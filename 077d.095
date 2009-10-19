@@ -220,9 +220,10 @@
 	.short	0x2028	/* 4085f1b4 2028 */
 	.short	0x0030	/* 4085f1b6 0030 */
 	.short	0x4e75	/* 4085f1b8 4e75 */
-	.short	0x0000	/* 4085f1ba 0000 */
-	.short	0x0000	/* 4085f1bc 0000 */
-	.short	0x0000	/* 4085f1be 0000 */
+
+	.align	16
+
+sub_4085f1c0:
 	.short	0x4e56	/* 4085f1c0 4e56 */
 	.short	0x0000	/* 4085f1c2 0000 */
 	.short	0x426e	/* 4085f1c4 426e */
@@ -263,6 +264,8 @@
 	.short	0x2028	/* 4085f20a 2028 */
 	.short	0x0034	/* 4085f20c 0034 */
 	.short	0x4e75	/* 4085f20e 4e75 */
+
+sub_4085f210:
 	.short	0x4e56	/* 4085f210 4e56 */
 	.short	0xfff0	/* 4085f212 fff0 */
 	.short	0x2f0a	/* 4085f214 2f0a */
@@ -336,6 +339,8 @@
 	.short	0xffff	/* 4085f29c ffff */
 	.short	0x0000	/* 4085f29e 0000 */
 	.short	0x0001	/* 4085f2a0 0001 */
+
+sub_4085f2a2:
 	.short	0x50f8	/* 4085f2a2 50f8 */
 	.short	0x0a58	/* 4085f2a4 0a58 */
 	.short	0x42b8	/* 4085f2a6 42b8 */
@@ -682,6 +687,8 @@
 	.short	0x2078	/* 4085f550 2078 */
 	.short	0x07e4	/* 4085f552 07e4 */
 	.short	0x4ed0	/* 4085f554 4ed0 */
+
+VSUPERLOAD:
 	.short	0x6100	/* 4085f556 6100 */
 	.short	0x00b4	/* 4085f558 00b4 */
 	.short	0x6b00	/* 4085f55a 6b00 */
@@ -844,6 +851,8 @@
 	.short	0x2078	/* 4085f694 2078 */
 	.short	0x07ec	/* 4085f696 07ec */
 	.short	0x4ed0	/* 4085f698 4ed0 */
+
+VNEWMAP:
 	.short	0x42b8	/* 4085f69a 42b8 */
 	.short	0x0b80	/* 4085f69c 0b80 */
 	.short	0x42b8	/* 4085f69e 42b8 */
@@ -1299,6 +1308,8 @@
 	.short	0x72ff	/* 4085fa22 72ff */
 	.short	0x70ff	/* 4085fa24 70ff */
 	.short	0x600a	/* 4085fa26 600a */
+
+sub_4085fa28:
 	.short	0x72ff	/* 4085fa28 72ff */
 	.short	0x202a	/* 4085fa2a 202a */
 	.short	0x0004	/* 4085fa2c 0004 */
@@ -1530,16 +1541,19 @@
 	.short	0x2078	/* 4085fbf0 2078 */
 	.short	0x07e8	/* 4085fbf2 07e8 */
 	.short	0x4ed0	/* 4085fbf4 4ed0 */
-	.short	0x082a	/* 4085fbf6 082a */
-	.short	0x0001	/* 4085fbf8 0001 */
-	.short	0x0004	/* 4085fbfa 0004 */
-	.short	0x6704	/* 4085fbfc 6704 */
-	.short	0x6164	/* 4085fbfe 6164 */
-	.short	0x6a04	/* 4085fc00 6a04 */
-	.short	0x6100	/* 4085fc02 6100 */
-	.short	0x00e8	/* 4085fc04 00e8 */
-	.short	0x6100	/* 4085fc06 6100 */
-	.short	0xfe20	/* 4085fc08 fe20 */
+
+VCMPFRM:
+	btst	#1,%a2@(4)		/* 4085fbf6 082a 0001 0004 */
+	beqs	loc_4085fc02		/* 4085fbfc 6704 */
+	bsrs	sub_4085fc64		/* 4085fbfe 6164 */
+	bpls	loc_4085fc06		/* 4085fc00 6a04 */
+
+loc_4085fc02:
+	bsrw	sub_4085fcec		/* 4085fc02 6100 00e8 */
+
+
+loc_4085fc06:
+	bsrw	sub_4085fa28		/* 4085fc06 6100 fe20 */
 	.short	0x67ea	/* 4085fc0a 67ea */
 	.short	0x2009	/* 4085fc0c 2009 */
 	.short	0x9093	/* 4085fc0e 9093 */
@@ -1585,6 +1599,8 @@
 	.short	0x4cdf	/* 4085fc5e 4cdf */
 	.short	0x1f03	/* 4085fc60 1f03 */
 	.short	0x4e75	/* 4085fc62 4e75 */
+
+sub_4085fc64:
 	.short	0x6100	/* 4085fc64 6100 */
 	.short	0x0146	/* 4085fc66 0146 */
 	.short	0x206a	/* 4085fc68 206a */
@@ -1653,6 +1669,8 @@
 	.short	0x5885	/* 4085fce6 5885 */
 	.short	0x221f	/* 4085fce8 221f */
 	.short	0x60c8	/* 4085fcea 60c8 */
+
+sub_4085fcec:
 	.short	0x202a	/* 4085fcec 202a */
 	.short	0x0004	/* 4085fcee 0004 */
 	.short	0xc0b8	/* 4085fcf0 c0b8 */

@@ -2027,23 +2027,16 @@
 	.short	0xfff0	/* 4088ffd2 fff0 */
 	.short	0x4e5e	/* 4088ffd4 4e5e */
 	.short	0x4e75	/* 4088ffd6 4e75 */
-	.short	0x0000	/* 4088ffd8 0000 */
-	.short	0x0000	/* 4088ffda 0000 */
-	.short	0x0000	/* 4088ffdc 0000 */
-	.short	0x0000	/* 4088ffde 0000 */
-	.short	0x4e56	/* 4088ffe0 4e56 */
-	.short	0x0000	/* 4088ffe2 0000 */
-	.short	0x48e7	/* 4088ffe4 48e7 */
-	.short	0x0718	/* 4088ffe6 0718 */
-	.short	0x266e	/* 4088ffe8 266e */
-	.short	0x0008	/* 4088ffea 0008 */
-	.short	0x59ab	/* 4088ffec 59ab */
-	.short	0x0018	/* 4088ffee 0018 */
-	.short	0x206b	/* 4088fff0 206b */
-	.short	0x0018	/* 4088fff2 0018 */
-	.short	0x2a10	/* 4088fff4 2a10 */
-	.short	0x59ab	/* 4088fff6 59ab */
-	.short	0x0018	/* 4088fff8 0018 */
-	.short	0x206b	/* 4088fffa 206b */
-	.short	0x0018	/* 4088fffc 0018 */
-	.short	0x2e10	/* 4088fffe 2e10 */
+
+	.align	16
+
+sub_4088ffe0:
+	linkw	%fp,#0	/* 4088ffe0 4e56 0000 */
+	moveml	%d5-%d7/%a3-%a4,%sp@-	/* 4088ffe4 48e7 0718 */
+	moveal	%fp@(8),%a3	/* 4088ffe8 266e 0008 */
+	subql	#4,%a3@(24)	/* 4088ffec 59ab 0018 */
+	moveal	%a3@(24),%a0	/* 4088fff0 206b 0018 */
+	movel	%a0@,%d5	/* 4088fff4 2a10 */
+	subql	#4,%a3@(24)	/* 4088fff6 59ab 0018 */
+	moveal	%a3@(24),%a0	/* 4088fffa 206b 0018 */
+	movel	%a0@,%d7	/* 4088fffe 2e10 */
