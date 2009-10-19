@@ -7,4 +7,4 @@ csplit -s -n 3 -f 077d. tmp9 "/SPLIT HERE/" "{*}"
 git diff
 git add 077d.???
 git commit -m "$(date)"
-rm 077d.[0123]??
+rm 077d.[0-9]??
