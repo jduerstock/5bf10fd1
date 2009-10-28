@@ -754,24 +754,18 @@ sub_4082f5cc:
 	.align	16
 
 sub_4082f5e0:
-	.short	0x4e56	/* 4082f5e0 4e56 */
-	.short	0x0000	/* 4082f5e2 0000 */
-	.short	0x2f07	/* 4082f5e4 2f07 */
-	.short	0x558f	/* 4082f5e6 558f */
-	.short	0x3f3c	/* 4082f5e8 3f3c */
-	.short	0x0040	/* 4082f5ea 0040 */
-	.short	0xa88f	/* 4082f5ec a88f */
-	.short	0x3e1f	/* 4082f5ee 3e1f */
-	.short	0x3d47	/* 4082f5f0 3d47 */
-	.short	0x0008	/* 4082f5f2 0008 */
-	.short	0x2e2e	/* 4082f5f4 2e2e */
-	.short	0xfffc	/* 4082f5f6 fffc */
-	.short	0x4e5e	/* 4082f5f8 4e5e */
-	.short	0x4e75	/* 4082f5fa 4e75 */
-	.short	0x2f30	/* 4082f5fc 2f30 */
-	.short	0x81e2	/* 4082f5fe 81e2 */
-	.short	0x2030	/* 4082f600 2030 */
-	.short	0x024c	/* 4082f602 024c */
+	linkw	%fp,#0			/* 4082f5e0 4e56 0000 */
+	movel	%d7,%sp@-		/* 4082f5e4 2f07 */
+	subql	#2,%sp			/* 4082f5e6 558f */
+	movew	#64,%sp@-		/* 4082f5e8 3f3c 0040 */
+	.short	0xa88f			/* 4082f5ec a88f */
+	movew	%sp@+,%d7		/* 4082f5ee 3e1f */
+	movew	%d7,%fp@(8)		/* 4082f5f0 3d47 0008 */
+	movel	%fp@(-4),%d7		/* 4082f5f4 2e2e fffc */
+	unlk	%fp			/* 4082f5f8 4e5e */
+	rts				/* 4082f5fa 4e75 */
+
+	CallVector	0x2030 147	/* 4082f5fc 2f30 81e2 2030 024c */
 	rts				/* 4082f604 4e75 */
 
 	.align	16
