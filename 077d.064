@@ -1606,17 +1606,18 @@ XHILITELINEENDS:
 
 	.align	16
 
-	.short	0x4a78	/* 40840ca0 4a78 */
-	.short	0x096a	/* 40840ca2 096a */
-	.short	0x6c06	/* 40840ca4 6c06 */
-	.short	0x594f	/* 40840ca6 594f */
-	.short	0xa9fc	/* 40840ca8 a9fc */
-	.short	0x584f	/* 40840caa 584f */
-	.short	0x205f	/* 40840cac 205f */
-	.short	0x43f8	/* 40840cae 43f8 */
-	.short	0x0960	/* 40840cb0 0960 */
-	.short	0x2e89	/* 40840cb2 2e89 */
-	.short	0x4ed0	/* 40840cb4 4ed0 */
+	tstw	0x96a			/* 40840ca0 4a78 096a */
+	bges	loc_40840cac		/* 40840ca4 6c06 */
+	subqw	#4,%sp			/* 40840ca6 594f */
+	.short	0xa9fc			/* 40840ca8 a9fc */
+	addqw	#4,%sp			/* 40840caa 584f */
+
+loc_40840cac:
+	moveal	%sp@+,%a0		/* 40840cac 205f */
+	lea	0x960,%a1		/* 40840cae 43f8 0960 */
+	movel	%a1,%sp@		/* 40840cb2 2e89 */
+	jmp	%a0@			/* 40840cb4 4ed0 */
+
 	.short	0x225f	/* 40840cb6 225f */
 	.short	0x4e56	/* 40840cb8 4e56 */
 	.short	0xffa8	/* 40840cba ffa8 */
