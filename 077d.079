@@ -985,17 +985,18 @@ sub_4084f0b0:
 sub_4084f7b0:
 	moveal	%sp@(16),%a0		/* 4084f7b0 206f 0010 */
 	tstl	%sp@(8)			/* 4084f7b4 4aaf 0008 */
-	.short	0x6614	/* 4084f7b8 6614 */
-	.short	0x3028	/* 4084f7ba 3028 */
-	.short	0x0004	/* 4084f7bc 0004 */
-	.short	0x0800	/* 4084f7be 0800 */
-	.short	0x000f	/* 4084f7c0 000f */
-	.short	0x6608	/* 4084f7c2 6608 */
-	.short	0x202f	/* 4084f7c4 202f */
-	.short	0x000c	/* 4084f7c6 000c */
-	.short	0x4480	/* 4084f7c8 4480 */
-	.short	0xa05a	/* 4084f7ca a05a */
-	.short	0x4e75	/* 4084f7cc 4e75 */
+	bnes	loc_4084f7ce		/* 4084f7b8 6614 */
+	movew	%a0@(4),%d0		/* 4084f7ba 3028 0004 */
+	btst	#15,%d0			/* 4084f7be 0800 000f */
+	bnes	loc_4084f7cc		/* 4084f7c2 6608 */
+	movel	%sp@(12),%d0		/* 4084f7c4 202f 000c */
+	negl	%d0			/* 4084f7c8 4480 */
+	.short	0xa05a			/* 4084f7ca a05a */
+
+loc_4084f7cc:
+	rts				/* 4084f7cc 4e75 */
+
+loc_4084f7ce:
 	.short	0x3028	/* 4084f7ce 3028 */
 	.short	0x0004	/* 4084f7d0 0004 */
 	.short	0x0800	/* 4084f7d2 0800 */
