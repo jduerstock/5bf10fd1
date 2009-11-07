@@ -590,7 +590,7 @@ __v__NEWGESTALTSELECTORS:
 	lea	%pc@(GETMACHINEICON),%a0	/* 408524a8 41fa 00de */
 	movel	#0x6d69636e,%d0		/* 408524ac 203c 6d69 636e */
 	.short	0xa3ad			/* 408524b2 a3ad */
-	lea	%pc@(sub_408525b0),%a0	/* 408524b4 41fa 00fa */
+	lea	%pc@(GETRESOURCEATTRS),%a0	/* 408524b4 41fa 00fa */
 	movel	#0x72737263,%d0		/* 408524b8 203c 7273 7263 */
 	.short	0xa3ad			/* 408524be a3ad */
 	rts				/* 408524c0 4e75 */
@@ -713,29 +713,27 @@ loc_4085259e:
 
 	.align	16
 
-sub_408525b0:
-	.short	0x7000	/* 408525b0 7000 */
-	.short	0x303c	/* 408525b2 303c */
-	.short	0x0003	/* 408525b4 0003 */
-	.short	0x41fa	/* 408525b6 41fa */
-	.short	0x0010	/* 408525b8 0010 */
-	.short	0x4ed0	/* 408525ba 4ed0 */
-	.short	0x0000	/* 408525bc 0000 */
-	.short	0x0000	/* 408525be 0000 */
-	.short	0x3f7c	/* 408525c0 3f7c */
-	.short	0xea52	/* 408525c2 ea52 */
-	.short	0x000c	/* 408525c4 000c */
-	.short	0x600a	/* 408525c6 600a */
+GETRESOURCEATTRS:
+	moveq	#0,%d0			/* 408525b0 7000 */
+	movew	#3,%d0			/* 408525b2 303c 0003 */
+	lea	%pc@(STDRESULT),%a0	/* 408525b6 41fa 0010 */
+	jmp	%a0@			/* 408525ba 4ed0 */
+
+	.align	16
+
+STDUNKNOWN:
+	movew	#-5550,%sp@(12)		/* 408525c0 3f7c ea52 000c */
+	bras	loc_408525d2		/* 408525c6 600a */
 
 STDRESULT:
-	.short	0x206f	/* 408525c8 206f */
-	.short	0x0004	/* 408525ca 0004 */
-	.short	0x2080	/* 408525cc 2080 */
-	.short	0x426f	/* 408525ce 426f */
-	.short	0x000c	/* 408525d0 000c */
-	.short	0x205f	/* 408525d2 205f */
-	.short	0x508f	/* 408525d4 508f */
-	.short	0x4ed0	/* 408525d6 4ed0 */
+	moveal	%sp@(4),%a0		/* 408525c8 206f 0004 */
+	movel	%d0,%a0@		/* 408525cc 2080 */
+	clrw	%sp@(12)		/* 408525ce 426f 000c */
+
+loc_408525d2:
+	moveal	%sp@+,%a0		/* 408525d2 205f */
+	addql	#8,%sp			/* 408525d4 508f */
+	jmp	%a0@			/* 408525d6 4ed0 */
 
 	.align	16
 
