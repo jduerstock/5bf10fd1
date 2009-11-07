@@ -581,13 +581,13 @@ sub_40852410:
 	.align	16
 
 __v__NEWGESTALTSELECTORS:
-	lea	sub_408524d0,%a0	/* 40852490 41fa 003e */
+	lea	GETBUGFIXES,%a0		/* 40852490 41fa 003e */
 	movel	#0x6275677a,%d0		/* 40852494 203c 6275 677a */
 	.short	0xa3ad			/* 4085249a a3ad */
-	lea	%pc@(sub_408524e0),%a0	/* 4085249c 41fa 0042 */
+	lea	%pc@(GETBUGFIXESTWO),%a0	/* 4085249c 41fa 0042 */
 	movel	#0x62756779,%d0		/* 408524a0 203c 6275 6779 */
 	.short	0xa3ad			/* 408524a6 a3ad */
-	lea	%pc@(sub_40852588),%a0	/* 408524a8 41fa 00de */
+	lea	%pc@(GETMACHINEICON),%a0	/* 408524a8 41fa 00de */
 	movel	#0x6d69636e,%d0		/* 408524ac 203c 6d69 636e */
 	.short	0xa3ad			/* 408524b2 a3ad */
 	lea	%pc@(sub_408525b0),%a0	/* 408524b4 41fa 00fa */
@@ -601,21 +601,22 @@ NEWGESTALTSELECTORS:
 
 	.align	16
 
-sub_408524d0:
+GETBUGFIXES:
 	moveq	#0,%d0			/* 408524d0 7000 */
 	movel	#16763903,%d0		/* 408524d2 203c 00ff cbff */
-	lea	%pc@(sub_408525c8),%a0	/* 408524d8 41fa 00ee */
+	lea	%pc@(STDRESULT),%a0	/* 408524d8 41fa 00ee */
 	jmp	%a0@			/* 408524dc 4ed0 */
 
 	.align	16
 
-sub_408524e0:
+GETBUGFIXESTWO:
 	movel	#0x200,%d0		/* 408524e0 203c 0000 0200 */
-	lea	%pc@(sub_408525c8),%a0	/* 408524e6 41fa 00e0 */
+	lea	%pc@(STDRESULT),%a0	/* 408524e6 41fa 00e0 */
 	jmp	%a0@			/* 408524ea 4ed0 */
 
 	.align	16
 
+MACHINEICON:
 	.short	0x0003	/* 408524f0 0003 */
 	.short	0xbf9e	/* 408524f2 bf9e */
 	.short	0x0003	/* 408524f4 0003 */
@@ -693,27 +694,24 @@ sub_408524e0:
 	.short	0x0003	/* 40852584 0003 */
 	.short	0x0003	/* 40852586 0003 */
 
-sub_40852588:
-	.short	0x203c	/* 40852588 203c */
-	.short	0x6d61	/* 4085258a 6d61 */
-	.short	0x6368	/* 4085258c 6368 */
-	.short	0xa1ad	/* 4085258e a1ad */
-	.short	0x2008	/* 40852590 2008 */
-	.short	0x0240	/* 40852592 0240 */
-	.short	0xffff	/* 40852594 ffff */
-	.short	0x0c40	/* 40852596 0c40 */
-	.short	0x004c	/* 40852598 004c */
-	.short	0x6502	/* 4085259a 6502 */
-	.short	0x4240	/* 4085259c 4240 */
-	.short	0xd040	/* 4085259e d040 */
-	.short	0x41fa	/* 408525a0 41fa */
-	.short	0xff4e	/* 408525a2 ff4e */
-	.short	0xd1c0	/* 408525a4 d1c0 */
-	.short	0x3010	/* 408525a6 3010 */
-	.short	0x41fa	/* 408525a8 41fa */
-	.short	0x001e	/* 408525aa 001e */
-	.short	0x4ed0	/* 408525ac 4ed0 */
-	.short	0x0000	/* 408525ae 0000 */
+GETMACHINEICON:
+	movel	#0x6d616368,%d0		/* 40852588 203c 6d61 6368 */
+	.short	0xa1ad			/* 4085258e a1ad */
+	movel	%a0,%d0			/* 40852590 2008 */
+	andiw	#-1,%d0			/* 40852592 0240 ffff */
+	cmpiw	#76,%d0			/* 40852596 0c40 004c */
+	bcss	loc_4085259e		/* 4085259a 6502 */
+	clrw	%d0			/* 4085259c 4240 */
+
+loc_4085259e:
+	addw	%d0,%d0			/* 4085259e d040 */
+	lea	%pc@(MACHINEICON),%a0	/* 408525a0 41fa ff4e */
+	addal	%d0,%a0			/* 408525a4 d1c0 */
+	movew	%a0@,%d0		/* 408525a6 3010 */
+	lea	%pc@(STDRESULT),%a0	/* 408525a8 41fa 001e */
+	jmp	%a0@			/* 408525ac 4ed0 */
+
+	.align	16
 
 sub_408525b0:
 	.short	0x7000	/* 408525b0 7000 */
@@ -729,7 +727,7 @@ sub_408525b0:
 	.short	0x000c	/* 408525c4 000c */
 	.short	0x600a	/* 408525c6 600a */
 
-sub_408525c8:
+STDRESULT:
 	.short	0x206f	/* 408525c8 206f */
 	.short	0x0004	/* 408525ca 0004 */
 	.short	0x2080	/* 408525cc 2080 */
