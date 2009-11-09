@@ -572,6 +572,8 @@ loc_408505a6:
 	moveml	%fp@(-8),%d7/%a4	/* 408505a6 4cee 1080 fff8 */
 	unlk	%fp			/* 408505ac 4e5e */
 	rts				/* 408505ae 4e75 */
+
+sub_408505b0:
 	linkw	%fp,#0			/* 408505b0 4e56 0000 */
 	movel	%a4,%sp@-		/* 408505b4 2f0c */
 	moveal	%fp@(8),%a4		/* 408505b6 286e 0008 */
@@ -877,38 +879,33 @@ loc_408508a0:
 
 	.align	16
 
-	.short	0x4e56	/* 408508c0 4e56 */
-	.short	0xfff8	/* 408508c2 fff8 */
-	.short	0x2f0c	/* 408508c4 2f0c */
-	.short	0x286e	/* 408508c6 286e */
-	.short	0x0008	/* 408508c8 0008 */
-	.short	0x486e	/* 408508ca 486e */
-	.short	0xfff8	/* 408508cc fff8 */
-	.short	0x2f0c	/* 408508ce 2f0c */
-	.short	0x4eba	/* 408508d0 4eba */
-	.short	0xfcde	/* 408508d2 fcde */
-	.short	0x4a00	/* 408508d4 4a00 */
-	.short	0x504f	/* 408508d6 504f */
-	.short	0x6704	/* 408508d8 6704 */
-	.short	0x7001	/* 408508da 7001 */
-	.short	0x6014	/* 408508dc 6014 */
-	.short	0x2f2c	/* 408508de 2f2c */
-	.short	0x0004	/* 408508e0 0004 */
-	.short	0x486e	/* 408508e2 486e */
-	.short	0xfff8	/* 408508e4 fff8 */
-	.short	0x2f0c	/* 408508e6 2f0c */
-	.short	0x4eba	/* 408508e8 4eba */
-	.short	0xff66	/* 408508ea ff66 */
-	.short	0x7000	/* 408508ec 7000 */
-	.short	0x4fef	/* 408508ee 4fef */
-	.short	0x000c	/* 408508f0 000c */
-	.short	0x286e	/* 408508f2 286e */
-	.short	0xfff4	/* 408508f4 fff4 */
-	.short	0x4e5e	/* 408508f6 4e5e */
-	.short	0x4e75	/* 408508f8 4e75 */
-	.short	0x0000	/* 408508fa 0000 */
-	.short	0x0000	/* 408508fc 0000 */
-	.short	0x0000	/* 408508fe 0000 */
+	linkw	%fp,#-8			/* 408508c0 4e56 fff8 */
+	movel	%a4,%sp@-		/* 408508c4 2f0c */
+	moveal	%fp@(8),%a4		/* 408508c6 286e 0008 */
+	pea	%fp@(-8)		/* 408508ca 486e fff8 */
+	movel	%a4,%sp@-		/* 408508ce 2f0c */
+	jsr	%pc@(sub_408505b0)	/* 408508d0 4eba fcde */
+	tstb	%d0			/* 408508d4 4a00 */
+	addqw	#8,%sp			/* 408508d6 504f */
+	beqs	loc_408508de		/* 408508d8 6704 */
+	moveq	#1,%d0			/* 408508da 7001 */
+	bras	loc_408508f2		/* 408508dc 6014 */
+
+loc_408508de:
+	movel	%a4@(4),%sp@-		/* 408508de 2f2c 0004 */
+	pea	%fp@(-8)		/* 408508e2 486e fff8 */
+	movel	%a4,%sp@-		/* 408508e6 2f0c */
+	jsr	%pc@(sub_40850850)	/* 408508e8 4eba ff66 */
+	moveq	#0,%d0			/* 408508ec 7000 */
+	lea	%sp@(12),%sp		/* 408508ee 4fef 000c */
+
+loc_408508f2:
+	moveal	%fp@(-12),%a4		/* 408508f2 286e fff4 */
+	unlk	%fp			/* 408508f6 4e5e */
+	rts				/* 408508f8 4e75 */
+
+	.align	16
+
 	.short	0x4e56	/* 40850900 4e56 */
 	.short	0xfff8	/* 40850902 fff8 */
 	.short	0x48e7	/* 40850904 48e7 */
