@@ -1762,62 +1762,55 @@ loc_40857eae:
 
 	.align	16
 
-	.short	0x205f	/* 40857ec0 205f */
-	.short	0x3f3c	/* 40857ec2 3f3c */
-	.short	0x0006	/* 40857ec4 0006 */
-	.short	0x2f08	/* 40857ec6 2f08 */
+	moveal	%sp@+,%a0		/* 40857ec0 205f */
+	movew	#6,%sp@-		/* 40857ec2 3f3c 0006 */
+	movel	%a0,%sp@-		/* 40857ec6 2f08 */
 
 sub_40857ec8:
-	.short	0x4e56	/* 40857ec8 4e56 */
-	.short	0xfffc	/* 40857eca fffc */
-	.short	0x48e7	/* 40857ecc 48e7 */
-	.short	0x1e10	/* 40857ece 1e10 */
-	.short	0x6100	/* 40857ed0 6100 */
-	.short	0xf608	/* 40857ed2 f608 */
-	.short	0x41ee	/* 40857ed4 41ee */
-	.short	0x0008	/* 40857ed6 0008 */
-	.short	0x3c18	/* 40857ed8 3c18 */
-	.short	0x5546	/* 40857eda 5546 */
-	.short	0x2d58	/* 40857edc 2d58 */
-	.short	0xfffc	/* 40857ede fffc */
-	.short	0x2658	/* 40857ee0 2658 */
-	.short	0x4250	/* 40857ee2 4250 */
-	.short	0x7a00	/* 40857ee4 7a00 */
-	.short	0x6100	/* 40857ee6 6100 */
-	.short	0xfeca	/* 40857ee8 feca */
-	.short	0x7001	/* 40857eea 7001 */
-	.short	0x262e	/* 40857eec 262e */
-	.short	0xfffc	/* 40857eee fffc */
-	.short	0x6100	/* 40857ef0 6100 */
-	.short	0xfdfc	/* 40857ef2 fdfc */
-	.short	0xb046	/* 40857ef4 b046 */
-	.short	0x6702	/* 40857ef6 6702 */
-	.short	0x7000	/* 40857ef8 7000 */
-	.short	0xba40	/* 40857efa ba40 */
-	.short	0x6704	/* 40857efc 6704 */
-	.short	0x3a00	/* 40857efe 3a00 */
-	.short	0x613a	/* 40857f00 613a */
-	.short	0x486e	/* 40857f02 486e */
-	.short	0xfffc	/* 40857f04 fffc */
-	.short	0xa972	/* 40857f06 a972 */
-	.short	0x6100	/* 40857f08 6100 */
-	.short	0x061c	/* 40857f0a 061c */
-	.short	0x4267	/* 40857f0c 4267 */
-	.short	0xa977	/* 40857f0e a977 */
-	.short	0x4a1f	/* 40857f10 4a1f */
-	.short	0x66d6	/* 40857f12 66d6 */
-	.short	0x4a45	/* 40857f14 4a45 */
-	.short	0x6706	/* 40857f16 6706 */
-	.short	0x522e	/* 40857f18 522e */
-	.short	0x0012	/* 40857f1a 0012 */
-	.short	0x611e	/* 40857f1c 611e */
-	.short	0x6100	/* 40857f1e 6100 */
-	.short	0xf5d6	/* 40857f20 f5d6 */
-	.short	0x4cdf	/* 40857f22 4cdf */
-	.short	0x0878	/* 40857f24 0878 */
-	.short	0x4e5e	/* 40857f26 4e5e */
-	.short	0x6000	/* 40857f28 6000 */
-	.short	0xfee8	/* 40857f2a fee8 */
+	linkw	%fp,#-4			/* 40857ec8 4e56 fffc */
+	moveml	%d3-%d6/%a3,%sp@-	/* 40857ecc 48e7 1e10 */
+	bsrw	sub_408574da		/* 40857ed0 6100 f608 */
+	lea	%fp@(8),%a0		/* 40857ed4 41ee 0008 */
+	movew	%a0@+,%d6		/* 40857ed8 3c18 */
+	subqw	#2,%d6			/* 40857eda 5546 */
+	movel	%a0@+,%fp@(-4)		/* 40857edc 2d58 fffc */
+	moveal	%a0@+,%a3		/* 40857ee0 2658 */
+	clrw	%a0@			/* 40857ee2 4250 */
+	moveq	#0,%d5			/* 40857ee4 7a00 */
+	bsrw	sub_40857db2		/* 40857ee6 6100 feca */
+
+loc_40857eea:
+	moveq	#1,%d0			/* 40857eea 7001 */
+	movel	%fp@(-4),%d3		/* 40857eec 262e fffc */
+	bsrw	sub_40857cee		/* 40857ef0 6100 fdfc */
+	cmpw	%d6,%d0			/* 40857ef4 b046 */
+	beqs	loc_40857efa		/* 40857ef6 6702 */
+	moveq	#0,%d0			/* 40857ef8 7000 */
+
+loc_40857efa:
+	cmpw	%d0,%d5			/* 40857efa ba40 */
+	beqs	loc_40857f02		/* 40857efc 6704 */
+	movew	%d0,%d5			/* 40857efe 3a00 */
+	bsrs	sub_40857f3c		/* 40857f00 613a */
+
+loc_40857f02:
+	pea	%fp@(-4)		/* 40857f02 486e fffc */
+	.short	0xa972			/* 40857f06 a972 */
+	bsrw	sub_40858526		/* 40857f08 6100 061c */
+	clrw	%sp@-			/* 40857f0c 4267 */
+	.short	0xa977			/* 40857f0e a977 */
+	tstb	%sp@+			/* 40857f10 4a1f */
+	bnes	loc_40857eea		/* 40857f12 66d6 */
+	tstw	%d5			/* 40857f14 4a45 */
+	beqs	loc_40857f1e		/* 40857f16 6706 */
+	addqb	#1,%fp@(18)		/* 40857f18 522e 0012 */
+	bsrs	sub_40857f3c		/* 40857f1c 611e */
+
+loc_40857f1e:
+	bsrw	sub_408574f6		/* 40857f1e 6100 f5d6 */
+	moveml	%sp@+,%d3-%d6/%a3	/* 40857f22 4cdf 0878 */
+	unlk	%fp			/* 40857f26 4e5e */
+	braw	sub_40857e12		/* 40857f28 6000 fee8 */
 
 	.align	16
 
@@ -1828,11 +1821,9 @@ sub_40857f30:
 	bsrw	sub_40857cee		/* 40857f36 6100 fdb6 */
 	rts				/* 40857f3a 4e75 */
 
-	.short	0x2f30	/* 40857f3c 2f30 */
-	.short	0x81e2	/* 40857f3e 81e2 */
-	.short	0x2084	/* 40857f40 2084 */
-	.short	0x0170	/* 40857f42 0170 */
-	.short	0x4e75	/* 40857f44 4e75 */
+sub_40857f3c:
+	CallVector	0x2084 92	/* 40857f3c 2f30 81e2 2084 0170 */
+	rts				/* 40857f44 4e75 */
 
 	.align	16
 
