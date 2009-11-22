@@ -79,7 +79,7 @@ sub_40801028:
 	clrl	%a0@+			/* 408010de 4298 */
 	rts				/* 408010e0 4e75 */
 
-sub_408010e2:
+ADDVIDDEVICE:
 	moveml	%d1-%d2/%a0-%a3,%sp@-	/* 408010e2 48e7 60f0 */
 	movew	%a1@(24),%d1		/* 408010e6 3229 0018 */
 	movel	0x8a8,%d0		/* 408010ea 2038 08a8 */
@@ -102,14 +102,14 @@ loc_408010ee:
 	moveal	%a0@,%a0		/* 40801112 2050 */
 	oriw	#8192,%a0@(20)		/* 40801114 0068 2000 0014 */
 	moveal	%sp@+,%a0		/* 4080111a 205f */
-	bsrw	sub_40800f3a		/* 4080111c 6100 fe1c */
+	bsrw	INITDEFGAMMA		/* 4080111c 6100 fe1c */
 
 loc_40801120:
 	moveml	%sp@+,%d1-%d2/%a0-%a3	/* 40801120 4cdf 0f06 */
 	moveq	#0,%d0			/* 40801124 7000 */
 	rts				/* 40801126 4e75 */
 
-sub_40801128:
+INITSCC:
 	btst	#1,0xdd1		/* 40801128 0838 0001 0dd1 */
 	beqs	loc_40801136		/* 4080112e 6706 */
 	bsrl	sub_40811128		/* 40801130 61ff 0000 fff6 */
@@ -251,7 +251,7 @@ sub_4080126c:
 	lea	%sp@(50),%sp		/* 40801286 4fef 0032 */
 	rts				/* 4080128a 4e75 */
 
-sub_4080128c:
+CHECKFOREGRET:
 	moveq	#14,%d0			/* 4080128c 700e */
 	andl	0xdd4,%d0		/* 4080128e c0b8 0dd4 */
 	subql	#6,%d0			/* 40801292 5d80 */
@@ -330,13 +330,13 @@ sub_40801340:
 
 	.align	16
 
-sub_40801350:
+FINDSTARTUPDEVICE:
 	bsrl	sub_4082002c		/* 40801350 61ff 0001 ecda */
 	tstb	%d0			/* 40801356 4a00 */
 	beqs	loc_4080136a		/* 40801358 6710 */
 	subqw	#4,%sp			/* 4080135a 594f */
 	moveal	%sp,%a0			/* 4080135c 204f */
-	bsrw	sub_40801400		/* 4080135e 6100 00a0 */
+	bsrw	GETDEFAULTSTARTUP	/* 4080135e 6100 00a0 */
 	bsrl	sub_40820192		/* 40801362 61ff 0001 ee2e */
 	addql	#4,%sp			/* 40801368 588f */
 
@@ -403,28 +403,28 @@ loc_408013f6:
 
 	.align	16
 
-sub_40801400:
+GETDEFAULTSTARTUP:
 	movel	#262264,%d0		/* 40801400 203c 0004 0078 */
 	.short	0xa051			/* 40801406 a051 */
 	rts				/* 40801408 4e75 */
 
 	.align	16
 
-sub_40801410:
+SETDEFAULTSTARTUP:
 	movel	#0x40078,%d0		/* 40801410 203c 0004 0078 */
 	.short	0xa052			/* 40801416 a052 */
 	rts				/* 40801418 4e75 */
 
 	.align	16
 
-sub_40801420:
+GETOSDEFAULT:
 	movel	#0x20076,%d0		/* 40801420 203c 0002 0076 */
 	.short	0xa051			/* 40801426 a051 */
 	rts				/* 40801428 4e75 */
 
 	.align	16
 
-sub_40801430:
+SETOSDEFAULT:
 	cmpil	#0x9961010,0xcdc	/* 4080142e 0cb8 0996 1010 0cdc */
 	bnes	loc_40801448		/* 40801438 660e */
 	clrl	0xcdc			/* 4080143a 42b8 0cdc */
@@ -1577,7 +1577,7 @@ sub_40801dc0:
 	bsrw	sub_40802280		/* 40801dc0 6100 04be */
 	tstw	%d0			/* 40801dc4 4a40 */
 	beqs	loc_40801dcc		/* 40801dc6 6704 */
-	bsrw	sub_40801350		/* 40801dc8 6100 f586 */
+	bsrw	FINDSTARTUPDEVICE	/* 40801dc8 6100 f586 */
 
 loc_40801dcc:
 	moveal	0x2a6,%a0		/* 40801dcc 2078 02a6 */
