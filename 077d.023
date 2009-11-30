@@ -1431,37 +1431,33 @@ SCSILOAD:
 	.short	0x4cdf	/* 40817bd4 4cdf */
 	.short	0x0307	/* 40817bd6 0307 */
 	rts				/* 40817bd8 4e75 */
-	.short	0x48e7	/* 40817bda 48e7 */
-	.short	0xe0c0	/* 40817bdc e0c0 */
-	.short	0x202e	/* 40817bde 202e */
-	.short	0xfeb6	/* 40817be0 feb6 */
-	.short	0xb0ae	/* 40817be2 b0ae */
-	.short	0xfe82	/* 40817be4 fe82 */
-	.short	0x6e2a	/* 40817be6 6e2a */
-	.short	0x42ae	/* 40817be8 42ae */
-	.short	0xfe82	/* 40817bea fe82 */
-	.short	0x7003	/* 40817bec 7003 */
-	.short	0xc02e	/* 40817bee c02e */
-	.short	0xfeae	/* 40817bf0 feae */
-	.short	0x5200	/* 40817bf2 5200 */
-	.short	0x0c00	/* 40817bf4 0c00 */
-	.short	0x0002	/* 40817bf6 0002 */
-	.short	0x6f02	/* 40817bf8 6f02 */
-	.short	0x7000	/* 40817bfa 7000 */
-	.short	0x1d40	/* 40817bfc 1d40 */
-	.short	0xfeae	/* 40817bfe feae */
-	.short	0x41ee	/* 40817c00 41ee */
-	.short	0xfee6	/* 40817c02 fee6 */
-	.short	0x2f30	/* 40817c04 2f30 */
-	.short	0x0400	/* 40817c06 0400 */
-	.short	0x486e	/* 40817c08 486e */
-	.short	0xfed2	/* 40817c0a fed2 */
-	.short	0x2f17	/* 40817c0c 2f17 */
-	.short	0xa8a3	/* 40817c0e a8a3 */
-	.short	0xa8f6	/* 40817c10 a8f6 */
-	.short	0x4cdf	/* 40817c12 4cdf */
-	.short	0x0307	/* 40817c14 0307 */
+
+sub_40817bda:
+	moveml	%d0-%d2/%a0-%a1,%sp@-	/* 40817bda 48e7 e0c0 */
+	movel	%fp@(-330),%d0		/* 40817bde 202e feb6 */
+	cmpl	%fp@(-382),%d0		/* 40817be2 b0ae fe82 */
+	bgts	loc_40817c12		/* 40817be6 6e2a */
+	clrl	%fp@(-382)		/* 40817be8 42ae fe82 */
+	moveq	#3,%d0			/* 40817bec 7003 */
+	andb	%fp@(-338),%d0		/* 40817bee c02e feae */
+	addqb	#1,%d0			/* 40817bf2 5200 */
+	cmpib	#2,%d0			/* 40817bf4 0c00 0002 */
+	bles	loc_40817bfc		/* 40817bf8 6f02 */
+	moveq	#0,%d0			/* 40817bfa 7000 */
+
+loc_40817bfc:
+	moveb	%d0,%fp@(-338)		/* 40817bfc 1d40 feae */
+	lea	%fp@(-282),%a0		/* 40817c00 41ee fee6 */
+	movel	%a0@(0,%d0:w:4),%sp@-	/* 40817c04 2f30 0400 */
+	pea	%fp@(-302)		/* 40817c08 486e fed2 */
+	movel	%sp@,%sp@-		/* 40817c0c 2f17 */
+	.short	0xa8a3			/* 40817c0e a8a3 */
+	.short	0xa8f6			/* 40817c10 a8f6 */
+
+loc_40817c12:
+	moveml	%sp@+,%d0-%d2/%a0-%a1	/* 40817c12 4cdf 0307 */
 	rts				/* 40817c16 4e75 */
+
 	.short	0x426e	/* 40817c18 426e */
 	.short	0x0018	/* 40817c1a 0018 */
 	.short	0x4fef	/* 40817c1c 4fef */
