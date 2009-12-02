@@ -46,6 +46,11 @@
 		.short	0xa06e
 	.endm
 
+	.macro	_SReadDrvrName
+		moveq	#25,%d0
+		.short	0xa06e
+	.endm
+
 	.macro	_SFindDevBase
 		moveq	#27,%d0
 		.short	0xa06e
@@ -1472,8 +1477,7 @@ OPENSDRVR:
 	movel	%a2,%a0@(20)		/* 40800e5a 214a 0014 */
 	lea	%sp@(-256),%sp		/* 40800e5e 4fef ff00 */
 	movel	%sp,%a0@		/* 40800e62 208f */
-	moveq	#25,%d0			/* 40800e64 7019 */
-	.short	0xa06e			/* 40800e66 a06e */
+	_SReadDrvrName			/* 40800e64 7019 a06e */
 	bnes	loc_40800e9e		/* 40800e68 6634 */
 	movel	%a0@,%a2@(12)		/* 40800e6a 2550 000c */
 	moveb	%a0@(49),%a2@		/* 40800e6e 14a8 0031 */
