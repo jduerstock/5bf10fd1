@@ -66,6 +66,11 @@
 		.short	0xa06e
 	.endm
 
+	.macro	_SReadPBSize
+		moveq	#38,%d0
+		.short	0xa06e
+	.endm
+
 	.macro	_GetResource
 		.short	0xa9a0
 	.endm
@@ -1586,8 +1591,7 @@ INITDEFGAMMA:
 	_SFindStruct			/* 40800f90 7006 a06e */
 	bnes	loc_40800ffc		/* 40800f94 6666 */
 	moveb	#128,%a0@(50)		/* 40800f96 117c 0080 0032 */
-	moveq	#38,%d0			/* 40800f9c 7026 */
-	.short	0xa06e			/* 40800f9e a06e */
+	_SReadPBSize			/* 40800f9c 7026 a06e */
 	bnes	loc_40800ffc		/* 40800fa0 665a */
 	moveal	%a0,%a3			/* 40800fa2 2648 */
 	movel	%a0@(8),%d0		/* 40800fa4 2028 0008 */
