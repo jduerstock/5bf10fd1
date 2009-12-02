@@ -21,6 +21,11 @@
 		.short	0xa06e
 	.endm
 
+	.macro	_SGetBlock
+		moveq	#5,%d0
+		.short	0xa06e
+	.endm
+
 	.macro	_SFindStruct
 		moveq	#6,%d0
 		.short	0xa06e
@@ -1423,8 +1428,7 @@ sub_40800da2:
 	_SFindStruct			/* 40800de0 7006 a06e */
 	bnew	loc_40800e4e		/* 40800de4 6600 0068 */
 	moveb	#1,%a0@(50)		/* 40800de8 117c 0001 0032 */
-	moveq	#5,%d0			/* 40800dee 7005 */
-	.short	0xa06e			/* 40800df0 a06e */
+	_SGetBlock			/* 40800dee 7005 a06e */
 	bnew	loc_40800e4e		/* 40800df2 6600 005a */
 	moveal	%a0@,%a1		/* 40800df6 2250 */
 	movew	%a1@(10),0xc22		/* 40800df8 31e9 000a 0c22 */
