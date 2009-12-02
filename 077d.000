@@ -31,6 +31,11 @@
 		.short	0xa06e
 	.endm
 
+	.macro	_SReadPRAMRec
+		moveq	#17,%d0
+		.short	0xa06e
+	.endm
+
 	.macro	_SNextTypeSRsrc
 		moveq	#21,%d0
 		.short	0xa06e
@@ -1525,8 +1530,7 @@ sub_40800ee0:
 	lea	%sp@(-8),%sp		/* 40800eea 4fef fff8 */
 	moveal	%sp,%a1			/* 40800eee 224f */
 	movel	%a1,%a0@		/* 40800ef0 2089 */
-	moveq	#17,%d0			/* 40800ef2 7011 */
-	.short	0xa06e			/* 40800ef4 a06e */
+	_SReadPRAMRec			/* 40800ef2 7011 a06e */
 	bnes	loc_40800f24		/* 40800ef6 662c */
 	clrb	%a0@(51)		/* 40800ef8 4228 0033 */
 	moveq	#22,%d0			/* 40800efc 7016 */
