@@ -36,6 +36,11 @@
 		.short	0xa06e
 	.endm
 
+	.macro	_SPutPRAMRec
+		moveq	#18,%d0
+		.short	0xa06e
+	.endm
+
 	.macro	_SNextTypeSRsrc
 		moveq	#21,%d0
 		.short	0xa06e
@@ -1533,8 +1538,7 @@ sub_40800ee0:
 	_SReadPRAMRec			/* 40800ef2 7011 a06e */
 	bnes	loc_40800f24		/* 40800ef6 662c */
 	clrb	%a0@(51)		/* 40800ef8 4228 0033 */
-	moveq	#22,%d0			/* 40800efc 7016 */
-	.short	0xa06e			/* 40800efe a06e */
+	_SRsrcInfo			/* 40800efc 7016 a06e */
 	bnes	loc_40800f24		/* 40800f00 6622 */
 	moveb	%a1@(2),%a0@(50)	/* 40800f02 1169 0002 0032 */
 	_SFindStruct			/* 40800f08 7006 a06e */
@@ -1552,8 +1556,7 @@ loc_40800f14:
 loc_40800f24:
 	moveb	#128,%a1@(2)		/* 40800f24 137c 0080 0002 */
 	movel	%a1,%a0@(4)		/* 40800f2a 2149 0004 */
-	moveq	#18,%d0			/* 40800f2e 7012 */
-	.short	0xa06e			/* 40800f30 a06e */
+	_SPutPRAMRec			/* 40800f2e 7012 a06e */
 	movel	#128,%d0		/* 40800f32 203c 0000 0080 */
 	bras	loc_40800f14		/* 40800f38 60da */
 
