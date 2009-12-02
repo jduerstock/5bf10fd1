@@ -41,6 +41,11 @@
 		.short	0xa06e
 	.endm
 
+	.macro	_SDisposePtr
+		moveq	#23,%d0
+		.short	0xa06e
+	.endm
+
 	.macro	_SFindDevBase
 		moveq	#27,%d0
 		.short	0xa06e
@@ -55,6 +60,7 @@
 	.endm
 
 	.equ	__FCL_DSAT_, 0x44534154
+
 ROMBase:
 	.long	0x5bf10fd1			/* 40800000 5bf1 0fd1 */
 	.long	loc_4080002a-ROMBase		/* 40800004 0000 002a */
@@ -1446,8 +1452,7 @@ sub_40800da2:
 	.short	0xa071			/* 40800e2e a071 */
 	movel	#1519594439,0xdb0	/* 40800e30 21fc 5a93 2bc7 0db0 */
 	movel	%a1,%a0@(4)		/* 40800e38 2149 0004 */
-	moveq	#23,%d0			/* 40800e3c 7017 */
-	.short	0xa06e			/* 40800e3e a06e */
+	_SDisposePtr			/* 40800e3c 7017 a06e */
 	moveq	#0,%d0			/* 40800e40 7000 */
 
 loc_40800e42:
