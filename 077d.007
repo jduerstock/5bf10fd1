@@ -1304,15 +1304,16 @@ a_backlight_0:
 	.short	0x7bd0	/* 40807a2a 7bd0 */
 
 sub_40807a2c:
-	.short	0xe181	/* 40807a2c e181 */
-	.short	0x82c2	/* 40807a2e 82c2 */
-	.short	0x0c41	/* 40807a30 0c41 */
-	.short	0x00ff	/* 40807a32 00ff */
-	.short	0x6304	/* 40807a34 6304 */
-	.short	0x123c	/* 40807a36 123c */
-	.short	0x00ff	/* 40807a38 00ff */
-	.short	0x1001	/* 40807a3a 1001 */
+	asll	#8,%d1			/* 40807a2c e181 */
+	divuw	%d2,%d1			/* 40807a2e 82c2 */
+	cmpiw	#255,%d1		/* 40807a30 0c41 00ff */
+	blss	loc_40807a3a		/* 40807a34 6304 */
+	moveb	#0xff,%d1		/* 40807a36 123c 00ff */
+
+loc_40807a3a:
+	moveb	%d1,%d0			/* 40807a3a 1001 */
 	rts				/* 40807a3c 4e75 */
+
 	linkw	%fp,#0			/* 40807a3e 4e56 0000 */
 	clrw	%sp@-			/* 40807a42 4267 */
 	clrl	%sp@-			/* 40807a44 42a7 */
