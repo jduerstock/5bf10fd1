@@ -31,6 +31,11 @@
 		.short	0xa06e
 	.endm
 
+	.macro	_SReadStruct
+		moveq	#7,%d0
+		.short	0xa06e
+	.endm
+
 	.macro	_SReadPRAMRec
 		moveq	#17,%d0
 		.short	0xa06e
@@ -1602,8 +1607,7 @@ INITDEFGAMMA:
 	moveal	%a3@,%a1		/* 40800fb0 2253 */
 	movel	%a1,%a0@		/* 40800fb2 2089 */
 	subqw	#4,%a0@(8)		/* 40800fb4 5968 0008 */
-	moveq	#7,%d0			/* 40800fb8 7007 */
-	.short	0xa06e			/* 40800fba a06e */
+	_SReadStruct			/* 40800fb8 7007 a06e */
 	bnew	loc_40800ffc		/* 40800fbc 6600 003e */
 	moveal	%a0@,%a0		/* 40800fc0 2050 */
 	addqw	#2,%a0			/* 40800fc2 5448 */
