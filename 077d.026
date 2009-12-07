@@ -1952,22 +1952,18 @@ sub_4081afa2:
 	rts				/* 4081afd8 4e75 */
 
 sub_4081afda:
-	.short	0x7a00	/* 4081afda 7a00 */
-	.short	0x7600	/* 4081afdc 7600 */
-	.short	0x3638	/* 4081afde 3638 */
-	.short	0x0b24	/* 4081afe0 0b24 */
-	.short	0xe18b	/* 4081afe2 e18b */
-	.short	0x2003	/* 4081afe4 2003 */
-	.short	0x4840	/* 4081afe6 4840 */
-	.short	0x1a2b	/* 4081afe8 1a2b */
-	.short	0x0040	/* 4081afea 0040 */
-	.short	0x0805	/* 4081afec 0805 */
-	.short	0x0007	/* 4081afee 0007 */
-	.short	0x56cb	/* 4081aff0 56cb */
-	.short	0xfff6	/* 4081aff2 fff6 */
-	.short	0x56c8	/* 4081aff4 56c8 */
-	.short	0xfff2	/* 4081aff6 fff2 */
-	.short	0x6714	/* 4081aff8 6714 */
-	.short	0x4845	/* 4081affa 4845 */
-	.short	0x1a2b	/* 4081affc 1a2b */
-	.short	0x0070	/* 4081affe 0070 */
+	moveq	#0,%d5			/* 4081afda 7a00 */
+	moveq	#0,%d3			/* 4081afdc 7600 */
+	movew	0xb24,%d3		/* 4081afde 3638 0b24 */
+	lsll	#8,%d3			/* 4081afe2 e18b */
+	movel	%d3,%d0			/* 4081afe4 2003 */
+	swap	%d0			/* 4081afe6 4840 */
+
+loc_4081afe8:
+	moveb	%a3@(64),%d5		/* 4081afe8 1a2b 0040 */
+	btst	#7,%d5			/* 4081afec 0805 0007 */
+	dbne	%d3,loc_4081afe8	/* 4081aff0 56cb fff6 */
+	dbne	%d0,loc_4081afe8	/* 4081aff4 56c8 fff2 */
+	beqs	loc_4081b00e		/* 4081aff8 6714 */
+	swap	%d5			/* 4081affa 4845 */
+	moveb	%a3@(112),%d5		/* 4081affc 1a2b 0070 */
