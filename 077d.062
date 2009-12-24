@@ -1,33 +1,40 @@
 /* SPLIT HERE */
-	.short	0x0000	/* 4083e000 0000 */
-	.short	0x6606	/* 4083e002 6606 */
-	.short	0xb652	/* 4083e004 b652 */
-	.short	0x6706	/* 4083e006 6706 */
-	.short	0x600c	/* 4083e008 600c */
-	.short	0xb652	/* 4083e00a b652 */
-	.short	0x6708	/* 4083e00c 6708 */
-	.short	0x7200	/* 4083e00e 7200 */
-	.short	0x6100	/* 4083e010 6100 */
-	.short	0xeb78	/* 4083e012 eb78 */
-	.short	0x6022	/* 4083e014 6022 */
-	.short	0x7200	/* 4083e016 7200 */
-	.short	0x601e	/* 4083e018 601e */
-	.short	0x321f	/* 4083e01a 321f */
-	.short	0x4cdf	/* 4083e01c 4cdf */
-	.short	0x0305	/* 4083e01e 0305 */
-	.short	0x4267	/* 4083e020 4267 */
-	.short	0x2f08	/* 4083e022 2f08 */
-	.short	0x3f00	/* 4083e024 3f00 */
-	.short	0x3f02	/* 4083e026 3f02 */
-	.short	0x3f01	/* 4083e028 3f01 */
-	.short	0x4842	/* 4083e02a 4842 */
-	.short	0x3f02	/* 4083e02c 3f02 */
-	.short	0x2f3c	/* 4083e02e 2f3c */
-	.short	0x820c	/* 4083e030 820c */
-	.short	0x0016	/* 4083e032 0016 */
-	.short	0xa8b5	/* 4083e034 a8b5 */
-	.short	0x321f	/* 4083e036 321f */
-	.short	0x261f	/* 4083e038 261f */
+	bnes	loc_4083e00a		/* 4083e002 6606 */
+	cmpw	%a2@,%d3		/* 4083e004 b652 */
+	beqs	loc_4083e00e		/* 4083e006 6706 */
+	bras	loc_4083e016		/* 4083e008 600c */
+
+loc_4083e00a:
+	cmpw	%a2@,%d3		/* 4083e00a b652 */
+	beqs	loc_4083e016		/* 4083e00c 6708 */
+
+loc_4083e00e:
+	moveq	#0,%d1			/* 4083e00e 7200 */
+	bsrw	sub_4083cb8a		/* 4083e010 6100 eb78 */
+	bras	loc_4083e038		/* 4083e014 6022 */
+
+loc_4083e016:
+	moveq	#0,%d1			/* 4083e016 7200 */
+	bras	loc_4083e038		/* 4083e018 601e */
+
+loc_4083e01a:
+	movew	%sp@+,%d1		/* 4083e01a 321f */
+	moveml	%sp@+,%d0/%d2/%a0-%a1	/* 4083e01c 4cdf 0305 */
+
+loc_4083e020:
+	clrw	%sp@-			/* 4083e020 4267 */
+	movel	%a0,%sp@-		/* 4083e022 2f08 */
+	movew	%d0,%sp@-		/* 4083e024 3f00 */
+	movew	%d2,%sp@-		/* 4083e026 3f02 */
+	movew	%d1,%sp@-		/* 4083e028 3f01 */
+	swap	%d2			/* 4083e02a 4842 */
+	movew	%d2,%sp@-		/* 4083e02c 3f02 */
+	movel	#-2113142762,%sp@-	/* 4083e02e 2f3c 820c 0016 */
+	.short	0xa8b5			/* 4083e034 a8b5 */
+	movew	%sp@+,%d1		/* 4083e036 321f */
+
+loc_4083e038:
+	movel	%sp@+,%d3		/* 4083e038 261f */
 	rts				/* 4083e03a 4e75 */
 
 sub_4083e03c:
