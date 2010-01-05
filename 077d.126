@@ -896,37 +896,25 @@
 	.short	0x0574	/* 4087e6fc 0574 */
 
 loc_4087e6fe:
-	.short	0x2a6e	/* 4087e6fe 2a6e */
-	.short	0xfe30	/* 4087e700 fe30 */
-	.short	0x4a2e	/* 4087e702 4a2e */
-	.short	0xfdc0	/* 4087e704 fdc0 */
-	.short	0x6706	/* 4087e706 6706 */
-	.short	0x4eb0	/* 4087e708 4eb0 */
-	.short	0x81e1	/* 4087e70a 81e1 */
-	.short	0x0f4c	/* 4087e70c 0f4c */
-	.short	0x08f8	/* 4087e70e 08f8 */
-	.short	0x0007	/* 4087e710 0007 */
-	.short	0x0938	/* 4087e712 0938 */
-	.short	0x2e6e	/* 4087e714 2e6e */
-	.short	0xfe34	/* 4087e716 fe34 */
-	.short	0x202e	/* 4087e718 202e */
-	.short	0xfd4c	/* 4087e71a fd4c */
-	.short	0x6714	/* 4087e71c 6714 */
-	.short	0x2040	/* 4087e71e 2040 */
-	.short	0x4eb0	/* 4087e720 4eb0 */
-	.short	0x81e1	/* 4087e722 81e1 */
-	.short	0x1a78	/* 4087e724 1a78 */
-	.short	0x21ee	/* 4087e726 21ee */
-	.short	0xfcfc	/* 4087e728 fcfc */
-	.short	0x0110	/* 4087e72a 0110 */
-	.short	0x21ee	/* 4087e72c 21ee */
-	.short	0xfd3c	/* 4087e72e fd3c */
-	.short	0x0bae	/* 4087e730 0bae */
-	.short	0x4cdf	/* 4087e732 4cdf */
-	.short	0x3eff	/* 4087e734 3eff */
-	.short	0x4e5e	/* 4087e736 4e5e */
-	.short	0x4e74	/* 4087e738 4e74 */
-	.short	0x002c	/* 4087e73a 002c */
+	moveal	%fp@(-464),%a5		/* 4087e6fe 2a6e fe30 */
+	tstb	%fp@(-576)		/* 4087e702 4a2e fdc0 */
+	beqs	loc_4087e70e		/* 4087e706 6706 */
+	.short	0x4eb0,0x81e1,0x0f4c	/* jsr @(0x0f4c)@(0x0000) /* 4087e708 4eb0 81e1 0f4c */
+
+loc_4087e70e:
+	bset	#7,0x938		/* 4087e70e 08f8 0007 0938 */
+	moveal	%fp@(-460),%sp		/* 4087e714 2e6e fe34 */
+	movel	%fp@(-692),%d0		/* 4087e718 202e fd4c */
+	beqs	loc_4087e732		/* 4087e71c 6714 */
+	moveal	%d0,%a0			/* 4087e71e 2040 */
+	.short	0x4eb0,0x81e1,0x1a78	/* jsr @(0x1a78)@(0x0000) /* 4087e720 4eb0 81e1 1a78 */
+	movel	%fp@(-772),0x110	/* 4087e726 21ee fcfc 0110 */
+	movel	%fp@(-708),0xbae	/* 4087e72c 21ee fd3c 0bae */
+
+loc_4087e732:
+	moveml	%sp@+,%d0-%d7/%a1-%a5	/* 4087e732 4cdf 3eff */
+	unlk	%fp			/* 4087e736 4e5e */
+	rtd	#44			/* 4087e738 4e74 002c */
 
 	.align	16
 
@@ -962,11 +950,9 @@ sub_4087e740:
 	rts				/* 4087e79c 4e75 */
 
 loc_4087e79e:
-	.short	0x31fc	/* 4087e79e 31fc */
-	.short	0xff6b	/* 4087e7a0 ff6b */
-	.short	0x0d6e	/* 4087e7a2 0d6e */
-	.short	0x6000	/* 4087e7a4 6000 */
-	.short	0xff58	/* 4087e7a6 ff58 */
+	movew	#-149,0xd6e		/* 4087e79e 31fc ff6b 0d6e */
+	braw	loc_4087e6fe		/* 4087e7a4 6000 ff58 */
+
 	.short	0x0000	/* 4087e7a8 0000 */
 	.short	0x0558	/* 4087e7aa 0558 */
 	.short	0x0000	/* 4087e7ac 0000 */
