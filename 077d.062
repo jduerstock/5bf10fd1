@@ -1969,6 +1969,8 @@ sub_4083ec06:
 	.short	0x50eb	/* 4083ef28 50eb */
 	.short	0x0038	/* 4083ef2a 0038 */
 	.short	0x6014	/* 4083ef2c 6014 */
+
+sub_4083ef2e:
 	.short	0x4a2b	/* 4083ef2e 4a2b */
 	.short	0x0024	/* 4083ef30 0024 */
 	.short	0x675c	/* 4083ef32 675c */
@@ -1979,6 +1981,8 @@ sub_4083ec06:
 	.short	0x6752	/* 4083ef3c 6752 */
 	.short	0x51eb	/* 4083ef3e 51eb */
 	.short	0x0038	/* 4083ef40 0038 */
+
+sub_4083ef42:
 	.short	0x48e7	/* 4083ef42 48e7 */
 	.short	0xff00	/* 4083ef44 ff00 */
 	.short	0x362b	/* 4083ef46 362b */
@@ -2052,29 +2056,21 @@ sub_4083ef92:
 	.short	0x6044	/* 4083efca 6044 */
 
 sub_4083efcc:
-	.short	0x6100	/* 4083efcc 6100 */
-	.short	0xf2a0	/* 4083efce f2a0 */
-	.short	0x4e56	/* 4083efd0 4e56 */
-	.short	0xffe4	/* 4083efd2 ffe4 */
-	.short	0x4a2b	/* 4083efd4 4a2b */
-	.short	0x0024	/* 4083efd6 0024 */
-	.short	0x6738	/* 4083efd8 6738 */
-	.short	0x302b	/* 4083efda 302b */
-	.short	0x0020	/* 4083efdc 0020 */
-	.short	0xb06b	/* 4083efde b06b */
-	.short	0x0022	/* 4083efe0 0022 */
-	.short	0x661e	/* 4083efe2 661e */
-	.short	0x206b	/* 4083efe4 206b */
-	.short	0x0042	/* 4083efe6 0042 */
-	.short	0x2050	/* 4083efe8 2050 */
-	.short	0x2028	/* 4083efea 2028 */
-	.short	0x0010	/* 4083efec 0010 */
-	.short	0x0800	/* 4083efee 0800 */
-	.short	0x0002	/* 4083eff0 0002 */
-	.short	0x670e	/* 4083eff2 670e */
-	.short	0x4a2b	/* 4083eff4 4a2b */
-	.short	0x0038	/* 4083eff6 0038 */
-	.short	0x6704	/* 4083eff8 6704 */
-	.short	0x6100	/* 4083effa 6100 */
-	.short	0xff46	/* 4083effc ff46 */
-	.short	0x50eb	/* 4083effe 50eb */
+	bsrw	sub_4083e26e		/* 4083efcc 6100 f2a0 */
+	linkw	%fp,#-28		/* 4083efd0 4e56 ffe4 */
+	tstb	%a3@(36)		/* 4083efd4 4a2b 0024 */
+	beqs	loc_4083f012		/* 4083efd8 6738 */
+	movew	%a3@(32),%d0		/* 4083efda 302b 0020 */
+	cmpw	%a3@(34),%d0		/* 4083efde b06b 0022 */
+	bnes	loc_4083f002		/* 4083efe2 661e */
+	moveal	%a3@(66),%a0		/* 4083efe4 206b 0042 */
+	moveal	%a0@,%a0		/* 4083efe8 2050 */
+	movel	%a0@(16),%d0		/* 4083efea 2028 0010 */
+	btst	#2,%d0			/* 4083efee 0800 0002 */
+	beqs	loc_4083f002		/* 4083eff2 670e */
+	tstb	%a3@(56)		/* 4083eff4 4a2b 0038 */
+	beqs	loc_4083effe		/* 4083eff8 6704 */
+	bsrw	sub_4083ef42		/* 4083effa 6100 ff46 */
+
+loc_4083effe:
+	st	%a3@(56)		/* 4083effe 50eb 0038 */
