@@ -2033,20 +2033,18 @@ sub_4080ff8c:
 	.short	0x0b73	/* 4080ffb2 0b73 */
 	.short	0x67dc	/* 4080ffb4 67dc */
 	moveq	#0,%d0			/* 4080ffb6 7000 */
-	.short	0x2078	/* 4080ffb8 2078 */
-	.short	0x0dbc	/* 4080ffba 0dbc */
-	.short	0x4e90	/* 4080ffbc 4e90 */
-	.short	0x4e93	/* 4080ffbe 4e93 */
-	.short	0x4ab8	/* 4080ffc0 4ab8 */
-	.short	0x0d94	/* 4080ffc2 0d94 */
-	.short	0x670e	/* 4080ffc4 670e */
-	.short	0x7007	/* 4080ffc6 7007 */
-	.short	0xc02f	/* 4080ffc8 c02f */
-	.short	0x0020	/* 4080ffca 0020 */
-	.short	0x6606	/* 4080ffcc 6606 */
-	.short	0x2078	/* 4080ffce 2078 */
-	.short	0x06e4	/* 4080ffd0 06e4 */
-	.short	0x4e90	/* 4080ffd2 4e90 */
+	moveal	0xdbc,%a0		/* 4080ffb8 2078 0dbc */
+	jsr	%a0@			/* 4080ffbc 4e90 */
+	jsr	%a3@			/* 4080ffbe 4e93 */
+	tstl	0xd94			/* 4080ffc0 4ab8 0d94 */
+	beqs	loc_4080ffd4		/* 4080ffc4 670e */
+	moveq	#7,%d0			/* 4080ffc6 7007 */
+	andb	%sp@(32),%d0		/* 4080ffc8 c02f 0020 */
+	bnes	loc_4080ffd4		/* 4080ffcc 6606 */
+	moveal	0x6e4,%a0		/* 4080ffce 2078 06e4 */
+	jsr	%a0@			/* 4080ffd2 4e90 */
+
+loc_4080ffd4:
 	moveq	#1,%d0			/* 4080ffd4 7001 */
 	moveal	0xdbc,%a0		/* 4080ffd6 2078 0dbc */
 	jsr	%a0@			/* 4080ffda 4e90 */
