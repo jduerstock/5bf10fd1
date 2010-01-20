@@ -305,17 +305,14 @@ loc_4086e2c6:
 	rts				/* 4086e2ca 4e75 */
 
 sub_4086e2cc:
-	.short	0x3011	/* 4086e2cc 3011 */
-	.short	0xc0ee	/* 4086e2ce c0ee */
-	.short	0xfffc	/* 4086e2d0 fffc */
-	.short	0x322e	/* 4086e2d2 322e */
-	.short	0xfff8	/* 4086e2d4 fff8 */
-	.short	0xe249	/* 4086e2d6 e249 */
-	.short	0x48c1	/* 4086e2d8 48c1 */
-	.short	0xd081	/* 4086e2da d081 */
-	.short	0x80ee	/* 4086e2dc 80ee */
-	.short	0xfff8	/* 4086e2de fff8 */
-	.short	0x32c0	/* 4086e2e0 32c0 */
+	movew	%a1@,%d0		/* 4086e2cc 3011 */
+	muluw	%fp@(-4),%d0		/* 4086e2ce c0ee fffc */
+	movew	%fp@(-8),%d1		/* 4086e2d2 322e fff8 */
+	lsrw	#1,%d1			/* 4086e2d6 e249 */
+	extl	%d1			/* 4086e2d8 48c1 */
+	addl	%d1,%d0			/* 4086e2da d081 */
+	divuw	%fp@(-8),%d0		/* 4086e2dc 80ee fff8 */
+	movew	%d0,%a1@+		/* 4086e2e0 32c0 */
 	rts				/* 4086e2e2 4e75 */
 
 	.align	16
