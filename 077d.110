@@ -416,39 +416,33 @@ loc_4086e3ce:
 	rts				/* 4086e3e4 4e75 */
 
 sub_4086e3e6:
-	.short	0x205f	/* 4086e3e6 205f */
-	.short	0x225f	/* 4086e3e8 225f */
-	.short	0x202e	/* 4086e3ea 202e */
-	.short	0x0008	/* 4086e3ec 0008 */
-	.short	0x222b	/* 4086e3ee 222b */
-	.short	0x0030	/* 4086e3f0 0030 */
-	.short	0xb240	/* 4086e3f2 b240 */
-	.short	0x6e02	/* 4086e3f4 6e02 */
-	.short	0xc141	/* 4086e3f6 c141 */
-	.short	0x3340	/* 4086e3f8 3340 */
-	.short	0x0002	/* 4086e3fa 0002 */
-	.short	0xd26b	/* 4086e3fc d26b */
-	.short	0x0036	/* 4086e3fe 0036 */
-	.short	0x3341	/* 4086e400 3341 */
-	.short	0x0006	/* 4086e402 0006 */
-	.short	0x4840	/* 4086e404 4840 */
-	.short	0x4841	/* 4086e406 4841 */
-	.short	0xb240	/* 4086e408 b240 */
-	.short	0x6e02	/* 4086e40a 6e02 */
-	.short	0xc141	/* 4086e40c c141 */
-	.short	0x3280	/* 4086e40e 3280 */
-	.short	0xd26b	/* 4086e410 d26b */
-	.short	0x0034	/* 4086e412 0034 */
-	.short	0x3341	/* 4086e414 3341 */
-	.short	0x0004	/* 4086e416 0004 */
-	.short	0x4ed0	/* 4086e418 4ed0 */
+	moveal	%sp@+,%a0		/* 4086e3e6 205f */
+	moveal	%sp@+,%a1		/* 4086e3e8 225f */
+	movel	%fp@(8),%d0		/* 4086e3ea 202e 0008 */
+	movel	%a3@(48),%d1		/* 4086e3ee 222b 0030 */
+	cmpw	%d0,%d1			/* 4086e3f2 b240 */
+	bgts	loc_4086e3f8		/* 4086e3f4 6e02 */
+	exg	%d0,%d1			/* 4086e3f6 c141 */
+
+loc_4086e3f8:
+	movew	%d0,%a1@(2)		/* 4086e3f8 3340 0002 */
+	addw	%a3@(54),%d1		/* 4086e3fc d26b 0036 */
+	movew	%d1,%a1@(6)		/* 4086e400 3341 0006 */
+	swap	%d0			/* 4086e404 4840 */
+	swap	%d1			/* 4086e406 4841 */
+	cmpw	%d0,%d1			/* 4086e408 b240 */
+	bgts	loc_4086e40e		/* 4086e40a 6e02 */
+	exg	%d0,%d1			/* 4086e40c c141 */
+
+loc_4086e40e:
+	movew	%d0,%a1@		/* 4086e40e 3280 */
+	addw	%a3@(52),%d1		/* 4086e410 d26b 0034 */
+	movew	%d1,%a1@(4)		/* 4086e414 3341 0004 */
+	jmp	%a0@			/* 4086e418 4ed0 */
 
 sub_4086e41a:
-	.short	0x2f2e	/* 4086e41a 2f2e */
-	.short	0x0008	/* 4086e41c 0008 */
-	.short	0x4eb0	/* 4086e41e 4eb0 */
-	.short	0x81e1	/* 4086e420 81e1 */
-	.short	0x1a40	/* 4086e422 1a40 */
+	movel	%fp@(8),%sp@-		/* 4086e41a 2f2e 0008 */
+	jsrind	0x1a40			/* 4086e41e 4eb0 81e1 1a40 */
 	rts				/* 4086e424 4e75 */
 
 	.align	16
