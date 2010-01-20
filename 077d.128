@@ -408,30 +408,28 @@
 	.short	0xfff0	/* 40880366 fff0 */
 	.short	0xffff	/* 40880368 ffff */
 	.short	0xffff	/* 4088036a ffff */
-	.short	0x0000	/* 4088036c 0000 */
-	.short	0x0000	/* 4088036e 0000 */
-	.short	0x1018	/* 40880370 1018 */
-	.short	0x3200	/* 40880372 3200 */
-	.short	0x0241	/* 40880374 0241 */
-	.short	0x00e0	/* 40880376 00e0 */
-	.short	0xe809	/* 40880378 e809 */
-	.short	0x32fb	/* 4088037a 32fb */
-	.short	0x1020	/* 4088037c 1020 */
-	.short	0x3200	/* 4088037e 3200 */
-	.short	0x0241	/* 40880380 0241 */
-	.short	0x003c	/* 40880382 003c */
-	.short	0xe209	/* 40880384 e209 */
-	.short	0x32fb	/* 40880386 32fb */
-	.short	0x1024	/* 40880388 1024 */
-	.short	0x3200	/* 4088038a 3200 */
-	.short	0x0241	/* 4088038c 0241 */
-	.short	0x0007	/* 4088038e 0007 */
-	.short	0xd241	/* 40880390 d241 */
-	.short	0x32fb	/* 40880392 32fb */
-	.short	0x1038	/* 40880394 1038 */
-	.short	0xb3ca	/* 40880396 b3ca */
-	.short	0x65d6	/* 40880398 65d6 */
+
+	.align	16
+
+sub_40880370:
+	moveb	%a0@+,%d0		/* 40880370 1018 */
+	movew	%d0,%d1			/* 40880372 3200 */
+	andiw	#224,%d1		/* 40880374 0241 00e0 */
+	lsrb	#4,%d1			/* 40880378 e809 */
+	movew	%pc@(word_4088039c,%d1:w),%a1@+	/* 4088037a 32fb 1020 */
+	movew	%d0,%d1			/* 4088037e 3200 */
+	andiw	#60,%d1			/* 40880380 0241 003c */
+	lsrb	#1,%d1			/* 40880384 e209 */
+	movew	%pc@(word_408803ac,%d1:w),%a1@+	/* 40880386 32fb 1024 */
+	movew	%d0,%d1			/* 4088038a 3200 */
+	andiw	#7,%d1			/* 4088038c 0241 0007 */
+	addw	%d1,%d1			/* 40880390 d241 */
+	movew	%pc@(word_408803cc,%d1:w),%a1@+	/* 40880392 32fb 1038 */
+	cmpal	%a2,%a1			/* 40880396 b3ca */
+	bcss	sub_40880370		/* 40880398 65d6 */
 	rts				/* 4088039a 4e75 */
+
+word_4088039c:
 	.short	0x0000	/* 4088039c 0000 */
 	.short	0x000f	/* 4088039e 000f */
 	.short	0x03f0	/* 408803a0 03f0 */
@@ -440,6 +438,8 @@
 	.short	0xfc0f	/* 408803a6 fc0f */
 	.short	0xfff0	/* 408803a8 fff0 */
 	.short	0xffff	/* 408803aa ffff */
+
+word_408803ac:
 	.short	0x0000	/* 408803ac 0000 */
 	.short	0x0003	/* 408803ae 0003 */
 	.short	0x00fc	/* 408803b0 00fc */
@@ -456,6 +456,8 @@
 	.short	0xff03	/* 408803c6 ff03 */
 	.short	0xfffc	/* 408803c8 fffc */
 	.short	0xffff	/* 408803ca ffff */
+
+word_408803cc:
 	.short	0x0000	/* 408803cc 0000 */
 	.short	0x003f	/* 408803ce 003f */
 	.short	0x0fc0	/* 408803d0 0fc0 */
