@@ -81,42 +81,32 @@ loc_409d70bc:
 	braw	loc_409d6cb2		/* 409d70bc 6000 fbf4 */
 
 loc_409d70c0:
-	.short	0x322b	/* 409d70c0 322b */
-	.short	0x0024	/* 409d70c2 0024 */
-	.short	0x6100	/* 409d70c4 6100 */
-	.short	0x0744	/* 409d70c6 0744 */
-	.short	0x6600	/* 409d70c8 6600 */
-	.short	0xfbe4	/* 409d70ca fbe4 */
-	.short	0x302a	/* 409d70cc 302a */
-	.short	0x0006	/* 409d70ce 0006 */
-	.short	0x6600	/* 409d70d0 6600 */
-	.short	0xfbdc	/* 409d70d2 fbdc */
-	.short	0x6100	/* 409d70d4 6100 */
-	.short	0x0abc	/* 409d70d6 0abc */
-	.short	0x082b	/* 409d70d8 082b */
-	.short	0x000a	/* 409d70da 000a */
-	.short	0x0020	/* 409d70dc 0020 */
-	.short	0x6704	/* 409d70de 6704 */
-	.short	0x6100	/* 409d70e0 6100 */
-	.short	0x0c5a	/* 409d70e2 0c5a */
-	.short	0x6000	/* 409d70e4 6000 */
-	.short	0xfbcc	/* 409d70e6 fbcc */
+	movew	%a3@(36),%d1		/* 409d70c0 322b 0024 */
+	bsrw	sub_409d780a		/* 409d70c4 6100 0744 */
+	bnew	loc_409d6cae		/* 409d70c8 6600 fbe4 */
+	movew	%a2@(6),%d0		/* 409d70cc 302a 0006 */
+	bnew	loc_409d6cae		/* 409d70d0 6600 fbdc */
+	bsrw	sub_409d7b92		/* 409d70d4 6100 0abc */
+	btst	#10,%a3@(32)		/* 409d70d8 082b 000a 0020 */
+	beqs	loc_409d70e4		/* 409d70de 6704 */
+	bsrw	sub_409d7d3c		/* 409d70e0 6100 0c5a */
+
+loc_409d70e4:
+	braw	loc_409d6cb2		/* 409d70e4 6000 fbcc */
 
 loc_409d70e8:
-	.short	0x082b	/* 409d70e8 082b */
-	.short	0x000d	/* 409d70ea 000d */
-	.short	0x0020	/* 409d70ec 0020 */
-	.short	0x6704	/* 409d70ee 6704 */
-	.short	0x14bc	/* 409d70f0 14bc */
-	.short	0x0001	/* 409d70f2 0001 */
-	.short	0x7200	/* 409d70f4 7200 */
-	.short	0x6104	/* 409d70f6 6104 */
-	.short	0x6000	/* 409d70f8 6000 */
-	.short	0xfbb8	/* 409d70fa fbb8 */
-	.short	0x1012	/* 409d70fc 1012 */
-	.short	0xefeb	/* 409d70fe efeb */
-	.short	0x0841	/* 409d7100 0841 */
-	.short	0x0020	/* 409d7102 0020 */
+	btst	#13,%a3@(32)		/* 409d70e8 082b 000d 0020 */
+	beqs	loc_409d70f4		/* 409d70ee 6704 */
+	moveb	#1,%a2@			/* 409d70f0 14bc 0001 */
+
+loc_409d70f4:
+	moveq	#0,%d1			/* 409d70f4 7200 */
+	bsrs	sub_409d70fc		/* 409d70f6 6104 */
+	braw	loc_409d6cb2		/* 409d70f8 6000 fbb8 */
+
+sub_409d70fc:
+	moveb	%a2@,%d0		/* 409d70fc 1012 */
+	bfins	%d0,%a3@(32),%d1,1	/* 409d70fe efeb 0841 0020 */
 	rts				/* 409d7104 4e75 */
 
 loc_409d7106:
