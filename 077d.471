@@ -556,38 +556,32 @@ loc_409d7546:
 
 loc_409d7570:
 	lea	%pc@(byte_409d6929),%a0	/* 409d7570 41fa f3b7 */
-	.short	0x0c46	/* 409d7574 0c46 */
-	.short	0x0004	/* 409d7576 0004 */
-	.short	0x660a	/* 409d7578 660a */
-	.short	0x4a2b	/* 409d757a 4a2b */
-	.short	0x0029	/* 409d757c 0029 */
-	.short	0x6604	/* 409d757e 6604 */
-	.short	0x08c5	/* 409d7580 08c5 */
-	.short	0x000c	/* 409d7582 000c */
+	cmpiw	#4,%d6			/* 409d7574 0c46 0004 */
+	bnes	loc_409d7584		/* 409d7578 660a */
+	tstb	%a3@(41)		/* 409d757a 4a2b 0029 */
+	bnes	loc_409d7584		/* 409d757e 6604 */
+	bset	#12,%d5			/* 409d7580 08c5 000c */
 
 loc_409d7584:
-	.short	0x7600	/* 409d7584 7600 */
-	.short	0x1630	/* 409d7586 1630 */
-	.short	0x1000	/* 409d7588 1000 */
-	.short	0x382a	/* 409d758a 382a */
-	.short	0x0006	/* 409d758c 0006 */
-	.short	0x6b7a	/* 409d758e 6b7a */
-	.short	0xb843	/* 409d7590 b843 */
-	.short	0x6276	/* 409d7592 6276 */
-	.short	0x3404	/* 409d7594 3404 */
-	.short	0x0c6a	/* 409d7596 0c6a */
-	.short	0xffff	/* 409d7598 ffff */
-	.short	0x0004	/* 409d759a 0004 */
-	.short	0x6712	/* 409d759c 6712 */
-	.short	0x3204	/* 409d759e 3204 */
-	.short	0xd46a	/* 409d75a0 d46a */
-	.short	0x0004	/* 409d75a2 0004 */
-	.short	0x2057	/* 409d75a4 2057 */
-	.short	0x3182	/* 409d75a6 3182 */
-	.short	0x1600	/* 409d75a8 1600 */
-	.short	0x5342	/* 409d75aa 5342 */
-	.short	0x51c9	/* 409d75ac 51c9 */
-	.short	0xfff8	/* 409d75ae fff8 */
+	moveq	#0,%d3			/* 409d7584 7600 */
+	moveb	%a0@(0x0000,%d1:w),%d3	/* 409d7586 1630 1000 */
+	movew	%a2@(6),%d4		/* 409d758a 382a 0006 */
+	bmis	loc_409d760a		/* 409d758e 6b7a */
+	cmpw	%d3,%d4			/* 409d7590 b843 */
+	bhis	loc_409d760a		/* 409d7592 6276 */
+	movew	%d4,%d2			/* 409d7594 3404 */
+	cmpiw	#-1,%a2@(4)		/* 409d7596 0c6a ffff 0004 */
+	beqs	loc_409d75b0		/* 409d759c 6712 */
+	movew	%d4,%d1			/* 409d759e 3204 */
+	addw	%a2@(4),%d2		/* 409d75a0 d46a 0004 */
+	moveal	%sp@,%a0		/* 409d75a4 2057 */
+
+loc_409d75a6:
+	movew	%d2,%a0@(0,%d1:w:8)	/* 409d75a6 3182 1600 */
+	subqw	#1,%d2			/* 409d75aa 5342 */
+	dbf	%d1,loc_409d75a6	/* 409d75ac 51c9 fff8 */
+
+loc_409d75b0:
 	moveq	#1,%d0			/* 409d75b0 7001 */
 	.short	0xa05d	/* 409d75b2 a05d */
 	.short	0x205f	/* 409d75b4 205f */
