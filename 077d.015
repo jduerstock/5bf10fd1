@@ -78,41 +78,27 @@ loc_4080f0b0:
 
 	.align	16
 
-	.short	0x0c38	/* 4080f0c0 0c38 */
-	.short	0x0003	/* 4080f0c2 0003 */
-	.short	0x0cb1	/* 4080f0c4 0cb1 */
-	.short	0x6500	/* 4080f0c6 6500 */
-	.short	0x0028	/* 4080f0c8 0028 */
-	.short	0x48e7	/* 4080f0ca 48e7 */
-	.short	0xf8c0	/* 4080f0cc f8c0 */
-	.short	0x2800	/* 4080f0ce 2800 */
-	.short	0x202a	/* 4080f0d0 202a */
-	.short	0x0008	/* 4080f0d2 0008 */
-	.short	0xe1a1	/* 4080f0d4 e1a1 */
-	.short	0x2041	/* 4080f0d6 2041 */
-	.short	0x48e7	/* 4080f0d8 48e7 */
-	.short	0x4060	/* 4080f0da 4060 */
-	.short	0x6100	/* 4080f0dc 6100 */
-	.short	0xc1b8	/* 4080f0de c1b8 */
-	.short	0x4cdf	/* 4080f0e0 4cdf */
-	.short	0x0602	/* 4080f0e2 0602 */
-	.short	0x08a8	/* 4080f0e4 08a8 */
-	.short	0x0002	/* 4080f0e6 0002 */
-	.short	0x0003	/* 4080f0e8 0003 */
-	.short	0x8990	/* 4080f0ea 8990 */
-	.short	0x4cdf	/* 4080f0ec 4cdf */
-	.short	0x031f	/* 4080f0ee 031f */
+sub_4080f0c0:
+	cmpib	#3,0xcb1		/* 4080f0c0 0c38 0003 0cb1 */
+	bcsw	loc_4080f0f0		/* 4080f0c6 6500 0028 */
+	moveml	%d0-%d4/%a0-%a1,%sp@-	/* 4080f0ca 48e7 f8c0 */
+	movel	%d0,%d4			/* 4080f0ce 2800 */
+	movel	%a2@(8),%d0		/* 4080f0d0 202a 0008 */
+	asll	%d0,%d1			/* 4080f0d4 e1a1 */
+	moveal	%d1,%a0			/* 4080f0d6 2041 */
+	moveml	%d1/%a1-%a2,%sp@-	/* 4080f0d8 48e7 4060 */
+	bsrw	sub_4080b296		/* 4080f0dc 6100 c1b8 */
+	moveml	%sp@+,%d1/%a1-%a2	/* 4080f0e0 4cdf 0602 */
+	bclr	#2,%a0@(3)		/* 4080f0e4 08a8 0002 0003 */
+	orl	%d4,%a0@		/* 4080f0ea 8990 */
+	moveml	%sp@+,%d0-%d4/%a0-%a1	/* 4080f0ec 4cdf 031f */
+
+loc_4080f0f0:
 	rts				/* 4080f0f0 4e75 */
-	.short	0x0000	/* 4080f0f2 0000 */
-	.short	0x0000	/* 4080f0f4 0000 */
-	.short	0x0000	/* 4080f0f6 0000 */
-	.short	0x0000	/* 4080f0f8 0000 */
-	.short	0x0000	/* 4080f0fa 0000 */
-	.short	0x0000	/* 4080f0fc 0000 */
-	.short	0x0000	/* 4080f0fe 0000 */
-	.short	0x0c38	/* 4080f100 0c38 */
-	.short	0x0003	/* 4080f102 0003 */
-	.short	0x0cb1	/* 4080f104 0cb1 */
+
+	.align	16
+
+	cmpib	#3,0xcb1		/* 4080f100 0c38 0003 0cb1 */
 	.short	0x6500	/* 4080f106 6500 */
 	.short	0x0022	/* 4080f108 0022 */
 	.short	0x48e7	/* 4080f10a 48e7 */
