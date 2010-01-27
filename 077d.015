@@ -156,41 +156,39 @@ loc_4080f176:
 	.align	16
 
 sub_4080f180:
-	.short	0x70ce	/* 4080f180 70ce */
-	.short	0x0838	/* 4080f182 0838 */
-	.short	0x0003	/* 4080f184 0003 */
-	.short	0x2403	/* 4080f186 2403 */
-	.short	0x673a	/* 4080f188 673a */
-	.short	0x2278	/* 4080f18a 2278 */
-	.short	0x0dd8	/* 4080f18c 0dd8 */
-	.short	0xd3d1	/* 4080f18e d3d1 */
-	.short	0x2269	/* 4080f190 2269 */
-	.short	0x008c	/* 4080f192 008c */
-	.short	0x2208	/* 4080f194 2208 */
-	.short	0x7400	/* 4080f196 7400 */
-	.short	0x2429	/* 4080f198 2429 */
-	.short	0x000c	/* 4080f19a 000c */
-	.short	0xe34a	/* 4080f19c e34a */
-	.short	0x2042	/* 4080f19e 2042 */
-	.short	0x7400	/* 4080f1a0 7400 */
-	.short	0x1401	/* 4080f1a2 1401 */
-	.short	0x5302	/* 4080f1a4 5302 */
-	.short	0x6b1c	/* 4080f1a6 6b1c */
-	.short	0x0c02	/* 4080f1a8 0c02 */
-	.short	0x000e	/* 4080f1aa 000e */
-	.short	0x6416	/* 4080f1ac 6416 */
-	.short	0x2029	/* 4080f1ae 2029 */
-	.short	0x000c	/* 4080f1b0 000c */
-	.short	0x0801	/* 4080f1b2 0801 */
-	.short	0x0008	/* 4080f1b4 0008 */
-	.short	0x6604	/* 4080f1b6 6604 */
-	.short	0x0580	/* 4080f1b8 0580 */
-	.short	0x6002	/* 4080f1ba 6002 */
-	.short	0x05c0	/* 4080f1bc 05c0 */
-	.short	0x2340	/* 4080f1be 2340 */
-	.short	0x000c	/* 4080f1c0 000c */
+	moveq	#-50,%d0		/* 4080f180 70ce */
+	btst	#3,0x2403		/* 4080f182 0838 0003 2403 */
+	beqs	loc_4080f1c4		/* 4080f188 673a */
+	moveal	0xdd8,%a1		/* 4080f18a 2278 0dd8 */
+	addal	%a1@,%a1		/* 4080f18e d3d1 */
+	moveal	%a1@(140),%a1		/* 4080f190 2269 008c */
+	movel	%a0,%d1			/* 4080f194 2208 */
+	moveq	#0,%d2			/* 4080f196 7400 */
+	movel	%a1@(12),%d2		/* 4080f198 2429 000c */
+	lslw	#1,%d2			/* 4080f19c e34a */
+	moveal	%d2,%a0			/* 4080f19e 2042 */
+	moveq	#0,%d2			/* 4080f1a0 7400 */
+	moveb	%d1,%d2			/* 4080f1a2 1401 */
+	subqb	#1,%d2			/* 4080f1a4 5302 */
+	bmis	loc_4080f1c4		/* 4080f1a6 6b1c */
+	cmpib	#14,%d2			/* 4080f1a8 0c02 000e */
+	bccs	loc_4080f1c4		/* 4080f1ac 6416 */
+	movel	%a1@(12),%d0		/* 4080f1ae 2029 000c */
+	btst	#8,%d1			/* 4080f1b2 0801 0008 */
+	bnes	loc_4080f1bc		/* 4080f1b6 6604 */
+	bclr	%d2,%d0			/* 4080f1b8 0580 */
+	bras	loc_4080f1be		/* 4080f1ba 6002 */
+
+loc_4080f1bc:
+	bset	%d2,%d0			/* 4080f1bc 05c0 */
+
+loc_4080f1be:
+	movel	%d0,%a1@(12)		/* 4080f1be 2340 000c */
 	moveq	#0,%d0			/* 4080f1c2 7000 */
+
+loc_4080f1c4:
 	rts				/* 4080f1c4 4e75 */
+
 	CallVector	0x2010 3	/* 4080f1c6 2f30 81e2 2010 000c */
 	rts				/* 4080f1ce 4e75 */
 
