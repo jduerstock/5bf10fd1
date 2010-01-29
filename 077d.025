@@ -1850,40 +1850,23 @@ sub_40819e5a:
 	.align	16
 
 	moveb	#2,%a3@(48)		/* 40819fb0 177c 0002 0030 */
-	.short	0x422b	/* 40819fb6 422b */
-	.short	0x0030	/* 40819fb8 0030 */
-	.short	0x177c	/* 40819fba 177c */
-	.short	0x0001	/* 40819fbc 0001 */
-	.short	0x0030	/* 40819fbe 0030 */
-	.short	0x177c	/* 40819fc0 177c */
-	.short	0x0047	/* 40819fc2 0047 */
-	.short	0x0080	/* 40819fc4 0080 */
-	.short	0x422b	/* 40819fc6 422b */
-	.short	0x00b0	/* 40819fc8 00b0 */
-	.short	0x177c	/* 40819fca 177c */
-	.short	0x0004	/* 40819fcc 0004 */
-	.short	0x00c0	/* 40819fce 00c0 */
-	.short	0x0838	/* 40819fd0 0838 */
-	.short	0x0003	/* 40819fd2 0003 */
-	.short	0x0dd2	/* 40819fd4 0dd2 */
-	.short	0x6768	/* 40819fd6 6768 */
-	.short	0x2078	/* 40819fd8 2078 */
-	.short	0x0dd8	/* 40819fda 0dd8 */
-	.short	0x0c28	/* 40819fdc 0c28 */
-	.short	0x0010	/* 40819fde 0010 */
-	.short	0x0012	/* 40819fe0 0012 */
-	.short	0x671a	/* 40819fe2 671a */
-	.short	0x0c28	/* 40819fe4 0c28 */
-	.short	0x000e	/* 40819fe6 000e */
-	.short	0x0012	/* 40819fe8 0012 */
-	.short	0x6712	/* 40819fea 6712 */
-	.short	0x0c28	/* 40819fec 0c28 */
-	.short	0x0014	/* 40819fee 0014 */
-	.short	0x0012	/* 40819ff0 0012 */
-	.short	0x670a	/* 40819ff2 670a */
-	.short	0x0c28	/* 40819ff4 0c28 */
-	.short	0x0037	/* 40819ff6 0037 */
-	.short	0x0012	/* 40819ff8 0012 */
-	.short	0x6702	/* 40819ffa 6702 */
-	.short	0x6042	/* 40819ffc 6042 */
-	.short	0x2078	/* 40819ffe 2078 */
+	clrb	%a3@(48)		/* 40819fb6 422b 0030 */
+	moveb	#1,%a3@(48)		/* 40819fba 177c 0001 0030 */
+	moveb	#71,%a3@(128)		/* 40819fc0 177c 0047 0080 */
+	clrb	%a3@(176)		/* 40819fc6 422b 00b0 */
+	moveb	#4,%a3@(192)		/* 40819fca 177c 0004 00c0 */
+	btst	#3,0xdd2		/* 40819fd0 0838 0003 0dd2 */
+	beqs	loc_4081a040		/* 40819fd6 6768 */
+	moveal	0xdd8,%a0		/* 40819fd8 2078 0dd8 */
+	cmpib	#16,%a0@(18)		/* 40819fdc 0c28 0010 0012 */
+	beqs	loc_40819ffe		/* 40819fe2 671a */
+	cmpib	#14,%a0@(18)		/* 40819fe4 0c28 000e 0012 */
+	beqs	loc_40819ffe		/* 40819fea 6712 */
+	cmpib	#20,%a0@(18)		/* 40819fec 0c28 0014 0012 */
+	beqs	loc_40819ffe		/* 40819ff2 670a */
+	cmpib	#55,%a0@(18)		/* 40819ff4 0c28 0037 0012 */
+	beqs	loc_40819ffe		/* 40819ffa 6702 */
+	bras	loc_4081a040		/* 40819ffc 6042 */
+
+loc_40819ffe:
+	moveal	0xcec,%a0		/* 40819ffe 2078 0cec */
