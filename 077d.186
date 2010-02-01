@@ -366,40 +366,28 @@ loc_408ba3fa:
 	.short	0x0203	/* 408ba40e 0203 */
 
 sub_408ba410:
-	.short	0xf23c	/* 408ba410 f23c */
-	.short	0x9000	/* 408ba412 9000 */
-	.short	0x0000	/* 408ba414 0000 */
-	.short	0x0000	/* 408ba416 0000 */
-	.short	0x48e7	/* 408ba418 48e7 */
-	.short	0x3c00	/* 408ba41a 3c00 */
-	.short	0x7402	/* 408ba41c 7402 */
-	.short	0x7604	/* 408ba41e 7604 */
-	.short	0x41ee	/* 408ba420 41ee */
-	.short	0xff8c	/* 408ba422 ff8c */
-	.short	0x20ae	/* 408ba424 20ae */
-	.short	0xff34	/* 408ba426 ff34 */
-	.short	0x216e	/* 408ba428 216e */
-	.short	0xff38	/* 408ba42a ff38 */
-	.short	0x0004	/* 408ba42c 0004 */
-	.short	0x216e	/* 408ba42e 216e */
-	.short	0xff3c	/* 408ba430 ff3c */
-	.short	0x0008	/* 408ba432 0008 */
-	.short	0x2810	/* 408ba434 2810 */
-	.short	0x7200	/* 408ba436 7200 */
-	.short	0x4c3c	/* 408ba438 4c3c */
-	.short	0x1001	/* 408ba43a 1001 */
-	.short	0x0000	/* 408ba43c 0000 */
-	.short	0x000a	/* 408ba43e 000a */
-	.short	0xe9c4	/* 408ba440 e9c4 */
-	.short	0x08c4	/* 408ba442 08c4 */
-	.short	0xd280	/* 408ba444 d280 */
-	.short	0x5803	/* 408ba446 5803 */
-	.short	0x51ca	/* 408ba448 51ca */
-	.short	0xffee	/* 408ba44a ffee */
-	.short	0x0804	/* 408ba44c 0804 */
-	.short	0x001e	/* 408ba44e 001e */
-	.short	0x6702	/* 408ba450 6702 */
-	.short	0x4481	/* 408ba452 4481 */
+	fmovel	#0,%fpcr		/* 408ba410 f23c 9000 0000 0000 */
+	moveml	%d2-%d5,%sp@-		/* 408ba418 48e7 3c00 */
+	moveq	#2,%d2			/* 408ba41c 7402 */
+	moveq	#4,%d3			/* 408ba41e 7604 */
+	lea	%fp@(-116),%a0		/* 408ba420 41ee ff8c */
+	movel	%fp@(-204),%a0@		/* 408ba424 20ae ff34 */
+	movel	%fp@(-200),%a0@(4)	/* 408ba428 216e ff38 0004 */
+	movel	%fp@(-196),%a0@(8)	/* 408ba42e 216e ff3c 0008 */
+	movel	%a0@,%d4		/* 408ba434 2810 */
+	moveq	#0,%d1			/* 408ba436 7200 */
+
+loc_408ba438:
+	.short	0x4c3c,0x1001,0x0000,0x000a	/* mulul #10,%d1 /* 408ba438 4c3c 1001 0000 000a */
+	bfextu	%d4,%d3,4,%d0		/* 408ba440 e9c4 08c4 */
+	addl	%d0,%d1			/* 408ba444 d280 */
+	addqb	#4,%d3			/* 408ba446 5803 */
+	dbf	%d2,loc_408ba438	/* 408ba448 51ca ffee */
+	btst	#30,%d4			/* 408ba44c 0804 001e */
+	beqs	loc_408ba454		/* 408ba450 6702 */
+	negl	%d1			/* 408ba452 4481 */
+
+loc_408ba454:
 	.short	0x0481	/* 408ba454 0481 */
 	.short	0x0000	/* 408ba456 0000 */
 	.short	0x0010	/* 408ba458 0010 */
