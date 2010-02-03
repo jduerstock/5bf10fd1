@@ -1,39 +1,49 @@
 /* SPLIT HERE */
-	.short	0x6012	/* 40843000 6012 */
-	.short	0x202e	/* 40843002 202e */
-	.short	0xffe8	/* 40843004 ffe8 */
-	.short	0xb0ae	/* 40843006 b0ae */
-	.short	0xffec	/* 40843008 ffec */
-	.short	0x6f08	/* 4084300a 6f08 */
-	.short	0x2d40	/* 4084300c 2d40 */
-	.short	0xffec	/* 4084300e ffec */
-	.short	0x42ae	/* 40843010 42ae */
-	.short	0xffe8	/* 40843012 ffe8 */
-	.short	0x202b	/* 40843014 202b */
-	.short	0xfff8	/* 40843016 fff8 */
-	.short	0xc086	/* 40843018 c086 */
-	.short	0xd7c0	/* 4084301a d7c0 */
-	.short	0x6000	/* 4084301c 6000 */
-	.short	0xff60	/* 4084301e ff60 */
-	.short	0x303c	/* 40843020 303c */
-	.short	0xff6b	/* 40843022 ff6b */
-	.short	0x31c0	/* 40843024 31c0 */
-	.short	0x0220	/* 40843026 0220 */
-	.short	0x6002	/* 40843028 6002 */
+	bras	loc_40843014		/* 40843000 6012 */
+
+loc_40843002:
+	movel	%fp@(-24),%d0		/* 40843002 202e ffe8 */
+	cmpl	%fp@(-20),%d0		/* 40843006 b0ae ffec */
+	bles	loc_40843014		/* 4084300a 6f08 */
+	movel	%d0,%fp@(-20)		/* 4084300c 2d40 ffec */
+	clrl	%fp@(-24)		/* 40843010 42ae ffe8 */
+
+loc_40843014:
+	movel	%a3@(-8),%d0		/* 40843014 202b fff8 */
+	andl	%d6,%d0			/* 40843018 c086 */
+
+loc_4084301a:
+	addal	%d0,%a3			/* 4084301a d7c0 */
+	braw	loc_40842f7e		/* 4084301c 6000 ff60 */
+
+loc_40843020:
+	movew	#-149,%d0		/* 40843020 303c ff6b */
+	movew	%d0,0x220		/* 40843024 31c0 0220 */
+	bras	loc_4084302c		/* 40843028 6002 */
+
+loc_4084302a:
 	moveq	#0,%d0			/* 4084302a 7000 */
-	.short	0x2641	/* 4084302c 2641 */
-	.short	0x4ed5	/* 4084302e 4ed5 */
-	.short	0x2a5f	/* 40843030 2a5f */
-	.short	0x4a97	/* 40843032 4a97 */
-	.short	0x6706	/* 40843034 6706 */
-	.short	0x205f	/* 40843036 205f */
-	.short	0xa049	/* 40843038 a049 */
-	.short	0x60f6	/* 4084303a 60f6 */
-	.short	0x4ed5	/* 4084303c 4ed5 */
-	.short	0x0000	/* 4084303e 0000 */
-	.short	0x026f	/* 40843040 026f */
-	.short	0xfeff	/* 40843042 feff */
-	.short	0x000a	/* 40843044 000a */
+
+loc_4084302c:
+	moveal	%d1,%a3			/* 4084302c 2641 */
+	jmp	%a5@			/* 4084302e 4ed5 */
+
+sub_40843030:
+	moveal	%sp@+,%a5		/* 40843030 2a5f */
+
+loc_40843032:
+	tstl	%sp@			/* 40843032 4a97 */
+	beqs	loc_4084303c		/* 40843034 6706 */
+	moveal	%sp@+,%a0		/* 40843036 205f */
+	.short	0xa049			/* 40843038 a049 */
+	bras	loc_40843032		/* 4084303a 60f6 */
+
+loc_4084303c:
+	jmp	%a5@			/* 4084303c 4ed5 */
+
+	.align	16
+
+	andiw	#0xfeff,%sp@(10)	/* 40843040 026f feff 000a */
 	.short	0x42af	/* 40843046 42af */
 	.short	0x002c	/* 40843048 002c */
 	.short	0x4e73	/* 4084304a 4e73 */
