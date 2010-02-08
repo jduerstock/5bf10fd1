@@ -26,71 +26,57 @@ sub_4084a02a:
 	.align	16
 
 sub_4084a040:
-	.short	0x4e56	/* 4084a040 4e56 */
-	.short	0xff74	/* 4084a042 ff74 */
-	.short	0x2f09	/* 4084a044 2f09 */
-	.short	0x41ee	/* 4084a046 41ee */
-	.short	0xff94	/* 4084a048 ff94 */
-	.short	0x7035	/* 4084a04a 7035 */
-	.short	0x4258	/* 4084a04c 4258 */
-	.short	0x51c8	/* 4084a04e 51c8 */
-	.short	0xfffc	/* 4084a050 fffc */
-	.short	0x41ee	/* 4084a052 41ee */
-	.short	0xff94	/* 4084a054 ff94 */
-	.short	0x43ee	/* 4084a056 43ee */
-	.short	0xff74	/* 4084a058 ff74 */
-	.short	0x2149	/* 4084a05a 2149 */
-	.short	0x0012	/* 4084a05c 0012 */
-	.short	0x316e	/* 4084a05e 316e */
-	.short	0x000c	/* 4084a060 000c */
-	.short	0x0016	/* 4084a062 0016 */
-	.short	0x216e	/* 4084a064 216e */
-	.short	0x0008	/* 4084a066 0008 */
-	.short	0x0030	/* 4084a068 0030 */
-	.short	0x317c	/* 4084a06a 317c */
-	.short	0x0001	/* 4084a06c 0001 */
-	.short	0x001c	/* 4084a06e 001c */
-	.short	0x7009	/* 4084a070 7009 */
-	.short	0xa260	/* 4084a072 a260 */
-	.short	0x6632	/* 4084a074 6632 */
-	.short	0x0828	/* 4084a076 0828 */
-	.short	0x0004	/* 4084a078 0004 */
-	.short	0x001e	/* 4084a07a 001e */
-	.short	0x6712	/* 4084a07c 6712 */
-	.short	0x3f2e	/* 4084a07e 3f2e */
-	.short	0x000c	/* 4084a080 000c */
-	.short	0x2f28	/* 4084a082 2f28 */
-	.short	0x0030	/* 4084a084 0030 */
-	.short	0x4eba	/* 4084a086 4eba */
-	.short	0xffb8	/* 4084a088 ffb8 */
-	.short	0x6624	/* 4084a08a 6624 */
-	.short	0x41ee	/* 4084a08c 41ee */
-	.short	0xff94	/* 4084a08e ff94 */
-	.short	0x216e	/* 4084a090 216e */
-	.short	0x0008	/* 4084a092 0008 */
-	.short	0x0030	/* 4084a094 0030 */
-	.short	0xa209	/* 4084a096 a209 */
-	.short	0x67c4	/* 4084a098 67c4 */
-	.short	0x0c40	/* 4084a09a 0c40 */
-	.short	0xffd3	/* 4084a09c ffd3 */
-	.short	0x6610	/* 4084a09e 6610 */
-	.short	0xa242	/* 4084a0a0 a242 */
-	.short	0xa209	/* 4084a0a2 a209 */
-	.short	0x660a	/* 4084a0a4 660a */
-	.short	0x60b6	/* 4084a0a6 60b6 */
-	.short	0x0c40	/* 4084a0a8 0c40 */
-	.short	0xffd5	/* 4084a0aa ffd5 */
-	.short	0x6602	/* 4084a0ac 6602 */
+	linkw	%fp,#-140		/* 4084a040 4e56 ff74 */
+	movel	%a1,%sp@-		/* 4084a044 2f09 */
+	lea	%fp@(-108),%a0		/* 4084a046 41ee ff94 */
+	moveq	#53,%d0			/* 4084a04a 7035 */
+
+loc_4084a04c:
+	clrw	%a0@+			/* 4084a04c 4258 */
+	dbf	%d0,loc_4084a04c	/* 4084a04e 51c8 fffc */
+	lea	%fp@(-108),%a0		/* 4084a052 41ee ff94 */
+	lea	%fp@(-140),%a1		/* 4084a056 43ee ff74 */
+	movel	%a1,%a0@(18)		/* 4084a05a 2149 0012 */
+
+loc_4084a05e:
+	movew	%fp@(12),%a0@(22)	/* 4084a05e 316e 000c 0016 */
+	movel	%fp@(8),%a0@(48)	/* 4084a064 216e 0008 0030 */
+	movew	#1,%a0@(28)		/* 4084a06a 317c 0001 001c */
+	moveq	#9,%d0			/* 4084a070 7009 */
+	.short	0xa260			/* 4084a072 a260 */
+	bnes	loc_4084a0a8		/* 4084a074 6632 */
+	btst	#4,%a0@(30)		/* 4084a076 0828 0004 001e */
+	beqs	loc_4084a090		/* 4084a07c 6712 */
+	movew	%fp@(12),%sp@-		/* 4084a07e 3f2e 000c */
+	movel	%a0@(48),%sp@-		/* 4084a082 2f28 0030 */
+	jsr	%pc@(sub_4084a040)	/* 4084a086 4eba ffb8 */
+	bnes	loc_4084a0b0		/* 4084a08a 6624 */
+	lea	%fp@(-108),%a0		/* 4084a08c 41ee ff94 */
+
+loc_4084a090:
+	movel	%fp@(8),%a0@(48)	/* 4084a090 216e 0008 0030 */
+	.short	0xa209			/* 4084a096 a209 */
+	beqs	loc_4084a05e		/* 4084a098 67c4 */
+	cmpiw	#-45,%d0		/* 4084a09a 0c40 ffd3 */
+	bnes	loc_4084a0b0		/* 4084a09e 6610 */
+	.short	0xa242			/* 4084a0a0 a242 */
+	.short	0xa209			/* 4084a0a2 a209 */
+	bnes	loc_4084a0b0		/* 4084a0a4 660a */
+	bras	loc_4084a05e		/* 4084a0a6 60b6 */
+
+loc_4084a0a8:
+	cmpiw	#-43,%d0		/* 4084a0a8 0c40 ffd5 */
+	bnes	loc_4084a0b0		/* 4084a0ac 6602 */
 	moveq	#0,%d0			/* 4084a0ae 7000 */
-	.short	0x225f	/* 4084a0b0 225f */
-	.short	0x4e5e	/* 4084a0b2 4e5e */
-	.short	0x205f	/* 4084a0b4 205f */
-	.short	0x5c8f	/* 4084a0b6 5c8f */
-	.short	0x4ed0	/* 4084a0b8 4ed0 */
-	.short	0x2f30	/* 4084a0ba 2f30 */
-	.short	0x81e2	/* 4084a0bc 81e2 */
-	.short	0x2018	/* 4084a0be 2018 */
-	.short	0x0048	/* 4084a0c0 0048 */
+
+loc_4084a0b0:
+	moveal	%sp@+,%a1		/* 4084a0b0 225f */
+	unlk	%fp			/* 4084a0b2 4e5e */
+	moveal	%sp@+,%a0		/* 4084a0b4 205f */
+	addql	#6,%sp			/* 4084a0b6 5c8f */
+	jmp	%a0@			/* 4084a0b8 4ed0 */
+	
+	CallVector	0x2018 18	/* 4084a0ba 2f30 81e2 2018 0048 */
 	rts				/* 4084a0c2 4e75 */
 
 	.align	16
