@@ -419,14 +419,18 @@ word_409ac3e8:
 	.align	16
 
 sub_409ac490:
-	.short	0x225f	/* 409ac490 225f */
-	.short	0x101f	/* 409ac492 101f */
-	.short	0x205f	/* 409ac494 205f */
-	.short	0x6604	/* 409ac496 6604 */
-	.short	0xa004	/* 409ac498 a004 */
-	.short	0x6002	/* 409ac49a 6002 */
-	.short	0xa404	/* 409ac49c a404 */
-	.short	0x3e80	/* 409ac49e 3e80 */
+	moveal	%sp@+,%a1		/* 409ac490 225f */
+	moveb	%sp@+,%d0		/* 409ac492 101f */
+	moveal	%sp@+,%a0		/* 409ac494 205f */
+	bnes	loc_409ac49c		/* 409ac496 6604 */
+	.short	0xa004			/* 409ac498 a004 */
+	bras	loc_409ac49e		/* 409ac49a 6002 */
+
+loc_409ac49c:
+	.short	0xa404			/* 409ac49c a404 */
+
+loc_409ac49e:
+	movew	%d0,%sp@		/* 409ac49e 3e80 */
 	jmp	%a1@			/* 409ac4a0 4ed1 */
 
 	.align	16
