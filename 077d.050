@@ -174,20 +174,17 @@ sub_40832186:
 	bsrs	sub_40832160		/* 408321a8 61b6 */
 	rts				/* 408321aa 4e75 */
 
-	.short	0x48e7	/* 408321ac 48e7 */
-	.short	0x8040	/* 408321ae 8040 */
-	.short	0x2278	/* 408321b0 2278 */
-	.short	0x0378	/* 408321b2 0378 */
+	moveml	%d0/%a1,%sp@-		/* 408321ac 48e7 8040 */
+	moveal	0x378,%a1		/* 408321b0 2278 0378 */
 	moveq	#0,%d0			/* 408321b4 7000 */
-	.short	0x3029	/* 408321b6 3029 */
-	.short	0x000a	/* 408321b8 000a */
-	.short	0x5340	/* 408321ba 5340 */
-	.short	0xe988	/* 408321bc e988 */
-	.short	0x2140	/* 408321be 2140 */
-	.short	0x0018	/* 408321c0 0018 */
-	.short	0x4cdf	/* 408321c2 4cdf */
-	.short	0x0201	/* 408321c4 0201 */
+	movew	%a1@(10),%d0		/* 408321b6 3029 000a */
+	subqw	#1,%d0			/* 408321ba 5340 */
+	lsll	#4,%d0			/* 408321bc e988 */
+	movel	%d0,%a0@(24)		/* 408321be 2140 0018 */
+	moveml	%sp@+,%d0/%a1		/* 408321c2 4cdf 0201 */
 	rts				/* 408321c6 4e75 */
+
+off_408321c8:
 	.short	0xf288	/* 408321c8 f288 */
 	.short	0xf31e	/* 408321ca f31e */
 	.short	0xf554	/* 408321cc f554 */
@@ -198,22 +195,19 @@ sub_40832186:
 	.short	0xf6c4	/* 408321d6 f6c4 */
 
 sub_408321d8:
-	.short	0x48e7	/* 408321d8 48e7 */
-	.short	0xc078	/* 408321da c078 */
-	.short	0x47fa	/* 408321dc 47fa */
-	.short	0xffea	/* 408321de ffea */
-	.short	0x284b	/* 408321e0 284b */
-	.short	0x45f8	/* 408321e2 45f8 */
-	.short	0x0700	/* 408321e4 0700 */
-	.short	0x7007	/* 408321e6 7007 */
-	.short	0x321b	/* 408321e8 321b */
-	.short	0x48c1	/* 408321ea 48c1 */
-	.short	0xd28c	/* 408321ec d28c */
-	.short	0x24c1	/* 408321ee 24c1 */
-	.short	0x51c8	/* 408321f0 51c8 */
-	.short	0xfff6	/* 408321f2 fff6 */
-	.short	0x4cdf	/* 408321f4 4cdf */
-	.short	0x1e03	/* 408321f6 1e03 */
+	moveml	%d0-%d1/%a1-%a4,%sp@-	/* 408321d8 48e7 c078 */
+	lea	%pc@(off_408321c8),%a3	/* 408321dc 47fa ffea */
+	moveal	%a3,%a4			/* 408321e0 284b */
+	lea	0x700,%a2		/* 408321e2 45f8 0700 */
+	moveq	#7,%d0			/* 408321e6 7007 */
+
+loc_408321e8:
+	movew	%a3@+,%d1		/* 408321e8 321b */
+	extl	%d1			/* 408321ea 48c1 */
+	addl	%a4,%d1			/* 408321ec d28c */
+	movel	%d1,%a2@+		/* 408321ee 24c1 */
+	dbf	%d0,loc_408321e8	/* 408321f0 51c8 fff6 */
+	moveml	%sp@+,%d0-%d1/%a1-%a4	/* 408321f4 4cdf 1e03 */
 	rts				/* 408321f8 4e75 */
 
 sub_408321fa:
