@@ -1288,20 +1288,22 @@ loc_40988a44:
 
 sub_40988a46:
 	moveq	#0,%d0			/* 40988a46 7000 */
-	.short	0x0838	/* 40988a48 0838 */
-	.short	0x000e	/* 40988a4a 000e */
-	.short	0x0b22	/* 40988a4c 0b22 */
-	.short	0x6714	/* 40988a4e 6714 */
-	.short	0x43fa	/* 40988a50 43fa */
-	.short	0xffc0	/* 40988a52 ffc0 */
-	.short	0x7204	/* 40988a54 7204 */
-	.short	0x2019	/* 40988a56 2019 */
-	.short	0x2400	/* 40988a58 2400 */
-	.short	0xa052	/* 40988a5a a052 */
-	.short	0x4842	/* 40988a5c 4842 */
-	.short	0xd0c2	/* 40988a5e d0c2 */
-	.short	0x51c9	/* 40988a60 51c9 */
-	.short	0xfff4	/* 40988a62 fff4 */
+	btst	#14,0xb22		/* 40988a48 0838 000e 0b22 */
+	beqs	loc_40988a64		/* 40988a4e 6714 */
+	lea	%pc@(word_40988a12),%a1	/* 40988a50 43fa ffc0 */
+	moveq	#4,%d1			/* 40988a54 7204 */
+
+loc_40988a56:
+	movel	%a1@+,%d0		/* 40988a56 2019 */
+	movel	%d0,%d2			/* 40988a58 2400 */
+
+loc_40988a5a:
+	.short	0xa052			/* 40988a5a a052 */
+	swap	%d2			/* 40988a5c 4842 */
+	addaw	%d2,%a0			/* 40988a5e d0c2 */
+	dbf	%d1,loc_40988a56	/* 40988a60 51c9 fff4 */
+
+loc_40988a64:
 	rts				/* 40988a64 4e75 */
 
 	.align	16
