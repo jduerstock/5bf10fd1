@@ -472,39 +472,36 @@ loc_409ff58a:
 	moveb	%d6,%a2@(5)		/* 409ff5b2 1546 0005 */
 	moveal	%fp@(-84),%a1		/* 409ff5b6 226e ffac */
 	addqw	#8,%a1			/* 409ff5ba 5049 */
-	.short	0x303c	/* 409ff5bc 303c */
-	.short	0x0004	/* 409ff5be 0004 */
-	.short	0xc0c4	/* 409ff5c0 c0c4 */
-	.short	0xd3c0	/* 409ff5c2 d3c0 */
-	.short	0x3029	/* 409ff5c4 3029 */
-	.short	0x0002	/* 409ff5c6 0002 */
-	.short	0x671e	/* 409ff5c8 671e */
-	.short	0x226e	/* 409ff5ca 226e */
-	.short	0xffac	/* 409ff5cc ffac */
-	.short	0xd2c0	/* 409ff5ce d2c0 */
-	.short	0x102a	/* 409ff5d0 102a */
-	.short	0x0003	/* 409ff5d2 0003 */
-	.short	0x1f00	/* 409ff5d4 1f00 */
-	.short	0x3219	/* 409ff5d6 3219 */
-	.short	0x1019	/* 409ff5d8 1019 */
-	.short	0xb017	/* 409ff5da b017 */
-	.short	0x6708	/* 409ff5dc 6708 */
-	.short	0x51c9	/* 409ff5de 51c9 */
-	.short	0xfff8	/* 409ff5e0 fff8 */
-	.short	0x422a	/* 409ff5e2 422a */
-	.short	0x0004	/* 409ff5e4 0004 */
-	.short	0x4a1f	/* 409ff5e6 4a1f */
-	.short	0xba2a	/* 409ff5e8 ba2a */
-	.short	0x0004	/* 409ff5ea 0004 */
-	.short	0x670c	/* 409ff5ec 670c */
-	.short	0x1545	/* 409ff5ee 1545 */
-	.short	0x0003	/* 409ff5f0 0003 */
-	.short	0x1545	/* 409ff5f2 1545 */
-	.short	0x0004	/* 409ff5f4 0004 */
-	.short	0x1547	/* 409ff5f6 1547 */
-	.short	0x0002	/* 409ff5f8 0002 */
-	.short	0x214a	/* 409ff5fa 214a */
-	.short	0x0004	/* 409ff5fc 0004 */
+	movew	#4,%d0			/* 409ff5bc 303c 0004 */
+	muluw	%d4,%d0			/* 409ff5c0 c0c4 */
+	addal	%d0,%a1			/* 409ff5c2 d3c0 */
+	movew	%a1@(2),%d0		/* 409ff5c4 3029 0002 */
+	beqs	loc_409ff5e8		/* 409ff5c8 671e */
+	moveal	%fp@(-84),%a1		/* 409ff5ca 226e ffac */
+	addaw	%d0,%a1			/* 409ff5ce d2c0 */
+	moveb	%a2@(3),%d0		/* 409ff5d0 102a 0003 */
+	moveb	%d0,%sp@-		/* 409ff5d4 1f00 */
+	movew	%a1@+,%d1		/* 409ff5d6 3219 */
+
+loc_409ff5d8:
+	moveb	%a1@+,%d0		/* 409ff5d8 1019 */
+	cmpb	%sp@,%d0		/* 409ff5da b017 */
+	beqs	loc_409ff5e6		/* 409ff5dc 6708 */
+	dbf	%d1,loc_409ff5d8	/* 409ff5de 51c9 fff8 */
+	clrb	%a2@(4)			/* 409ff5e2 422a 0004 */
+
+loc_409ff5e6:
+	tstb	%sp@+			/* 409ff5e6 4a1f */
+
+loc_409ff5e8:
+	cmpb	%a2@(4),%d5		/* 409ff5e8 ba2a 0004 */
+	beqs	loc_409ff5fa		/* 409ff5ec 670c */
+	moveb	%d5,%a2@(3)		/* 409ff5ee 1545 0003 */
+	moveb	%d5,%a2@(4)		/* 409ff5f2 1545 0004 */
+	moveb	%d7,%a2@(2)		/* 409ff5f6 1547 0002 */
+
+loc_409ff5fa:
+	movel	%a2,%a0@(4)		/* 409ff5fa 214a 0004 */
 	_SPutPRAMRec			/* 409ff5fe 7012 a06e */
 	moveb	%a2@(3),%d5		/* 409ff602 1a2a 0003 */
 	lea	%pc@(byte_409ffbc0),%a1	/* 409ff606 43fa 05b8 */
