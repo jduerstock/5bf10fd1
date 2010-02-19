@@ -1519,21 +1519,16 @@ word_409ffc74:
 	.short	0x0000	/* 409fffae 0000 */
 	.short	0x0000	/* 409fffb0 0000 */
 	.short	0x0004	/* 409fffb2 0004 */
-	.short	0x4268	/* 409fffb4 4268 */
-	.short	0x0002	/* 409fffb6 0002 */
-	.short	0x103c	/* 409fffb8 103c */
-	.short	0x007f	/* 409fffba 007f */
-	.short	0x2278	/* 409fffbc 2278 */
-	.short	0x0dd8	/* 409fffbe 0dd8 */
-	.short	0xd3e9	/* 409fffc0 d3e9 */
-	.short	0x0008	/* 409fffc2 0008 */
-	.short	0xb2fc	/* 409fffc4 b2fc */
-	.short	0x0000	/* 409fffc6 0000 */
-	.short	0x6704	/* 409fffc8 6704 */
-	.short	0x1029	/* 409fffca 1029 */
-	.short	0x000e	/* 409fffcc 000e */
-	.short	0x1140	/* 409fffce 1140 */
-	.short	0x0003	/* 409fffd0 0003 */
+	clrw	%a0@(2)			/* 409fffb4 4268 0002 */
+	moveb	#127,%d0		/* 409fffb8 103c 007f */
+	moveal	0xdd8,%a1		/* 409fffbc 2278 0dd8 */
+	addal	%a1@(8),%a1		/* 409fffc0 d3e9 0008 */
+	cmpaw	#0,%a1			/* 409fffc4 b2fc 0000 */
+	beqs	loc_409fffce		/* 409fffc8 6704 */
+	moveb	%a1@(14),%d0		/* 409fffca 1029 000e */
+
+loc_409fffce:
+	moveb	%d0,%a0@(3)		/* 409fffce 1140 0003 */
 	rts				/* 409fffd2 4e75 */
 	.short	0x0000	/* 409fffd4 0000 */
 	.short	0x0000	/* 409fffd6 0000 */
