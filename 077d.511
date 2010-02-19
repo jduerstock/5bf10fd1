@@ -387,36 +387,32 @@ loc_409ff4e0:
 	braw	loc_409ff58a		/* 409ff4f4 6000 0094 */
 
 loc_409ff4f8:
-	.short	0x1c3c	/* 409ff4f8 1c3c */
-	.short	0x0006	/* 409ff4fa 0006 */
-	.short	0x45ee	/* 409ff4fc 45ee */
-	.short	0xffc0	/* 409ff4fe ffc0 */
-	.short	0x102a	/* 409ff500 102a */
-	.short	0x0007	/* 409ff502 0007 */
-	.short	0x0200	/* 409ff504 0200 */
-	.short	0x0040	/* 409ff506 0040 */
-	.short	0x6604	/* 409ff508 6604 */
-	.short	0x6000	/* 409ff50a 6000 */
-	.short	0x007e	/* 409ff50c 007e */
-	.short	0x1c2a	/* 409ff50e 1c2a */
-	.short	0x0007	/* 409ff510 0007 */
-	.short	0x0206	/* 409ff512 0206 */
-	.short	0x003f	/* 409ff514 003f */
-	.short	0x6000	/* 409ff516 6000 */
-	.short	0x0072	/* 409ff518 0072 */
+	moveb	#6,%d6			/* 409ff4f8 1c3c 0006 */
+	lea	%fp@(-64),%a2		/* 409ff4fc 45ee ffc0 */
+	moveb	%a2@(7),%d0		/* 409ff500 102a 0007 */
+	andib	#64,%d0			/* 409ff504 0200 0040 */
+	bnes	loc_409ff50e		/* 409ff508 6604 */
+	braw	loc_409ff58a		/* 409ff50a 6000 007e */
+
+loc_409ff50e:
+	moveb	%a2@(7),%d6		/* 409ff50e 1c2a 0007 */
+	andib	#63,%d6			/* 409ff512 0206 003f */
+	braw	loc_409ff58a		/* 409ff516 6000 0072 */
 
 loc_409ff51a:
-	.short	0x6100	/* 409ff51a 6100 */
-	.short	0xf9e0	/* 409ff51c f9e0 */
-	.short	0x43fa	/* 409ff51e 43fa */
-	.short	0x0010	/* 409ff520 0010 */
-	.short	0x1019	/* 409ff522 1019 */
-	.short	0x6b18	/* 409ff524 6b18 */
-	.short	0x1219	/* 409ff526 1219 */
-	.short	0xbc00	/* 409ff528 bc00 */
-	.short	0x66f6	/* 409ff52a 66f6 */
-	.short	0x1c01	/* 409ff52c 1c01 */
-	.short	0x605a	/* 409ff52e 605a */
+	bsrw	sub_409feefc		/* 409ff51a 6100 f9e0 */
+	lea	%pc@(byte_409ff530),%a1	/* 409ff51e 43fa 0010 */
+
+loc_409ff522:
+	moveb	%a1@+,%d0		/* 409ff522 1019 */
+	bmis	loc_409ff53e		/* 409ff524 6b18 */
+	moveb	%a1@+,%d1		/* 409ff526 1219 */
+	cmpb	%d0,%d6			/* 409ff528 bc00 */
+	bnes	loc_409ff522		/* 409ff52a 66f6 */
+	moveb	%d1,%d6			/* 409ff52c 1c01 */
+	bras	loc_409ff58a		/* 409ff52e 605a */
+
+byte_409ff530:
 	.short	0x3009	/* 409ff530 3009 */
 	.short	0x0009	/* 409ff532 0009 */
 	.short	0x1404	/* 409ff534 1404 */
@@ -424,6 +420,8 @@ loc_409ff51a:
 	.short	0x2d0a	/* 409ff538 2d0a */
 	.short	0x3a0b	/* 409ff53a 3a0b */
 	.short	0xffff	/* 409ff53c ffff */
+
+loc_409ff53e:
 	.short	0x1c3c	/* 409ff53e 1c3c */
 	.short	0x0007	/* 409ff540 0007 */
 	.short	0x102e	/* 409ff542 102e */
