@@ -211,41 +211,34 @@ loc_408a01ce:
 	.align	16
 
 sub_408a01f0:
-	.short	0x4e56	/* 408a01f0 4e56 */
-	.short	0x0000	/* 408a01f2 0000 */
-	.short	0x48e7	/* 408a01f4 48e7 */
-	.short	0x0118	/* 408a01f6 0118 */
-	.short	0x286e	/* 408a01f8 286e */
-	.short	0x0010	/* 408a01fa 0010 */
-	.short	0x200c	/* 408a01fc 200c */
-	.short	0x6720	/* 408a01fe 6720 */
-	.short	0x2f0c	/* 408a0200 2f0c */
-	.short	0x4eba	/* 408a0202 4eba */
-	.short	0xfef6	/* 408a0204 fef6 */
-	.short	0x2640	/* 408a0206 2640 */
-	.short	0x206e	/* 408a0208 206e */
-	.short	0x0008	/* 408a020a 0008 */
-	.short	0x202e	/* 408a020c 202e */
-	.short	0x000c	/* 408a020e 000c */
-	.short	0xa024	/* 408a0210 a024 */
-	.short	0x3e38	/* 408a0212 3e38 */
-	.short	0x0220	/* 408a0214 0220 */
-	.short	0x2f0b	/* 408a0216 2f0b */
-	.short	0x4eba	/* 408a0218 4eba */
-	.short	0xfee0	/* 408a021a fee0 */
-	.short	0x504f	/* 408a021c 504f */
-	.short	0x6002	/* 408a021e 6002 */
-	.short	0x7e8f	/* 408a0220 7e8f */
-	.short	0x3007	/* 408a0222 3007 */
-	.short	0x4cee	/* 408a0224 4cee */
-	.short	0x1880	/* 408a0226 1880 */
-	.short	0xfff4	/* 408a0228 fff4 */
-	.short	0x4e5e	/* 408a022a 4e5e */
+	linkw	%fp,#0			/* 408a01f0 4e56 0000 */
+	moveml	%d7/%a3-%a4,%sp@-	/* 408a01f4 48e7 0118 */
+	moveal	%fp@(16),%a4		/* 408a01f8 286e 0010 */
+	movel	%a4,%d0			/* 408a01fc 200c */
+	beqs	loc_408a0220		/* 408a01fe 6720 */
+	movel	%a4,%sp@-		/* 408a0200 2f0c */
+	jsr	%pc@(sub_408a00fa)	/* 408a0202 4eba fef6 */
+	moveal	%d0,%a3			/* 408a0206 2640 */
+	moveal	%fp@(8),%a0		/* 408a0208 206e 0008 */
+	movel	%fp@(12),%d0		/* 408a020c 202e 000c */
+	.short	0xa024			/* 408a0210 a024 */
+	movew	0x220,%d7		/* 408a0212 3e38 0220 */
+	movel	%a3,%sp@-		/* 408a0216 2f0b */
+	jsr	%pc@(sub_408a00fa)	/* 408a0218 4eba fee0 */
+	addqw	#8,%sp			/* 408a021c 504f */
+	bras	loc_408a0222		/* 408a021e 6002 */
+
+loc_408a0220:
+	moveq	#-113,%d7		/* 408a0220 7e8f */
+
+loc_408a0222:
+	movew	%d7,%d0			/* 408a0222 3007 */
+	moveml	%fp@(-12),%d7/%a3-%a4	/* 408a0224 4cee 1880 fff4 */
+	unlk	%fp			/* 408a022a 4e5e */
 	rts				/* 408a022c 4e75 */
-	.short	0x2278	/* 408a022e 2278 */
-	.short	0x202c	/* 408a0230 202c */
-	.short	0x2269	/* 408a0232 2269 */
-	.short	0x01f4	/* 408a0234 01f4 */
+
+	moveal	0x202c,%a1		/* 408a022e 2278 202c */
+	moveal	%a1@(500),%a1		/* 408a0232 2269 01f4 */
 	jmp	%a1@			/* 408a0236 4ed1 */
 
 	.align	16
