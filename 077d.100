@@ -227,24 +227,19 @@ off_40864238:
 
 loc_40864256:
 	jsr	%pc@(sub_40864140)	/* 40864264 4eba fee8 */
-	.short	0x302e	/* 4086425a 302e */
-	.short	0xfffc	/* 4086425c fffc */
-	.short	0xb06b	/* 4086425e b06b */
-	.short	0x001a	/* 40864260 001a */
-	.short	0x661a	/* 40864262 661a */
-	.short	0x4eba	/* 40864264 4eba */
-	.short	0xfeda	/* 40864266 feda */
-	.short	0x4267	/* 40864268 4267 */
-	.short	0x3f2e	/* 4086426a 3f2e */
-	.short	0xfffc	/* 4086426c fffc */
-	.short	0x486c	/* 4086426e 486c */
-	.short	0x002c	/* 40864270 002c */
-	.short	0x486e	/* 40864272 486e */
-	.short	0xfffa	/* 40864274 fffa */
-	.short	0x4eba	/* 40864276 4eba */
-	.short	0xfbe8	/* 40864278 fbe8 */
-	.short	0x8c5f	/* 4086427a 8c5f */
-	.short	0x60d8	/* 4086427c 60d8 */
+	movew	%fp@(-4),%d0		/* 4086425a 302e fffc */
+	cmpw	%a3@(26),%d0		/* 4086425e b06b 001a */
+	bnes	loc_4086427e		/* 40864262 661a */
+	jsr	%pc@(sub_40864140)	/* 40864264 4eba feda */
+	clrw	%sp@-			/* 40864268 4267 */
+	movew	%fp@(-4),%sp@-		/* 4086426a 3f2e fffc */
+	pea	%a4@(44)		/* 4086426e 486c 002c */
+	pea	%fp@(-6)		/* 40864272 486e fffa */
+	jsr	%pc@(sub_40863e60)	/* 40864276 4eba fbe8 */
+	orw	%sp@+,%d6		/* 4086427a 8c5f */
+	bras	loc_40864256		/* 4086427c 60d8 */
+
+loc_4086427e:
 	.short	0x302e	/* 4086427e 302e */
 	.short	0xfffc	/* 40864280 fffc */
 	.short	0x671e	/* 40864282 671e */
