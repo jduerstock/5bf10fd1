@@ -1498,28 +1498,24 @@ loc_40994fb8:
 	.align	16
 
 	linkw	%fp,#0			/* 40994fc0 4e56 0000 */
-	.short	0x2078	/* 40994fc4 2078 */
-	.short	0x1fc4	/* 40994fc6 1fc4 */
-	.short	0x2068	/* 40994fc8 2068 */
-	.short	0x0004	/* 40994fca 0004 */
-	.short	0x226e	/* 40994fcc 226e */
-	.short	0x000a	/* 40994fce 000a */
-	.short	0x302e	/* 40994fd0 302e */
-	.short	0x0008	/* 40994fd2 0008 */
-	.short	0x0c40	/* 40994fd4 0c40 */
-	.short	0x01ff	/* 40994fd6 01ff */
-	.short	0x620a	/* 40994fd8 620a */
-	.short	0x22b0	/* 40994fda 22b0 */
-	.short	0x0400	/* 40994fdc 0400 */
-	.short	0x426e	/* 40994fde 426e */
-	.short	0x000e	/* 40994fe0 000e */
-	.short	0x6006	/* 40994fe2 6006 */
-	.short	0x3d7c	/* 40994fe4 3d7c */
-	.short	0xffff	/* 40994fe6 ffff */
-	.short	0x000e	/* 40994fe8 000e */
-	.short	0x4e5e	/* 40994fea 4e5e */
-	.short	0x205f	/* 40994fec 205f */
-	.short	0x5c8f	/* 40994fee 5c8f */
-	.short	0x4ed0	/* 40994ff0 4ed0 */
+	moveal	0x1fc4,%a0		/* 40994fc4 2078 1fc4 */
+	moveal	%a0@(4),%a0		/* 40994fc8 2068 0004 */
+	moveal	%fp@(10),%a1		/* 40994fcc 226e 000a */
+	movew	%fp@(8),%d0		/* 40994fd0 302e 0008 */
+	cmpiw	#511,%d0		/* 40994fd4 0c40 01ff */
+	bhis	loc_40994fe4		/* 40994fd8 620a */
+	movel	%a0@(0x0000,%d0:w:4),%a1@	/* 40994fda 22b0 0400 */
+	clrw	%fp@(14)		/* 40994fde 426e 000e */
+	bras	loc_40994fea		/* 40994fe2 6006 */
+
+loc_40994fe4:
+	movew	#-1,%fp@(14)		/* 40994fe4 3d7c ffff 000e */
+
+loc_40994fea:
+	unlk	%fp			/* 40994fea 4e5e */
+	moveal	%sp@+,%a0		/* 40994fec 205f */
+	addql	#6,%sp			/* 40994fee 5c8f */
+	jmp	%a0@			/* 40994ff0 4ed0 */
+
 	.byte	0x91			/* 40994ff2 91 */
 	.string	"DSPGetTrapAddress"	/* 40994ff3 */
