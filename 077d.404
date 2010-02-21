@@ -1472,45 +1472,32 @@ loc_40994f54:
 
 	.align	16
 
-	.short	0x0c40	/* 40994f70 0c40 */
-	.short	0x01ff	/* 40994f72 01ff */
-	.short	0x621a	/* 40994f74 621a */
-	.short	0x2078	/* 40994f76 2078 */
-	.short	0x1fc4	/* 40994f78 1fc4 */
-	.short	0x2068	/* 40994f7a 2068 */
-	.short	0x0004	/* 40994f7c 0004 */
-	.short	0x2070	/* 40994f7e 2070 */
-	.short	0x0400	/* 40994f80 0400 */
-	.short	0x4ed0	/* 40994f82 4ed0 */
+	cmpiw	#511,%d0		/* 40994f70 0c40 01ff */
+	bhis	loc_40994f90		/* 40994f74 621a */
+	moveal	0x1fc4,%a0		/* 40994f76 2078 1fc4 */
+	moveal	%a0@(4),%a0		/* 40994f7a 2068 0004 */
+	moveal	%a0@(0x0000,%d0:w:4),%a0	/* 40994f7e 2070 0400 */
+	jmp	%a0@			/* 40994f82 4ed0 */
 
 	.align	16
 
-	.short	0x205f	/* 40994f90 205f */
-	.short	0x487a	/* 40994f92 487a */
-	.short	0x0006	/* 40994f94 0006 */
-	.short	0xabff	/* 40994f96 abff */
-	.short	0x601e	/* 40994f98 601e */
-	.short	0x1b55	/* 40994f9a 1b55 */
-	.short	0x6e69	/* 40994f9c 6e69 */
-	.short	0x6d70	/* 40994f9e 6d70 */
-	.short	0x6c65	/* 40994fa0 6c65 */
-	.short	0x6d65	/* 40994fa2 6d65 */
-	.short	0x6e74	/* 40994fa4 6e74 */
-	.short	0x6564	/* 40994fa6 6564 */
-	.short	0x2044	/* 40994fa8 2044 */
-	.short	0x5350	/* 40994faa 5350 */
-	.short	0x2050	/* 40994fac 2050 */
-	.short	0x726f	/* 40994fae 726f */
-	.short	0x6365	/* 40994fb0 6365 */
-	.short	0x6475	/* 40994fb2 6475 */
-	.short	0x7265	/* 40994fb4 7265 */
-	.short	0x0000	/* 40994fb6 0000 */
-	.short	0x4ed0	/* 40994fb8 4ed0 */
-	.short	0x0000	/* 40994fba 0000 */
-	.short	0x0000	/* 40994fbc 0000 */
-	.short	0x0000	/* 40994fbe 0000 */
-	.short	0x4e56	/* 40994fc0 4e56 */
-	.short	0x0000	/* 40994fc2 0000 */
+loc_40994f90:
+	moveal	%sp@+,%a0		/* 40994f90 205f */
+	pea	%pc@(str_40994f9a)	/* 40994f92 487a 0006 */
+	.short	0xabff			/* 40994f96 abff */
+	bras	loc_40994fb8		/* 40994f98 601e */
+
+str_40994f9a:
+	.byte	0x1b			/* 40994f9a 1b */
+	.string	"Unimplemented DSP Procedure"
+	.align	2
+
+loc_40994fb8:
+	jmp	%a0@			/* 40994fb8 4ed0 */
+
+	.align	16
+
+	linkw	%fp,#0			/* 40994fc0 4e56 0000 */
 	.short	0x2078	/* 40994fc4 2078 */
 	.short	0x1fc4	/* 40994fc6 1fc4 */
 	.short	0x2068	/* 40994fc8 2068 */
