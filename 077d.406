@@ -260,38 +260,30 @@ loc_40996294:
 
 	.align	16
 
-	.short	0x4e56	/* 409962b0 4e56 */
-	.short	0xfffc	/* 409962b2 fffc */
-	.short	0x2f07	/* 409962b4 2f07 */
-	.short	0x558f	/* 409962b6 558f */
-	.short	0x2f2e	/* 409962b8 2f2e */
-	.short	0x0008	/* 409962ba 0008 */
-	.short	0x486e	/* 409962bc 486e */
-	.short	0xfffc	/* 409962be fffc */
-	.short	0x303c	/* 409962c0 303c */
-	.short	0x0113	/* 409962c2 0113 */
-	.short	0xabf5	/* 409962c4 abf5 */
-	.short	0x3e1f	/* 409962c6 3e1f */
-	.short	0x6706	/* 409962c8 6706 */
-	.short	0x3d47	/* 409962ca 3d47 */
-	.short	0x000c	/* 409962cc 000c */
-	.short	0x6010	/* 409962ce 6010 */
-	.short	0x206e	/* 409962d0 206e */
-	.short	0xfffc	/* 409962d2 fffc */
-	.short	0x02a8	/* 409962d4 02a8 */
-	.short	0xffff	/* 409962d6 ffff */
-	.short	0xfffd	/* 409962d8 fffd */
-	.short	0x0020	/* 409962da 0020 */
-	.short	0x426e	/* 409962dc 426e */
-	.short	0x000c	/* 409962de 000c */
-	.short	0x2e2e	/* 409962e0 2e2e */
-	.short	0xfff8	/* 409962e2 fff8 */
-	.short	0x4e5e	/* 409962e4 4e5e */
-	.short	0x4e74	/* 409962e6 4e74 */
-	.short	0x0004	/* 409962e8 0004 */
-	.short	0x0000	/* 409962ea 0000 */
-	.short	0x0000	/* 409962ec 0000 */
-	.short	0x0000	/* 409962ee 0000 */
+	linkw	%fp,#-4			/* 409962b0 4e56 fffc */
+	movel	%d7,%sp@-		/* 409962b4 2f07 */
+	subql	#2,%sp			/* 409962b6 558f */
+	movel	%fp@(8),%sp@-		/* 409962b8 2f2e 0008 */
+	pea	%fp@(-4)		/* 409962bc 486e fffc */
+	movew	#275,%d0		/* 409962c0 303c 0113 */
+	.short	0xabf5			/* 409962c4 abf5 */
+	movew	%sp@+,%d7		/* 409962c6 3e1f */
+	beqs	loc_409962d0		/* 409962c8 6706 */
+	movew	%d7,%fp@(12)		/* 409962ca 3d47 000c */
+	bras	loc_409962e0		/* 409962ce 6010 */
+
+loc_409962d0:
+	moveal	%fp@(-4),%a0		/* 409962d0 206e fffc */
+	andil	#-3,%a0@(32)		/* 409962d4 02a8 ffff fffd 0020 */
+	clrw	%fp@(12)		/* 409962dc 426e 000c */
+
+loc_409962e0:
+	movel	%fp@(-8),%d7		/* 409962e0 2e2e fff8 */
+	unlk	%fp			/* 409962e4 4e5e */
+	rtd	#4			/* 409962e6 4e74 0004 */
+
+	.align	16
+
 	.short	0x4e56	/* 409962f0 4e56 */
 	.short	0xfffc	/* 409962f2 fffc */
 	.short	0x2f07	/* 409962f4 2f07 */
