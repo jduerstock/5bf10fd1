@@ -1113,38 +1113,30 @@ loc_4099ab52:
 
 	.align	16
 
-	.short	0x4e56	/* 4099ab70 4e56 */
-	.short	0xfffc	/* 4099ab72 fffc */
-	.short	0x2f07	/* 4099ab74 2f07 */
-	.short	0x558f	/* 4099ab76 558f */
-	.short	0x2f2e	/* 4099ab78 2f2e */
-	.short	0x0008	/* 4099ab7a 0008 */
-	.short	0x486e	/* 4099ab7c 486e */
-	.short	0xfffc	/* 4099ab7e fffc */
-	.short	0x303c	/* 4099ab80 303c */
-	.short	0x0112	/* 4099ab82 0112 */
-	.short	0xabf5	/* 4099ab84 abf5 */
-	.short	0x3e1f	/* 4099ab86 3e1f */
-	.short	0x6706	/* 4099ab88 6706 */
-	.short	0x3d47	/* 4099ab8a 3d47 */
-	.short	0x000c	/* 4099ab8c 000c */
-	.short	0x6010	/* 4099ab8e 6010 */
-	.short	0x206e	/* 4099ab90 206e */
-	.short	0xfffc	/* 4099ab92 fffc */
-	.short	0x00a8	/* 4099ab94 00a8 */
-	.short	0x0000	/* 4099ab96 0000 */
-	.short	0x0010	/* 4099ab98 0010 */
-	.short	0x0040	/* 4099ab9a 0040 */
-	.short	0x426e	/* 4099ab9c 426e */
-	.short	0x000c	/* 4099ab9e 000c */
-	.short	0x2e2e	/* 4099aba0 2e2e */
-	.short	0xfff8	/* 4099aba2 fff8 */
-	.short	0x4e5e	/* 4099aba4 4e5e */
-	.short	0x4e74	/* 4099aba6 4e74 */
-	.short	0x0004	/* 4099aba8 0004 */
-	.short	0x0000	/* 4099abaa 0000 */
-	.short	0x0000	/* 4099abac 0000 */
-	.short	0x0000	/* 4099abae 0000 */
+	linkw	%fp,#-4			/* 4099ab70 4e56 fffc */
+	movel	%d7,%sp@-		/* 4099ab74 2f07 */
+	subql	#2,%sp			/* 4099ab76 558f */
+	movel	%fp@(8),%sp@-		/* 4099ab78 2f2e 0008 */
+	pea	%fp@(-4)		/* 4099ab7c 486e fffc */
+	movew	#274,%d0		/* 4099ab80 303c 0112 */
+	.short	0xabf5			/* 4099ab84 abf5 */
+	movew	%sp@+,%d7		/* 4099ab86 3e1f */
+	beqs	loc_4099ab90		/* 4099ab88 6706 */
+	movew	%d7,%fp@(12)		/* 4099ab8a 3d47 000c */
+	bras	loc_4099aba0		/* 4099ab8e 6010 */
+
+loc_4099ab90:
+	moveal	%fp@(-4),%a0		/* 4099ab90 206e fffc */
+	oril	#16,%a0@(64)		/* 4099ab94 00a8 0000 0010 0040 */
+	clrw	%fp@(12)		/* 4099ab9c 426e 000c */
+
+loc_4099aba0:
+	movel	%fp@(-8),%d7		/* 4099aba0 2e2e fff8 */
+	unlk	%fp			/* 4099aba4 4e5e */
+	rtd	#4			/* 4099aba6 4e74 0004 */
+
+	.align	16
+
 	.short	0x4e56	/* 4099abb0 4e56 */
 	.short	0xffc8	/* 4099abb2 ffc8 */
 	.short	0x48e7	/* 4099abb4 48e7 */
