@@ -127,6 +127,7 @@ loc_4099b12c:
 
 	.align	16
 
+dword_4099b140:
 	.short	0x0000	/* 4099b140 0000 */
 	.short	0x3940	/* 4099b142 3940 */
 	.short	0xabf5	/* 4099b144 abf5 */
@@ -135,54 +136,50 @@ loc_4099b12c:
 	.short	0x0000	/* 4099b14a 0000 */
 	.short	0x0000	/* 4099b14c 0000 */
 	.short	0x0000	/* 4099b14e 0000 */
-	.short	0x7200	/* 4099b150 7200 */
-	.short	0x43fa	/* 4099b152 43fa */
-	.short	0xffec	/* 4099b154 ffec */
-	.short	0x2031	/* 4099b156 2031 */
-	.short	0x1000	/* 4099b158 1000 */
-	.short	0x670e	/* 4099b15a 670e */
-	.short	0x5841	/* 4099b15c 5841 */
-	.short	0xd1c0	/* 4099b15e d1c0 */
-	.short	0x3031	/* 4099b160 3031 */
-	.short	0x1000	/* 4099b162 1000 */
-	.short	0x5441	/* 4099b164 5441 */
-	.short	0xa647	/* 4099b166 a647 */
-	.short	0x60ec	/* 4099b168 60ec */
-	.short	0x554f	/* 4099b16a 554f */
-	.short	0x6100	/* 4099b16c 6100 */
-	.short	0x0042	/* 4099b16e 0042 */
-	.short	0x301f	/* 4099b170 301f */
-	.short	0x6614	/* 4099b172 6614 */
-	.short	0x554f	/* 4099b174 554f */
-	.short	0x6100	/* 4099b176 6100 */
-	.short	0x0098	/* 4099b178 0098 */
-	.short	0x301f	/* 4099b17a 301f */
-	.short	0x660a	/* 4099b17c 660a */
-	.short	0x554f	/* 4099b17e 554f */
-	.short	0x6100	/* 4099b180 6100 */
-	.short	0x006e	/* 4099b182 006e */
-	.short	0x301f	/* 4099b184 301f */
-	.short	0x6720	/* 4099b186 6720 */
-	.short	0x487a	/* 4099b188 487a */
-	.short	0x0006	/* 4099b18a 0006 */
-	.short	0xabff	/* 4099b18c abff */
-	.short	0x6018	/* 4099b18e 6018 */
-	.short	0x1665	/* 4099b190 1665 */
-	.short	0x7272	/* 4099b192 7272 */
-	.short	0x6f72	/* 4099b194 6f72 */
-	.short	0x2064	/* 4099b196 2064 */
-	.short	0x7572	/* 4099b198 7572 */
-	.short	0x696e	/* 4099b19a 696e */
-	.short	0x6720	/* 4099b19c 6720 */
-	.short	0x696e	/* 4099b19e 696e */
-	.short	0x6974	/* 4099b1a0 6974 */
-	.short	0x206c	/* 4099b1a2 206c */
-	.short	0x6f61	/* 4099b1a4 6f61 */
-	.short	0x6400	/* 4099b1a6 6400 */
-	.short	0x41fa	/* 4099b1a8 41fa */
-	.short	0xff96	/* 4099b1aa ff96 */
+
+	moveq	#0,%d1			/* 4099b150 7200 */
+	lea	%pc@(dword_4099b140),%a1	/* 4099b152 43fa ffec */
+
+loc_4099b156:
+	movel	%a1@(0x0000,%d1:w),%d0	/* 4099b156 2031 1000 */
+	beqs	loc_4099b16a		/* 4099b15a 670e */
+	addqw	#4,%d1			/* 4099b15c 5841 */
+	addal	%d0,%a0			/* 4099b15e d1c0 */
+	movew	%a1@(0x0000,%d1:w),%d0	/* 4099b160 3031 1000 */
+	addqw	#2,%d1			/* 4099b164 5441 */
+	.short	0xa647			/* 4099b166 a647 */
+	bras	loc_4099b156		/* 4099b168 60ec */
+
+loc_4099b16a:
+	subqw	#2,%sp			/* 4099b16a 554f */
+	bsrw	sub_4099b1b0		/* 4099b16c 6100 0042 */
+	movew	%sp@+,%d0		/* 4099b170 301f */
+	bnes	loc_4099b188		/* 4099b172 6614 */
+	subqw	#2,%sp			/* 4099b174 554f */
+	bsrw	sub_4099b210		/* 4099b176 6100 0098 */
+	movew	%sp@+,%d0		/* 4099b17a 301f */
+	bnes	loc_4099b188		/* 4099b17c 660a */
+	subqw	#2,%sp			/* 4099b17e 554f */
+	bsrw	sub_4099b1f0		/* 4099b180 6100 006e */
+	movew	%sp@+,%d0		/* 4099b184 301f */
+	beqs	loc_4099b1a8		/* 4099b186 6720 */
+
+loc_4099b188:
+	pea	%pc@(str_4099b190)	/* 4099b188 487a 0006 */
+	.short	0xabff			/* 4099b18c abff */
+	bras	loc_4099b1a8		/* 4099b18e 6018 */
+
+str_4099b190:
+	.byte	0x16			/* 4099b190 16 */
+	.string	"error during init load"
+
+loc_4099b1a8:
+	lea	dword_4099b140,%a0	/* 4099b1a8 41fa */
 	rts				/* 4099b1ac 4e75 */
-	.short	0x0000	/* 4099b1ae 0000 */
+
+	.align	16
+
+sub_4099b1b0:
 	.short	0x4e56	/* 4099b1b0 4e56 */
 	.short	0x0000	/* 4099b1b2 0000 */
 	.short	0x7020	/* 4099b1b4 7020 */
@@ -215,6 +212,8 @@ loc_4099b12c:
 	.short	0x0000	/* 4099b1ea 0000 */
 	.short	0x0000	/* 4099b1ec 0000 */
 	.short	0x0000	/* 4099b1ee 0000 */
+
+sub_4099b1f0:
 	.short	0x4e56	/* 4099b1f0 4e56 */
 	.short	0x0000	/* 4099b1f2 0000 */
 	.short	0x41fa	/* 4099b1f4 41fa */
@@ -231,6 +230,8 @@ loc_4099b12c:
 	.short	0x0000	/* 4099b20a 0000 */
 	.short	0x0000	/* 4099b20c 0000 */
 	.short	0x0000	/* 4099b20e 0000 */
+
+sub_4099b210:
 	.short	0x4e56	/* 4099b210 4e56 */
 	.short	0x0000	/* 4099b212 0000 */
 	.short	0x2278	/* 4099b214 2278 */
