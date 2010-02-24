@@ -601,22 +601,24 @@ sub_409bb540:
 	.align	16
 
 sub_409bb5e0:
-	.short	0x225f	/* 409bb5e0 225f */
-	.short	0x101f	/* 409bb5e2 101f */
-	.short	0x205f	/* 409bb5e4 205f */
-	.short	0x6606	/* 409bb5e6 6606 */
-	.short	0x7008	/* 409bb5e8 7008 */
-	.short	0xa260	/* 409bb5ea a260 */
-	.short	0x6004	/* 409bb5ec 6004 */
-	.short	0x7008	/* 409bb5ee 7008 */
-	.short	0xa660	/* 409bb5f0 a660 */
-	.short	0x3e80	/* 409bb5f2 3e80 */
+	moveal	%sp@+,%a1		/* 409bb5e0 225f */
+	moveb	%sp@+,%d0		/* 409bb5e2 101f */
+	moveal	%sp@+,%a0		/* 409bb5e4 205f */
+	bnes	loc_409bb5ee		/* 409bb5e6 6606 */
+	moveq	#8,%d0			/* 409bb5e8 7008 */
+	.short	0xa260			/* 409bb5ea a260 */
+	bras	loc_409bb5f2		/* 409bb5ec 6004 */
+
+loc_409bb5ee:
+	moveq	#8,%d0			/* 409bb5ee 7008 */
+	.short	0xa660			/* 409bb5f0 a660 */
+
+loc_409bb5f2:
+	movew	%d0,%sp@		/* 409bb5f2 3e80 */
 	jmp	%a1@			/* 409bb5f4 4ed1 */
-	.short	0x0000	/* 409bb5f6 0000 */
-	.short	0x0000	/* 409bb5f8 0000 */
-	.short	0x0000	/* 409bb5fa 0000 */
-	.short	0x0000	/* 409bb5fc 0000 */
-	.short	0x0000	/* 409bb5fe 0000 */
+
+	.align	16
+
 	.short	0x225f	/* 409bb600 225f */
 	.short	0x101f	/* 409bb602 101f */
 	.short	0x205f	/* 409bb604 205f */
