@@ -253,25 +253,27 @@ loc_4099b25a:
 	.align	16
 
 sub_4099b280:
-	.short	0x4e56	/* 4099b280 4e56 */
-	.short	0x0000	/* 4099b282 0000 */
-	.short	0x45fa	/* 4099b284 45fa */
-	.short	0x004a	/* 4099b286 004a */
-	.short	0x264a	/* 4099b288 264a */
-	.short	0x201a	/* 4099b28a 201a */
-	.short	0x6712	/* 4099b28c 6712 */
-	.short	0x558f	/* 4099b28e 558f */
-	.short	0xd08b	/* 4099b290 d08b */
-	.short	0x2f00	/* 4099b292 2f00 */
-	.short	0x3f1a	/* 4099b294 3f1a */
+	linkw	%fp,#0			/* 4099b280 4e56 0000 */
+	lea	off_4099b2d0,%a2	/* 4099b284 45fa 004a */
+	moveal	%a2,%a3			/* 4099b288 264a */
+
+loc_4099b28a:
+	movel	%a2@+,%d0		/* 4099b28a 201a */
+	beqs	loc_4099b2a0		/* 4099b28c 6712 */
+	subql	#2,%sp			/* 4099b28e 558f */
+	addl	%a3,%d0			/* 4099b290 d08b */
+	movel	%d0,%sp@-		/* 4099b292 2f00 */
+	movew	%a2@+,%sp@-		/* 4099b294 3f1a */
 	moveq	#1,%d0			/* 4099b296 7001 */
-	.short	0xabf5	/* 4099b298 abf5 */
-	.short	0x3d5f	/* 4099b29a 3d5f */
-	.short	0x0008	/* 4099b29c 0008 */
-	.short	0x67ea	/* 4099b29e 67ea */
-	.short	0x4e5e	/* 4099b2a0 4e5e */
-	.short	0x205f	/* 4099b2a2 205f */
-	.short	0x4ed0	/* 4099b2a4 4ed0 */
+	.short	0xabf5			/* 4099b298 abf5 */
+	movew	%sp@+,%fp@(8)		/* 4099b29a 3d5f 0008 */
+	beqs	loc_4099b28a		/* 4099b29e 67ea */
+
+loc_4099b2a0:
+	unlk	%fp			/* 4099b2a0 4e5e */
+	moveal	%sp@+,%a0		/* 4099b2a2 205f */
+	jmp	%a0@			/* 4099b2a4 4ed0 */
+
 	.byte	0x9b	/* 4099b2a6 9b */
 	.ascii	"LoadDSPCallsInDispatchTable"
 
@@ -308,11 +310,9 @@ off_4099b2d0:
 	.short	0x000f				/* 4099b322 000f */
 	.long	sub_40997ca0-off_4099b2d0	/* 4099b324 ffff c9d0 */
 	.short	0x0010				/* 4099b328 0010 */
-	.short	0xffff	/* 4099b32a ffff */
-	.short	0xd800	/* 4099b32c d800 */
+	.long	sub_40998ad0-off_4099b2d0	/* 4099b32a ffff d800 */
 	.short	0x0011				/* 4099b32e 0011 */
-	.short	0xffff	/* 4099b330 ffff */
-	.short	0x89e0	/* 4099b332 89e0 */
+	.long	sub_40993cb0-off_4099b2d0	/* 4099b330 ffff 89e0 */
 	.short	0x0012				/* 4099b334 0012 */
 	.short	0xffff	/* 4099b336 ffff */
 	.short	0x80e0	/* 4099b338 80e0 */
