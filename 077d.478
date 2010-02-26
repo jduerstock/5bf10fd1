@@ -908,38 +908,36 @@ sub_409de6f0:
 	.short	0x0000	/* 409de7ee 0000 */
 
 sub_409de7f0:
-	.short	0x4e56	/* 409de7f0 4e56 */
-	.short	0x0000	/* 409de7f2 0000 */
-	.short	0x48e7	/* 409de7f4 48e7 */
-	.short	0x0318	/* 409de7f6 0318 */
-	.short	0x3c2e	/* 409de7f8 3c2e */
-	.short	0x0012	/* 409de7fa 0012 */
-	.short	0x266e	/* 409de7fc 266e */
-	.short	0x000c	/* 409de7fe 000c */
-	.short	0x286e	/* 409de800 286e */
-	.short	0x0008	/* 409de802 0008 */
-	.short	0x4247	/* 409de804 4247 */
-	.short	0x6012	/* 409de806 6012 */
-	.short	0x1034	/* 409de808 1034 */
-	moveq	#0,%d0			/* 409de80a 7000 */
-	.short	0xb033	/* 409de80c b033 */
-	moveq	#0,%d0			/* 409de80e 7000 */
-	.short	0x6704	/* 409de810 6704 */
+	linkw	%fp,#0			/* 409de7f0 4e56 0000 */
+	moveml	%d6-%d7/%a3-%a4,%sp@-	/* 409de7f4 48e7 0318 */
+	movew	%fp@(18),%d6		/* 409de7f8 3c2e 0012 */
+	moveal	%fp@(12),%a3		/* 409de7fc 266e 000c */
+	moveal	%fp@(8),%a4		/* 409de800 286e 0008 */
+	clrw	%d7			/* 409de804 4247 */
+	bras	loc_409de81a		/* 409de806 6012 */
+
+loc_409de808:
+	moveb	%a4@(0x0000,%d7:w),%d0	/* 409de808 1034 7000 */
+	cmpb	%a3@(0x0000,%d7:w),%d0	/* 409de80c b033 7000 */
+	beqs	loc_409de816		/* 409de810 6704 */
 	moveq	#0,%d0			/* 409de812 7000 */
-	.short	0x600a	/* 409de814 600a */
-	.short	0x3007	/* 409de816 3007 */
-	.short	0x5247	/* 409de818 5247 */
-	.short	0xbc47	/* 409de81a bc47 */
-	.short	0x6eea	/* 409de81c 6eea */
+	bras	loc_409de820		/* 409de814 600a */
+
+loc_409de816:
+	movew	%d7,%d0			/* 409de816 3007 */
+	addqw	#1,%d7			/* 409de818 5247 */
+
+loc_409de81a:
+	cmpw	%d7,%d6			/* 409de81a bc47 */
+	bgts	loc_409de808		/* 409de81c 6eea */
 	moveq	#1,%d0			/* 409de81e 7001 */
-	.short	0x4cee	/* 409de820 4cee */
-	.short	0x18c0	/* 409de822 18c0 */
-	.short	0xfff0	/* 409de824 fff0 */
-	.short	0x4e5e	/* 409de826 4e5e */
+
+loc_409de820:
+	moveml	%fp@(-16),%d6-%d7/%a3-%a4	/* 409de820 4cee 18c0 fff0 */
+	unlk	%fp			/* 409de826 4e5e */
 	rts				/* 409de828 4e75 */
-	.short	0x0000	/* 409de82a 0000 */
-	.short	0x0000	/* 409de82c 0000 */
-	.short	0x0000	/* 409de82e 0000 */
+
+	.align	16
 
 sub_409de830:
 	linkw	%fp,#0			/* 409de830 4e56 0000 */
