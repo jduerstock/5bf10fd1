@@ -3,34 +3,21 @@
 	.short	0x4e5e	/* 4092f002 4e5e */
 	.short	0x4e74	/* 4092f004 4e74 */
 	.short	0x0008	/* 4092f006 0008 */
-	.short	0x4e56	/* 4092f008 4e56 */
-	.short	0xffa2	/* 4092f00a ffa2 */
-	.short	0x2d7c	/* 4092f00c 2d7c */
-	.short	0x0010	/* 4092f00e 0010 */
-	.short	0x3028	/* 4092f010 3028 */
-	.short	0xfffc	/* 4092f012 fffc */
-	.short	0x48e7	/* 4092f014 48e7 */
-	.short	0x8080	/* 4092f016 8080 */
-	.short	0x6100	/* 4092f018 6100 */
-	.short	0xf8f6	/* 4092f01a f8f6 */
-	.short	0x206e	/* 4092f01c 206e */
-	.short	0x0008	/* 4092f01e 0008 */
-	.short	0xf210	/* 4092f020 f210 */
-	.short	0xd080	/* 4092f022 d080 */
-	.short	0xf200	/* 4092f024 f200 */
-	.short	0x0438	/* 4092f026 0438 */
-	.short	0xf200	/* 4092f028 f200 */
-	.short	0xa800	/* 4092f02a a800 */
-	.short	0xe9c0	/* 4092f02c e9c0 */
-	.short	0x0104	/* 4092f02e 0104 */
-	.short	0x44fb	/* 4092f030 44fb */
-	.short	0x0320	/* 4092f032 0320 */
-	.short	0x0b78	/* 4092f034 0b78 */
-	.short	0x4cdf	/* 4092f036 4cdf */
-	.short	0x0101	/* 4092f038 0101 */
-	.short	0x4e5e	/* 4092f03a 4e5e */
-	.short	0x4e74	/* 4092f03c 4e74 */
-	.short	0x0008	/* 4092f03e 0008 */
+
+	linkw	%fp,#-94		/* 4092f008 4e56 ffa2 */
+	movel	#1060904,%fp@(-4)	/* 4092f00c 2d7c 0010 3028 fffc */
+	moveml	%d0/%a0,%sp@-		/* 4092f014 48e7 8080 */
+	bsrw	sub_4092e910		/* 4092f018 6100 f8f6 */
+	moveal	%fp@(8),%a0		/* 4092f01c 206e 0008 */
+	fmovemx %a0@,%fp0		/* 4092f020 f210 d080 */
+	fcmpx	%fp1,%fp0		/* 4092f024 f200 0438 */
+	fmovel	%fpsr,%d0		/* 4092f028 f200 a800 */
+	bfextu	%d0,4,4,%d0		/* 4092f02c e9c0 0104 */
+	movew	%pc@(byte_4092fbaa,%d0:w:2),%ccr	/* 4092f030 44fb 0320 0b78 */
+	moveml	%sp@+,%d0/%a0		/* 4092f036 4cdf 0101 */
+	unlk	%fp			/* 4092f03a 4e5e */
+	rtd	#8			/* 4092f03c 4e74 0008 */
+
 	.short	0x4e56	/* 4092f040 4e56 */
 	.short	0xffa2	/* 4092f042 ffa2 */
 	.short	0x2d7c	/* 4092f044 2d7c */
@@ -1492,6 +1479,8 @@
 	.short	0x4e5e	/* 4092fba4 4e5e */
 	.short	0x4e74	/* 4092fba6 4e74 */
 	.short	0x0008	/* 4092fba8 0008 */
+
+byte_4092fbaa:
 	.short	0x0000	/* 4092fbaa 0000 */
 	.short	0x0002	/* 4092fbac 0002 */
 	.short	0x0000	/* 4092fbae 0000 */
