@@ -332,38 +332,34 @@ loc_4080d30a:
 	rts				/* 4080d30c 4e75 */
 
 sub_4080d30e:
-	.short	0x48e7	/* 4080d30e 48e7 */
-	.short	0x1c38	/* 4080d310 1c38 */
-	.short	0x61da	/* 4080d312 61da */
-	.short	0x6bd2	/* 4080d314 6bd2 */
-	.short	0x67ce	/* 4080d316 67ce */
-	.short	0x264a	/* 4080d318 264a */
-	.short	0x2440	/* 4080d31a 2440 */
-	.short	0x2252	/* 4080d31c 2252 */
-	.short	0x0829	/* 4080d31e 0829 */
-	.short	0x0005	/* 4080d320 0005 */
-	.short	0x0005	/* 4080d322 0005 */
-	.short	0x6614	/* 4080d324 6614 */
-	.short	0x0829	/* 4080d326 0829 */
-	.short	0x0006	/* 4080d328 0006 */
-	.short	0x0005	/* 4080d32a 0005 */
-	.short	0x6704	/* 4080d32c 6704 */
-	.short	0x2f11	/* 4080d32e 2f11 */
-	.short	0xa9a3	/* 4080d330 a9a3 */
-	.short	0x204a	/* 4080d332 204a */
-	.short	0xa423	/* 4080d334 a423 */
-	.short	0x4293	/* 4080d336 4293 */
-	.short	0x60ac	/* 4080d338 60ac */
-	.short	0x70e7	/* 4080d33a 70e7 */
-	.short	0x60aa	/* 4080d33c 60aa */
+	moveml	%d3-%d5/%a2-%a4,%sp@-	/* 4080d30e 48e7 1c38 */
+	bsrs	sub_4080d2ee		/* 4080d312 61da */
+	bmis	loc_4080d2e8		/* 4080d314 6bd2 */
+	beqs	loc_4080d2e6		/* 4080d316 67ce */
+	moveal	%a2,%a3			/* 4080d318 264a */
+	moveal	%d0,%a2			/* 4080d31a 2440 */
+	moveal	%a2@,%a1		/* 4080d31c 2252 */
+	btst	#5,%a1@(5)		/* 4080d31e 0829 0005 0005 */
+	bnes	loc_4080d33a		/* 4080d324 6614 */
+	btst	#6,%a1@(5)		/* 4080d326 0829 0006 0005 */
+	beqs	loc_4080d332		/* 4080d32c 6704 */
+	movel	%a1@,%sp@-		/* 4080d32e 2f11 */
+	.short	0xa9a3			/* 4080d330 a9a3 */
+
+loc_4080d332:
+	moveal	%a2,%a0			/* 4080d332 204a */
+	.short	0xa423			/* 4080d334 a423 */
+	clrl	%a3@			/* 4080d336 4293 */
+	bras	loc_4080d2e6		/* 4080d338 60ac */
+
+loc_4080d33a:
+	moveq	#-25,%d0		/* 4080d33a 70e7 */
+	bras	loc_4080d2e8		/* 4080d33c 60aa */
 
 sub_4080d33e:
-	.short	0x2140	/* 4080d33e 2140 */
-	.short	0x0006	/* 4080d340 0006 */
-	.short	0x43f8	/* 4080d342 43f8 */
-	.short	0x0308	/* 4080d344 0308 */
-	.short	0x4eba	/* 4080d346 4eba */
-	.short	0x4028	/* 4080d348 4028 */
+	movel	%d0,%a0@(6)		/* 4080d33e 2140 0006 */
+	lea	0x308,%a1		/* 4080d342 43f8 0308 */
+	jsr	%pc@(sub_40811370)	/* 4080d346 4eba 4028 */
 	moveq	#0,%d0			/* 4080d34a 7000 */
 	rts				/* 4080d34c 4e75 */
 
