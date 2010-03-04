@@ -385,21 +385,19 @@ sub_4080d380:
 	.align	16
 
 sub_4080d390:
-	.short	0x2078	/* 4080d390 2078 */
-	.short	0x1ff8	/* 4080d392 1ff8 */
-	.short	0x2250	/* 4080d394 2250 */
-	.short	0x0caf	/* 4080d396 0caf */
-	.short	0x736c	/* 4080d398 736c */
-	.short	0x6f74	/* 4080d39a 6f74 */
-	.short	0x0008	/* 4080d39c 0008 */
-	.short	0x660c	/* 4080d39e 660c */
-	.short	0x225f	/* 4080d3a0 225f */
-	.short	0x504f	/* 4080d3a2 504f */
+	moveal	0x1ff8,%a0		/* 4080d390 2078 1ff8 */
+	moveal	%a0@,%a1		/* 4080d394 2250 */
+	cmpil	#1936486260,%sp@(8)	/* 4080d396 0caf 736c 6f74 0008 */
+	bnes	loc_4080d3ac		/* 4080d39e 660c */
+	moveal	%sp@+,%a1		/* 4080d3a0 225f */
+	addqw	#8,%sp			/* 4080d3a2 504f */
 	moveq	#0,%d0			/* 4080d3a4 7000 */
-	.short	0x1028	/* 4080d3a6 1028 */
-	.short	0x0004	/* 4080d3a8 0004 */
-	.short	0x2e80	/* 4080d3aa 2e80 */
+	moveb	%a0@(4),%d0		/* 4080d3a6 1028 0004 */
+	movel	%d0,%sp@		/* 4080d3aa 2e80 */
+
+loc_4080d3ac:
 	jmp	%a1@			/* 4080d3ac 4ed1 */
+
 	.short	0x225f	/* 4080d3ae 225f */
 	.short	0x584f	/* 4080d3b0 584f */
 	moveq	#0,%d0			/* 4080d3b2 7000 */
