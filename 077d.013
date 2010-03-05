@@ -1823,6 +1823,8 @@ sub_4080df28:
 	.short	0x6702	/* 4080df7a 6702 */
 	.short	0x6112	/* 4080df7c 6112 */
 	rts				/* 4080df7e 4e75 */
+
+sub_4080df80:
 	.short	0x0891	/* 4080df80 0891 */
 	.short	0x0004	/* 4080df82 0004 */
 	.short	0x6122	/* 4080df84 6122 */
@@ -1860,32 +1862,22 @@ sub_4080df28:
 	rts				/* 4080dfc4 4e75 */
 
 sub_4080dfc6:
-	.short	0x40c3	/* 4080dfc6 40c3 */
-	.short	0x007c	/* 4080dfc8 007c */
-	.short	0x0700	/* 4080dfca 0700 */
-	.short	0x2478	/* 4080dfcc 2478 */
-	.short	0x0de0	/* 4080dfce 0de0 */
-	.short	0x08d2	/* 4080dfd0 08d2 */
-	.short	0x0000	/* 4080dfd2 0000 */
-	.short	0x0829	/* 4080dfd4 0829 */
-	.short	0x0004	/* 4080dfd6 0004 */
-	.short	0x1600	/* 4080dfd8 1600 */
-	.short	0x6750	/* 4080dfda 6750 */
-	.short	0x4a29	/* 4080dfdc 4a29 */
-	.short	0x1400	/* 4080dfde 1400 */
-	.short	0x4a6a	/* 4080dfe0 4a6a */
-	.short	0x0002	/* 4080dfe2 0002 */
-	.short	0x6f16	/* 4080dfe4 6f16 */
-	.short	0x206a	/* 4080dfe6 206a */
-	.short	0x0004	/* 4080dfe8 0004 */
-	.short	0x1018	/* 4080dfea 1018 */
-	.short	0x2548	/* 4080dfec 2548 */
-	.short	0x0004	/* 4080dfee 0004 */
-	.short	0x618e	/* 4080dff0 618e */
-	.short	0x536a	/* 4080dff2 536a */
-	.short	0x0002	/* 4080dff4 0002 */
-	.short	0x46c3	/* 4080dff6 46c3 */
-	.short	0x6000	/* 4080dff8 6000 */
-	.short	0x01d8	/* 4080dffa 01d8 */
-	.short	0x4a6a	/* 4080dffc 4a6a */
-	.short	0x0008	/* 4080dffe 0008 */
+	movew	%sr,%d3			/* 4080dfc6 40c3 */
+	oriw	#1792,%sr		/* 4080dfc8 007c 0700 */
+	moveal	0xde0,%a2		/* 4080dfcc 2478 0de0 */
+	bset	#0,%a2@			/* 4080dfd0 08d2 0000 */
+	btst	#4,%a1@(5632)		/* 4080dfd4 0829 0004 1600 */
+	beqs	loc_4080e02c		/* 4080dfda 6750 */
+	tstb	%a1@(5120)		/* 4080dfdc 4a29 1400 */
+	tstw	%a2@(2)			/* 4080dfe0 4a6a 0002 */
+	bles	loc_4080dffc		/* 4080dfe4 6f16 */
+	moveal	%a2@(4),%a0		/* 4080dfe6 206a 0004 */
+	moveb	%a0@+,%d0		/* 4080dfea 1018 */
+	movel	%a0,%a2@(4)		/* 4080dfec 2548 0004 */
+	bsrs	sub_4080df80		/* 4080dff0 618e */
+	subqw	#1,%a2@(2)		/* 4080dff2 536a 0002 */
+	movew	%d3,%sr			/* 4080dff6 46c3 */
+	braw	loc_4080e1d2		/* 4080dff8 6000 01d8 */
+
+loc_4080dffc:
+	tstw	%a2@(8)			/* 4080dffc 4a6a 0008 */
