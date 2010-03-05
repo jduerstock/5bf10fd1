@@ -710,36 +710,32 @@ loc_4080d6d4:
 	rts				/* 4080d6d4 4e75 */
 
 sub_4080d6d6:
-	.short	0x48e7	/* 4080d6d6 48e7 */
-	.short	0xe0e0	/* 4080d6d8 e0e0 */
-	.short	0x6100	/* 4080d6da 6100 */
-	.short	0xfe56	/* 4080d6dc fe56 */
-	.short	0x670e	/* 4080d6de 670e */
-	.short	0x7082	/* 4080d6e0 7082 */
-	.short	0x6110	/* 4080d6e2 6110 */
-	.short	0x61ff	/* 4080d6e4 61ff */
-	.short	0xffff	/* 4080d6e6 ffff */
-	.short	0x3a42	/* 4080d6e8 3a42 */
-	.short	0x7002	/* 4080d6ea 7002 */
-	.short	0x6106	/* 4080d6ec 6106 */
-	.short	0x4cdf	/* 4080d6ee 4cdf */
-	.short	0x0707	/* 4080d6f0 0707 */
+	moveml	%d0-%d2/%a0-%a2,%sp@-	/* 4080d6d6 48e7 e0e0 */
+	bsrw	sub_4080d532		/* 4080d6da 6100 fe56 */
+	beqs	loc_4080d6ee		/* 4080d6de 670e */
+	moveq	#-126,%d0		/* 4080d6e0 7082 */
+	bsrs	sub_4080d6f4		/* 4080d6e2 6110 */
+	bsrl	INITSCC			/* 4080d6e4 61ff ffff 3a42 */
+	moveq	#2,%d0			/* 4080d6ea 7002 */
+	bsrs	sub_4080d6f4		/* 4080d6ec 6106 */
+
+loc_4080d6ee:
+	moveml	%sp@+,%d0-%d2/%a0-%a2	/* 4080d6ee 4cdf 0707 */
 	rts				/* 4080d6f2 4e75 */
-	.short	0x0838	/* 4080d6f4 0838 */
-	.short	0x0000	/* 4080d6f6 0000 */
-	.short	0x0b22	/* 4080d6f8 0b22 */
-	.short	0x6716	/* 4080d6fa 6716 */
-	.short	0x1f00	/* 4080d6fc 1f00 */
-	.short	0x2f0f	/* 4080d6fe 2f0f */
-	.short	0x2f17	/* 4080d700 2f17 */
-	.short	0x3f3c	/* 4080d702 3f3c */
-	.short	0x0001	/* 4080d704 0001 */
-	.short	0x3f3c	/* 4080d706 3f3c */
-	.short	0x0010	/* 4080d708 0010 */
-	.short	0x204f	/* 4080d70a 204f */
-	.short	0xa085	/* 4080d70c a085 */
-	.short	0x4fef	/* 4080d70e 4fef */
-	.short	0x000e	/* 4080d710 000e */
+
+sub_4080d6f4:
+	btst	#0,0xb22		/* 4080d6f4 0838 0000 0b22 */
+	beqs	loc_4080d712		/* 4080d6fa 6716 */
+	moveb	%d0,%sp@-		/* 4080d6fc 1f00 */
+	movel	%sp,%sp@-		/* 4080d6fe 2f0f */
+	movel	%sp@,%sp@-		/* 4080d700 2f17 */
+	movew	#1,%sp@-		/* 4080d702 3f3c 0001 */
+	movew	#16,%sp@-		/* 4080d706 3f3c 0010 */
+	moveal	%sp,%a0			/* 4080d70a 204f */
+	.short	0xa085			/* 4080d70c a085 */
+	lea	%sp@(14),%sp		/* 4080d70e 4fef 000e */
+
+loc_4080d712:
 	rts				/* 4080d712 4e75 */
 
 sub_4080d714:
