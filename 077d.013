@@ -1825,40 +1825,34 @@ sub_4080df28:
 	rts				/* 4080df7e 4e75 */
 
 sub_4080df80:
-	.short	0x0891	/* 4080df80 0891 */
-	.short	0x0004	/* 4080df82 0004 */
-	.short	0x6122	/* 4080df84 6122 */
-	.short	0x1340	/* 4080df86 1340 */
-	.short	0x1400	/* 4080df88 1400 */
-	.short	0x08d1	/* 4080df8a 08d1 */
-	.short	0x0004	/* 4080df8c 0004 */
+	bclr	#4,%a1@			/* 4080df80 0891 0004 */
+	bsrs	sub_4080dfa8		/* 4080df84 6122 */
+	moveb	%d0,%a1@(5120)		/* 4080df86 1340 1400 */
+	bset	#4,%a1@			/* 4080df8a 08d1 0004 */
 	rts				/* 4080df8e 4e75 */
-	.short	0x48e7	/* 4080df90 48e7 */
-	.short	0xf0f0	/* 4080df92 f0f0 */
-	.short	0x2078	/* 4080df94 2078 */
-	.short	0x019a	/* 4080df96 019a */
-	.short	0x4e90	/* 4080df98 4e90 */
-	.short	0x4cdf	/* 4080df9a 4cdf */
-	.short	0x0f0f	/* 4080df9c 0f0f */
+
+	moveml	%d0-%d3/%a0-%a3,%sp@-	/* 4080df90 48e7 f0f0 */
+	moveal	0x19a,%a0		/* 4080df94 2078 019a */
+	jsr	%a0@			/* 4080df98 4e90 */
+	moveml	%sp@+,%d0-%d3/%a0-%a3	/* 4080df9a 4cdf 0f0f */
 	rts				/* 4080df9e 4e75 */
-	.short	0x08d1	/* 4080dfa0 08d1 */
-	.short	0x0004	/* 4080dfa2 0004 */
-	.short	0x6102	/* 4080dfa4 6102 */
+
+	bset	#4,%a1@			/* 4080dfa0 08d1 0004 */
+	bsrs	sub_4080dfa8		/* 4080dfa4 6102 */
 	rts				/* 4080dfa6 4e75 */
-	.short	0x2f01	/* 4080dfa8 2f01 */
-	.short	0x3238	/* 4080dfaa 3238 */
-	.short	0x0cea	/* 4080dfac 0cea */
-	.short	0xe649	/* 4080dfae e649 */
-	.short	0x0c38	/* 4080dfb0 0c38 */
-	.short	0x000e	/* 4080dfb2 000e */
-	.short	0x0cb3	/* 4080dfb4 0cb3 */
-	.short	0x6604	/* 4080dfb6 6604 */
-	.short	0x0641	/* 4080dfb8 0641 */
-	.short	0x0019	/* 4080dfba 0019 */
-	.short	0x4a11	/* 4080dfbc 4a11 */
-	.short	0x51c9	/* 4080dfbe 51c9 */
-	.short	0xfffc	/* 4080dfc0 fffc */
-	.short	0x221f	/* 4080dfc2 221f */
+
+sub_4080dfa8:
+	movel	%d1,%sp@-		/* 4080dfa8 2f01 */
+	movew	0xcea,%d1		/* 4080dfaa 3238 0cea */
+	lsrw	#3,%d1			/* 4080dfae e649 */
+	cmpib	#14,0xcb3		/* 4080dfb0 0c38 000e 0cb3 */
+	bnes	loc_4080dfbc		/* 4080dfb6 6604 */
+	addiw	#25,%d1			/* 4080dfb8 0641 0019 */
+
+loc_4080dfbc:
+	tstb	%a1@			/* 4080dfbc 4a11 */
+	dbf	%d1,loc_4080dfbc	/* 4080dfbe 51c9 fffc */
+	movel	%sp@+,%d1		/* 4080dfc2 221f */
 	rts				/* 4080dfc4 4e75 */
 
 sub_4080dfc6:
