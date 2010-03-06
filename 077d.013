@@ -1636,39 +1636,32 @@ sub_4080de4e:
 	rts				/* 4080df26 4e75 */
 
 sub_4080df28:
-	.short	0x0c10	/* 4080df28 0c10 */
-	.short	0x00ff	/* 4080df2a 00ff */
-	.short	0x6738	/* 4080df2c 6738 */
-	.short	0x0c10	/* 4080df2e 0c10 */
-	.short	0x00fe	/* 4080df30 00fe */
-	.short	0x6732	/* 4080df32 6732 */
-	.short	0x0c10	/* 4080df34 0c10 */
-	.short	0x0002	/* 4080df36 0002 */
-	.short	0x621a	/* 4080df38 621a */
-	.short	0x0c10	/* 4080df3a 0c10 */
-	.short	0x0001	/* 4080df3c 0001 */
-	.short	0x6626	/* 4080df3e 6626 */
-	.short	0x0c28	/* 4080df40 0c28 */
-	.short	0x0024	/* 4080df42 0024 */
-	.short	0x0001	/* 4080df44 0001 */
-	.short	0x631e	/* 4080df46 631e */
-	.short	0x317c	/* 4080df48 317c */
-	.short	0x0202	/* 4080df4a 0202 */
-	.short	0x0002	/* 4080df4c 0002 */
-	.short	0x3150	/* 4080df4e 3150 */
-	.short	0x0004	/* 4080df50 0004 */
-	.short	0x600a	/* 4080df52 600a */
-	.short	0x317c	/* 4080df54 317c */
-	.short	0x0201	/* 4080df56 0201 */
-	.short	0x0002	/* 4080df58 0002 */
-	.short	0x3150	/* 4080df5a 3150 */
-	.short	0x0004	/* 4080df5c 0004 */
-	.short	0x317c	/* 4080df5e 317c */
-	.short	0xffce	/* 4080df60 ffce */
-	.short	0x000e	/* 4080df62 000e */
-	.short	0x6004	/* 4080df64 6004 */
-	.short	0x4268	/* 4080df66 4268 */
-	.short	0x000e	/* 4080df68 000e */
+	cmpib	#0xff,%a0@		/* 4080df28 0c10 00ff */
+	beqs	loc_4080df66		/* 4080df2c 6738 */
+	cmpib	#0xfe,%a0@		/* 4080df2e 0c10 00fe */
+	beqs	loc_4080df66		/* 4080df32 6732 */
+	cmpib	#2,%a0@			/* 4080df34 0c10 0002 */
+	bhis	loc_4080df54		/* 4080df38 621a */
+	cmpib	#1,%a0@			/* 4080df3a 0c10 0001 */
+	bnes	loc_4080df66		/* 4080df3e 6626 */
+	cmpib	#36,%a0@(1)		/* 4080df40 0c28 0024 0001 */
+	blss	loc_4080df66		/* 4080df46 631e */
+	movew	#514,%a0@(2)		/* 4080df48 317c 0202 0002 */
+	movew	%a0@,%a0@(4)		/* 4080df4e 3150 0004 */
+	bras	loc_4080df5e		/* 4080df52 600a */
+
+loc_4080df54:
+	movew	#513,%a0@(2)		/* 4080df54 317c 0201 0002 */
+	movew	%a0@,%a0@(4)		/* 4080df5a 3150 0004 */
+
+loc_4080df5e:
+	movew	#-50,%a0@(14)		/* 4080df5e 317c ffce 000e */
+	bras	loc_4080df6a		/* 4080df64 6004 */
+
+loc_4080df66:
+	clrw	%a0@(14)		/* 4080df66 4268 000e */
+
+loc_4080df6a:
 	rts				/* 4080df6a 4e75 */
 
 	movew	%sr,%d0			/* 4080df6c 40c0 */
