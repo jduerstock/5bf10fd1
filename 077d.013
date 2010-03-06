@@ -1670,15 +1670,15 @@ sub_4080df28:
 	.short	0x4268	/* 4080df66 4268 */
 	.short	0x000e	/* 4080df68 000e */
 	rts				/* 4080df6a 4e75 */
-	.short	0x40c0	/* 4080df6c 40c0 */
-	.short	0x0240	/* 4080df6e 0240 */
-	.short	0x0700	/* 4080df70 0700 */
-	.short	0x670a	/* 4080df72 670a */
-	.short	0x0829	/* 4080df74 0829 */
-	.short	0x0002	/* 4080df76 0002 */
-	.short	0x1a00	/* 4080df78 1a00 */
-	.short	0x6702	/* 4080df7a 6702 */
-	.short	0x6112	/* 4080df7c 6112 */
+
+	movew	%sr,%d0			/* 4080df6c 40c0 */
+	andiw	#1792,%d0		/* 4080df6e 0240 0700 */
+	beqs	loc_4080df7e		/* 4080df72 670a */
+	btst	#2,%a1@(6656)		/* 4080df74 0829 0002 1a00 */
+	beqs	loc_4080df7e		/* 4080df7a 6702 */
+	bsrs	sub_4080df90		/* 4080df7c 6112 */
+
+loc_4080df7e:
 	rts				/* 4080df7e 4e75 */
 
 sub_4080df80:
@@ -1688,6 +1688,7 @@ sub_4080df80:
 	bset	#4,%a1@			/* 4080df8a 08d1 0004 */
 	rts				/* 4080df8e 4e75 */
 
+sub_4080df90:
 	moveml	%d0-%d3/%a0-%a3,%sp@-	/* 4080df90 48e7 f0f0 */
 	moveal	0x19a,%a0		/* 4080df94 2078 019a */
 	jsr	%a0@			/* 4080df98 4e90 */
