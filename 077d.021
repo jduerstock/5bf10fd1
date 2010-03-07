@@ -911,41 +911,33 @@ sub_408156ee:
 	moveq	#0,%d0			/* 4081570a 7000 */
 	rts				/* 4081570c 4e75 */
 	rts				/* 4081570e 4e75 */
-	.short	0x48e7	/* 40815710 48e7 */
-	.short	0x00e0	/* 40815712 00e0 */
-	.short	0x203c	/* 40815714 203c */
-	.short	0x0000	/* 40815716 0000 */
-	.short	0x00f4	/* 40815718 00f4 */
-	.short	0xa71e	/* 4081571a a71e */
-	.short	0x21c8	/* 4081571c 21c8 */
-	.short	0x0db8	/* 4081571e 0db8 */
-	.short	0x703c	/* 40815720 703c */
-	.short	0x43fa	/* 40815722 43fa */
-	.short	0x002c	/* 40815724 002c */
-	.short	0x2449	/* 40815726 2449 */
-	.short	0xd4d9	/* 40815728 d4d9 */
-	.short	0x20ca	/* 4081572a 20ca */
-	.short	0x51c8	/* 4081572c 51c8 */
-	.short	0xfff8	/* 4081572e fff8 */
-	.short	0x0c38	/* 40815730 0c38 */
-	.short	0x0004	/* 40815732 0004 */
-	.short	0x012f	/* 40815734 012f */
-	.short	0x660c	/* 40815736 660c */
-	.short	0x41fa	/* 40815738 41fa */
-	.short	0x1b84	/* 4081573a 1b84 */
-	.short	0x2188	/* 4081573c 2188 */
-	.short	0x81e2	/* 4081573e 81e2 */
-	.short	0x0db8	/* 40815740 0db8 */
-	.short	0x00e4	/* 40815742 00e4 */
-	.short	0x4cdf	/* 40815744 4cdf */
-	.short	0x0700	/* 40815746 0700 */
+
+	moveml	%a0-%a2,%sp@-		/* 40815710 48e7 00e0 */
+	movel	#244,%d0		/* 40815714 203c 0000 00f4 */
+	.short	0xa71e			/* 4081571a a71e */
+	movel	%a0,0xdb8		/* 4081571c 21c8 0db8 */
+	moveq	#60,%d0			/* 40815720 703c */
+	lea	%pc@(off_40815750),%a1	/* 40815722 43fa 002c */
+
+loc_40815726:
+	moveal	%a1,%a2			/* 40815726 2449 */
+	addaw	%a1@+,%a2		/* 40815728 d4d9 */
+	movel	%a2,%a0@+		/* 4081572a 20ca */
+	dbf	%d0,loc_40815726	/* 4081572c 51c8 fff8 */
+	cmpib	#4,0x12f		/* 40815730 0c38 0004 012f */
+	bnes	loc_40815744		/* 40815736 660c */
+	lea	%pc@(sub_408172be),%a0	/* 40815738 41fa 1b84 */
+	.short	0x2188,0x81e2,0x0db8,0x00e4	/* movel %a0,@(0x0db8)@(0xe4) /* 4081573c 2188 81e2 0db8 00e4 */
+
+loc_40815744:
+	moveml	%sp@+,%a0-%a2		/* 40815744 4cdf 0700 */
 	moveq	#0,%d0			/* 40815748 7000 */
 	rts				/* 4081574a 4e75 */
 
 	.align	16
 
 off_40815750:
-	.short	sub_40815fdc-.		/* 40815750 088c */
+	.short	READSLOTBYTE-.		/* 40815750 088c */
 	.short	sub_4081600c-.		/* 40815752 08ba */
 	.short	sub_4081603e-.		/* 40815754 08ea */
 	.short	sub_408160e4-.		/* 40815756 098e */
@@ -1962,7 +1954,7 @@ loc_40815fd6:
 	movel	%sp@+,%a0@(4)		/* 40815fd6 215f 0004 */
 	rts				/* 40815fda 4e75 */
 
-sub_40815fdc:
+READSLOTBYTE:
 	CallVector	0x206c 0x04	/* 40815fdc 2f30 81e2 206c 0010 */
 	rts				/* 40815fe4 4e75 */
 
