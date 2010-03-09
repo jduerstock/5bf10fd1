@@ -1322,37 +1322,30 @@ loc_40815b54:
 	rts				/* 40815b54 4e75 */
 
 sub_40815b56:
-	.short	0x48e7	/* 40815b56 48e7 */
-	.short	0x7838	/* 40815b58 7838 */
-	.short	0x284a	/* 40815b5a 284a */
-	.short	0x242c	/* 40815b5c 242c */
-	.short	0x0004	/* 40815b5e 0004 */
-	.short	0x677a	/* 40815b60 677a */
-	.short	0x7201	/* 40815b62 7201 */
-	.short	0x9282	/* 40815b64 9282 */
-	.short	0x2169	/* 40815b66 2169 */
-	.short	0x0010	/* 40815b68 0010 */
-	.short	0x0004	/* 40815b6a 0004 */
-	.short	0x2141	/* 40815b6c 2141 */
-	.short	0x000c	/* 40815b6e 000c */
-	.short	0x702c	/* 40815b70 702c */
-	.short	0xa06e	/* 40815b72 a06e */
-	.short	0x6666	/* 40815b74 6666 */
-	.short	0x2668	/* 40815b76 2668 */
-	.short	0x0004	/* 40815b78 0004 */
-	.short	0x08e8	/* 40815b7a 08e8 */
-	.short	0x0005	/* 40815b7c 0005 */
-	.short	0x0036	/* 40815b7e 0036 */
-	.short	0x7028	/* 40815b80 7028 */
-	.short	0xa06e	/* 40815b82 a06e */
-	.short	0x6656	/* 40815b84 6656 */
-	.short	0x2810	/* 40815b86 2810 */
-	.short	0x7200	/* 40815b88 7200 */
-	.short	0x7600	/* 40815b8a 7600 */
-	.short	0x487a	/* 40815b8c 487a */
-	.short	0x000c	/* 40815b8e 000c */
+	moveml	%d1-%d4/%a2-%a4,%sp@-	/* 40815b56 48e7 7838 */
+	moveal	%a2,%a4			/* 40815b5a 284a */
+	movel	%a4@(4),%d2		/* 40815b5c 242c 0004 */
+	beqs	loc_40815bdc		/* 40815b60 677a */
+	moveq	#1,%d1			/* 40815b62 7201 */
+	subl	%d2,%d1			/* 40815b64 9282 */
+	movel	%a1@(16),%a0@(4)	/* 40815b66 2169 0010 0004 */
+	movel	%d1,%a0@(12)		/* 40815b6c 2141 000c */
+	moveq	#44,%d0			/* 40815b70 702c */
+	.short	0xa06e			/* 40815b72 a06e */
+	bnes	loc_40815bdc		/* 40815b74 6666 */
+	moveal	%a0@(4),%a3		/* 40815b76 2668 0004 */
+	bset	#5,%a0@(54)		/* 40815b7a 08e8 0005 0036 */
+	moveq	#40,%d0			/* 40815b80 7028 */
+	.short	0xa06e			/* 40815b82 a06e */
+	bnes	loc_40815bdc		/* 40815b84 6656 */
+	movel	%a0@,%d4		/* 40815b86 2810 */
+	moveq	#0,%d1			/* 40815b88 7200 */
+	moveq	#0,%d3			/* 40815b8a 7600 */
+	pea	%pc@(sub_40815b9a)	/* 40815b8c 487a 000c */
 	CallVector	0x0db8 58	/* 40815b90 2f30 81e2 0db8 00e8 */
 	rts				/* 40815b98 4e75 */
+
+sub_40815b9a:
 	.short	0x303c	/* 40815b9a 303c */
 	.short	0xfed3	/* 40815b9c fed3 */
 	.short	0x45fa	/* 40815b9e 45fa */
@@ -1383,6 +1376,8 @@ sub_40815b56:
 	.short	0x000c	/* 40815bd0 000c */
 	CallVector	0x0db8 59	/* 40815bd2 2f30 81e2 0db8 00ec */
 	rts				/* 40815bda 4e75 */
+
+loc_40815bdc:
 	.short	0x4cdf	/* 40815bdc 4cdf */
 	.short	0x1c1e	/* 40815bde 1c1e */
 	rts				/* 40815be0 4e75 */
