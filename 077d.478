@@ -104,28 +104,22 @@ sub_409de0c8:
 	rts				/* 409de0c8 4e75 */
 
 sub_409de0ca:
-	.short	0x41fa	/* 409de0ca 41fa */
-	.short	0xfdcc	/* 409de0cc fdcc */
-	.short	0x202a	/* 409de0ce 202a */
-	.short	0x0014	/* 409de0d0 0014 */
-	.short	0x0240	/* 409de0d2 0240 */
-	.short	0x0100	/* 409de0d4 0100 */
-	.short	0x671e	/* 409de0d6 671e */
-	.short	0x2540	/* 409de0d8 2540 */
-	.short	0x0014	/* 409de0da 0014 */
-	.short	0x5290	/* 409de0dc 5290 */
-	.short	0x0c90	/* 409de0de 0c90 */
-	.short	0x0000	/* 409de0e0 0000 */
-	.short	0x0004	/* 409de0e2 0004 */
-	.short	0x6510	/* 409de0e4 6510 */
-	.short	0x202a	/* 409de0e6 202a */
-	.short	0x001c	/* 409de0e8 001c */
-	.short	0x0800	/* 409de0ea 0800 */
-	.short	0x0000	/* 409de0ec 0000 */
-	.short	0x6606	/* 409de0ee 6606 */
-	.short	0x7002	/* 409de0f0 7002 */
-	.short	0x2480	/* 409de0f2 2480 */
+	lea	%pc@(byte_409dde98),%a0	/* 409de0ca 41fa fdcc */
+	movel	%a2@(20),%d0		/* 409de0ce 202a 0014 */
+	andiw	#256,%d0		/* 409de0d2 0240 0100 */
+	beqs	loc_409de0f6		/* 409de0d6 671e */
+	movel	%d0,%a2@(20)		/* 409de0d8 2540 0014 */
+	addql	#1,%a0@			/* 409de0dc 5290 */
+	cmpil	#4,%a0@			/* 409de0de 0c90 0000 0004 */
+	bcss	loc_409de0f6		/* 409de0e4 6510 */
+	movel	%a2@(28),%d0		/* 409de0e6 202a 001c */
+	btst	#0,%d0			/* 409de0ea 0800 0000 */
+	bnes	loc_409de0f6		/* 409de0ee 6606 */
+	moveq	#2,%d0			/* 409de0f0 7002 */
+	movel	%d0,%a2@		/* 409de0f2 2480 */
 	rts				/* 409de0f4 4e75 */
+
+loc_409de0f6:
 	.short	0x4290	/* 409de0f6 4290 */
 	.short	0x227a	/* 409de0f8 227a */
 	.short	0xfdb2	/* 409de0fa fdb2 */
