@@ -223,38 +223,38 @@ loc_408a41b8:
 	.align	16
 
 sub_408a41d0:
-	.short	0x4cef	/* 408a41d0 4cef */
-	.short	0x0300	/* 408a41d2 0300 */
-	.short	0x0004	/* 408a41d4 0004 */
-	.short	0x222f	/* 408a41d6 222f */
-	.short	0x000c	/* 408a41d8 000c */
-	.short	0xb000	/* 408a41da b000 */
-	.short	0x6004	/* 408a41dc 6004 */
-	.short	0x4841	/* 408a41de 4841 */
-	.short	0xb109	/* 408a41e0 b109 */
-	.short	0x56c9	/* 408a41e2 56c9 */
-	.short	0xfffc	/* 408a41e4 fffc */
-	.short	0x660a	/* 408a41e6 660a */
-	.short	0x4841	/* 408a41e8 4841 */
-	.short	0x51c9	/* 408a41ea 51c9 */
-	.short	0xfff2	/* 408a41ec fff2 */
+	moveml	%sp@(4),%a0-%a1 	/* 408a41d0 4cef 0300 0004 */
+	movel	%sp@(12),%d1		/* 408aa748 222f 000c */
+	cmpb	%d0,%d0			/* 408a41da b000 */
+	bras	loc_408a41e2		/* 408a41dc 6004 */
+
+loc_408a41de:
+	swap	%d1			/* 408a41de 4841 */
+
+loc_408a41e0:
+	cmpmb	%a1@+,%a0@+		/* 408a41e0 b109 */
+
+loc_408a41e2:
+	dbne	%d1,loc_408a41e0	/* 408a41e2 56c9 fffc */
+	bnes	loc_408a41f2		/* 408a41e6 660a */
+	swap	%d1			/* 408a41e8 4841 */
+	dbf	%d1,loc_408a41de	/* 408a41ea 51c9 fff2 */
 	moveq	#0,%d0			/* 408a41ee 7000 */
 	rts				/* 408a41f0 4e75 */
-	.short	0x7200	/* 408a41f2 7200 */
-	.short	0x1221	/* 408a41f4 1221 */
+
+loc_408a41f2:
+	moveq	#0,%d1			/* 408a41f2 7200 */
+	moveb	%a1@-,%d1		/* 408a41f4 1221 */
 	moveq	#0,%d0			/* 408a41f6 7000 */
-	.short	0x1020	/* 408a41f8 1020 */
-	.short	0x9081	/* 408a41fa 9081 */
+	moveb	%a0@-,%d0		/* 408a41f8 1020 */
+	subl	%d1,%d0			/* 408a41fa 9081 */
 	rts				/* 408a41fc 4e75 */
-	.short	0x866d	/* 408a41fe 866d */
-	.short	0x656d	/* 408a4200 656d */
-	.short	0x636d	/* 408a4202 636d */
-	moveq	#0,%d0			/* 408a4204 7000 */
-	.short	0x0000	/* 408a4206 0000 */
-	.short	0x0000	/* 408a4208 0000 */
-	.short	0x0000	/* 408a420a 0000 */
-	.short	0x0000	/* 408a420c 0000 */
-	.short	0x0000	/* 408a420e 0000 */
+
+	.byte	0x86			/* 408a41fe 86 */
+	.ascii	"memcmp"
+
+	.align	16
+
 	.short	0x206f	/* 408a4210 206f */
 	.short	0x0004	/* 408a4212 0004 */
 	.short	0x4cef	/* 408a4214 4cef */
