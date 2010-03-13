@@ -244,28 +244,19 @@ loc_4080726c:
 	movew	%sp@+,%sr		/* 408072ca 46df */
 	rts				/* 408072cc 4e75 */
 
-	.short	0x007c	/* 408072ce 007c */
-	.short	0x0700	/* 408072d0 0700 */
-	.short	0x4cdf	/* 408072d2 4cdf */
-	.short	0x0703	/* 408072d4 0703 */
-	.short	0x4e7b	/* 408072d6 4e7b */
-	.short	0x0002	/* 408072d8 0002 */
-	.short	0x4e7b	/* 408072da 4e7b */
-	.short	0x1802	/* 408072dc 1802 */
-	.short	0x4e7b	/* 408072de 4e7b */
-	.short	0x8801	/* 408072e0 8801 */
-	.short	0x4e61	/* 408072e2 4e61 */
-	.short	0x4e7b	/* 408072e4 4e7b */
-	.short	0xa803	/* 408072e6 a803 */
-	.short	0x2078	/* 408072e8 2078 */
-	.short	0x0d18	/* 408072ea 0d18 */
-	.short	0x21e8	/* 408072ec 21e8 */
-	.short	0x0158	/* 408072ee 0158 */
-	.short	0x007c	/* 408072f0 007c */
-	.short	0x4cdf	/* 408072f2 4cdf */
-	.short	0x7ffe	/* 408072f4 7ffe */
-	.short	0x46df	/* 408072f6 46df */
+	oriw	#1792,%sr		/* 408072ce 007c 0700 */
+	moveml	%sp@+,%d0-%d1/%a0-%a2	/* 408072d2 4cdf 0703 */
+	movec	%d0,%cacr		/* 408072d6 4e7b 0002 */
+	.short	0x4e7b,0x1802		/* movec %d1,%caar */
+	movec	%a0,%vbr		/* 408072de 4e7b 8801 */
+	movel	%a1,%usp		/* 408072e2 4e61 */
+	movec	%a2,%msp		/* 408072e4 4e7b a803 */
+	moveal	0xd18,%a0		/* 408072e8 2078 0d18 */
+	movel	%a0@(344),0x7c		/* 408072ec 21e8 0158 007c */
+	moveml	%sp@+,%d1-%fp		/* 408072f2 4cdf 7ffe */
+	movew	%sp@+,%sr		/* 408072f6 46df */
 	rts				/* 408072f8 4e75 */
+
 	.short	0x0000	/* 408072fa 0000 */
 	.short	0x0036	/* 408072fc 0036 */
 	.short	0x0000	/* 408072fe 0000 */
