@@ -223,44 +223,27 @@ loc_4080726c:
 	movew	%sp@+,%sr		/* 4080727e 46df */
 	rts				/* 40807280 4e75 */
 
-	.short	0x007c	/* 40807282 007c */
-	.short	0x0700	/* 40807284 0700 */
-	.short	0x2078	/* 40807286 2078 */
-	.short	0x0000	/* 40807288 0000 */
-	.short	0x2e50	/* 4080728a 2e50 */
-	.short	0xf028	/* 4080728c f028 */
-	.short	0x0800	/* 4080728e 0800 */
-	.short	0x001c	/* 40807290 001c */
-	.short	0xf028	/* 40807292 f028 */
-	.short	0x0c00	/* 40807294 0c00 */
-	.short	0x0018	/* 40807296 0018 */
-	.short	0xf028	/* 40807298 f028 */
-	.short	0x4c00	/* 4080729a 4c00 */
-	.short	0x0010	/* 4080729c 0010 */
-	.short	0xf028	/* 4080729e f028 */
-	.short	0x4000	/* 408072a0 4000 */
-	.short	0x000c	/* 408072a2 000c */
-	.short	0x4cdf	/* 408072a4 4cdf */
-	.short	0x0703	/* 408072a6 0703 */
-	.short	0x4e7b	/* 408072a8 4e7b */
-	.short	0x0002	/* 408072aa 0002 */
-	.short	0x4e7b	/* 408072ac 4e7b */
-	.short	0x1802	/* 408072ae 1802 */
-	.short	0x4e7b	/* 408072b0 4e7b */
-	.short	0x8801	/* 408072b2 8801 */
-	.short	0x4e7b	/* 408072b4 4e7b */
-	.short	0x9800	/* 408072b6 9800 */
-	.short	0x4e7b	/* 408072b8 4e7b */
-	.short	0xa803	/* 408072ba a803 */
-	.short	0x2078	/* 408072bc 2078 */
-	.short	0x0d18	/* 408072be 0d18 */
-	.short	0x21e8	/* 408072c0 21e8 */
-	.short	0x0158	/* 408072c2 0158 */
-	.short	0x007c	/* 408072c4 007c */
-	.short	0x4cdf	/* 408072c6 4cdf */
-	.short	0x7ffe	/* 408072c8 7ffe */
-	.short	0x46df	/* 408072ca 46df */
+	oriw	#1792,%sr		/* 40807282 007c 0700 */
+	moveal	0x0,%a0			/* 40807286 2078 0000 */
+	moveal	%a0@,%sp		/* 4080728a 2e50 */
+	.short	0xf028			/* 4080728c f028 */
+	btst	#28,%d0			/* 4080728e 0800 001c */
+	.short	0xf028			/* 40807292 f028 */
+	cmpib	#24,%d0			/* 40807294 0c00 0018 */
+	.short	0xf028,0x4c00,0x0010	/* pmove %a0@(16),%crp */
+	.short	0xf028,0x4000,0x000c	/* pmove %a0@(12),%tc */
+	moveml	%sp@+,%d0-%d1/%a0-%a2	/* 408072a4 4cdf 0703 */
+	movec	%d0,%cacr		/* 408072a8 4e7b 0002 */
+	.short	0x4e7b,0x1802		/* movec %d1,%caar */
+	movec	%a0,%vbr		/* 408072b0 4e7b 8801 */
+	movec	%a1,%usp		/* 408072b4 4e7b 9800 */
+	movec	%a2,%msp		/* 408072b8 4e7b a803 */
+	moveal	0xd18,%a0		/* 408072bc 2078 0d18 */
+	movel	%a0@(344),0x7c		/* 408072c0 21e8 0158 007c */
+	moveml	%sp@+,%d1-%fp		/* 408072c6 4cdf 7ffe */
+	movew	%sp@+,%sr		/* 408072ca 46df */
 	rts				/* 408072cc 4e75 */
+
 	.short	0x007c	/* 408072ce 007c */
 	.short	0x0700	/* 408072d0 0700 */
 	.short	0x4cdf	/* 408072d2 4cdf */
