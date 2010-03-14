@@ -1549,62 +1549,49 @@ sub_408a0c00:
 	.short	0xffe8	/* 408a0c54 ffe8 */
 	.short	0x4e5e	/* 408a0c56 4e5e */
 	rts				/* 408a0c58 4e75 */
-	.short	0x2278	/* 408a0c5a 2278 */
-	.short	0x202c	/* 408a0c5c 202c */
-	.short	0x2269	/* 408a0c5e 2269 */
-	.short	0x00d0	/* 408a0c60 00d0 */
+
+FindCacheInCacheList:
+	moveal	0x202c,%a1		/* 408a0c5a 2278 202c */
+	moveal	%a1@(208),%a1		/* 408a0c5e 2269 00d0 */
 	jmp	%a1@			/* 408a0c62 4ed1 */
 
 	.align	16
 
-sub_408a0c70:
-	.short	0x4e56	/* 408a0c70 4e56 */
-	.short	0x0000	/* 408a0c72 0000 */
-	.short	0x48e7	/* 408a0c74 48e7 */
-	.short	0x0118	/* 408a0c76 0118 */
-	.short	0x266e	/* 408a0c78 266e */
-	.short	0x0008	/* 408a0c7a 0008 */
-	.short	0x2078	/* 408a0c7c 2078 */
-	.short	0x02b6	/* 408a0c7e 02b6 */
-	.short	0x2868	/* 408a0c80 2868 */
-	.short	0x0068	/* 408a0c82 0068 */
-	.short	0x2054	/* 408a0c84 2054 */
+__v__DISKCACHEPURGEPROCEDURE:
+	linkw	%fp,#0			/* 408a0c70 4e56 0000 */
+	moveml	%d7/%a3-%a4,%sp@-	/* 408a0c74 48e7 0118 */
+	moveal	%fp@(8),%a3		/* 408a0c78 266e 0008 */
+	moveal	0x2b6,%a0		/* 408a0c7c 2078 02b6 */
+	moveal	%a0@(104),%a4		/* 408a0c80 2868 0068 */
+	moveal	%a4@,%a0		/* 408a0c84 2054 */
 	moveq	#0,%d0			/* 408a0c86 7000 */
-	.short	0x1028	/* 408a0c88 1028 */
-	.short	0x0096	/* 408a0c8a 0096 */
-	.short	0x4a80	/* 408a0c8c 4a80 */
-	.short	0x6626	/* 408a0c8e 6626 */
-	.short	0x117c	/* 408a0c90 117c */
-	.short	0x0001	/* 408a0c92 0001 */
-	.short	0x0096	/* 408a0c94 0096 */
-	.short	0x2f0c	/* 408a0c96 2f0c */
-	.short	0x2f0b	/* 408a0c98 2f0b */
-	.short	0x4eba	/* 408a0c9a 4eba */
-	.short	0xffbe	/* 408a0c9c ffbe */
-	.short	0x3e00	/* 408a0c9e 3e00 */
-	.short	0x0c47	/* 408a0ca0 0c47 */
-	.short	0xffff	/* 408a0ca2 ffff */
-	.short	0x504f	/* 408a0ca4 504f */
-	.short	0x6708	/* 408a0ca6 6708 */
-	.short	0x2f0b	/* 408a0ca8 2f0b */
-	.short	0x4eba	/* 408a0caa 4eba */
-	.short	0x0298	/* 408a0cac 0298 */
-	.short	0x584f	/* 408a0cae 584f */
-	.short	0x2054	/* 408a0cb0 2054 */
-	.short	0x4228	/* 408a0cb2 4228 */
-	.short	0x0096	/* 408a0cb4 0096 */
-	.short	0x4cee	/* 408a0cb6 4cee */
-	.short	0x1880	/* 408a0cb8 1880 */
-	.short	0xfff4	/* 408a0cba fff4 */
-	.short	0x4e5e	/* 408a0cbc 4e5e */
-	.short	0x4e74	/* 408a0cbe 4e74 */
-	.short	0x0004	/* 408a0cc0 0004 */
+	moveb	%a0@(150),%d0		/* 408a0c88 1028 0096 */
+	tstl	%d0			/* 408a0c8c 4a80 */
+	bnes	loc_408a0cb6		/* 408a0c8e 6626 */
+	moveb	#1,%a0@(150)		/* 408a0c90 117c 0001 0096 */
+	movel	%a4,%sp@-		/* 408a0c96 2f0c */
+	movel	%a3,%sp@-		/* 408a0c98 2f0b */
+	jsr	%pc@(FindCacheInCacheList)	/* 408a0c9a 4eba ffbe */
+	movew	%d0,%d7			/* 408a0c9e 3e00 */
+	cmpiw	#-1,%d7			/* 408a0ca0 0c47 ffff */
+	addqw	#8,%sp			/* 408a0ca4 504f */
+	beqs	loc_408a0cb0		/* 408a0ca6 6708 */
+	movel	%a3,%sp@-		/* 408a0ca8 2f0b */
+	jsr	%pc@(DumpFontCacheToDiskIfNotTooBig)	/* 408a0caa 4eba 0298 */
+	addqw	#4,%sp			/* 408a0cae 584f */
 
-sub_408a0cc2:
-	.short	0x2278	/* 408a0cc2 2278 */
-	.short	0x202c	/* 408a0cc4 202c */
-	.short	0x2269	/* 408a0cc6 2269 */
-	.short	0x00d4	/* 408a0cc8 00d4 */
+loc_408a0cb0:
+	moveal	%a4@,%a0		/* 408a0cb0 2054 */
+	clrb	%a0@(150)		/* 408a0cb2 4228 0096 */
+
+loc_408a0cb6:
+	moveml	%fp@(-12),%d7/%a3-%a4	/* 408a0cb6 4cee 1880 fff4 */
+	unlk	%fp			/* 408a0cbc 4e5e */
+	rtd	#4			/* 408a0cbe 4e74 0004 */
+
+DISKCACHEPURGEPROCEDURE:
+	moveal	0x202c,%a1		/* 408a0cc2 2278 202c */
+	moveal	%a1@(212),%a1		/* 408a0cc6 2269 00d4 */
 	jmp	%a1@			/* 408a0cca 4ed1 */
 
 	.align	16
@@ -1914,11 +1901,9 @@ sub_408a0f10:
 	.short	0x4e5e	/* 408a0f40 4e5e */
 	rts				/* 408a0f42 4e75 */
 
-sub_408a0f44:
-	.short	0x2278	/* 408a0f44 2278 */
-	.short	0x202c	/* 408a0f46 202c */
-	.short	0x2269	/* 408a0f48 2269 */
-	.short	0x00dc	/* 408a0f4a 00dc */
+DumpFontCacheToDiskIfNotTooBig:
+	moveal	0x202c,%a1		/* 408a0f44 2278 202c */
+	moveal	%a1@(220),%a1		/* 408a0f48 2269 00dc */
 	jmp	%a1@			/* 408a0f4c 4ed1 */
 
 	.align	16
