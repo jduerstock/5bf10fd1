@@ -310,21 +310,18 @@ loc_408412b0:
 	.align	16
 
 __v__INSTALLPRIVTRAP:
-	.short	0x0838	/* 408412e0 0838 */
-	.short	0x0004	/* 408412e2 0004 */
-	.short	0x0b22	/* 408412e4 0b22 */
-	.short	0x6716	/* 408412e6 6716 */
-	.short	0x41fa	/* 408412e8 41fa */
-	.short	0x0016	/* 408412ea 0016 */
-	.short	0x0c38	/* 408412ec 0c38 */
-	.short	0x0004	/* 408412ee 0004 */
-	.short	0x012f	/* 408412f0 012f */
-	.short	0x6d04	/* 408412f2 6d04 */
-	.short	0x41fa	/* 408412f4 41fa */
-	.short	0x008a	/* 408412f6 008a */
-	.short	0x303c	/* 408412f8 303c */
-	.short	0xa097	/* 408412fa a097 */
-	.short	0xa247	/* 408412fc a247 */
+	btst	#4,0xb22		/* 408412e0 0838 0004 0b22 */
+	beqs	loc_408412fe		/* 408412e6 6716 */
+	lea	%pc@(sub_40841300),%a0	/* 408412e8 41fa 0016 */
+	cmpib	#4,0x12f		/* 408412ec 0c38 0004 012f */
+	blts	loc_408412f8		/* 408412f2 6d04 */
+	lea	%pc@(sub_40841380),%a0	/* 408412f4 41fa 008a */
+
+loc_408412f8:
+	movew	#0xa097,%d0		/* 408412f8 303c a097 */
+	.short	0xa247			/* 408412fc a247 */
+
+loc_408412fe:
 	rts				/* 408412fe 4e75 */
 
 sub_40841300:
