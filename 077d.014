@@ -1542,16 +1542,13 @@ off_4080ec32:
 	.short	sub_4080efa0-off_4080ec32	/* 4080ec40 036e */
 
 sub_4080ec42:
-	.short	0x0c40	/* 4080ec42 0c40 */
-	.short	0x0007	/* 4080ec44 0007 */
-	.short	0x6208	/* 4080ec46 6208 */
-	.short	0x303b	/* 4080ec48 303b */
-	.short	0x02e8	/* 4080ec4a 02e8 */
-	.short	0x4efb	/* 4080ec4c 4efb */
-	.short	0x00e4	/* 4080ec4e 00e4 */
-	.short	0x203c	/* 4080ec50 203c */
-	.short	0xffff	/* 4080ec52 ffff */
-	.short	0xfe0a	/* 4080ec54 fe0a */
+	cmpiw	#7,%d0			/* 4080ec42 0c40 0007 */
+	bhis	loc_4080ec50		/* 4080ec46 6208 */
+	movew	%pc@(off_4080ec32,%d0:w:2),%d0	/* 4080ec48 303b 02e8 */
+	jmp	%pc@(off_4080ec32,%d0:w)	/* 4080ec4c 4efb 00e4 */
+
+loc_4080ec50:
+	movel	#-502,%d0		/* 4080ec50 203c ffff fe0a */
 	rts				/* 4080ec56 4e75 */
 
 	.align	16
