@@ -279,21 +279,16 @@ sub_4080e292:
 	rts				/* 4080e2be 4e75 */
 
 sub_4080e2c0:
-	.short	0x5589	/* 4080e2c0 5589 */
-	.short	0x0c29	/* 4080e2c2 0c29 */
-	.short	0x0003	/* 4080e2c4 0003 */
-	.short	0x0001	/* 4080e2c6 0001 */
-	.short	0x670a	/* 4080e2c8 670a */
-	.short	0x21e9	/* 4080e2ca 21e9 */
-	.short	0x0004	/* 4080e2cc 0004 */
-	.short	0x020c	/* 4080e2ce 020c */
-	.short	0x53b8	/* 4080e2d0 53b8 */
-	.short	0x020c	/* 4080e2d2 020c */
-	.short	0x2278	/* 4080e2d4 2278 */
-	.short	0x01d4	/* 4080e2d6 01d4 */
-	.short	0x2078	/* 4080e2d8 2078 */
-	.short	0x0192	/* 4080e2da 0192 */
-	.short	0x4ed0	/* 4080e2dc 4ed0 */
+	subql	#2,%a1			/* 4080e2c0 5589 */
+	cmpib	#3,%a1@(1)		/* 4080e2c2 0c29 0003 0001 */
+	beqs	loc_4080e2d4		/* 4080e2c8 670a */
+	movel	%a1@(4),0x20c		/* 4080e2ca 21e9 0004 020c */
+	subql	#1,0x20c		/* 4080e2d0 53b8 020c */
+
+loc_4080e2d4:
+	moveal	0x1d4,%a1		/* 4080e2d4 2278 01d4 */
+	moveal	0x192,%a0		/* 4080e2d8 2078 0192 */
+	jmp	%a0@			/* 4080e2dc 4ed0 */
 
 byte_4080e2de:
 	.short	0x0000	/* 4080e2de 0000 */
