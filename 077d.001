@@ -1362,8 +1362,7 @@ unk_40801ba2:
 	.short	0xffff	/* 40801c4c ffff */
 	.short	0xffff	/* 40801c4e ffff */
 	.short	0xffff	/* 40801c50 ffff */
-	.short	0xffff	/* 40801c52 ffff */
-	.short	0xffff	/* 40801c54 ffff */
+	.long	0xffffffff		/* 40801c52 ffff ffff */
 	.long	0xffffffff		/* 40801c56 ffff ffff */
 	.long	0xffffffff		/* 40801c5a ffff ffff */
 	.long	0xffffffff		/* 40801c5e ffff ffff */
@@ -1387,7 +1386,7 @@ unk_40801ba2:
 	.align	16
 
 IGETTIMEOUT:
-	jsr	%pc@(sub_40801d90)	/* 40801cb0 4eba 00de */
+	jsr	%pc@(GETRAWTIMEOUT)	/* 40801cb0 4eba 00de */
 	andib	#31,%d0			/* 40801cb4 0200 001f */
 	rts				/* 40801cb8 4e75 */
 
@@ -1395,7 +1394,7 @@ IGETTIMEOUT:
 
 ISETTIMEOUT:
 	moveb	%d0,%sp@-		/* 40801cc0 1f00 */
-	jsr	%pc@(sub_40801d90)	/* 40801cc2 4eba 00cc */
+	jsr	%pc@(GETRAWTIMEOUT)	/* 40801cc2 4eba 00cc */
 	moveb	%sp@+,%d1		/* 40801cc6 121f */
 	cmpib	#31,%d1			/* 40801cc8 0c01 001f */
 	blss	loc_40801cd0		/* 40801ccc 6302 */
@@ -1409,7 +1408,7 @@ loc_40801cd0:
 	.align	16
 
 IGETWAITFLAGS:
-	jsr	%pc@(sub_40801d90)	/* 40801ce0 4eba 00ae */
+	jsr	%pc@(GETRAWTIMEOUT)	/* 40801ce0 4eba 00ae */
 	andib	#0xe0,%d0		/* 40801ce4 0200 00e0 */
 	rts				/* 40801ce8 4e75 */
 
@@ -1417,7 +1416,7 @@ IGETWAITFLAGS:
 
 ISETWAITFLAGS:
 	moveb	%d0,%sp@-		/* 40801cf0 1f00 */
-	jsr	%pc@(sub_40801d90)	/* 40801cf2 4eba 009c */
+	jsr	%pc@(GETRAWTIMEOUT)	/* 40801cf2 4eba 009c */
 	moveb	%sp@+,%d1		/* 40801cf6 121f */
 	andib	#0xe0,%d1		/* 40801cf8 0201 00e0 */
 	andib	#31,%d0			/* 40801cfc 0200 001f */
@@ -1466,7 +1465,7 @@ sub_40801d70:
 
 	.align	16
 
-sub_40801d90:
+GETRAWTIMEOUT:
 	clrb	%sp@-			/* 40801d90 4227 */
 	moveal	%sp,%a0			/* 40801d92 204f */
 	movel	#0x10001,%d0		/* 40801d94 203c */
