@@ -2,15 +2,18 @@
 	.short	0x81e2	/* 409b2000 81e2 */
 	.short	0x02ae	/* 409b2002 02ae */
 	.short	0x0009	/* 409b2004 0009 */
-	.short	0x6706	/* 409b2006 6706 */
-	.short	0x4efb	/* 409b2008 4efb */
-	.short	0x8161	/* 409b200a 8161 */
-	.short	0xffde	/* 409b200c ffde */
-	.short	0xd4f2	/* 409b200e d4f2 */
-	.short	0x0200	/* 409b2010 0200 */
-	.short	0x4ed2	/* 409b2012 4ed2 */
-	.short	0x70ce	/* 409b2014 70ce */
+	beqs	loc_409b200e		/* 409b2006 6706 */
+	.short	0x4efb,0x8161,0xffde	/* jmp ([word_409b1fe8,%pc]) /* 409b2008 4efb 8161 ffde */
+
+loc_409b200e:
+	addaw	%a2@(%d0:w:2),%a2	/* 409b200e d4f2 0200 */
+	jmp	%a2@			/* 409b2012 4ed2 */
+
+loc_409b2014:
+	moveq	#-50,%d0		/* 409b2014 70ce */
 	rts				/* 409b2016 4e75 */
+
+word_409b2018:
 	.short	0x0000	/* 409b2018 0000 */
 	.short	0x0008	/* 409b201a 0008 */
 	.short	0x0000	/* 409b201c 0000 */
