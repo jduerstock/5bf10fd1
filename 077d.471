@@ -1416,34 +1416,27 @@ sub_409d7d3c:
 	rts				/* 409d7de0 4e75 */
 
 sub_409d7de2:
-	.short	0x2f08	/* 409d7de2 2f08 */
-	.short	0x2f01	/* 409d7de4 2f01 */
+	movel	%a0,%sp@-		/* 409d7de2 2f08 */
+	movel	%d1,%sp@-		/* 409d7de4 2f01 */
 	moveq	#1,%d0			/* 409d7de6 7001 */
-	.short	0x4eb0	/* 409d7de8 4eb0 */
-	.short	0x81e1	/* 409d7dea 81e1 */
-	.short	0x0dbc	/* 409d7dec 0dbc */
-	.short	0x1f00	/* 409d7dee 1f00 */
-	.short	0x2069	/* 409d7df0 2069 */
-	.short	0x0018	/* 409d7df2 0018 */
-	.short	0x42a8	/* 409d7df4 42a8 */
-	.short	0x010c	/* 409d7df6 010c */
-	.short	0x2028	/* 409d7df8 2028 */
-	.short	0x0108	/* 409d7dfa 0108 */
-	.short	0x0800	/* 409d7dfc 0800 */
-	.short	0x0002	/* 409d7dfe 0002 */
-	.short	0x66f2	/* 409d7e00 66f2 */
-	.short	0x101f	/* 409d7e02 101f */
-	.short	0x4eb0	/* 409d7e04 4eb0 */
-	.short	0x81e1	/* 409d7e06 81e1 */
-	.short	0x0dbc	/* 409d7e08 0dbc */
+	jsrind	JSwapMMU		/* 409d7de8 4eb0 81e1 0dbc */
+	moveb	%d0,%sp@-		/* 409d7dee 1f00 */
+	moveal	%a1@(24),%a0		/* 409d7df0 2069 0018 */
+
+loc_409d7df4:
+	clrl	%a0@(268)		/* 409d7df4 42a8 010c */
+	movel	%a0@(264),%d0		/* 409d7df8 2028 0108 */
+	btst	#2,%d0			/* 409d7dfc 0800 0002 */
+	bnes	loc_409d7df4		/* 409d7e00 66f2 */
+	moveb	%sp@+,%d0		/* 409d7e02 101f */
+	jsrind	JSwapMMU		/* 409d7e04 4eb0 81e1 0dbc */
 	moveq	#0,%d0			/* 409d7e0a 7000 */
-	.short	0x4eb0	/* 409d7e0c 4eb0 */
-	.short	0x81e1	/* 409d7e0e 81e1 */
-	.short	0x0d28	/* 409d7e10 0d28 */
+	jsrind	JVBLTask		/* 409d7e0c 4eb0 81e1 0d28 */
 	moveq	#1,%d0			/* 409d7e12 7001 */
-	.short	0x221f	/* 409d7e14 221f */
-	.short	0x205f	/* 409d7e16 205f */
+	movel	%sp@+,%d1		/* 409d7e14 221f */
+	moveal	%sp@+,%a0		/* 409d7e16 205f */
 	rts				/* 409d7e18 4e75 */
+
 	.short	0x0000	/* 409d7e1a 0000 */
 	.short	0x0000	/* 409d7e1c 0000 */
 	.short	0x0000	/* 409d7e1e 0000 */
