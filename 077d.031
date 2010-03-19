@@ -1391,31 +1391,25 @@ sub_4081fc04:
 	.align 	16
 
 sub_4081fc10:
-	.short	0x2070	/* 4081fc10 2070 */
-	.short	0x81e2	/* 4081fc12 81e2 */
-	.short	0x0c0c	/* 4081fc14 0c0c */
-	.short	0x01b4	/* 4081fc16 01b4 */
-	.short	0x5228	/* 4081fc18 5228 */
-	.short	0x0047	/* 4081fc1a 0047 */
-	.short	0x6402	/* 4081fc1c 6402 */
-	.short	0x4e71	/* 4081fc1e 4e71 */
-	.short	0x4ab8	/* 4081fc20 4ab8 */
-	.short	0x0b78	/* 4081fc22 0b78 */
-	.short	0x6b0e	/* 4081fc24 6b0e */
-	.short	0x42a7	/* 4081fc26 42a7 */
-	.short	0x2078	/* 4081fc28 2078 */
-	.short	0x0cf0	/* 4081fc2a 0cf0 */
-	.short	0x2068	/* 4081fc2c 2068 */
-	.short	0x0048	/* 4081fc2e 0048 */
-	.short	0x4e90	/* 4081fc30 4e90 */
-	.short	0x588f	/* 4081fc32 588f */
+	.short	0x2070,0x81e2,0x0c0c,0x01b4	/* moveal ([0x0c0c],0x01b4),%a0	/* 4081fc10 2070 81e2 0c0c 01b4 */
+	addqb	#1,%a0@(71)		/* 4081fc18 5228 0047 */
+	bccs	loc_4081fc20		/* 4081fc1c 6402 */
+	nop				/* 4081fc1e 4e71 */
+
+loc_4081fc20:
+	tstl	0xb78			/* 4081fc20 4ab8 0b78 */
+	bmis	loc_4081fc34		/* 4081fc24 6b0e */
+	clrl	%sp@-			/* 4081fc26 42a7 */
+	moveal	0xcf0,%a0		/* 4081fc28 2078 0cf0 */
+	moveal	%a0@(72),%a0		/* 4081fc2c 2068 0048 */
+	jsr	%a0@			/* 4081fc30 4e90 */
+	addql	#4,%sp			/* 4081fc32 588f */
+
+loc_4081fc34:
 	rts				/* 4081fc34 4e75 */
 
-sub_4081fc36:
-	.short	0x2f30	/* 4081fc36 2f30 */
-	.short	0x81e2	/* 4081fc38 81e2 */
-	.short	0x205c	/* 4081fc3a 205c */
-	.short	0x0340	/* 4081fc3c 0340 */
+VMDisableUserCode:
+	CallVector	0x205c	208	/* 4081fc36 2f30 81e2 205c 0340 */
 	rts				/* 4081fc3e 4e75 */
 
 sub_4081fc40:
