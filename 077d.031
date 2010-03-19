@@ -1357,48 +1357,38 @@ sub_4081fbb0:
 	.short	0x0004	/* 4081fbbe 0004 */
 	.short	0x56c0	/* 4081fbc0 56c0 */
 	rts				/* 4081fbc2 4e75 */
-	.short	0x0000	/* 4081fbc4 0000 */
-	.short	0x0000	/* 4081fbc6 0000 */
-	.short	0x0000	/* 4081fbc8 0000 */
-	.short	0x0000	/* 4081fbca 0000 */
-	.short	0x0000	/* 4081fbcc 0000 */
-	.short	0x0000	/* 4081fbce 0000 */
 
-sub_4081fbd0:
-	.short	0x2070	/* 4081fbd0 2070 */
-	.short	0x81e2	/* 4081fbd2 81e2 */
-	.short	0x0c0c	/* 4081fbd4 0c0c */
-	.short	0x01b4	/* 4081fbd6 01b4 */
-	.short	0x5328	/* 4081fbd8 5328 */
-	.short	0x0047	/* 4081fbda 0047 */
-	.short	0x640a	/* 4081fbdc 640a */
+	.align	16
+
+__v__VMEnableUserCode:
+	.short	0x2070,0x81e2,0x0c0c,0x01b4	/* moveal ([0x0c0c],0x01b4),%a0 /* 4081fbd0 2070 81e2 0c0c 01b4 */
+	subqb	#1,%a0@(71)		/* 4081fbd8 5328 0047 */
+	bccs	loc_4081fbe8		/* 4081fbdc 640a */
 	moveq	#0,%d0			/* 4081fbde 7000 */
-	.short	0x1140	/* 4081fbe0 1140 */
-	.short	0x0047	/* 4081fbe2 0047 */
-	.short	0x4e71	/* 4081fbe4 4e71 */
-	.short	0x601a	/* 4081fbe6 601a */
-	.short	0x4ab8	/* 4081fbe8 4ab8 */
-	.short	0x0b78	/* 4081fbea 0b78 */
-	.short	0x6b12	/* 4081fbec 6b12 */
-	.short	0x2f3c	/* 4081fbee 2f3c */
-	.short	0x0000	/* 4081fbf0 0000 */
-	.short	0x0001	/* 4081fbf2 0001 */
-	.short	0x2078	/* 4081fbf4 2078 */
-	.short	0x0cf0	/* 4081fbf6 0cf0 */
-	.short	0x2068	/* 4081fbf8 2068 */
-	.short	0x0048	/* 4081fbfa 0048 */
-	.short	0x4e90	/* 4081fbfc 4e90 */
-	.short	0x588f	/* 4081fbfe 588f */
+	moveb	%d0,%a0@(71)		/* 4081fbe0 1140 0047 */
+	nop				/* 4081fbe4 4e71 */
+	bras	loc_4081fc02		/* 4081fbe6 601a */
+
+loc_4081fbe8:
+	tstl	0xb78			/* 4081fbe8 4ab8 0b78 */
+	bmis	loc_4081fc00		/* 4081fbec 6b12 */
+	movel	#1,%sp@-		/* 4081fbee 2f3c 0000 0001 */
+	moveal	0xcf0,%a0		/* 4081fbf4 2078 0cf0 */
+	moveal	%a0@(72),%a0		/* 4081fbf8 2068 0048 */
+	jsr	%a0@			/* 4081fbfc 4e90 */
+	addql	#4,%sp			/* 4081fbfe 588f */
+
+loc_4081fc00:
 	moveq	#1,%d0			/* 4081fc00 7001 */
+
+loc_4081fc02:
 	rts				/* 4081fc02 4e75 */
 
 sub_4081fc04:
-	.short	0x2f30	/* 4081fc04 2f30 */
-	.short	0x81e2	/* 4081fc06 81e2 */
-	.short	0x205c	/* 4081fc08 205c */
-	.short	0x033c	/* 4081fc0a 033c */
+	CallVector	0x205c 207	/* 4081fc04 2f30 81e2 205c 033c */
 	rts				/* 4081fc0c 4e75 */
-	.short	0x0000	/* 4081fc0e 0000 */
+
+	.align 	16
 
 sub_4081fc10:
 	.short	0x2070	/* 4081fc10 2070 */
