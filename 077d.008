@@ -744,40 +744,30 @@ INITMMUTRAP:
 	rts				/* 408086ca 4e75 */
 
 sub_408086cc:
-	.short	0x2278	/* 408086cc 2278 */
-	.short	0x0ddc	/* 408086ce 0ddc */
-	.short	0x4238	/* 408086d0 4238 */
-	.short	0x0cb0	/* 408086d2 0cb0 */
-	.short	0x11fc	/* 408086d4 11fc */
-	.short	0x0001	/* 408086d6 0001 */
-	.short	0x0cb2	/* 408086d8 0cb2 */
-	.short	0x41e9	/* 408086da 41e9 */
-	.short	0xffbe	/* 408086dc ffbe */
-	.short	0x21c8	/* 408086de 21c8 */
-	.short	0x0cb8	/* 408086e0 0cb8 */
-	.short	0x41e9	/* 408086e2 41e9 */
-	.short	0xffd2	/* 408086e4 ffd2 */
-	.short	0x21c8	/* 408086e6 21c8 */
-	.short	0x0cb4	/* 408086e8 0cb4 */
+	moveal	0xddc,%a1		/* 408086cc 2278 0ddc */
+	clrb	0xcb0			/* 408086d0 4238 0cb0 */
+	moveb	#1,0xcb2		/* 408086d4 11fc 0001 0cb2 */
+	lea	%a1@(-66),%a0		/* 408086da 41e9 ffbe */
+	movel	%a0,0xcb8		/* 408086de 21c8 0cb8 */
+	lea	%a1@(-46),%a0		/* 408086e2 41e9 ffd2 */
+	movel	%a0,0xcb4		/* 408086e6 21c8 0cb4 */
 	moveq	#0,%d0			/* 408086ea 7000 */
-	.short	0x1029	/* 408086ec 1029 */
-	.short	0xffe6	/* 408086ee ffe6 */
-	.short	0x11c0	/* 408086f0 11c0 */
-	.short	0x0cb1	/* 408086f2 0cb1 */
-	.short	0x0829	/* 408086f4 0829 */
-	.short	0x0000	/* 408086f6 0000 */
-	.short	0xffe7	/* 408086f8 ffe7 */
-	.short	0x6706	/* 408086fa 6706 */
-	.short	0x41fa	/* 408086fc 41fa */
-	.short	0x0046	/* 408086fe 0046 */
-	.short	0x6008	/* 40808700 6008 */
-	.short	0x303b	/* 40808702 303b */
-	.short	0x020c	/* 40808704 020c */
-	.short	0x41fb	/* 40808706 41fb */
-	.short	0x0008	/* 40808708 0008 */
-	.short	0x21c8	/* 4080870a 21c8 */
-	.short	0x0dbc	/* 4080870c 0dbc */
+	moveb	%a1@(-26),%d0		/* 408086ec 1029 ffe6 */
+	moveb	%d0,0xcb1		/* 408086f0 11c0 0cb1 */
+	btst	#0,%a1@(-25)		/* 408086f4 0829 0000 ffe7 */
+	beqs	loc_40808702		/* 408086fa 6706 */
+	lea	%pc@(sub_40808744),%a0	/* 408086fc 41fa 0046 */
+	bras	loc_4080870a		/* 40808700 6008 */
+
+loc_40808702:
+	movew	%pc@(word_40808710,%d0:w:2),%d0	/* 40808702 303b 020c */
+	lea	%pc@(word_40808710,%d0:w),%a0	/* 40808706 41fb 0008 */
+
+loc_4080870a:
+	movel	%a0,0xdbc		/* 4080870a 21c8 0dbc */
 	rts				/* 4080870e 4e75 */
+
+word_40808710:
 	.short	0xfffe	/* 40808710 fffe */
 	.short	0x0136	/* 40808712 0136 */
 	.short	0xfffe	/* 40808714 fffe */
@@ -806,8 +796,11 @@ sub_40808720:
 	.short	0x51c8	/* 4080873e 51c8 */
 	.short	0xfffc	/* 40808740 fffc */
 	rts				/* 40808742 4e75 */
+
+sub_40808744:
 	moveq	#1,%d0			/* 40808744 7001 */
 	rts				/* 40808746 4e75 */
+
 	.short	0x1200	/* 40808748 1200 */
 	.short	0x6614	/* 4080874a 6614 */
 	moveq	#0,%d0			/* 4080874c 7000 */
