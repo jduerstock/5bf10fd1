@@ -162,6 +162,10 @@
 		.short	0xa1ad
 	.endm
 
+	.macro	_SetOSTrapAddress
+		.short	0xaa247
+	.endm
+
 	.macro	_IdleUpdate
 		.short	0xa285
 	.endm
@@ -223,6 +227,7 @@
 	.equ	__FCL_vm___, 0x766d2020
 
 	.equ	ExpandMem, 0x02b6
+	.equ	JSwapMMU, 0x0dbc
 
 ROMBase:
 	.long	0x5bf10fd1			/* 40800000 5bf1 0fd1 */
@@ -497,7 +502,7 @@ BOOTRETRY:
 	bsrl	sub_4080fdf4		/* 408002ec 61ff 0000 fb06 */
 	bsrl	sub_4080fdd0		/* 408002f2 61ff 0000 fadc */
 	bsrl	sub_40813a56		/* 408002f8 61ff 0001 375c */
-	bsrl	sub_408086c0		/* 408002fe 61ff 0000 83c0 */
+	bsrl	INITMMUTRAP		/* 408002fe 61ff 0000 83c0 */
 	cmpib	#0,0xcb1		/* 40800304 0c38 0000 0cb1 */
 	beqs	loc_40800314		/* 4080030a 6708 */
 	cmpib	#1,0xcb1		/* 4080030c 0c38 0001 0cb1 */
@@ -507,7 +512,7 @@ loc_40800314:
 	movew	#0xa89f,%d0		/* 40800314 303c a89f */
 	_GetToolboxTrapAddress		/* 40800318 a746 */
 	movew	#0xa05c,%d0		/* 4080031a 303c a05c */
-	.short	0xa247			/* 4080031e a247 */
+	_SetOSTrapAddress		/* 4080031e a247 */
 
 loc_40800320:
 	bsrw	CHECKFOREGRET		/* 40800320 6100 0f6a */
