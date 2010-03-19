@@ -1679,40 +1679,32 @@
 	.short	0xff00	/* 408afd26 ff00 */
 	.short	0x0000	/* 408afd28 0000 */
 	.short	0x0000	/* 408afd2a 0000 */
-	.short	0x48e7	/* 408afd2c 48e7 */
-	.short	0x60c0	/* 408afd2e 60c0 */
+
+	moveml	%d1-%d2/%a0-%a1,%sp@-	/* 408afd2c 48e7 60c0 */
 	moveq	#1,%d0			/* 408afd30 7001 */
-	.short	0x2078	/* 408afd32 2078 */
-	.short	0x0dbc	/* 408afd34 0dbc */
-	.short	0x4e90	/* 408afd36 4e90 */
-	.short	0x4cdf	/* 408afd38 4cdf */
-	.short	0x0306	/* 408afd3a 0306 */
-	.short	0x2f01	/* 408afd3c 2f01 */
-	.short	0x2229	/* 408afd3e 2229 */
-	.short	0x0084	/* 408afd40 0084 */
-	.short	0x0241	/* 408afd42 0241 */
-	.short	0x0008	/* 408afd44 0008 */
-	.short	0x66f6	/* 408afd46 66f6 */
-	.short	0x221f	/* 408afd48 221f */
-	.short	0x22bc	/* 408afd4a 22bc */
-	.short	0x0000	/* 408afd4c 0000 */
-	.short	0x0001	/* 408afd4e 0001 */
-	.short	0x48e7	/* 408afd50 48e7 */
-	.short	0x60c0	/* 408afd52 60c0 */
-	.short	0x2078	/* 408afd54 2078 */
-	.short	0x0dbc	/* 408afd56 0dbc */
-	.short	0x4e90	/* 408afd58 4e90 */
-	.short	0x4cdf	/* 408afd5a 4cdf */
-	.short	0x0306	/* 408afd5c 0306 */
-	.short	0x2009	/* 408afd5e 2009 */
-	.short	0xe198	/* 408afd60 e198 */
-	.short	0x0240	/* 408afd62 0240 */
-	.short	0x000f	/* 408afd64 000f */
-	.short	0x2078	/* 408afd66 2078 */
-	.short	0x0d28	/* 408afd68 0d28 */
-	.short	0x4e90	/* 408afd6a 4e90 */
+	moveal	JSwapMMU,%a0		/* 408afd32 2078 0dbc */
+	jsr	%a0@			/* 408afd36 4e90 */
+	moveml	%sp@+,%d1-%d2/%a0-%a1	/* 408afd38 4cdf 0306 */
+	movel	%d1,%sp@-		/* 408afd3c 2f01 */
+
+loc_408afd3e:
+	movel	%a1@(132),%d1		/* 408afd3e 2229 0084 */
+	andiw	#8,%d1			/* 408afd42 0241 0008 */
+	bnes	loc_408afd3e		/* 408afd46 66f6 */
+	movel	%sp@+,%d1		/* 408afd48 221f */
+	movel	#1,%a1@			/* 408afd4a 22bc 0000 0001 */
+	moveml	%d1-%d2/%a0-%a1,%sp@-	/* 408afd50 48e7 60c0 */
+	moveal	0xdbc,%a0		/* 408afd54 2078 0dbc */
+	jsr	%a0@			/* 408afd58 4e90 */
+	moveml	%sp@+,%d1-%d2/%a0-%a1	/* 408afd5a 4cdf 0306 */
+	movel	%a1,%d0			/* 408afd5e 2009 */
+	roll	#8,%d0			/* 408afd60 e198 */
+	andiw	#15,%d0			/* 408afd62 0240 000f */
+	moveal	0xd28,%a0		/* 408afd66 2078 0d28 */
+	jsr	%a0@			/* 408afd6a 4e90 */
 	moveq	#1,%d0			/* 408afd6c 7001 */
 	rts				/* 408afd6e 4e75 */
+
 	.short	0x0000	/* 408afd70 0000 */
 	.short	0x1a20	/* 408afd72 1a20 */
 
