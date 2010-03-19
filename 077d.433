@@ -10,41 +10,31 @@ loc_409b100c:
 	unlk	%fp			/* 409b100c 4e5e */
 	rts				/* 409b100e 4e75 */
 
-	.short	0x4e56	/* 409b1010 4e56 */
-	.short	0x0000	/* 409b1012 0000 */
-	.short	0x48e7	/* 409b1014 48e7 */
-	.short	0x0018	/* 409b1016 0018 */
-	.short	0x2678	/* 409b1018 2678 */
-	.short	0x0cf0	/* 409b101a 0cf0 */
-	.short	0x2f2e	/* 409b101c 2f2e */
-	.short	0x0008	/* 409b101e 0008 */
-	.short	0x2053	/* 409b1020 2053 */
-	.short	0x4e90	/* 409b1022 4e90 */
-	.short	0x2840	/* 409b1024 2840 */
-	.short	0x08ac	/* 409b1026 08ac */
-	.short	0x0006	/* 409b1028 0006 */
-	.short	0x0003	/* 409b102a 0003 */
-	.short	0x2078	/* 409b102c 2078 */
-	.short	0x0b78	/* 409b102e 0b78 */
-	.short	0x4a28	/* 409b1030 4a28 */
-	.short	0x0100	/* 409b1032 0100 */
-	.short	0x6716	/* 409b1034 6716 */
+	linkw	%fp,#0			/* 409b1010 4e56 0000 */
+	moveml	%a3-%a4,%sp@-		/* 409b1014 48e7 0018 */
+	moveal	0xcf0,%a3		/* 409b1018 2678 0cf0 */
+	movel	%fp@(8),%sp@-		/* 409b101c 2f2e 0008 */
+	moveal	%a3@,%a0		/* 409b1020 2053 */
+	jsr	%a0@			/* 409b1022 4e90 */
+	moveal	%d0,%a4			/* 409b1024 2840 */
+	bclr	#6,%a4@(3)		/* 409b1026 08ac 0006 0003 */
+	moveal	0xb78,%a0		/* 409b102c 2078 0b78 */
+	tstb	%a0@(256)		/* 409b1030 4a28 0100 */
+	beqs	loc_409b104c		/* 409b1034 6716 */
 	moveq	#0,%d0			/* 409b1036 7000 */
-	.short	0x1038	/* 409b1038 1038 */
-	.short	0x0b72	/* 409b103a 0b72 */
-	.short	0x323c	/* 409b103c 323c */
-	.short	0x0080	/* 409b103e 0080 */
-	.short	0xc200	/* 409b1040 c200 */
-	.short	0xee09	/* 409b1042 ee09 */
+	moveb	0xb72,%d0		/* 409b1038 1038 0b72 */
+	movew	#128,%d1		/* 409b103c 323c 0080 */
+	andb	%d0,%d1			/* 409b1040 c200 */
+	lsrb	#7,%d1			/* 409b1042 ee09 */
 	moveq	#0,%d0			/* 409b1044 7000 */
-	.short	0x1001	/* 409b1046 1001 */
-	.short	0xefd4	/* 409b1048 efd4 */
-	.short	0x0681	/* 409b104a 0681 */
-	.short	0x4cee	/* 409b104c 4cee */
-	.short	0x1800	/* 409b104e 1800 */
-	.short	0xfff8	/* 409b1050 fff8 */
-	.short	0x4e5e	/* 409b1052 4e5e */
+	moveb	%d1,%d0			/* 409b1046 1001 */
+	bfins	%d0,%a4@,26,1		/* 409b1048 efd4 0681 */
+
+loc_409b104c:
+	moveml	%fp@(-8),%a3-%a4	/* 409b104c 4cee 1800 fff8 */
+	unlk	%fp			/* 409b1052 4e5e */
 	rts				/* 409b1054 4e75 */
+
 	.short	0x4e56	/* 409b1056 4e56 */
 	.short	0x0000	/* 409b1058 0000 */
 	.short	0x48e7	/* 409b105a 48e7 */
