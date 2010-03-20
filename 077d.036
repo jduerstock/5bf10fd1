@@ -130,23 +130,17 @@ loc_40824142:
 	.align	16
 
 	linkw	%fp,#0			/* 40824150 4e56 0000 */
-	.short	0x2f0c	/* 40824154 2f0c */
-	.short	0x4eba	/* 40824156 4eba */
-	.short	0xbade	/* 40824158 bade */
-	.short	0x2078	/* 4082415a 2078 */
-	.short	0x0c0c	/* 4082415c 0c0c */
-	.short	0x2068	/* 4082415e 2068 */
-	.short	0x01b4	/* 40824160 01b4 */
-	.short	0x2850	/* 40824162 2850 */
-	.short	0x2f14	/* 40824164 2f14 */
-	.short	0x206c	/* 40824166 206c */
-	.short	0x0010	/* 40824168 0010 */
-	.short	0x4e90	/* 4082416a 4e90 */
-	.short	0x4eba	/* 4082416c 4eba */
-	.short	0xba96	/* 4082416e ba96 */
-	.short	0x286e	/* 40824170 286e */
-	.short	0xfffc	/* 40824172 fffc */
-	.short	0x4e5e	/* 40824174 4e5e */
+	movel	%a4,%sp@-		/* 40824154 2f0c */
+	jsr	%pc@(VMDisableUserCode)	/* 40824156 4eba bade */
+	moveal	0xc0c,%a0		/* 4082415a 2078 0c0c */
+	moveal	%a0@(436),%a0		/* 4082415e 2068 01b4 */
+	moveal	%a0@,%a4		/* 40824162 2850 */
+	movel	%a4@,%sp@-		/* 40824164 2f14 */
+	moveal	%a4@(16),%a0		/* 40824166 206c 0010 */
+	jsr	%a0@			/* 4082416a 4e90 */
+	jsr	%pc@(sub_4081fc04)	/* 4082416c 4eba ba96 */
+	moveal	%fp@(-4),%a4		/* 40824170 286e fffc */
+	unlk	%fp			/* 40824174 4e5e */
 	rts				/* 40824176 4e75 */
 
 	.align	16
