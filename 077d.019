@@ -1315,13 +1315,12 @@ sub_40813a44:
 	.short	0xf4f8			/* cpusha bc /* 40813a44 f4f8 */
 	rts				/* 40813a46 4e75 */
 
-	.short	0x41fa	/* 40813a48 41fa */
-	.short	0xff16	/* 40813a4a ff16 */
-	.short	0x6704	/* 40813a4c 6704 */
-	.short	0x41fa	/* 40813a4e 41fa */
-	.short	0xff10	/* 40813a50 ff10 */
-	.short	0x21c8	/* 40813a52 21c8 */
-	.short	0x0028	/* 40813a54 0028 */
+	lea	%pc@(DISPATCHER),%a0	/* 40813a48 41fa ff16 */
+	beqs	loc_40813a52		/* 40813a4c 6704 */
+	lea	%pc@(DISPATCHER),%a0	/* 40813a4e 41fa ff10 */
+
+loc_40813a52:
+	movel	%a0,0x28		/* 40813a52 21c8 0028 */
 
 INITDISPATCHER:
 	lea	%pc@(sub_40813aae),%a4	/* 40813a56 49fa 0056 */
