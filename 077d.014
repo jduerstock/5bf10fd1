@@ -1364,8 +1364,8 @@ MEMORYDISPATCH:
 
 off_4080ec32:
 	.short	HOLDMEMORYPROC-off_4080ec32	/* 4080ec32 002e */
-	.short	sub_4080ec70-off_4080ec32	/* 4080ec34 003e */
-	.short	sub_4080ec80-off_4080ec32	/* 4080ec36 004e */
+	.short	UNHOLDMEMORYPROC-off_4080ec32	/* 4080ec34 003e */
+	.short	LOCKMEMORYPROC-off_4080ec32	/* 4080ec36 004e */
 	.short	sub_4080ece0-off_4080ec32	/* 4080ec38 00ae */
 	.short	sub_4080ed30-off_4080ec32	/* 4080ec3a 00fe */
 	.short	sub_4080edc0-off_4080ec32	/* 4080ec3c 018e */
@@ -1390,57 +1390,48 @@ HOLDMEMORYPROC:
 
 	.align	16
 
-sub_4080ec70:
+UNHOLDMEMORYPROC:
 	moveq	#0,%d0			/* 4080ec70 7000 */
 	rts				/* 4080ec72 4e75 */
 
 	.align	16
 
-sub_4080ec80:
-	.short	0x48e7	/* 4080ec80 48e7 */
-	.short	0x78e0	/* 4080ec82 78e0 */
-	.short	0x2478	/* 4080ec84 2478 */
-	.short	0x1ff4	/* 4080ec86 1ff4 */
-	.short	0x6100	/* 4080ec88 6100 */
-	.short	0x03f6	/* 4080ec8a 03f6 */
-	.short	0x6646	/* 4080ec8c 6646 */
-	.short	0x594f	/* 4080ec8e 594f */
-	.short	0x43f2	/* 4080ec90 43f2 */
-	.short	0x121c	/* 4080ec92 121c */
-	.short	0x2008	/* 4080ec94 2008 */
-	.short	0x48e7	/* 4080ec96 48e7 */
-	.short	0xe000	/* 4080ec98 e000 */
-	.short	0x7002	/* 4080ec9a 7002 */
-	.short	0x91c8	/* 4080ec9c 91c8 */
-	.short	0xa198	/* 4080ec9e a198 */
-	.short	0x4cdf	/* 4080eca0 4cdf */
-	.short	0x0007	/* 4080eca2 0007 */
-	.short	0x2f48	/* 4080eca4 2f48 */
-	.short	0x0004	/* 4080eca6 0004 */
-	.short	0x2040	/* 4080eca8 2040 */
+LOCKMEMORYPROC:
+	moveml	%d1-%d4/%a0-%a2,%sp@-	/* 4080ec80 48e7 78e0 */
+	moveal	0x1ff4,%a2		/* 4080ec84 2478 1ff4 */
+	bsrw	GETPAGERANGE		/* 4080ec88 6100 03f6 */
+	bnes	loc_4080ecd4		/* 4080ec8c 6646 */
+	subqw	#4,%sp			/* 4080ec8e 594f */
+	lea	%a2@(0x001c,%d1:w:2),%a1	/* 4080ec90 43f2 121c */
+	movel	%a0,%d0			/* 4080ec94 2008 */
+	moveml	%d0-%d2,%sp@-		/* 4080ec96 48e7 e000 */
+	moveq	#2,%d0			/* 4080ec9a 7002 */
+	subal	%a0,%a0			/* 4080ec9c 91c8 */
+	.short	0xa198			/* 4080ec9e a198 */
+	moveml	%sp@+,%d0-%d2		/* 4080eca0 4cdf 0007 */
+	movel	%a0,%sp@(4)		/* 4080eca4 2f48 0004 */
+	moveal	%d0,%a0			/* 4080eca8 2040 */
 	moveq	#1,%d0			/* 4080ecaa 7001 */
-	.short	0x5259	/* 4080ecac 5259 */
-	.short	0x6100	/* 4080ecae 6100 */
-	.short	0x0450	/* 4080ecb0 0450 */
-	.short	0x5281	/* 4080ecb2 5281 */
-	.short	0x5382	/* 4080ecb4 5382 */
-	.short	0x62f4	/* 4080ecb6 62f4 */
-	.short	0x6100	/* 4080ecb8 6100 */
-	.short	0x04a6	/* 4080ecba 04a6 */
-	.short	0x2008	/* 4080ecbc 2008 */
-	.short	0x206f	/* 4080ecbe 206f */
-	.short	0x0004	/* 4080ecc0 0004 */
-	.short	0x48e7	/* 4080ecc2 48e7 */
-	.short	0xe000	/* 4080ecc4 e000 */
-	.short	0x7002	/* 4080ecc6 7002 */
-	.short	0xa198	/* 4080ecc8 a198 */
-	.short	0x4cdf	/* 4080ecca 4cdf */
-	.short	0x0007	/* 4080eccc 0007 */
-	.short	0x2040	/* 4080ecce 2040 */
-	.short	0x2e9f	/* 4080ecd0 2e9f */
+
+loc_4080ecac:
+	addqw	#1,%a1@+		/* 4080ecac 5259 */
+	bsrw	MMUSETCACHEINHIBIT	/* 4080ecae 6100 0450 */
+	addql	#1,%d1			/* 4080ecb2 5281 */
+	subql	#1,%d2			/* 4080ecb4 5382 */
+	bhis	loc_4080ecac		/* 4080ecb6 62f4 */
+	bsrw	MMUFLUSHATC		/* 4080ecb8 6100 04a6 */
+	movel	%a0,%d0			/* 4080ecbc 2008 */
+	moveal	%sp@(4),%a0		/* 4080ecbe 206f 0004 */
+	moveml	%d0-%d2,%sp@-		/* 4080ecc2 48e7 e000 */
+	moveq	#2,%d0			/* 4080ecc6 7002 */
+	.short	0xa198			/* 4080ecc8 a198 */
+	moveml	%sp@+,%d0-%d2		/* 4080ecca 4cdf 0007 */
+	moveal	%d0,%a0			/* 4080ecce 2040 */
+	movel	%sp@+,%sp@		/* 4080ecd0 2e9f */
 	moveq	#0,%d0			/* 4080ecd2 7000 */
-	.short	0x4cdf	/* 4080ecd4 4cdf */
-	.short	0x071e	/* 4080ecd6 071e */
+
+loc_4080ecd4:
+	moveml	%sp@+,%d1-%d4/%a0-%a2	/* 4080ecd4 4cdf 071e */
 	rts				/* 4080ecd8 4e75 */
 
 	.align	16
