@@ -1535,22 +1535,23 @@ sub_40874bca:
 
 	.align	16
 
-	.short	0xc0b8	/* 40874be0 c0b8 */
-	.short	0x031a	/* 40874be2 031a */
-	.short	0x0880	/* 40874be4 0880 */
-	.short	0x0017	/* 40874be6 0017 */
-	.short	0x6602	/* 40874be8 6602 */
+__v__ELSIETRANSLATE24TO32:
+	andl	0x31a,%d0		/* 40874be0 c0b8 031a */
+	bclr	#23,%d0			/* 40874be4 0880 0017 */
+	bnes	loc_40874bec		/* 40874be8 6602 */
 	rts				/* 40874bea 4e75 */
-	.short	0x3f01	/* 40874bec 3f01 */
-	.short	0x4840	/* 40874bee 4840 */
-	.short	0x3200	/* 40874bf0 3200 */
-	.short	0xe849	/* 40874bf2 e849 */
-	.short	0xd07b	/* 40874bf4 d07b */
-	.short	0x1320	/* 40874bf6 1320 */
-	.short	0x000a	/* 40874bf8 000a */
-	.short	0x4840	/* 40874bfa 4840 */
-	.short	0x321f	/* 40874bfc 321f */
+
+loc_40874bec:
+	movew	%d1,%sp@-		/* 40874bec 3f01 */
+	swap	%d0			/* 40874bee 4840 */
+	movew	%d0,%d1			/* 40874bf0 3200 */
+	lsrw	#4,%d1			/* 40874bf2 e849 */
+	.short	0xd07b,0x1320,0x000a	/* addw %pc@(word_40874c00,%d1:w:2),%d0 /* 40874bf4 d07b 1320 000a */
+	swap	%d0			/* 40874bfa 4840 */
+	movew	%sp@+,%d1		/* 40874bfc 321f */
 	rts				/* 40874bfe 4e75 */
+
+word_40874c00:
 	.short	0x0080	/* 40874c00 0080 */
 	.short	0x0080	/* 40874c02 0080 */
 	.short	0x4080	/* 40874c04 4080 */
@@ -1560,11 +1561,8 @@ sub_40874bca:
 	.short	0xfda0	/* 40874c0c fda0 */
 	.short	0x5080	/* 40874c0e 5080 */
 
-sub_40874c10:
-	.short	0x2f30	/* 40874c10 2f30 */
-	.short	0x81e2	/* 40874c12 81e2 */
-	.short	0x2054	/* 40874c14 2054 */
-	.short	0x0270	/* 40874c16 0270 */
+ELSIETRANSLATE24TO32:
+	CallVector	0x2054 156	/* 40874c10 2f30 81e2 2054 0270 */
 	rts				/* 40874c18 4e75 */
 
 	.align	16
