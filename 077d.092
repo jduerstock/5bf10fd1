@@ -284,20 +284,19 @@ sub_4085c220:
 
 	.align	16
 
-sub_4085c230:
-	.short	0x7400	/* 4085c230 7400 */
-	.short	0x5242	/* 4085c232 5242 */
-	.short	0x206f	/* 4085c234 206f */
-	.short	0x0004	/* 4085c236 0004 */
-	.short	0x2050	/* 4085c238 2050 */
-	.short	0x3002	/* 4085c23a 3002 */
-	.short	0x6100	/* 4085c23c 6100 */
-	.short	0xf862	/* 4085c23e f862 */
-	.short	0x66f0	/* 4085c240 66f0 */
-	.short	0x5342	/* 4085c242 5342 */
-	.short	0x3f42	/* 4085c244 3f42 */
-	.short	0x0008	/* 4085c246 0008 */
-	.short	0x2e9f	/* 4085c248 2e9f */
+COUNTMITEMS:
+	moveq	#0,%d2			/* 4085c230 7400 */
+
+loc_4085c232:
+	addqw	#1,%d2			/* 4085c232 5242 */
+	moveal	%sp@(4),%a0		/* 4085c234 206f 0004 */
+	moveal	%a0@,%a0		/* 4085c238 2050 */
+	movew	%d2,%d0			/* 4085c23a 3002 */
+	bsrw	GETITEMRECORD		/* 4085c23c 6100 f862 */
+	bnes	loc_4085c232		/* 4085c240 66f0 */
+	subqw	#1,%d2			/* 4085c242 5342 */
+	movew	%d2,%sp@(8)		/* 4085c244 3f42 0008 */
+	movel	%sp@+,%sp@		/* 4085c248 2e9f */
 	rts				/* 4085c24a 4e75 */
 
 	.align	16

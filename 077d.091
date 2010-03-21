@@ -1348,34 +1348,39 @@ sub_4085ba30:
 	.short	0x205f	/* 4085ba92 205f */
 	.short	0x504f	/* 4085ba94 504f */
 	.short	0x4ed0	/* 4085ba96 4ed0 */
-	.short	0x0000	/* 4085ba98 0000 */
-	.short	0x0000	/* 4085ba9a 0000 */
-	.short	0x0000	/* 4085ba9c 0000 */
-	.short	0x0000	/* 4085ba9e 0000 */
-	.short	0x4a40	/* 4085baa0 4a40 */
-	.short	0x6f18	/* 4085baa2 6f18 */
-	.short	0x7200	/* 4085baa4 7200 */
-	.short	0x43e8	/* 4085baa6 43e8 */
-	.short	0x000e	/* 4085baa8 000e */
-	.short	0x1219	/* 4085baaa 1219 */
-	.short	0xd2c1	/* 4085baac d2c1 */
-	.short	0x5340	/* 4085baae 5340 */
-	.short	0x6714	/* 4085bab0 6714 */
-	.short	0x1211	/* 4085bab2 1211 */
-	.short	0x6706	/* 4085bab4 6706 */
-	.short	0x5a41	/* 4085bab6 5a41 */
-	.short	0xd2c1	/* 4085bab8 d2c1 */
-	.short	0x60f2	/* 4085baba 60f2 */
-	.short	0x2209	/* 4085babc 2209 */
-	.short	0x91c8	/* 4085babe 91c8 */
-	.short	0x2248	/* 4085bac0 2248 */
-	.short	0x2008	/* 4085bac2 2008 */
+
+	.align	16
+
+GETITEMRECORD:
+	tstw	%d0			/* 4085baa0 4a40 */
+	bles	loc_4085babc		/* 4085baa2 6f18 */
+	moveq	#0,%d1			/* 4085baa4 7200 */
+	lea	%a0@(14),%a1		/* 4085baa6 43e8 000e */
+	moveb	%a1@+,%d1		/* 4085baaa 1219 */
+	addaw	%d1,%a1			/* 4085baac d2c1 */
+
+loc_4085baae:
+	subqw	#1,%d0			/* 4085baae 5340 */
+	beqs	loc_4085bac6		/* 4085bab0 6714 */
+	moveb	%a1@,%d1		/* 4085bab2 1211 */
+	beqs	loc_4085babc		/* 4085bab4 6706 */
+	addqw	#5,%d1			/* 4085bab6 5a41 */
+	addaw	%d1,%a1			/* 4085bab8 d2c1 */
+	bras	loc_4085baae		/* 4085baba 60f2 */
+
+loc_4085babc:
+	movel	%a1,%d1			/* 4085babc 2209 */
+	subal	%a0,%a0			/* 4085babe 91c8 */
+	moveal	%a0,%a1			/* 4085bac0 2248 */
+	movel	%a0,%d0			/* 4085bac2 2008 */
 	rts				/* 4085bac4 4e75 */
-	.short	0x4a11	/* 4085bac6 4a11 */
-	.short	0x67f2	/* 4085bac8 67f2 */
-	.short	0x2049	/* 4085baca 2049 */
-	.short	0x1219	/* 4085bacc 1219 */
-	.short	0xd2c1	/* 4085bace d2c1 */
+
+loc_4085bac6:
+	tstb	%a1@			/* 4085bac6 4a11 */
+	beqs	loc_4085babc		/* 4085bac8 67f2 */
+	moveal	%a1,%a0			/* 4085baca 2049 */
+	moveb	%a1@+,%d1		/* 4085bacc 1219 */
+	addaw	%d1,%a1			/* 4085bace d2c1 */
 	rts				/* 4085bad0 4e75 */
 
 	.align	16
