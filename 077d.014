@@ -1688,42 +1688,37 @@ loc_4080ef3e:
 	.align	16
 
 sub_4080ef50:
-	.short	0x48e7	/* 4080ef50 48e7 */
-	.short	0x60e0	/* 4080ef52 60e0 */
-	.short	0x2478	/* 4080ef54 2478 */
-	.short	0x1ff4	/* 4080ef56 1ff4 */
-	.short	0x70ce	/* 4080ef58 70ce */
-	.short	0x242a	/* 4080ef5a 242a */
-	.short	0x0004	/* 4080ef5c 0004 */
-	.short	0x5382	/* 4080ef5e 5382 */
-	.short	0x2208	/* 4080ef60 2208 */
-	.short	0xc282	/* 4080ef62 c282 */
-	.short	0x662e	/* 4080ef64 662e */
-	.short	0x2209	/* 4080ef66 2209 */
-	.short	0xc282	/* 4080ef68 c282 */
-	.short	0x6628	/* 4080ef6a 6628 */
-	.short	0x6100	/* 4080ef6c 6100 */
-	.short	0x0112	/* 4080ef6e 0112 */
-	.short	0x6622	/* 4080ef70 6622 */
-	.short	0x7003	/* 4080ef72 7003 */
-	.short	0xa198	/* 4080ef74 a198 */
+	moveml	%d1-%d2/%a0-%a2,%sp@-	/* 4080ef50 48e7 60e0 */
+	moveal	0x1ff4,%a2		/* 4080ef54 2478 1ff4 */
+	moveq	#-50,%d0		/* 4080ef58 70ce */
+	movel	%a2@(4),%d2		/* 4080ef5a 242a 0004 */
+	subql	#1,%d2			/* 4080ef5e 5382 */
+	movel	%a0,%d1			/* 4080ef60 2208 */
+	andl	%d2,%d1			/* 4080ef62 c282 */
+	bnes	loc_4080ef94		/* 4080ef64 662e */
+	movel	%a1,%d1			/* 4080ef66 2209 */
+	andl	%d2,%d1			/* 4080ef68 c282 */
+	bnes	loc_4080ef94		/* 4080ef6a 6628 */
+	bsrw	GETPAGERANGE		/* 4080ef6c 6100 0112 */
+	bnes	loc_4080ef94		/* 4080ef70 6622 */
+	moveq	#3,%d0			/* 4080ef72 7003 */
+	.short	0xa198			/* 4080ef74 a198 */
 	moveq	#1,%d0			/* 4080ef76 7001 */
-	.short	0xa198	/* 4080ef78 a198 */
-	.short	0x6100	/* 4080ef7a 6100 */
-	.short	0x01e4	/* 4080ef7c 01e4 */
-	.short	0x43f2	/* 4080ef7e 43f2 */
-	.short	0x121c	/* 4080ef80 121c */
-	.short	0x7004	/* 4080ef82 7004 */
-	.short	0x0059	/* 4080ef84 0059 */
-	.short	0x8000	/* 4080ef86 8000 */
-	.short	0x6100	/* 4080ef88 6100 */
-	.short	0x0136	/* 4080ef8a 0136 */
-	.short	0x5281	/* 4080ef8c 5281 */
-	.short	0x5382	/* 4080ef8e 5382 */
-	.short	0x62f2	/* 4080ef90 62f2 */
+	.short	0xa198			/* 4080ef78 a198 */
+	bsrw	MMUFLUSHATC		/* 4080ef7a 6100 01e4 */
+	lea	%a2@(0x001c,%d1:w:2),%a1	/* 4080ef7e 43f2 121c */
+	moveq	#4,%d0			/* 4080ef82 7004 */
+
+loc_4080ef84:
+	oriw	#-32768,%a1@+		/* 4080ef84 0059 8000 */
+	bsrw	sub_4080f0c0		/* 4080ef88 6100 0136 */
+	addql	#1,%d1			/* 4080ef8c 5281 */
+	subql	#1,%d2			/* 4080ef8e 5382 */
+	bhis	loc_4080ef84		/* 4080ef90 62f2 */
 	moveq	#0,%d0			/* 4080ef92 7000 */
-	.short	0x4cdf	/* 4080ef94 4cdf */
-	.short	0x0706	/* 4080ef96 0706 */
+
+loc_4080ef94:
+	moveml	%sp@+,%d1-%d2/%a0-%a2	/* 4080ef94 4cdf 0706 */
 	rts				/* 4080ef98 4e75 */
 
 	.align	16
