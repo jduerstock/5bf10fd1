@@ -1956,68 +1956,59 @@ sub_4080bb60:
 	rts				/* 4080bf46 4e75 */
 
 sub_4080bf48:
-	.short	0x286b	/* 4080bf48 286b */
-	.short	0x0004	/* 4080bf4a 0004 */
-	.short	0x202c	/* 4080bf4c 202c */
-	.short	0x0010	/* 4080bf4e 0010 */
-	.short	0xb0b8	/* 4080bf50 b0b8 */
-	.short	0x0830	/* 4080bf52 0830 */
-	.short	0x676e	/* 4080bf54 676e */
-	.short	0x4a38	/* 4080bf56 4a38 */
-	.short	0x08cf	/* 4080bf58 08cf */
-	.short	0x6606	/* 4080bf5a 6606 */
-	.short	0x21c0	/* 4080bf5c 21c0 */
-	.short	0x0828	/* 4080bf5e 0828 */
-	.short	0x6062	/* 4080bf60 6062 */
-	.short	0x4a38	/* 4080bf62 4a38 */
-	.short	0x08cd	/* 4080bf64 08cd */
-	.short	0x665c	/* 4080bf66 665c */
-	.short	0x41f8	/* 4080bf68 41f8 */
-	.short	0x0834	/* 4080bf6a 0834 */
-	.short	0x61ff	/* 4080bf6c 61ff */
-	.short	0x0006	/* 4080bf6e 0006 */
-	.short	0x7cde	/* 4080bf70 7cde */
-	.short	0x2038	/* 4080bf72 2038 */
-	.short	0x0830	/* 4080bf74 0830 */
-	.short	0xb0ac	/* 4080bf76 b0ac */
-	.short	0x0010	/* 4080bf78 0010 */
-	.short	0x6748	/* 4080bf7a 6748 */
-	.short	0x2940	/* 4080bf7c 2940 */
-	.short	0x0010	/* 4080bf7e 0010 */
-	.short	0x2238	/* 4080bf80 2238 */
-	.short	0x08d6	/* 4080bf82 08d6 */
-	.short	0x4681	/* 4080bf84 4681 */
-	.short	0x4a41	/* 4080bf86 4a41 */
-	.short	0x6710	/* 4080bf88 6710 */
-	.short	0x302c	/* 4080bf8a 302c */
-	.short	0x0008	/* 4080bf8c 0008 */
-	.short	0x9078	/* 4080bf8e 9078 */
-	.short	0x0832	/* 4080bf90 0832 */
-	.short	0x6a02	/* 4080bf92 6a02 */
-	.short	0x4440	/* 4080bf94 4440 */
-	.short	0xb041	/* 4080bf96 b041 */
-	.short	0x6f0a	/* 4080bf98 6f0a */
-	.short	0x3978	/* 4080bf9a 3978 */
-	.short	0x082e	/* 4080bf9c 082e */
-	.short	0x0008	/* 4080bf9e 0008 */
-	.short	0x426c	/* 4080bfa0 426c */
-	.short	0x000a	/* 4080bfa2 000a */
-	.short	0x4841	/* 4080bfa4 4841 */
-	.short	0x4a41	/* 4080bfa6 4a41 */
-	.short	0x6710	/* 4080bfa8 6710 */
-	.short	0x302c	/* 4080bfaa 302c */
-	.short	0x000c	/* 4080bfac 000c */
-	.short	0x9078	/* 4080bfae 9078 */
-	.short	0x0830	/* 4080bfb0 0830 */
-	.short	0x6a02	/* 4080bfb2 6a02 */
-	.short	0x4440	/* 4080bfb4 4440 */
-	.short	0xb041	/* 4080bfb6 b041 */
-	.short	0x6f0a	/* 4080bfb8 6f0a */
-	.short	0x3978	/* 4080bfba 3978 */
-	.short	0x082c	/* 4080bfbc 082c */
-	.short	0x000c	/* 4080bfbe 000c */
-	.short	0x426c	/* 4080bfc0 426c */
-	.short	0x000e	/* 4080bfc2 000e */
+	moveal	%a3@(4),%a4		/* 4080bf48 286b 0004 */
+	movel	%a4@(16),%d0		/* 4080bf4c 202c 0010 */
+	cmpl	0x830,%d0		/* 4080bf50 b0b8 0830 */
+	beqs	loc_4080bfc4		/* 4080bf54 676e */
+	tstb	0x8cf			/* 4080bf56 4a38 08cf */
+	bnes	loc_4080bf62		/* 4080bf5a 6606 */
+	movel	%d0,0x828		/* 4080bf5c 21c0 0828 */
+	bras	loc_4080bfc4		/* 4080bf60 6062 */
+
+loc_4080bf62:
+	tstb	0x8cd			/* 4080bf62 4a38 08cd */
+	bnes	loc_4080bfc4		/* 4080bf66 665c */
+	lea	0x834,%a0		/* 4080bf68 41f8 0834 */
+	bsrl	CRSRVBLTASK		/* 4080bf6c 61ff 0006 7cde */
+	movel	0x830,%d0		/* 4080bf72 2038 0830 */
+	cmpl	%a4@(16),%d0		/* 4080bf76 b0ac 0010 */
+	beqs	loc_4080bfc4		/* 4080bf7a 6748 */
+	movel	%d0,%a4@(16)		/* 4080bf7c 2940 0010 */
+	movel	0x8d6,%d1		/* 4080bf80 2238 08d6 */
+	notl	%d1			/* 4080bf84 4681 */
+	tstw	%d1			/* 4080bf86 4a41 */
+	beqs	loc_4080bf9a		/* 4080bf88 6710 */
+	movew	%a4@(8),%d0		/* 4080bf8a 302c 0008 */
+	subw	0x832,%d0		/* 4080bf8e 9078 0832 */
+	bpls	loc_4080bf96		/* 4080bf92 6a02 */
+	negw	%d0			/* 4080bf94 4440 */
+
+loc_4080bf96:
+	cmpw	%d1,%d0			/* 4080bf96 b041 */
+	bles	loc_4080bfa4		/* 4080bf98 6f0a */
+
+loc_4080bf9a:
+	movew	0x82e,%a4@(8)		/* 4080bf9a 3978 082e 0008 */
+	clrw	%a4@(10)		/* 4080bfa0 426c 000a */
+
+loc_4080bfa4:
+	swap	%d1			/* 4080bfa4 4841 */
+	tstw	%d1			/* 4080bfa6 4a41 */
+	beqs	loc_4080bfba		/* 4080bfa8 6710 */
+	movew	%a4@(12),%d0		/* 4080bfaa 302c 000c */
+	subw	0x830,%d0		/* 4080bfae 9078 0830 */
+	bpls	loc_4080bfb6		/* 4080bfb2 6a02 */
+	negw	%d0			/* 4080bfb4 4440 */
+
+loc_4080bfb6:
+	cmpw	%d1,%d0			/* 4080bfb6 b041 */
+	bles	loc_4080bfc4		/* 4080bfb8 6f0a */
+
+loc_4080bfba:
+	movew	0x82c,%a4@(12)		/* 4080bfba 3978 082c 000c */
+	clrw	%a4@(14)		/* 4080bfc0 426c 000e */
+
+loc_4080bfc4:
 	rts				/* 4080bfc4 4e75 */
 
 sub_4080bfc6:
