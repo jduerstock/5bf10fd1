@@ -961,50 +961,43 @@ sub_4080e8a0:
 	.align	16
 
 sub_4080e8f0:
-	.short	0x0c38	/* 4080e8f0 0c38 */
-	.short	0x0004	/* 4080e8f2 0004 */
-	.short	0x012f	/* 4080e8f4 012f */
-	.short	0x6c16	/* 4080e8f6 6c16 */
-	.short	0x4e7a	/* 4080e8f8 4e7a */
-	.short	0x0002	/* 4080e8fa 0002 */
-	.short	0xe9c0	/* 4080e8fc e9c0 */
-	.short	0x17c1	/* 4080e8fe 17c1 */
-	.short	0x0880	/* 4080e900 0880 */
-	.short	0x0000	/* 4080e902 0000 */
-	.short	0x2408	/* 4080e904 2408 */
-	.short	0x6704	/* 4080e906 6704 */
-	.short	0x0000	/* 4080e908 0000 */
-	.short	0x0009	/* 4080e90a 0009 */
-	.short	0x601a	/* 4080e90c 601a */
-	.short	0x4e7a	/* 4080e90e 4e7a */
-	.short	0x0002	/* 4080e910 0002 */
-	.short	0xe9c0	/* 4080e912 e9c0 */
-	.short	0x1401	/* 4080e914 1401 */
-	.short	0x0880	/* 4080e916 0880 */
-	.short	0x000f	/* 4080e918 000f */
-	.short	0x2408	/* 4080e91a 2408 */
-	.short	0x670a	/* 4080e91c 670a */
-	.short	0x4eb0	/* 4080e91e 4eb0 */
-	.short	0x81e1	/* 4080e920 81e1 */
-	.short	0x06f4	/* 4080e922 06f4 */
-	.short	0x08c0	/* 4080e924 08c0 */
-	.short	0x000f	/* 4080e926 000f */
-	.short	0x2041	/* 4080e928 2041 */
-	.short	0x4e7b	/* 4080e92a 4e7b */
-	.short	0x0002	/* 4080e92c 0002 */
+	cmpib	#4,0x12f		/* 4080e8f0 0c38 0004 012f */
+	bges	loc_4080e90e		/* 4080e8f6 6c16 */
+	movec	%cacr,%d0		/* 4080e8f8 4e7a 0002 */
+	bfextu	%d0,31,1,%d1		/* 4080e8fc e9c0 17c1 */
+	bclr	#0,%d0			/* 4080e900 0880 0000 */
+	movel	%a0,%d2			/* 4080e904 2408 */
+	beqs	loc_4080e90c		/* 4080e906 6704 */
+	orib	#9,%d0			/* 4080e908 0000 0009 */
+
+loc_4080e90c:
+	bras	loc_4080e928		/* 4080e90c 601a */
+
+loc_4080e90e:
+	movec	%cacr,%d0		/* 4080e90e 4e7a 0002 */
+	bfextu	%d0,16,1,%d1		/* 4080e912 e9c0 1401 */
+	bclr	#15,%d0			/* 4080e916 0880 000f */
+	movel	%a0,%d2			/* 4080e91a 2408 */
+	beqs	loc_4080e928		/* 4080e91c 670a */
+	jsrind	0x06f4			/* 4080e91e 4eb0 81e1 06f4 */
+	bset	#15,%d0			/* 4080e924 08c0 000f */
+
+loc_4080e928:
+	moveal	%d1,%a0			/* 4080e928 2041 */
+	movec	%d0,%cacr		/* 4080e92a 4e7b 0002 */
 	moveq	#0,%d0			/* 4080e92e 7000 */
 	rts				/* 4080e930 4e75 */
+
 	CallVector	0x2010 30	/* 4080e932 2f30 81e2 2010 0078 */
 	rts				/* 4080e93a 4e75 */
 
 	.align	16
 
 sub_4080e940:
-	.short	0x4eb0	/* 4080e940 4eb0 */
-	.short	0x81e1	/* 4080e942 81e1 */
-	.short	0x06f4	/* 4080e944 06f4 */
+	jsrind	0x06f4			/* 4080e940 4eb0 81e1 06f4 */
 	moveq	#0,%d0			/* 4080e946 7000 */
 	rts				/* 4080e948 4e75 */
+
 	CallVector	0x2010 31	/* 4080e94a 2f30 81e2 2010 007c */
 	rts				/* 4080e952 4e75 */
 
