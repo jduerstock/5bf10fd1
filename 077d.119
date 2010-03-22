@@ -465,27 +465,29 @@ sub_40877390:
 
 	.align	16
 
-sub_408773b0:
+__v__NEWHANDLEWRAPPER:
 	moveq	#0,%d0			/* 408773b0 7000 */
-	.short	0x225f	/* 408773b2 225f */
-	.short	0x301f	/* 408773b4 301f */
-	.short	0x6602	/* 408773b6 6602 */
-	.short	0x7002	/* 408773b8 7002 */
-	.short	0xa322	/* 408773ba a322 */
-	.short	0x6604	/* 408773bc 6604 */
-	.short	0x2e88	/* 408773be 2e88 */
+	moveal	%sp@+,%a1		/* 408773b2 225f */
+	movew	%sp@+,%d0		/* 408773b4 301f */
+	bnes	loc_408773ba		/* 408773b6 6602 */
+	moveq	#2,%d0			/* 408773b8 7002 */
+
+loc_408773ba:
+	.short	0xa322			/* 408773ba a322 */
+	bnes	loc_408773c2		/* 408773bc 6604 */
+	movel	%a0,%sp@		/* 408773be 2e88 */
 	jmp	%a1@			/* 408773c0 4ed1 */
-	.short	0x7019	/* 408773c2 7019 */
-	.short	0x4eb0	/* 408773c4 4eb0 */
-	.short	0x81e1	/* 408773c6 81e1 */
-	.short	0x1524	/* 408773c8 1524 */
+
+loc_408773c2:
+	moveq	#25,%d0			/* 408773c2 7019 */
+	tsjsr	0xa9c9			/* 408773c4 4eb0 81e1 1524 */
 
 sub_408773ca:
-	.short	0xa9ff	/* 408773ca a9ff */
+	.short	0xa9ff			/* 408773ca a9ff */
 
 sub_408773cc:
-	.short	0xa322	/* 408773cc a322 */
-	.short	0x66f2	/* 408773ce 66f2 */
+	.short	0xa322			/* 408773cc a322 */
+	bnes	loc_408773c2		/* 408773ce 66f2 */
 	rts				/* 408773d0 4e75 */
 
 sub_408773d2:

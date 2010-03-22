@@ -2,6 +2,22 @@
 
 	.cpu	68040
 
+	.macro	tsjsr	trap
+		.iflt \trap-0xa000
+			.err
+		.endif
+		.ifgt \trap-0xabff
+			.err
+		.endif
+		.iflt \trap-0xa800
+			.short 0x4eb0,0x81e1
+			.short 0x400 + ( \trap & 0xff ) * 4
+		.else
+			.short 0x4eb0,0x81e1
+			.short 0xe00 + ( \trap - 0xa800) * 4
+		.endif
+	.endm
+
 	.macro	CallVector base vector
 		.short	0x2f30,0x81e2
 		.short	\base
