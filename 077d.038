@@ -202,19 +202,17 @@ loc_408261be:
 	rts				/* 408261c4 4e75 */
 
 sub_408261c6:
-	.short	0x48e7	/* 408261c6 48e7 */
-	.short	0xc080	/* 408261c8 c080 */
-	.short	0x7203	/* 408261ca 7203 */
-	.short	0xd26c	/* 408261cc d26c */
-	.short	0x002a	/* 408261ce 002a */
-	.short	0xe449	/* 408261d0 e449 */
-	.short	0x5341	/* 408261d2 5341 */
+	moveml	%d0-%d1/%a0,%sp@-	/* 408261c6 48e7 c080 */
+	moveq	#3,%d1			/* 408261ca 7203 */
+	addw	%a4@(42),%d1		/* 408261cc d26c 002a */
+	lsrw	#2,%d1			/* 408261d0 e449 */
+	subqw	#1,%d1			/* 408261d2 5341 */
 	moveq	#0,%d0			/* 408261d4 7000 */
-	.short	0x20c0	/* 408261d6 20c0 */
-	.short	0x51c9	/* 408261d8 51c9 */
-	.short	0xfffc	/* 408261da fffc */
-	.short	0x4cdf	/* 408261dc 4cdf */
-	.short	0x0103	/* 408261de 0103 */
+
+loc_408261d6:
+	movel	%d0,%a0@+		/* 408261d6 20c0 */
+	dbf	%d1,loc_408261d6	/* 408261d8 51c9 fffc */
+	moveml	%sp@+,%d0-%d1/%a0	/* 408261dc 4cdf 0103 */
 	rts				/* 408261e0 4e75 */
 
 sub_408261e2:
