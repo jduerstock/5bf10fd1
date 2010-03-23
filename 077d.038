@@ -599,36 +599,40 @@ loc_408264ca:
 	rts				/* 408264ce 4e75 */
 
 sub_408264d0:
-	.short	0x48e7	/* 408264d0 48e7 */
-	.short	0xc0e0	/* 408264d2 c0e0 */
-	.short	0x2448	/* 408264d4 2448 */
-	.short	0x322c	/* 408264d6 322c */
-	.short	0x002c	/* 408264d8 002c */
-	.short	0x12c1	/* 408264da 12c1 */
-	.short	0x204a	/* 408264dc 204a */
+	moveml	%d0-%d1/%a0-%a2,%sp@-	/* 408264d0 48e7 c0e0 */
+	moveal	%a0,%a2			/* 408264d4 2448 */
+	movew	%a4@(44),%d1		/* 408264d6 322c 002c */
+	moveb	%d1,%a1@+		/* 408264da 12c1 */
+	moveal	%a2,%a0			/* 408264dc 204a */
 	moveq	#0,%d0			/* 408264de 7000 */
-	.short	0x1018	/* 408264e0 1018 */
-	.short	0x9240	/* 408264e2 9240 */
-	.short	0x6c06	/* 408264e4 6c06 */
-	.short	0xd041	/* 408264e6 d041 */
-	.short	0x6002	/* 408264e8 6002 */
-	.short	0x12d8	/* 408264ea 12d8 */
-	.short	0x51c8	/* 408264ec 51c8 */
-	.short	0xfffc	/* 408264ee fffc */
-	.short	0x4a41	/* 408264f0 4a41 */
-	.short	0x6f08	/* 408264f2 6f08 */
-	.short	0x6002	/* 408264f4 6002 */
-	.short	0x4219	/* 408264f6 4219 */
-	.short	0x51c9	/* 408264f8 51c9 */
-	.short	0xfffc	/* 408264fa fffc */
-	.short	0x4cdf	/* 408264fc 4cdf */
-	.short	0x0703	/* 408264fe 0703 */
+	moveb	%a0@+,%d0		/* 408264e0 1018 */
+	subw	%d0,%d1			/* 408264e2 9240 */
+	bges	loc_408264ec		/* 408264e4 6c06 */
+	addw	%d1,%d0			/* 408264e6 d041 */
+	bras	loc_408264ec		/* 408264e8 6002 */
+
+loc_408264ea:
+	moveb	%a0@+,%a1@+		/* 408264ea 12d8 */
+
+loc_408264ec:
+	dbf	%d0,loc_408264ea	/* 408264ec 51c8 fffc */
+	tstw	%d1			/* 408264f0 4a41 */
+	bles	loc_408264fc		/* 408264f2 6f08 */
+	bras	loc_408264f8		/* 408264f4 6002 */
+
+loc_408264f6:
+	clrb	%a1@+			/* 408264f6 4219 */
+
+loc_408264f8:
+	dbf	%d1,loc_408264f6	/* 408264f8 51c9 fffc */
+
+loc_408264fc:
+	moveml	%sp@+,%d0-%d1/%a0-%a2	/* 408264fc 4cdf 0703 */
 	rts				/* 40826500 4e75 */
-	.short	0x2f30	/* 40826502 2f30 */
-	.short	0x81e2	/* 40826504 81e2 */
-	.short	0x2030	/* 40826506 2030 */
-	.short	0x0150	/* 40826508 0150 */
+
+	CallVector	0x02030 84	/* 40826502 2f30 81e2 2030 0150 */
 	rts				/* 4082650a 4e75 */
+
 	.short	0x2f30	/* 4082650c 2f30 */
 	.short	0x81e2	/* 4082650e 81e2 */
 	.short	0x2030	/* 40826510 2030 */
