@@ -920,15 +920,19 @@ sub_408a3700:
 
 	.align	16
 
-sub_408a3710:
-	.short	0x225f	/* 408a3710 225f */
-	.short	0x205f	/* 408a3712 205f */
-	.short	0xa025	/* 408a3714 a025 */
-	.short	0x2e80	/* 408a3716 2e80 */
-	.short	0x6a02	/* 408a3718 6a02 */
-	.short	0x4297	/* 408a371a 4297 */
+GETHANDLESIZE:
+	moveal	%sp@+,%a1		/* 408a3710 225f */
+	moveal	%sp@+,%a0		/* 408a3712 205f */
+	.short	0xa025			/* 408a3714 a025 */
+	movel	%d0,%sp@		/* 408a3716 2e80 */
+	bpls	loc_408a371c		/* 408a3718 6a02 */
+	clrl	%sp@			/* 408a371a 4297 */
+
+loc_408a371c:
 	jmp	%a1@			/* 408a371c 4ed1 */
-	.short	0x0000	/* 408a371e 0000 */
+
+	.align	16
+
 	.short	0x7018	/* 408a3720 7018 */
 	.short	0x4267	/* 408a3722 4267 */
 	.short	0x51c8	/* 408a3724 51c8 */
