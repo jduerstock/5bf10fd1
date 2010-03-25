@@ -517,39 +517,32 @@ sub_409e54d0:
 	bfins	%d0,%a3@(28),%d1,1	/* 409e54d2 efeb 0841 001c */
 	rts				/* 409e54d8 4e75 */
 
-	.short	0x7201	/* 409e54da 7201 */
-	.short	0x61f2	/* 409e54dc 61f2 */
-	.short	0x660a	/* 409e54de 660a */
-	.short	0x613c	/* 409e54e0 613c */
-	.short	0x6600	/* 409e54e2 6600 */
-	.short	0xfb32	/* 409e54e4 fb32 */
-	.short	0x6000	/* 409e54e6 6000 */
-	.short	0xfb32	/* 409e54e8 fb32 */
-	.short	0x6104	/* 409e54ea 6104 */
-	.short	0x6000	/* 409e54ec 6000 */
-	.short	0xfb2c	/* 409e54ee fb2c */
-	.short	0x40e7	/* 409e54f0 40e7 */
-	.short	0x6100	/* 409e54f2 6100 */
-	.short	0x1160	/* 409e54f4 1160 */
-	.short	0x303c	/* 409e54f6 303c */
-	.short	0x0070	/* 409e54f8 0070 */
-	.short	0x6100	/* 409e54fa 6100 */
-	.short	0x10fa	/* 409e54fc 10fa */
-	.short	0x4240	/* 409e54fe 4240 */
-	.short	0x6100	/* 409e5500 6100 */
-	.short	0x1108	/* 409e5502 1108 */
-	.short	0x303c	/* 409e5504 303c */
-	.short	0x0080	/* 409e5506 0080 */
-	.short	0x6100	/* 409e5508 6100 */
-	.short	0x10ec	/* 409e550a 10ec */
-	.short	0x4240	/* 409e550c 4240 */
-	.short	0x6100	/* 409e550e 6100 */
-	.short	0x10fa	/* 409e5510 10fa */
-	.short	0x46df	/* 409e5512 46df */
-	.short	0x4240	/* 409e5514 4240 */
-	.short	0x206b	/* 409e5516 206b */
-	.short	0x0004	/* 409e5518 0004 */
-	.short	0xa076	/* 409e551a a076 */
+	moveq	#1,%d1			/* 409e54da 7201 */
+	bsrs	sub_409e54d0		/* 409e54dc 61f2 */
+	bnes	loc_409e54ea		/* 409e54de 660a */
+	bsrs	sub_409e551e		/* 409e54e0 613c */
+	bnew	loc_409e5016		/* 409e54e2 6600 fb32 */
+	braw	loc_409e501a		/* 409e54e6 6000 fb32 */
+
+loc_409e54ea:
+	bsrs	sub_409e54f0		/* 409e54ea 6104 */
+	braw	loc_409e501a		/* 409e54ec 6000 fb2c */
+
+sub_409e54f0:
+	movew	%sr,%sp@-		/* 409e54f0 40e7 */
+	bsrw	sub_409e6654		/* 409e54f2 6100 1160 */
+	movew	#112,%d0		/* 409e54f6 303c 0070 */
+	bsrw	sub_409e65f6		/* 409e54fa 6100 10fa */
+	clrw	%d0			/* 409e54fe 4240 */
+	bsrw	sub_409e660a		/* 409e5500 6100 1108 */
+	movew	#128,%d0		/* 409e5504 303c 0080 */
+	bsrw	sub_409e65f6		/* 409e5508 6100 10ec */
+	clrw	%d0			/* 409e550c 4240 */
+	bsrw	sub_409e660a		/* 409e550e 6100 10fa */
+	movew	%sp@+,%sr		/* 409e5512 46df */
+	clrw	%d0			/* 409e5514 4240 */
+	moveal	%a3@(4),%a0		/* 409e5516 206b 0004 */
+	.short	0xa076			/* 409e551a a076 */
 	rts				/* 409e551c 4e75 */
 
 sub_409e551e:
