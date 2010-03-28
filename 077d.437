@@ -1423,39 +1423,28 @@
 	.short	0xfff0	/* 409b5b1a fff0 */
 	.short	0x4e5e	/* 409b5b1c 4e5e */
 	rts				/* 409b5b1e 4e75 */
-	.short	0x4e56	/* 409b5b20 4e56 */
-	.short	0x0000	/* 409b5b22 0000 */
-	.short	0x48e7	/* 409b5b24 48e7 */
-	.short	0x0300	/* 409b5b26 0300 */
-	.short	0x2c2e	/* 409b5b28 2c2e */
-	.short	0x0008	/* 409b5b2a 0008 */
-	.short	0x2006	/* 409b5b2c 2006 */
-	.short	0xd0bc	/* 409b5b2e d0bc */
-	.short	0x0000	/* 409b5b30 0000 */
-	.short	0x0200	/* 409b5b32 0200 */
-	.short	0x223c	/* 409b5b34 223c */
-	.short	0xffff	/* 409b5b36 ffff */
-	.short	0xfe00	/* 409b5b38 fe00 */
-	.short	0xc280	/* 409b5b3a c280 */
-	.short	0x2c01	/* 409b5b3c 2c01 */
-	.short	0x2006	/* 409b5b3e 2006 */
-	.short	0xa71e	/* 409b5b40 a71e */
-	.short	0x2e08	/* 409b5b42 2e08 */
-	.short	0x2007	/* 409b5b44 2007 */
-	.short	0xd0bc	/* 409b5b46 d0bc */
-	.short	0x0000	/* 409b5b48 0000 */
-	.short	0x0200	/* 409b5b4a 0200 */
-	.short	0x223c	/* 409b5b4c 223c */
-	.short	0xffff	/* 409b5b4e ffff */
-	.short	0xfe00	/* 409b5b50 fe00 */
-	.short	0xc280	/* 409b5b52 c280 */
-	.short	0x2e01	/* 409b5b54 2e01 */
-	.short	0x2007	/* 409b5b56 2007 */
-	.short	0x4cee	/* 409b5b58 4cee */
-	.short	0x00c0	/* 409b5b5a 00c0 */
-	.short	0xfff8	/* 409b5b5c fff8 */
-	.short	0x4e5e	/* 409b5b5e 4e5e */
+
+	linkw	%fp,#0			/* 409b5b20 4e56 0000 */
+	moveml	%d6-%d7,%sp@-		/* 409b5b24 48e7 0300 */
+	movel	%fp@(8),%d6		/* 409b5b28 2c2e 0008 */
+	movel	%d6,%d0			/* 409b5b2c 2006 */
+	.short	0xd0bc,0x0000,0x0200	/* addl #512,%d0 /* 409b5b2e d0bc 0000 0200 */
+	movel	#-512,%d1		/* 409b5b34 223c ffff fe00 */
+	andl	%d0,%d1			/* 409b5b3a c280 */
+	movel	%d1,%d6			/* 409b5b3c 2c01 */
+	movel	%d6,%d0			/* 409b5b3e 2006 */
+	.short	0xa71e			/* 409b5b40 a71e */
+	movel	%a0,%d7			/* 409b5b42 2e08 */
+	movel	%d7,%d0			/* 409b5b44 2007 */
+	.short	0xd0bc,0x0000,0x0200	/* addl #512,%d0 /* 409b5b46 d0bc 0000 0200 */
+	movel	#-512,%d1		/* 409b5b4c 223c ffff fe00 */
+	andl	%d0,%d1			/* 409b5b52 c280 */
+	movel	%d1,%d7			/* 409b5b54 2e01 */
+	movel	%d7,%d0			/* 409b5b56 2007 */
+	moveml	%fp@(-8),%d6-%d7	/* 409b5b58 4cee 00c0 fff8 */
+	unlk	%fp			/* 409b5b5e 4e5e */
 	rts				/* 409b5b60 4e75 */
+
 	.short	0x4e56	/* 409b5b62 4e56 */
 	.short	0x0000	/* 409b5b64 0000 */
 	.short	0x48e7	/* 409b5b66 48e7 */
