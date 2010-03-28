@@ -6,5 +6,5 @@ cmp ROM-077D.DAT bork || exit
 #csplit -s -n 3 -f 077d. tmp9 "/SPLIT HERE/" "{*}"
 git diff
 git add 077d.???
-git commit -m "$(date)"
+git commit -m "$(date) $(./complete.sh)"
 #rm 077d.[0-9]??
