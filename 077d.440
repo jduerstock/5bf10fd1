@@ -736,38 +736,30 @@
 	.short	0x51c1	/* 409b85c0 51c1 */
 	.short	0x6002	/* 409b85c2 6002 */
 	.short	0x50c1	/* 409b85c4 50c1 */
-	.short	0x4e56	/* 409b85c6 4e56 */
-	.short	0xffce	/* 409b85c8 ffce */
-	.short	0x204f	/* 409b85ca 204f */
-	.short	0x216e	/* 409b85cc 216e */
-	.short	0x0008	/* 409b85ce 0008 */
-	.short	0x0020	/* 409b85d0 0020 */
-	.short	0x316e	/* 409b85d2 316e */
-	.short	0x0010	/* 409b85d4 0010 */
-	.short	0x0018	/* 409b85d6 0018 */
-	.short	0x226e	/* 409b85d8 226e */
-	.short	0x000c	/* 409b85da 000c */
-	.short	0x2151	/* 409b85dc 2151 */
-	.short	0x0024	/* 409b85de 0024 */
-	.short	0x4268	/* 409b85e0 4268 */
-	.short	0x002c	/* 409b85e2 002c */
-	.short	0x42a8	/* 409b85e4 42a8 */
-	.short	0x002e	/* 409b85e6 002e */
-	.short	0x4a01	/* 409b85e8 4a01 */
-	.short	0x6604	/* 409b85ea 6604 */
-	.short	0xa002	/* 409b85ec a002 */
-	.short	0x6002	/* 409b85ee 6002 */
-	.short	0xa003	/* 409b85f0 a003 */
-	.short	0x3d40	/* 409b85f2 3d40 */
-	.short	0x0012	/* 409b85f4 0012 */
-	.short	0x226e	/* 409b85f6 226e */
-	.short	0x000c	/* 409b85f8 000c */
-	.short	0x22a8	/* 409b85fa 22a8 */
-	.short	0x0028	/* 409b85fc 0028 */
-	.short	0x4e5e	/* 409b85fe 4e5e */
-	.short	0x225f	/* 409b8600 225f */
-	.short	0x4fef	/* 409b8602 4fef */
-	.short	0x000a	/* 409b8604 000a */
+
+	linkw	%fp,#-50		/* 409b85c6 4e56 ffce */
+	moveal	%sp,%a0			/* 409b85ca 204f */
+	movel	%fp@(8),%a0@(32)	/* 409b85cc 216e 0008 0020 */
+	movew	%fp@(16),%a0@(24)	/* 409b85d2 316e 0010 0018 */
+	moveal	%fp@(12),%a1		/* 409b85d8 226e 000c */
+	movel	%a1@,%a0@(36)		/* 409b85dc 2151 0024 */
+	clrw	%a0@(44)		/* 409b85e0 4268 002c */
+	clrl	%a0@(46)		/* 409b85e4 42a8 002e */
+	tstb	%d1			/* 409b85e8 4a01 */
+	bnes	loc_409b85f0		/* 409b85ea 6604 */
+	.short	0xa002			/* 409b85ec a002 */
+	bras	loc_409b85f2		/* 409b85ee 6002 */
+
+loc_409b85f0:
+	.short	0xa003			/* 409b85f0 a003 */
+
+loc_409b85f2:
+	movew	%d0,%fp@(18)		/* 409b85f2 3d40 0012 */
+	moveal	%fp@(12),%a1		/* 409b85f6 226e 000c */
+	movel	%a0@(40),%a1@		/* 409b85fa 22a8 0028 */
+	unlk	%fp			/* 409b85fe 4e5e */
+	moveal	%sp@+,%a1		/* 409b8600 225f */
+	lea	%sp@(10),%sp		/* 409b8602 4fef 000a */
 	jmp	%a1@			/* 409b8606 4ed1 */
 
 	.align	16
