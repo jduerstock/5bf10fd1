@@ -890,38 +890,35 @@ sub_409b86c0:
 	.short	0xa60a	/* 409b86ec a60a */
 	.short	0x3e80	/* 409b86ee 3e80 */
 	jmp	%a1@			/* 409b86f0 4ed1 */
-	.short	0x0000	/* 409b86f2 0000 */
-	.short	0x0000	/* 409b86f4 0000 */
-	.short	0x0000	/* 409b86f6 0000 */
-	.short	0x0000	/* 409b86f8 0000 */
-	.short	0x0000	/* 409b86fa 0000 */
-	.short	0x0000	/* 409b86fc 0000 */
-	.short	0x0000	/* 409b86fe 0000 */
-	.short	0x4e56	/* 409b8700 4e56 */
-	.short	0x0000	/* 409b8702 0000 */
-	.short	0x48e7	/* 409b8704 48e7 */
-	.short	0x1018	/* 409b8706 1018 */
-	.short	0x266e	/* 409b8708 266e */
-	.short	0x0008	/* 409b870a 0008 */
-	.short	0x2078	/* 409b870c 2078 */
-	.short	0x02b6	/* 409b870e 02b6 */
-	.short	0x2068	/* 409b8710 2068 */
-	.short	0x0110	/* 409b8712 0110 */
-	.short	0x2850	/* 409b8714 2850 */
-	.short	0x7600	/* 409b8716 7600 */
-	.short	0x600a	/* 409b8718 600a */
-	.short	0xb9cb	/* 409b871a b9cb */
-	.short	0x6604	/* 409b871c 6604 */
+
+	.align	16
+
+	linkw	%fp,#0			/* 409b8700 4e56 0000 */
+	moveml	%d3/%a3-%a4,%sp@-	/* 409b8704 48e7 1018 */
+	moveal	%fp@(8),%a3		/* 409b8708 266e 0008 */
+	moveal	0x2b6,%a0		/* 409b870c 2078 02b6 */
+	moveal	%a0@(272),%a0		/* 409b8710 2068 0110 */
+	moveal	%a0@,%a4		/* 409b8714 2850 */
+	moveq	#0,%d3			/* 409b8716 7600 */
+	bras	loc_409b8724		/* 409b8718 600a */
+
+loc_409b871a:
+	cmpal	%a3,%a4			/* 409b871a b9cb */
+	bnes	loc_409b8722		/* 409b871c 6604 */
 	moveq	#0,%d0			/* 409b871e 7000 */
-	.short	0x6008	/* 409b8720 6008 */
-	.short	0x2854	/* 409b8722 2854 */
-	.short	0xb68c	/* 409b8724 b68c */
-	.short	0x66f2	/* 409b8726 66f2 */
+	bras	loc_409b872a		/* 409b8720 6008 */
+
+loc_409b8722:
+	moveal	%a4@,%a4		/* 409b8722 2854 */
+
+loc_409b8724:
+	cmpl	%a4,%d3			/* 409b8724 b68c */
+	bnes	loc_409b871a		/* 409b8726 66f2 */
 	moveq	#1,%d0			/* 409b8728 7001 */
-	.short	0x4cee	/* 409b872a 4cee */
-	.short	0x1808	/* 409b872c 1808 */
-	.short	0xfff4	/* 409b872e fff4 */
-	.short	0x4e5e	/* 409b8730 4e5e */
+
+loc_409b872a:
+	moveml	%fp@(-12),%d3/%a3-%a4	/* 409b872a 4cee 1808 fff4 */
+	unlk	%fp			/* 409b8730 4e5e */
 	rts				/* 409b8732 4e75 */
 
 	.align	16
