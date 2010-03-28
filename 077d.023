@@ -731,7 +731,7 @@ sub_40817620:
 	.align	16
 
 sub_40817630:
-	btst	#7,0x0b22		/* 40817d54 0838 0007 0b22 */
+	btst	#7,0x0b22		/* 40817630 0838 0007 0b22 */
 	bnes	loc_4081763c		/* 40817636 6604 */
 	moveq	#0,%d0			/* 40817638 7000 */
 	rts				/* 4081763a 4e75 */
@@ -1022,6 +1022,7 @@ sub_408178b8:
 	.short	0x6602	/* 408178ca 6602 */
 	.short	0x5340	/* 408178cc 5340 */
 	rts				/* 408178ce 4e75 */
+
 	CallVector	0x205c 3	/* 408178d0 2f30 81e2 205c 000c */
 	rts				/* 408178d8 4e75 */
 
@@ -1031,47 +1032,36 @@ SCSILOAD:
 
 	.align	16
 
-	.short	0x6100	/* 408178f0 6100 */
-	.short	0x0462	/* 408178f2 0462 */
-	.short	0x674c	/* 408178f4 674c */
-	.short	0x41fa	/* 408178f6 41fa */
-	.short	0x0046	/* 408178f8 0046 */
-	.short	0x21c8	/* 408178fa 21c8 */
-	.short	0x0070	/* 408178fc 0070 */
-	.short	0x21c8	/* 408178fe 21c8 */
-	.short	0x0074	/* 40817900 0074 */
-	.short	0x21c8	/* 40817902 21c8 */
-	.short	0x0078	/* 40817904 0078 */
-	.short	0x21c8	/* 40817906 21c8 */
-	.short	0x007c	/* 40817908 007c */
-	.short	0x7e00	/* 4081790a 7e00 */
-	.short	0x4e56	/* 4081790c 4e56 */
-	.short	0xfe0a	/* 4081790e fe0a */
-	.short	0x2878	/* 40817910 2878 */
-	.short	0x0c0c	/* 40817912 0c0c */
-	.short	0x294e	/* 40817914 294e */
-	.short	0x0108	/* 40817916 0108 */
-	.short	0x6100	/* 40817918 6100 */
-	.short	0x0bb4	/* 4081791a 0bb4 */
-	.short	0x6100	/* 4081791c 6100 */
-	.short	0x00b0	/* 4081791e 00b0 */
-	.short	0x6100	/* 40817920 6100 */
-	.short	0x012a	/* 40817922 012a */
-	.short	0x6718	/* 40817924 6718 */
-	.short	0x6100	/* 40817926 6100 */
-	.short	0x02f0	/* 40817928 02f0 */
-	.short	0x6100	/* 4081792a 6100 */
-	.short	0x0398	/* 4081792c 0398 */
-	.short	0x6100	/* 4081792e 6100 */
-	.short	0x0466	/* 40817930 0466 */
-	.short	0x6100	/* 40817932 6100 */
-	.short	0x0a5a	/* 40817934 0a5a */
-	.short	0x6100	/* 40817936 6100 */
-	.short	0x0084	/* 40817938 0084 */
-	.short	0x6100	/* 4081793a 6100 */
-	.short	0x04d0	/* 4081793c 04d0 */
-	.short	0xa05b	/* 4081793e a05b */
-	.short	0x60fe	/* 40817940 60fe */
+SCSIDISKMODE:
+	bsrw	TESTFORDISKMODE		/* 408178f0 6100 0462 */
+	beqs	loc_40817942		/* 408178f4 674c */
+	lea	%pc@(loc_4081793e),%a0	/* 408178f6 41fa 0046 */
+	movel	%a0,0x70		/* 408178fa 21c8 0070 */
+	movel	%a0,0x74		/* 408178fe 21c8 0074 */
+	movel	%a0,0x78		/* 40817902 21c8 0078 */
+	movel	%a0,0x7c		/* 40817906 21c8 007c */
+	moveq	#0,%d7			/* 4081790a 7e00 */
+	linkw	%fp,#-502		/* 4081790c 4e56 fe0a */
+	moveal	0xc0c,%a4		/* 40817910 2878 0c0c */
+	movel	%fp,%a4@(264)		/* 40817914 294e 0108 */
+	bsrw	sub_408184ce		/* 40817918 6100 0bb4 */
+	bsrw	sub_408179ce		/* 4081791c 6100 00b0 */
+	bsrw	sub_40817a4c		/* 40817920 6100 012a */
+	beqs	loc_4081793e		/* 40817924 6718 */
+	bsrw	sub_40817c18		/* 40817926 6100 02f0 */
+	bsrw	sub_40817cc4		/* 4081792a 6100 0398 */
+	bsrw	sub_40817d96		/* 4081792e 6100 0466 */
+	bsrw	sub_4081838e		/* 40817932 6100 0a5a */
+	bsrw	sub_408179bc		/* 40817936 6100 0084 */
+	bsrw	sub_40817e0c		/* 4081793a 6100 04d0 */
+
+loc_4081793e:
+	.short	0xa05b			/* 4081793e a05b */
+
+loc_40817940:
+	bras	loc_40817940		/* 40817940 60fe */
+
+loc_40817942:
 	rts				/* 40817942 4e75 */
 
 SCSIDISKWAKEALERT:
@@ -1135,6 +1125,8 @@ SCSIDISKWAKEALERT:
 	.short	0x4cdf	/* 408179b6 4cdf */
 	.short	0x0307	/* 408179b8 0307 */
 	rts				/* 408179ba 4e75 */
+
+sub_408179bc:
 	.short	0x0838	/* 408179bc 0838 */
 	.short	0x0000	/* 408179be 0000 */
 	.short	0x0b22	/* 408179c0 0b22 */
@@ -1144,6 +1136,8 @@ SCSIDISKWAKEALERT:
 	.short	0x000a	/* 408179c8 000a */
 	.short	0xa09f	/* 408179ca a09f */
 	rts				/* 408179cc 4e75 */
+
+sub_408179ce:
 	.short	0x203c	/* 408179ce 203c */
 	.short	0x0001	/* 408179d0 0001 */
 	.short	0x0003	/* 408179d2 0003 */
@@ -1207,6 +1201,8 @@ SCSIDISKWAKEALERT:
 	.short	0x4cdf	/* 40817a46 4cdf */
 	.short	0x0f00	/* 40817a48 0f00 */
 	rts				/* 40817a4a 4e75 */
+
+sub_40817a4c:
 	.short	0x2d78	/* 40817a4c 2d78 */
 	.short	0x0904	/* 40817a4e 0904 */
 	.short	0xfffc	/* 40817a50 fffc */
@@ -1433,6 +1429,7 @@ loc_40817c12:
 	moveml	%sp@+,%d0-%d2/%a0-%a1	/* 40817c12 4cdf 0307 */
 	rts				/* 40817c16 4e75 */
 
+sub_40817c18:
 	.short	0x426e	/* 40817c18 426e */
 	.short	0x0018	/* 40817c1a 0018 */
 	.short	0x4fef	/* 40817c1c 4fef */
@@ -1519,6 +1516,8 @@ loc_40817c12:
 	moveq	#-1,%d0			/* 40817cbe 70ff */
 	.short	0x4a40	/* 40817cc0 4a40 */
 	rts				/* 40817cc2 4e75 */
+
+sub_40817cc4:
 	.short	0x0838	/* 40817cc4 0838 */
 	.short	0x0000	/* 40817cc6 0000 */
 	.short	0x0b22	/* 40817cc8 0b22 */
@@ -1591,6 +1590,8 @@ loc_40817c12:
 	.short	0x4cdf	/* 40817d4e 4cdf */
 	.short	0x0003	/* 40817d50 0003 */
 	rts				/* 40817d52 4e75 */
+
+TESTFORDISKMODE:
 	.short	0x0838	/* 40817d54 0838 */
 	.short	0x0005	/* 40817d56 0005 */
 	.short	0x0dd5	/* 40817d58 0dd5 */
@@ -1624,6 +1625,8 @@ loc_40817c12:
 	.short	0x4e71	/* 40817d90 4e71 */
 	moveq	#0,%d0			/* 40817d92 7000 */
 	rts				/* 40817d94 4e75 */
+
+sub_40817d96:
 	.short	0x0838	/* 40817d96 0838 */
 	.short	0x0005	/* 40817d98 0005 */
 	.short	0x0dd5	/* 40817d9a 0dd5 */
@@ -1683,6 +1686,8 @@ loc_40817c12:
 	.short	0x4fef	/* 40817e06 4fef */
 	.short	0x000e	/* 40817e08 000e */
 	rts				/* 40817e0a 4e75 */
+
+sub_40817e0c:
 	.short	0x4aac	/* 40817e0c 4aac */
 	.short	0x0118	/* 40817e0e 0118 */
 	.short	0x6676	/* 40817e10 6676 */
