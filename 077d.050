@@ -1592,31 +1592,22 @@ str_40832e6e:
 	.align	16
 
 sub_40832e80:
-	.short	0x4e56	/* 40832e80 4e56 */
-	.short	0xffd4	/* 40832e82 ffd4 */
-	.short	0x2f0c	/* 40832e84 2f0c */
-	.short	0x286e	/* 40832e86 286e */
-	.short	0x0008	/* 40832e88 0008 */
-	.short	0x486e	/* 40832e8a 486e */
-	.short	0xffd4	/* 40832e8c ffd4 */
+	linkw	%fp,#-44		/* 40832e80 4e56 ffd4 */
+	movel	%a4,%sp@-		/* 40832e84 2f0c */
+	moveal	%fp@(8),%a4		/* 40832e86 286e 0008 */
+	pea	%fp@(-44)		/* 40832e8a 486e ffd4 */
 	moveq	#0,%d0			/* 40832e8e 7000 */
-	.short	0x2f00	/* 40832e90 2f00 */
-	.short	0x2f00	/* 40832e92 2f00 */
-	.short	0x7200	/* 40832e94 7200 */
-	.short	0x122c	/* 40832e96 122c */
-	.short	0x013c	/* 40832e98 013c */
-	.short	0x746c	/* 40832e9a 746c */
-	.short	0x4c02	/* 40832e9c 4c02 */
-	.short	0x1800	/* 40832e9e 1800 */
-	.short	0x41ec	/* 40832ea0 41ec */
-	.short	0x0147	/* 40832ea2 0147 */
-	.short	0x4870	/* 40832ea4 4870 */
-	.short	0x1800	/* 40832ea6 1800 */
-	.short	0x4eba	/* 40832ea8 4eba */
-	.short	0x56ec	/* 40832eaa 56ec */
-	.short	0x286e	/* 40832eac 286e */
-	.short	0xffd0	/* 40832eae ffd0 */
-	.short	0x4e5e	/* 40832eb0 4e5e */
+	movel	%d0,%sp@-		/* 40832e90 2f00 */
+	movel	%d0,%sp@-		/* 40832e92 2f00 */
+	moveq	#0,%d1			/* 40832e94 7200 */
+	moveb	%a4@(316),%d1		/* 40832e96 122c 013c */
+	moveq	#108,%d2		/* 40832e9a 746c */
+	mulsl	%d2,%d1			/* 40832e9c 4c02 1800 */
+	lea	%a4@(327),%a0		/* 40832ea0 41ec 0147 */
+	pea	%a0@(0x0000,%d1:l)	/* 40832ea4 4870 1800 */
+	jsr	%pc@(sub_40838596)	/* 40832ea8 4eba 56ec */
+	moveal	%fp@(-48),%a4		/* 40832eac 286e ffd0 */
+	unlk	%fp			/* 40832eb0 4e5e */
 	rts				/* 40832eb2 4e75 */
 
 RemoveToolBoxName:
