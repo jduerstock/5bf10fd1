@@ -877,7 +877,7 @@ loc_40835982:
 	lea	%a4@(3536),%a0		/* 40835996 41ec 0dd0 */
 	lea	%a3@(1464),%a1		/* 4083599a 43eb 05b8 */
 	moveq	#68,%d0			/* 4083599e 7044 */
-	.short	0xa02e			/* 408359a0 a02e */
+	_BlockMove			/* 408359a0 a02e */
 	pea	%a3@(1464)		/* 408359a2 486b 05b8 */
 	pea	%pc@(sub_408359c8)	/* 408359a6 487a 0020 */
 	moveq	#1,%d0			/* 408359aa 7001 */
@@ -952,32 +952,20 @@ sub_40835a56:
 
 sub_40835a60:
 	linkw	%fp,#0			/* 40835a60 4e56 0000 */
-	.short	0x48e7	/* 40835a64 48e7 */
-	.short	0x0018	/* 40835a66 0018 */
-	.short	0x286e	/* 40835a68 286e */
-	.short	0x000c	/* 40835a6a 000c */
-	.short	0x47ec	/* 40835a6c 47ec */
-	.short	0x0f86	/* 40835a6e 0f86 */
-	.short	0x26bc	/* 40835a70 26bc */
-	.short	0x5341	/* 40835a72 5341 */
-	.short	0x5054	/* 40835a74 5054 */
-	.short	0x296e	/* 40835a76 296e */
-	.short	0x0008	/* 40835a78 0008 */
-	.short	0x003a	/* 40835a7a 003a */
-	.short	0x2f0c	/* 40835a7c 2f0c */
-	.short	0x4eba	/* 40835a7e 4eba */
-	.short	0x02a4	/* 40835a80 02a4 */
-	.short	0x4cee	/* 40835a82 4cee */
-	.short	0x1800	/* 40835a84 1800 */
-	.short	0xfff8	/* 40835a86 fff8 */
-	.short	0x4e5e	/* 40835a88 4e5e */
+	moveml	%a3-%a4,%sp@-		/* 40835a64 48e7 0018 */
+	moveal	%fp@(12),%a4		/* 40835a68 286e 000c */
+	lea	%a4@(3974),%a3		/* 40835a6c 47ec 0f86 */
+	movel	#1396789332,%a3@	/* 40835a70 26bc 5341 5054 */
+	movel	%fp@(8),%a4@(58)	/* 40835a76 296e 0008 003a */
+	movel	%a4,%sp@-		/* 40835a7c 2f0c */
+	jsr	%pc@(sub_40835d24)	/* 40835a7e 4eba 02a4 */
+	moveml	%fp@(-8),%a3-%a4	/* 40835a82 4cee 1800 fff8 */
+	unlk	%fp			/* 40835a88 4e5e */
 	rts				/* 40835a8a 4e75 */
 
 sub_40835a8c:
-	.short	0x2278	/* 40835a8c 2278 */
-	.short	0x2050	/* 40835a8e 2050 */
-	.short	0x2269	/* 40835a90 2269 */
-	.short	0x01ac	/* 40835a92 01ac */
+	moveal	0x2050,%a1		/* 40835a8c 2278 2050 */
+	moveal	%a1@(428),%a1		/* 40835a90 2269 01ac */
 	jmp	%a1@			/* 40835a94 4ed1 */
 
 	.align	16
@@ -1317,6 +1305,8 @@ sub_40835cf0:
 	.short	0xfffc	/* 40835d1e fffc */
 	.short	0x4e5e	/* 40835d20 4e5e */
 	rts				/* 40835d22 4e75 */
+
+sub_40835d24:
 	.short	0x2278	/* 40835d24 2278 */
 	.short	0x2050	/* 40835d26 2050 */
 	.short	0x2269	/* 40835d28 2269 */
