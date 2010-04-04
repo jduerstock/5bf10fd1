@@ -1,39 +1,27 @@
 /* SPLIT HERE */
-	.short	0x2078	/* 409b0000 2078 */
-	.short	0x0b78	/* 409b0002 0b78 */
-	.short	0x2228	/* 409b0004 2228 */
-	.short	0x001c	/* 409b0006 001c */
-	.short	0x4c3c	/* 409b0008 4c3c */
-	.short	0x1800	/* 409b000a 1800 */
-	.short	0x0000	/* 409b000c 0000 */
-	.short	0x1000	/* 409b000e 1000 */
-	.short	0x2001	/* 409b0010 2001 */
-	.short	0x4e5e	/* 409b0012 4e5e */
+	moveal	0xb78,%a0		/* 409b0000 2078 0b78 */
+	movel	%a0@(28),%d1		/* 409b0004 2228 001c */
+	mulsl	#4096,%d1		/* 409b0008 4c3c 1800 0000 1000 */
+	movel	%d1,%d0			/* 409b0010 2001 */
+	unlk	%fp			/* 409b0012 4e5e */
 	rts				/* 409b0014 4e75 */
-	.short	0x4e56	/* 409b0016 4e56 */
-	.short	0x0000	/* 409b0018 0000 */
-	.short	0x2078	/* 409b001a 2078 */
-	.short	0x0b78	/* 409b001c 0b78 */
-	.short	0x2210	/* 409b001e 2210 */
-	.short	0x4c3c	/* 409b0020 4c3c */
-	.short	0x1800	/* 409b0022 1800 */
-	.short	0x0000	/* 409b0024 0000 */
-	.short	0x1000	/* 409b0026 1000 */
-	.short	0x2001	/* 409b0028 2001 */
-	.short	0x4e5e	/* 409b002a 4e5e */
+
+	linkw	%fp,#0			/* 409b0016 4e56 0000 */
+	moveal	0xb78,%a0		/* 409b001a 2078 0b78 */
+	movel	%a0@,%d1		/* 409b001e 2210 */
+	mulsl	#4096,%d1		/* 409b0020 4c3c 1800 0000 1000 */
+	movel	%d1,%d0			/* 409b0028 2001 */
+	unlk	%fp			/* 409b002a 4e5e */
 	rts				/* 409b002c 4e75 */
-	.short	0x4e56	/* 409b002e 4e56 */
-	.short	0x0000	/* 409b0030 0000 */
-	.short	0x4878	/* 409b0032 4878 */
-	.short	0x3c00	/* 409b0034 3c00 */
-	.short	0x2078	/* 409b0036 2078 */
-	.short	0x0b78	/* 409b0038 0b78 */
-	.short	0x2f28	/* 409b003a 2f28 */
-	.short	0x00f4	/* 409b003c 00f4 */
-	.short	0x4eba	/* 409b003e 4eba */
-	.short	0x02ca	/* 409b0040 02ca */
-	.short	0x4e5e	/* 409b0042 4e5e */
+
+	linkw	%fp,#0			/* 409b002e 4e56 0000 */
+	pea	0x3c00			/* 409b0032 4878 3c00 */
+	moveal	0xb78,%a0		/* 409b0036 2078 0b78 */
+	movel	%a0@(244),%sp@-		/* 409b003a 2f28 00f4 */
+	jsr	%pc@(sub_409b030a)	/* 409b003e 4eba 02ca */
+	unlk	%fp			/* 409b0042 4e5e */
 	rts				/* 409b0044 4e75 */
+
 	.short	0x4e56	/* 409b0046 4e56 */
 	.short	0x0000	/* 409b0048 0000 */
 	.short	0x2078	/* 409b004a 2078 */
@@ -390,6 +378,8 @@ sub_409b01fa:
 	.short	0xffe0	/* 409b0304 ffe0 */
 	.short	0x4e5e	/* 409b0306 4e5e */
 	rts				/* 409b0308 4e75 */
+
+sub_409b030a:
 	.short	0x4e56	/* 409b030a 4e56 */
 	.short	0xfffc	/* 409b030c fffc */
 	.short	0x48e7	/* 409b030e 48e7 */
