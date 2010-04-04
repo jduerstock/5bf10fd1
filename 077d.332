@@ -245,42 +245,25 @@ loc_4094c280:
 
 	.align	16
 
-	.short	0x4e56	/* 4094c2c0 4e56 */
-	.short	0xfff6	/* 4094c2c2 fff6 */
-	.short	0x48e7	/* 4094c2c4 48e7 */
-	.short	0x0300	/* 4094c2c6 0300 */
-	.short	0x3e2e	/* 4094c2c8 3e2e */
-	.short	0x000a	/* 4094c2ca 000a */
-	.short	0x426e	/* 4094c2cc 426e */
-	.short	0xfff6	/* 4094c2ce fff6 */
-	.short	0x3d47	/* 4094c2d0 3d47 */
-	.short	0xfffc	/* 4094c2d2 fffc */
-	.short	0x486e	/* 4094c2d4 486e */
-	.short	0xfff6	/* 4094c2d6 fff6 */
-	.short	0x4eba	/* 4094c2d8 4eba */
-	.short	0x0796	/* 4094c2da 0796 */
-	.short	0x558f	/* 4094c2dc 558f */
-	.short	0x3f07	/* 4094c2de 3f07 */
-	.short	0x4eba	/* 4094c2e0 4eba */
-	.short	0x070e	/* 4094c2e2 070e */
-	.short	0x3c1f	/* 4094c2e4 3c1f */
-	.short	0x4cee	/* 4094c2e6 4cee */
-	.short	0x00c0	/* 4094c2e8 00c0 */
-	.short	0xffee	/* 4094c2ea ffee */
-	.short	0x4e5e	/* 4094c2ec 4e5e */
-	.short	0x4e74	/* 4094c2ee 4e74 */
-	.short	0x0004	/* 4094c2f0 0004 */
-	.short	0x0000	/* 4094c2f2 0000 */
-	.short	0x0000	/* 4094c2f4 0000 */
-	.short	0x0000	/* 4094c2f6 0000 */
-	.short	0x0000	/* 4094c2f8 0000 */
-	.short	0x0000	/* 4094c2fa 0000 */
-	.short	0x0000	/* 4094c2fc 0000 */
-	.short	0x0000	/* 4094c2fe 0000 */
-	.short	0x4e56	/* 4094c300 4e56 */
-	.short	0x0000	/* 4094c302 0000 */
-	.short	0x48e7	/* 4094c304 48e7 */
-	.short	0x0118	/* 4094c306 0118 */
+	linkw	%fp,#-10		/* 4094c2c0 4e56 fff6 */
+	moveml	%d6-%d7,%sp@-		/* 4094c2c4 48e7 0300 */
+	movew	%fp@(10),%d7		/* 4094c2c8 3e2e 000a */
+	clrw	%fp@(-10)		/* 4094c2cc 426e fff6 */
+	movew	%d7,%fp@(-4)		/* 4094c2d0 3d47 fffc */
+	pea	%fp@(-10)		/* 4094c2d4 486e fff6 */
+	jsr	%pc@(sub_4094ca70)	/* 4094c2d8 4eba 0796 */
+	subql	#2,%sp			/* 4094c2dc 558f */
+	movew	%d7,%sp@-		/* 4094c2de 3f07 */
+	jsr	%pc@(sub_4094c9f0)	/* 4094c2e0 4eba 070e */
+	movew	%sp@+,%d6		/* 4094c2e4 3c1f */
+	moveml	%fp@(-18),%d6-%d7	/* 4094c2e6 4cee 00c0 ffee */
+	unlk	%fp			/* 4094c2ec 4e5e */
+	rtd	#4			/* 4094c2ee 4e74 0004 */
+
+	.align	16
+
+	linkw	%fp,#0			/* 4094c300 4e56 0000 */
+	moveml	%d7/%a3-%a4,%sp@-	/* 4094c304 48e7 0118 */
 	moveq	#0,%d0			/* 4094c308 7000 */
 	.short	0x2640	/* 4094c30a 2640 */
 	.short	0x7004	/* 4094c30c 7004 */
@@ -1162,6 +1145,8 @@ sub_4094c970:
 	.short	0x0000	/* 4094c9ea 0000 */
 	.short	0x0000	/* 4094c9ec 0000 */
 	.short	0x0000	/* 4094c9ee 0000 */
+
+sub_4094c9f0:
 	.short	0x201f	/* 4094c9f0 201f */
 	.short	0x3f3c	/* 4094c9f2 3f3c */
 	.short	0x0514	/* 4094c9f4 0514 */
