@@ -6,19 +6,20 @@
 	moveq	#0,%d0			/* 4083a00e 7000 */
 	rts				/* 4083a010 4e75 */
 
-sub_4083a012:
-	.short	0x245f	/* 4083a012 245f */
-	.short	0x221a	/* 4083a014 221a */
-	.short	0x4c00	/* 4083a016 4c00 */
-	.short	0x1400	/* 4083a018 1400 */
-	.short	0x241a	/* 4083a01a 241a */
-	.short	0x670a	/* 4083a01c 670a */
-	.short	0xc282	/* 4083a01e c282 */
-	.short	0xd480	/* 4083a020 d480 */
-	.short	0x9582	/* 4083a022 9582 */
-	.short	0x8082	/* 4083a024 8082 */
-	.short	0x8081	/* 4083a026 8081 */
-	.short	0x4ed2	/* 4083a028 4ed2 */
+__v__MULTANDMERGE:
+	moveal	%sp@+,%a2		/* 4083a012 245f */
+	movel	%a2@+,%d1		/* 4083a014 221a */
+	mulul	%d0,%d0,%d1		/* 4083a016 4c00 1400 */
+	movel	%a2@+,%d2		/* 4083a01a 241a */
+	beqs	loc_4083a028		/* 4083a01c 670a */
+	andl	%d2,%d1			/* 4083a01e c282 */
+	addl	%d0,%d2			/* 4083a020 d480 */
+	subxl	%d2,%d2			/* 4083a022 9582 */
+	orl	%d2,%d0			/* 4083a024 8082 */
+	orl	%d1,%d0			/* 4083a026 8081 */
+
+loc_4083a028:
+	jmp	%a2@			/* 4083a028 4ed2 */
 
 sub_4083a02a:
 	.short	0x2f03	/* 4083a02a 2f03 */
