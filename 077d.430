@@ -1998,39 +1998,34 @@ sub_409ae7ba:
 	rts				/* 409aefb6 4e75 */
 
 sub_409aefb8:
-	.short	0x4e56	/* 409aefb8 4e56 */
-	.short	0xfffc	/* 409aefba fffc */
-	.short	0x48e7	/* 409aefbc 48e7 */
-	.short	0x0f18	/* 409aefbe 0f18 */
-	.short	0x2a2e	/* 409aefc0 2a2e */
-	.short	0x0010	/* 409aefc2 0010 */
-	.short	0x266e	/* 409aefc4 266e */
-	.short	0x0008	/* 409aefc6 0008 */
-	.short	0x2e2e	/* 409aefc8 2e2e */
-	.short	0x000c	/* 409aefca 000c */
-	.short	0x2d78	/* 409aefcc 2d78 */
-	.short	0x0b78	/* 409aefce 0b78 */
-	.short	0xfffc	/* 409aefd0 fffc */
-	.short	0x206e	/* 409aefd2 206e */
-	.short	0xfffc	/* 409aefd4 fffc */
-	.short	0xbea8	/* 409aefd6 bea8 */
-	.short	0x0004	/* 409aefd8 0004 */
-	.short	0x620a	/* 409aefda 620a */
-	.short	0x2007	/* 409aefdc 2007 */
-	.short	0xd085	/* 409aefde d085 */
-	.short	0xb0a8	/* 409aefe0 b0a8 */
-	.short	0x0004	/* 409aefe2 0004 */
-	.short	0x6304	/* 409aefe4 6304 */
-	.short	0x70d9	/* 409aefe6 70d9 */
-	.short	0x605c	/* 409aefe8 605c */
-	.short	0x206e	/* 409aefea 206e */
-	.short	0xfffc	/* 409aefec fffc */
-	.short	0x2868	/* 409aefee 2868 */
-	.short	0x0052	/* 409aeff0 0052 */
-	.short	0xbeac	/* 409aeff2 beac */
-	.short	0x0004	/* 409aeff4 0004 */
-	.short	0x6404	/* 409aeff6 6404 */
-	.short	0x70d9	/* 409aeff8 70d9 */
-	.short	0x604a	/* 409aeffa 604a */
-	.short	0x2c07	/* 409aeffc 2c07 */
-	.short	0x9cac	/* 409aeffe 9cac */
+	linkw	%fp,#-4			/* 409aefb8 4e56 fffc */
+	moveml	%d4-%d7/%a3-%a4,%sp@-	/* 409aefbc 48e7 0f18 */
+	movel	%fp@(16),%d5		/* 409aefc0 2a2e 0010 */
+	moveal	%fp@(8),%a3		/* 409aefc4 266e 0008 */
+	movel	%fp@(12),%d7		/* 409aefc8 2e2e 000c */
+	movel	0xb78,%fp@(-4)		/* 409aefcc 2d78 0b78 fffc */
+	moveal	%fp@(-4),%a0		/* 409aefd2 206e fffc */
+	cmpl	%a0@(4),%d7		/* 409aefd6 bea8 0004 */
+	bhis	loc_409aefe6		/* 409aefda 620a */
+	movel	%d7,%d0			/* 409aefdc 2007 */
+	addl	%d5,%d0			/* 409aefde d085 */
+	cmpl	%a0@(4),%d0		/* 409aefe0 b0a8 0004 */
+	blss	loc_409aefea		/* 409aefe4 6304 */
+
+loc_409aefe6:
+	moveq	#-39,%d0		/* 409aefe6 70d9 */
+	bras	loc_409af046		/* 409aefe8 605c */
+
+loc_409aefea:
+	moveal	%fp@(-4),%a0		/* 409aefea 206e fffc */
+	moveal	%a0@(82),%a4		/* 409aefee 2868 0052 */
+
+loc_409aeff2:
+	cmpl	%a4@(4),%d7		/* 409aeff2 beac 0004 */
+	bccs	loc_409aeffc		/* 409aeff6 6404 */
+	moveq	#-39,%d0		/* 409aeff8 70d9 */
+	bras	loc_409af046		/* 409aeffa 604a */
+
+loc_409aeffc:
+	movel	%d7,%d6			/* 409aeffc 2c07 */
+	subl	%a4@(4),%d6		/* 409aeffe 9cac 0004 */
