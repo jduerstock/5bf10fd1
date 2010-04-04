@@ -681,21 +681,17 @@ loc_408076fe:
 loc_4080773e:
 	jmp	%a1@			/* 4080773e 4ed1 */
 
-	.short	0x4cdf	/* 40807740 4cdf */
-	.short	0x0003	/* 40807742 0003 */
-	.short	0x4e7b	/* 40807744 4e7b */
-	.short	0x0002	/* 40807746 0002 */
-	.short	0x4e7b	/* 40807748 4e7b */
-	.short	0x1802	/* 4080774a 1802 */
-	.short	0x205f	/* 4080774c 205f */
-	.short	0x4e7b	/* 4080774e 4e7b */
-	.short	0x8801	/* 40807750 8801 */
-	.short	0x205f	/* 40807752 205f */
-	.short	0x4e7b	/* 40807754 4e7b */
-	.short	0x8803	/* 40807756 8803 */
-	.short	0x205f	/* 40807758 205f */
-	.short	0x4e60	/* 4080775a 4e60 */
+	moveml	%sp@+,%d0-%d1		/* 40807740 4cdf 0003 */
+	movec	%d0,%cacr		/* 40807744 4e7b 0002 */
+	.short	0x4e7b,0x1802		/* movec %d1,%caar */
+	moveal	%sp@+,%a0		/* 4080774c 205f */
+	movec	%a0,%vbr		/* 4080774e 4e7b 8801 */
+	moveal	%sp@+,%a0		/* 40807752 205f */
+	movec	%a0,%msp		/* 40807754 4e7b 8803 */
+	moveal	%sp@+,%a0		/* 40807758 205f */
+	movel	%a0,%usp		/* 4080775a 4e60 */
 	jmp	%a1@			/* 4080775c 4ed1 */
+
 	.short	0x2078	/* 4080775e 2078 */
 	.short	0x0dd8	/* 40807760 0dd8 */
 	.short	0xd1d0	/* 40807762 d1d0 */
