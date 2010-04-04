@@ -22,39 +22,33 @@
 	unlk	%fp			/* 409b0042 4e5e */
 	rts				/* 409b0044 4e75 */
 
-	.short	0x4e56	/* 409b0046 4e56 */
-	.short	0x0000	/* 409b0048 0000 */
-	.short	0x2078	/* 409b004a 2078 */
-	.short	0x0b78	/* 409b004c 0b78 */
-	.short	0x2028	/* 409b004e 2028 */
-	.short	0x00f8	/* 409b0050 00f8 */
-	.short	0x4e5e	/* 409b0052 4e5e */
+	linkw	%fp,#0			/* 409b0046 4e56 0000 */
+	moveal	0xb78,%a0		/* 409b004a 2078 0b78 */
+	movel	%a0@(248),%d0		/* 409b004e 2028 00f8 */
+	unlk	%fp			/* 409b0052 4e5e */
 	rts				/* 409b0054 4e75 */
-	.short	0x4e56	/* 409b0056 4e56 */
-	.short	0x0000	/* 409b0058 0000 */
-	.short	0x48e7	/* 409b005a 48e7 */
-	.short	0x0108	/* 409b005c 0108 */
-	.short	0x2878	/* 409b005e 2878 */
-	.short	0x0b78	/* 409b0060 0b78 */
-	.short	0x2e2c	/* 409b0062 2e2c */
-	.short	0x0018	/* 409b0064 0018 */
-	.short	0x707d	/* 409b0066 707d */
-	.short	0x9e80	/* 409b0068 9e80 */
-	.short	0x4a87	/* 409b006a 4a87 */
-	.short	0x6e04	/* 409b006c 6e04 */
+
+	linkw	%fp,#0			/* 409b0056 4e56 0000 */
+	moveml	%d7/%a4,%sp@-		/* 409b005a 48e7 0108 */
+	moveal	0xb78,%a4		/* 409b005e 2878 0b78 */
+	movel	%a4@(24),%d7		/* 409b0062 2e2c 0018 */
+	moveq	#125,%d0		/* 409b0066 707d */
+	subl	%d0,%d7			/* 409b0068 9e80 */
+	tstl	%d7			/* 409b006a 4a87 */
+	bgts	loc_409b0072		/* 409b006c 6e04 */
 	moveq	#0,%d0			/* 409b006e 7000 */
-	.short	0x600c	/* 409b0070 600c */
-	.short	0x2207	/* 409b0072 2207 */
-	.short	0x4c3c	/* 409b0074 4c3c */
-	.short	0x1800	/* 409b0076 1800 */
-	.short	0x0000	/* 409b0078 0000 */
-	.short	0x1000	/* 409b007a 1000 */
-	.short	0x2001	/* 409b007c 2001 */
-	.short	0x4cee	/* 409b007e 4cee */
-	.short	0x1080	/* 409b0080 1080 */
-	.short	0xfff8	/* 409b0082 fff8 */
-	.short	0x4e5e	/* 409b0084 4e5e */
+	bras	loc_409b007e		/* 409b0070 600c */
+
+loc_409b0072:
+	movel	%d7,%d1			/* 409b0072 2207 */
+	mulsl	#4096,%d1		/* 409b0074 4c3c 1800 0000 1000 */
+	movel	%d1,%d0			/* 409b007c 2001 */
+
+loc_409b007e:
+	moveml	%fp@(-8),%d7/%a4	/* 409b007e 4cee 1080 fff8 */
+	unlk	%fp			/* 409b0084 4e5e */
 	rts				/* 409b0086 4e75 */
+
 	.short	0x4e56	/* 409b0088 4e56 */
 	.short	0xfff8	/* 409b008a fff8 */
 	.short	0x48e7	/* 409b008c 48e7 */
