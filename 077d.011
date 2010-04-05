@@ -608,15 +608,17 @@ loc_4080b528:
 	bras	loc_4080b522		/* 4080b52c 60f4 */
 
 sub_4080b52e:
-	.short	0x4847	/* 4080b52e 4847 */
-	.short	0x0807	/* 4080b530 0807 */
-	.short	0x000f	/* 4080b532 000f */
-	.short	0x6604	/* 4080b534 6604 */
-	.short	0xbe46	/* 4080b536 be46 */
-	.short	0x6006	/* 4080b538 6006 */
-	.short	0x0247	/* 4080b53a 0247 */
-	.short	0x7fff	/* 4080b53c 7fff */
-	.short	0xbc47	/* 4080b53e bc47 */
+	swap	%d7			/* 4080b52e 4847 */
+	btst	#15,%d7			/* 4080b530 0807 000f */
+	bnes	loc_4080b53a		/* 4080b534 6604 */
+	cmpw	%d6,%d7			/* 4080b536 be46 */
+	bras	loc_4080b540		/* 4080b538 6006 */
+
+loc_4080b53a:
+	andiw	#32767,%d7		/* 4080b53a 0247 7fff */
+	cmpw	%d7,%d6			/* 4080b53e bc47 */
+
+loc_4080b540:
 	rts				/* 4080b540 4e75 */
 
 	.align	16
