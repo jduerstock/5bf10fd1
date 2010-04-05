@@ -650,26 +650,19 @@ loc_4080a59e:
 	rts				/* 4080a5a6 4e75 */
 
 sub_4080a5a8:
-	.short	0x48e7	/* 4080a5a8 48e7 */
-	.short	0x7ef0	/* 4080a5aa 7ef0 */
-	.short	0x206d	/* 4080a5ac 206d */
-	.short	0xfff8	/* 4080a5ae fff8 */
-	.short	0x226d	/* 4080a5b0 226d */
-	.short	0xfffc	/* 4080a5b2 fffc */
-	.short	0x222d	/* 4080a5b4 222d */
-	.short	0xffec	/* 4080a5b6 ffec */
-	.short	0x7601	/* 4080a5b8 7601 */
-	.short	0x4843	/* 4080a5ba 4843 */
-	.short	0x3600	/* 4080a5bc 3600 */
-	.short	0x554f	/* 4080a5be 554f */
-	.short	0x264f	/* 4080a5c0 264f */
-	.short	0x61ff	/* 4080a5c2 61ff */
-	.short	0x0000	/* 4080a5c4 0000 */
-	.short	0x1046	/* 4080a5c6 1046 */
+	moveml	%d1-%d6/%a0-%a3,%sp@-	/* 4080a5a8 48e7 7ef0 */
+	moveal	%a5@(-8),%a0		/* 4080a5ac 206d fff8 */
+	moveal	%a5@(-4),%a1		/* 4080a5b0 226d fffc */
+	movel	%a5@(-20),%d1		/* 4080a5b4 222d ffec */
+	moveq	#1,%d3			/* 4080a5b8 7601 */
+	swap	%d3			/* 4080a5ba 4843 */
+	movew	%d0,%d3			/* 4080a5bc 3600 */
+	subqw	#2,%sp			/* 4080a5be 554f */
+	moveal	%sp,%a3			/* 4080a5c0 264f */
+	bsrl	PRAMIO			/* 4080a5c2 61ff 0000 1046 */
 	moveq	#0,%d0			/* 4080a5c8 7000 */
-	.short	0x101f	/* 4080a5ca 101f */
-	.short	0x4cdf	/* 4080a5cc 4cdf */
-	.short	0x0f7e	/* 4080a5ce 0f7e */
+	moveb	%sp@+,%d0		/* 4080a5ca 101f */
+	moveml	%sp@+,%d1-%d6/%a0-%a3	/* 4080a5cc 4cdf 0f7e */
 	rts				/* 4080a5d0 4e75 */
 
 sub_4080a5d2:
