@@ -128,7 +128,7 @@ loc_4080b100:
 sub_4080b10e:
 	bras	loc_4080b15c		/* 4080b10e 604c */
 
-byte_4080b110:
+TRANS:
 	.short	0x0000	/* 4080b110 0000 */
 	.short	0x0040	/* 4080b112 0040 */
 	.short	0x0020	/* 4080b114 0020 */
@@ -197,7 +197,7 @@ loc_4080b178:
 	movew	%d0,%d3			/* 4080b1a0 3600 */
 	andil	#7,%d0			/* 4080b1a2 0280 0000 0007 */
 	moveq	#0,%d1			/* 4080b1a8 7200 */
-	movew	%pc@(byte_4080b110,%d4:w:2),%d1	/* 4080b1aa 323b 4320 ff64 */
+	movew	%pc@(TRANS,%d4:w:2),%d1	/* 4080b1aa 323b 4320 ff64 */
 	beqs	loc_4080b1ea		/* 4080b1b0 6738 */
 	cmpb	%d0,%d4			/* 4080b1b2 b800 */
 	beqs	loc_4080b1c2		/* 4080b1b4 670c */
@@ -211,9 +211,9 @@ loc_4080b1c0:
 	orb	%d4,%d3			/* 4080b1c0 8604 */
 
 loc_4080b1c2:
-	lea	%pc@(byte_4080b110),%a0	/* 4080b1c2 41fa ff4c */
+	lea	%pc@(TRANS),%a0		/* 4080b1c2 41fa ff4c */
 	moveq	#0,%d1			/* 4080b1c6 7200 */
-	movew	%pc@(byte_4080b110,%d4:w:2),%d1	/* 4080b1c8 323b 4320 ff46 */
+	movew	%pc@(TRANS,%d4:w:2),%d1	/* 4080b1c8 323b 4320 ff46 */
 	beqs	loc_4080b1ea		/* 4080b1ce 671a */
 	addal	%d1,%a0			/* 4080b1d0 d1c1 */
 	lsrw	#3,%d3			/* 4080b1d2 e64b */
@@ -316,7 +316,7 @@ GETREALPROC:
 	movew	#6,%sp@-		/* 4080b290 3f3c 0006 */
 	bras	loc_4080b29a		/* 4080b294 6004 */
 
-sub_4080b296:
+GETPAGEDESCPROC:
 	movew	#7,%sp@-		/* 4080b296 3f3c 0007 */
 
 loc_4080b29a:
@@ -330,8 +330,8 @@ loc_4080b29a:
 
 loc_4080b2b0:
 	movel	%a0,%d2			/* 4080b2b0 2408 */
-	jsr	%pc@(sub_4080b2ea)	/* 4080b2b2 4eba 0036 */
-	jsr	%pc@(sub_4080b392)	/* 4080b2b6 4eba 00da */
+	jsr	%pc@(GETMMUINFO)	/* 4080b2b2 4eba 0036 */
+	jsr	%pc@(CHECKTTREGS)	/* 4080b2b6 4eba 00da */
 	bnes	loc_4080b2c4		/* 4080b2ba 6608 */
 	moveal	%d2,%a0			/* 4080b2bc 2042 */
 	subal	%a2,%a2			/* 4080b2be 95ca */
@@ -361,7 +361,7 @@ loc_4080b2e6:
 	tstw	%d3			/* 4080b2e6 4a43 */
 	rts				/* 4080b2e8 4e75 */
 
-sub_4080b2ea:
+GETMMUINFO:
 	.short	0x0c38	/* 4080b2ea 0c38 */
 	.short	0x0005	/* 4080b2ec 0005 */
 	.short	0x0cb1	/* 4080b2ee 0cb1 */
@@ -447,7 +447,7 @@ sub_4080b2ea:
 	.short	0xffec	/* 4080b38e ffec */
 	rts				/* 4080b390 4e75 */
 
-sub_4080b392:
+CHECKTTREGS:
 	.short	0x0c38	/* 4080b392 0c38 */
 	.short	0x0005	/* 4080b394 0005 */
 	.short	0x0cb1	/* 4080b396 0cb1 */
@@ -694,14 +694,14 @@ sub_4080b498:
 
 loc_4080b572:
 	movew	%d0,%sp@-		/* 4080b572 3f00 */
-	jsr	%pc@(sub_4080b392)	/* 4080b574 4eba fe1c */
+	jsr	%pc@(CHECKTTREGS)	/* 4080b574 4eba fe1c */
 	bnes	loc_4080b580		/* 4080b578 6606 */
 	moveal	%d2,%a0			/* 4080b57a 2042 */
 	moveq	#-50,%d3		/* 4080b57c 76ce */
 	bras	loc_4080b5d2		/* 4080b57e 6052 */
 
 loc_4080b580:
-	jsr	%pc@(sub_4080b2ea)	/* 4080b580 4eba fd68 */
+	jsr	%pc@(GETMMUINFO)	/* 4080b580 4eba fd68 */
 	moveq	#0,%d0			/* 4080b584 7000 */
 	moveq	#0,%d1			/* 4080b586 7200 */
 	moveb	%fp@(-21),%d0		/* 4080b588 102e ffeb */
