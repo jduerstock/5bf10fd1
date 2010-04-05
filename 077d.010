@@ -731,25 +731,22 @@ sub_4080a66a:
 loc_4080a68e:
 	rts				/* 4080a68e 4e75 */
 
+byte_4080a690:
 	.short	0x0000			/* 4080a690 0000 */
 	.short	0x0104			/* 4080a692 0104 */
 	.short	0x0500			/* 4080a694 0500 */
 
 sub_4080a696:
-	.short	0x0c47	/* 4080a696 0c47 */
-	.short	0x0004	/* 4080a698 0004 */
-	.short	0x6200	/* 4080a69a 6200 */
-	.short	0xfcda	/* 4080a69c fcda */
+	cmpiw	#4,%d7			/* 4080a696 0c47 0004 */
+	bhiw	loc_4080a376		/* 4080a69a 6200 fcda */
 	moveq	#0,%d0			/* 4080a69e 7000 */
-	.short	0x103b	/* 4080a6a0 103b */
-	.short	0x70ee	/* 4080a6a2 70ee */
-	.short	0x206d	/* 4080a6a4 206d */
-	.short	0xfffc	/* 4080a6a6 fffc */
-	.short	0x0828	/* 4080a6a8 0828 */
-	.short	0x0020	/* 4080a6aa 0020 */
-	.short	0x002b	/* 4080a6ac 002b */
-	.short	0x6702	/* 4080a6ae 6702 */
-	.short	0x7006	/* 4080a6b0 7006 */
+	moveb	%pc@(byte_4080a690,%d7:w),%d0	/* 4080a6a0 103b 70ee */
+	moveal	%a5@(-4),%a0		/* 4080a6a4 206d fffc */
+	btst	#32,%a0@(43)		/* 4080a6a8 0828 0020 002b */
+	beqs	loc_4080a6b2		/* 4080a6ae 6702 */
+	moveq	#6,%d0			/* 4080a6b0 7006 */
+
+loc_4080a6b2:
 	rts				/* 4080a6b2 4e75 */
 
 sub_4080a6b4:
