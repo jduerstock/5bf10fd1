@@ -1376,49 +1376,32 @@ loc_4080abca:
 	rts				/* 4080abcc 4e75 */
 
 sub_4080abce:
-	.short	0x480c	/* 4080abce 480c */
-	.short	0xfffc	/* 4080abd0 fffc */
-	.short	0xff62	/* 4080abd2 ff62 */
-	.short	0x48e7	/* 4080abd4 48e7 */
-	.short	0x2040	/* 4080abd6 2040 */
-	.short	0x2948	/* 4080abd8 2948 */
-	.short	0xfffc	/* 4080abda fffc */
-	.short	0x3028	/* 4080abdc 3028 */
-	.short	0x000c	/* 4080abde 000c */
-	.short	0x082e	/* 4080abe0 082e */
-	.short	0x0004	/* 4080abe2 0004 */
-	.short	0xffe7	/* 4080abe4 ffe7 */
-	.short	0x6704	/* 4080abe6 6704 */
-	.short	0x3028	/* 4080abe8 3028 */
-	.short	0x000e	/* 4080abea 000e */
-	.short	0xd0c0	/* 4080abec d0c0 */
-	.short	0x2948	/* 4080abee 2948 */
-	.short	0xfff8	/* 4080abf0 fff8 */
-	.short	0x41ed	/* 4080abf2 41ed */
-	.short	0xffa8	/* 4080abf4 ffa8 */
-	.short	0x43ec	/* 4080abf6 43ec */
-	.short	0xffb0	/* 4080abf8 ffb0 */
-	.short	0x6100	/* 4080abfa 6100 */
-	.short	0xfab8	/* 4080abfc fab8 */
-	.short	0x41ed	/* 4080abfe 41ed */
-	.short	0xff68	/* 4080ac00 ff68 */
-	.short	0x43ec	/* 4080ac02 43ec */
-	.short	0xff70	/* 4080ac04 ff70 */
-	.short	0x6100	/* 4080ac06 6100 */
-	.short	0xfaac	/* 4080ac08 faac */
-	.short	0x296d	/* 4080ac0a 296d */
-	.short	0xff5c	/* 4080ac0c ff5c */
-	.short	0xff6c	/* 4080ac0e ff6c */
-	.short	0x296d	/* 4080ac10 296d */
-	.short	0xff54	/* 4080ac12 ff54 */
-	.short	0xff68	/* 4080ac14 ff68 */
-	.short	0x610c	/* 4080ac16 610c */
-	.short	0x6100	/* 4080ac18 6100 */
-	.short	0x0356	/* 4080ac1a 0356 */
-	.short	0x4cdf	/* 4080ac1c 4cdf */
-	.short	0x0204	/* 4080ac1e 0204 */
-	.short	0x4e5c	/* 4080ac20 4e5c */
+	linkl	%a4,#-196766		/* 4080abce 480c fffc ff62 */
+	moveml	%d2/%a1,%sp@-		/* 4080abd4 48e7 2040 */
+	movel	%a0,%a4@(-4)		/* 4080abd8 2948 fffc */
+	movew	%a0@(12),%d0		/* 4080abdc 3028 000c */
+	btst	#4,%fp@(-25)		/* 4080abe0 082e 0004 ffe7 */
+	beqs	loc_4080abec		/* 4080abe6 6704 */
+	movew	%a0@(14),%d0		/* 4080abe8 3028 000e */
+
+loc_4080abec:
+	addaw	%d0,%a0			/* 4080abec d0c0 */
+	movel	%a0,%a4@(-8)		/* 4080abee 2948 fff8 */
+	lea	%a5@(-88),%a0		/* 4080abf2 41ed ffa8 */
+	lea	%a4@(-80),%a1		/* 4080abf6 43ec ffb0 */
+	bsrw	sub_4080a6b4		/* 4080abfa 6100 fab8 */
+	lea	%a5@(-152),%a0		/* 4080abfe 41ed ff68 */
+	lea	%a4@(-144),%a1		/* 4080ac02 43ec ff70 */
+	bsrw	sub_4080a6b4		/* 4080ac06 6100 faac */
+	movel	%a5@(-164),%a4@(-148)	/* 4080ac0a 296d ff5c ff6c */
+	movel	%a5@(-172),%a4@(-152)	/* 4080ac10 296d ff54 ff68 */
+	bsrs	sub_4080ac24		/* 4080ac16 610c */
+	bsrw	sub_4080af70		/* 4080ac18 6100 0356 */
+	moveml	%sp@+,%d2/%a1		/* 4080ac1c 4cdf 0204 */
+	unlk	%a4			/* 4080ac20 4e5c */
 	rts				/* 4080ac22 4e75 */
+
+sub_4080ac24:
 	.short	0x2f02	/* 4080ac24 2f02 */
 	.short	0x41ec	/* 4080ac26 41ec */
 	.short	0xff62	/* 4080ac28 ff62 */
@@ -1847,6 +1830,7 @@ byte_4080af6a:
 	.short	0x1207			/* 4080af6c 1207 */
 	.short	0x0d05			/* 4080af6e 0d05 */
 
+sub_4080af70:
 	lea	%a4@(-158),%a0		/* 4080af70 41ec ff62 */
 	movel	%a0,%a4@(-16)		/* 4080af74 2948 fff0 */
 	moveq	#1,%d0			/* 4080af78 7001 */
