@@ -1905,27 +1905,31 @@ sub_4080abce:
 	.short	0xff62	/* 4080aee6 ff62 */
 	.short	0x66f0	/* 4080aee8 66f0 */
 	rts				/* 4080aeea 4e75 */
-	.short	0x2f02	/* 4080aeec 2f02 */
-	.short	0xc540	/* 4080aeee c540 */
-	.short	0x5240	/* 4080aef0 5240 */
-	.short	0x6124	/* 4080aef2 6124 */
-	.short	0xb242	/* 4080aef4 b242 */
-	.short	0x6d10	/* 4080aef6 6d10 */
-	.short	0x9242	/* 4080aef8 9242 */
-	.short	0x5341	/* 4080aefa 5341 */
-	.short	0x4841	/* 4080aefc 4841 */
-	.short	0x4241	/* 4080aefe 4241 */
-	.short	0x2041	/* 4080af00 2041 */
+
+sub_4080aeec:
+	movel	%d2,%sp@-		/* 4080aeec 2f02 */
+	exg	%d2,%d0			/* 4080aeee c540 */
+	addqw	#1,%d0			/* 4080aef0 5240 */
+	bsrs	sub_4080af18		/* 4080aef2 6124 */
+	cmpw	%d2,%d1			/* 4080aef4 b242 */
+	blts	loc_4080af08		/* 4080aef6 6d10 */
+	subw	%d2,%d1			/* 4080aef8 9242 */
+	subqw	#1,%d1			/* 4080aefa 5341 */
+	swap	%d1			/* 4080aefc 4841 */
+	clrw	%d1			/* 4080aefe 4241 */
+	moveal	%d1,%a0			/* 4080af00 2041 */
 	moveq	#0,%d0			/* 4080af02 7000 */
-	.short	0x3002	/* 4080af04 3002 */
-	.short	0x6006	/* 4080af06 6006 */
-	.short	0x2001	/* 4080af08 2001 */
-	.short	0x307c	/* 4080af0a 307c */
-	.short	0x0001	/* 4080af0c 0001 */
-	.short	0xe588	/* 4080af0e e588 */
-	.short	0xd1ac	/* 4080af10 d1ac */
-	.short	0xfff0	/* 4080af12 fff0 */
-	.short	0x241f	/* 4080af14 241f */
+	movew	%d2,%d0			/* 4080af04 3002 */
+	bras	loc_4080af0e		/* 4080af06 6006 */
+
+loc_4080af08:
+	movel	%d1,%d0			/* 4080af08 2001 */
+	moveaw	#1,%a0			/* 4080af0a 307c 0001 */
+
+loc_4080af0e:
+	lsll	#2,%d0			/* 4080af0e e588 */
+	addl	%d0,%a4@(-16)		/* 4080af10 d1ac fff0 */
+	movel	%sp@+,%d2		/* 4080af14 241f */
 	rts				/* 4080af16 4e75 */
 
 sub_4080af18:
@@ -1969,9 +1973,9 @@ loc_4080af5c:
 	rts				/* 4080af68 4e75 */
 
 byte_4080af6a:
-	.short	0x1907	/* 4080af6a 1907 */
-	.short	0x1207	/* 4080af6c 1207 */
-	.short	0x0d05	/* 4080af6e 0d05 */
+	.short	0x1907			/* 4080af6a 1907 */
+	.short	0x1207			/* 4080af6c 1207 */
+	.short	0x0d05			/* 4080af6e 0d05 */
 
 	lea	%a4@(-158),%a0		/* 4080af70 41ec ff62 */
 	movel	%a0,%a4@(-16)		/* 4080af74 2948 fff0 */
