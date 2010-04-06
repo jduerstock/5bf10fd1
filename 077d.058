@@ -436,23 +436,17 @@ INITTIMEMGR:
 	.align	16
 
 __v__PACKDISPATCHER:
-	.short	0x598f	/* 4083a390 598f */
-	.short	0x2f3c	/* 4083a392 2f3c */
-	.short	0x5041	/* 4083a394 5041 */
-	.short	0x434b	/* 4083a396 434b */
-	.short	0x3f2f	/* 4083a398 3f2f */
-	.short	0x000c	/* 4083a39a 000c */
-	.short	0x31fc	/* 4083a39c 31fc */
-	.short	0xff00	/* 4083a39e ff00 */
-	.short	0x0b9e	/* 4083a3a0 0b9e */
-	.short	0xa9a0	/* 4083a3a2 a9a0 */
-	.short	0x302f	/* 4083a3a4 302f */
-	.short	0x0008	/* 4083a3a6 0008 */
-	.short	0x612c	/* 4083a3a8 612c */
-	.short	0x209f	/* 4083a3aa 209f */
-	.short	0x205f	/* 4083a3ac 205f */
-	.short	0x548f	/* 4083a3ae 548f */
-	.short	0x4ed0	/* 4083a3b0 4ed0 */
+	subql	#4,%sp			/* 4083a390 598f */
+	movel	#1346454347,%sp@-	/* 4083a392 2f3c 5041 434b */
+	movew	%sp@(12),%sp@-		/* 4083a398 3f2f 000c */
+	movew	#-256,0xb9e		/* 4083a39c 31fc ff00 0b9e */
+	.short	0xa9a0			/* 4083a3a2 a9a0 */
+	movew	%sp@(8),%d0		/* 4083a3a4 302f 0008 */
+	bsrs	sub_4083a3d6		/* 4083a3a8 612c */
+	movel	%sp@+,%a0@		/* 4083a3aa 209f */
+	moveal	%sp@+,%a0		/* 4083a3ac 205f */
+	addql	#2,%sp			/* 4083a3ae 548f */
+	jmp	%a0@			/* 4083a3b0 4ed0 */
 
 sub_4083a3b2:
 	.short	0x205f	/* 4083a3b2 205f */
@@ -473,6 +467,8 @@ sub_4083a3b2:
 	rts				/* 4083a3d0 4e75 */
 	.short	0x7010	/* 4083a3d2 7010 */
 	.short	0xa9c9	/* 4083a3d4 a9c9 */
+
+sub_4083a3d6:
 	.short	0x41f8	/* 4083a3d6 41f8 */
 	.short	0x0bc8	/* 4083a3d8 0bc8 */
 	.short	0x5140	/* 4083a3da 5140 */
