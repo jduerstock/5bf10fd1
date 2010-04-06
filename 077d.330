@@ -712,16 +712,19 @@ sub_4094a50e:
 	.short	0x0020	/* 4094a580 0020 */
 	.short	0xd3d0	/* 4094a582 d3d0 */
 	jmp	%a1@			/* 4094a584 4ed1 */
-	.short	0x226e	/* 4094a586 226e */
-	.short	0x0008	/* 4094a588 0008 */
-	.short	0x2280	/* 4094a58a 2280 */
-	.short	0x4240	/* 4094a58c 4240 */
-	.short	0x3d40	/* 4094a58e 3d40 */
-	.short	0x0010	/* 4094a590 0010 */
-	.short	0x4e5e	/* 4094a592 4e5e */
-	.short	0x205f	/* 4094a594 205f */
-	.short	0x508f	/* 4094a596 508f */
-	.short	0x4ed0	/* 4094a598 4ed0 */
+
+loc_4094a586:
+	moveal	%fp@(8),%a1		/* 4094a586 226e 0008 */
+	movel	%d0,%a1@		/* 4094a58a 2280 */
+	clrw	%d0			/* 4094a58c 4240 */
+
+loc_4094a58e:
+	movew	%d0,%fp@(16)		/* 4094a58e 3d40 0010 */
+	unlk	%fp			/* 4094a592 4e5e */
+	moveal	%sp@+,%a0		/* 4094a594 205f */
+	addql	#8,%sp			/* 4094a596 508f */
+	jmp	%a0@			/* 4094a598 4ed0 */
+
 	.short	0x303c	/* 4094a59a 303c */
 	.short	0xea52	/* 4094a59c ea52 */
 	.short	0x60ee	/* 4094a59e 60ee */
@@ -903,24 +906,24 @@ sub_4094a50e:
 	.short	0x0007	/* 4094a6fe 0007 */
 	.short	0x6000	/* 4094a700 6000 */
 	.short	0xfe84	/* 4094a702 fe84 */
-	.short	0x0c38	/* 4094a704 0c38 */
-	.short	0x0002	/* 4094a706 0002 */
-	.short	0x012f	/* 4094a708 012f */
-	.short	0x6d16	/* 4094a70a 6d16 */
+
+	cmpib	#2,0x12f		/* 4094a704 0c38 0002 012f */
+	blts	loc_4094a722		/* 4094a70a 6d16 */
 	moveq	#0,%d0			/* 4094a70c 7000 */
-	.short	0x1038	/* 4094a70e 1038 */
-	.short	0x0cb1	/* 4094a710 0cb1 */
-	.short	0x0c00	/* 4094a712 0c00 */
-	.short	0x0001	/* 4094a714 0001 */
-	.short	0x670c	/* 4094a716 670c */
-	.short	0x0c00	/* 4094a718 0c00 */
-	.short	0x0003	/* 4094a71a 0003 */
-	.short	0x6d04	/* 4094a71c 6d04 */
-	.short	0x5340	/* 4094a71e 5340 */
-	.short	0x6002	/* 4094a720 6002 */
+	moveb	0xcb1,%d0		/* 4094a70e 1038 0cb1 */
+	cmpib	#1,%d0			/* 4094a712 0c00 0001 */
+	beqs	loc_4094a724		/* 4094a716 670c */
+	cmpib	#3,%d0			/* 4094a718 0c00 0003 */
+	blts	loc_4094a722		/* 4094a71c 6d04 */
+	subqw	#1,%d0			/* 4094a71e 5340 */
+	bras	loc_4094a724		/* 4094a720 6002 */
+
+loc_4094a722:
 	moveq	#0,%d0			/* 4094a722 7000 */
-	.short	0x6000	/* 4094a724 6000 */
-	.short	0xfe60	/* 4094a726 fe60 */
+
+loc_4094a724:
+	braw	loc_4094a586		/* 4094a724 6000 fe60 */
+
 	.short	0x303c	/* 4094a728 303c */
 	.short	0xa89f	/* 4094a72a a89f */
 	.short	0xa746	/* 4094a72c a746 */
