@@ -21,43 +21,49 @@ __v__MULTANDMERGE:
 loc_4083a028:
 	jmp	%a2@			/* 4083a028 4ed2 */
 
-sub_4083a02a:
-	.short	0x2f03	/* 4083a02a 2f03 */
-	.short	0x0828	/* 4083a02c 0828 */
-	.short	0x0006	/* 4083a02e 0006 */
-	.short	0x0004	/* 4083a030 0004 */
-	.short	0x671c	/* 4083a032 671c */
-	.short	0x43e8	/* 4083a034 43e8 */
-	.short	0x0015	/* 4083a036 0015 */
-	.short	0x4aa8	/* 4083a038 4aa8 */
-	.short	0x000e	/* 4083a03a 000e */
-	.short	0x6704	/* 4083a03c 6704 */
-	.short	0x4a80	/* 4083a03e 4a80 */
-	.short	0x6704	/* 4083a040 6704 */
-	.short	0x4211	/* 4083a042 4211 */
-	.short	0x600a	/* 4083a044 600a */
-	.short	0x5211	/* 4083a046 5211 */
-	.short	0x6a06	/* 4083a048 6a06 */
-	.short	0x08a8	/* 4083a04a 08a8 */
-	.short	0x0006	/* 4083a04c 0006 */
-	.short	0x0004	/* 4083a04e 0004 */
-	.short	0x4a80	/* 4083a050 4a80 */
-	.short	0x6a0e	/* 4083a052 6a0e */
-	.short	0x4480	/* 4083a054 4480 */
-	.short	0x61ba	/* 4083a056 61ba */
+__PRIMETIME:
+	movel	%d3,%sp@-		/* 4083a02a 2f03 */
+	btst	#6,%a0@(4)		/* 4083a02c 0828 0006 0004 */
+	beqs	loc_4083a050		/* 4083a032 671c */
+	lea	%a0@(21),%a1		/* 4083a034 43e8 0015 */
+	tstl	%a0@(14)		/* 4083a038 4aa8 000e */
+	beqs	loc_4083a042		/* 4083a03c 6704 */
+	tstl	%d0			/* 4083a03e 4a80 */
+	beqs	loc_4083a046		/* 4083a040 6704 */
+
+loc_4083a042:
+	clrb	%a1@			/* 4083a042 4211 */
+	bras	loc_4083a050		/* 4083a044 600a */
+
+loc_4083a046:
+	addqb	#1,%a1@			/* 4083a046 5211 */
+	bpls	loc_4083a050		/* 4083a048 6a06 */
+	bclr	#6,%a0@(4)		/* 4083a04a 08a8 0006 0004 */
+
+loc_4083a050:
+	tstl	%d0			/* 4083a050 4a80 */
+	bpls	loc_4083a062		/* 4083a052 6a0e */
+	negl	%d0			/* 4083a054 4480 */
+	bsrs	__v__MULTANDMERGE	/* 4083a056 61ba */
+
 	.short	0x0c88	/* 4083a058 0c88 */
 	.short	0xa47f	/* 4083a05a a47f */
 	.short	0x0000	/* 4083a05c 0000 */
 	.short	0x0000	/* 4083a05e 0000 */
-	.short	0x600c	/* 4083a060 600c */
-	.short	0x61ae	/* 4083a062 61ae */
+
+	bras	loc_4083a06e		/* 4083a060 600c */
+
+loc_4083a062:
+	bsrs	__v__MULTANDMERGE	/* 4083a062 61ae */
+
 	.short	0xc3d7	/* 4083a064 c3d7 */
 	.short	0x0a3e	/* 4083a066 0a3e */
 	.short	0xfc00	/* 4083a068 fc00 */
 	.short	0x0000	/* 4083a06a 0000 */
 	.short	0xed98	/* 4083a06c ed98 */
-	.short	0x4eba	/* 4083a06e 4eba */
-	.short	0x0292	/* 4083a070 0292 */
+
+loc_4083a06e:
+	jsr	%pc@(FREEZETIME)	/* 4083a06e 4eba 0292 */
 
 sub_4083a072:
 	.short	0x08e8	/* 4083a072 08e8 */
@@ -384,10 +390,9 @@ sub_4083a270:
 	.short	0xd2a9	/* 4083a2fc d2a9 */
 	.short	0x000a	/* 4083a2fe 000a */
 	.short	0x60f0	/* 4083a300 60f0 */
-	.short	0x2f30	/* 4083a302 2f30 */
-	.short	0x81e2	/* 4083a304 81e2 */
-	.short	0x2080	/* 4083a306 2080 */
-	.short	0x0014	/* 4083a308 0014 */
+
+FREEZETIME:
+	CallVector	0x2080 5	/* 4083a302 2f30 81e2 2080 0014 */
 	rts				/* 4083a30a 4e75 */
 
 	.align	16
