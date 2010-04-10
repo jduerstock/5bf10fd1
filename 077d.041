@@ -525,23 +525,22 @@ loc_408294e0:
 	rts				/* 408294e0 4e75 */
 
 __v__ROUNDALLOC:
-	.short	0x2f01	/* 408294e2 2f01 */
-	.short	0x2f00	/* 408294e4 2f00 */
-	.short	0x2001	/* 408294e6 2001 */
-	.short	0x222a	/* 408294e8 222a */
-	.short	0x001c	/* 408294ea 001c */
-	.short	0x61e0	/* 408294ec 61e0 */
-	.short	0x2200	/* 408294ee 2200 */
-	.short	0x201f	/* 408294f0 201f */
-	.short	0x2f01	/* 408294f2 2f01 */
-	.short	0x222a	/* 408294f4 222a */
-	.short	0x001c	/* 408294f6 001c */
-	.short	0x61d4	/* 408294f8 61d4 */
-	.short	0x221f	/* 408294fa 221f */
-	.short	0x61d0	/* 408294fc 61d0 */
-	.short	0xc0c1	/* 408294fe c0c1 */
-	.short	0x221f	/* 40829500 221f */
+	movel	%d1,%sp@-		/* 408294e2 2f01 */
+	movel	%d0,%sp@-		/* 408294e4 2f00 */
+	movel	%d1,%d0			/* 408294e6 2001 */
+	movel	%a2@(28),%d1		/* 408294e8 222a 001c */
+	bsrs	__v__DIVUP		/* 408294ec 61e0 */
+	movel	%d0,%d1			/* 408294ee 2200 */
+	movel	%sp@+,%d0		/* 408294f0 201f */
+	movel	%d1,%sp@-		/* 408294f2 2f01 */
+	movel	%a2@(28),%d1		/* 408294f4 222a 001c */
+	bsrs	__v__DIVUP		/* 408294f8 61d4 */
+	movel	%sp@+,%d1		/* 408294fa 221f */
+	bsrs	__v__DIVUP		/* 408294fc 61d0 */
+	muluw	%d1,%d0			/* 408294fe c0c1 */
+	movel	%sp@+,%d1		/* 40829500 221f */
 	rts				/* 40829502 4e75 */
+
 	.short	0x2f02	/* 40829504 2f02 */
 	.short	0x2428	/* 40829506 2428 */
 	.short	0x0002	/* 40829508 0002 */
