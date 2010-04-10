@@ -269,7 +269,7 @@
 
 	.align	16
 
-sub_40849220:
+__v__AL_mountForeign:
 	.short	0x4e56	/* 40849220 4e56 */
 	.short	0xfffe	/* 40849222 fffe */
 	.short	0x48e7	/* 40849224 48e7 */
@@ -406,7 +406,7 @@ sub_40849220:
 
 	.align	16
 
-sub_40849330:
+__v__AL_isItAFloppy:
 	linkw	%fp,#0			/* 40849330 4e56 0000 */
 	.short	0x48e7	/* 40849334 48e7 */
 	.short	0x1100	/* 40849336 1100 */
@@ -972,7 +972,7 @@ sub_40849330:
 
 	.align	16
 
-sub_408497a0:
+__v__AL_mountVolume:
 	linkw	%fp,#0			/* 408497a0 4e56 0000 */
 	.short	0x48e7	/* 408497a4 48e7 */
 	.short	0x0318	/* 408497a6 0318 */
@@ -1109,7 +1109,7 @@ str_40849866:
 	.short	0x0000	/* 4084989c 0000 */
 	.short	0x0000	/* 4084989e 0000 */
 
-sub_408498a0:
+__v__InitFolderManager:
 	.short	0x7008	/* 408498a0 7008 */
 	.short	0xa71e	/* 408498a2 a71e */
 	.short	0x2278	/* 408498a4 2278 */
@@ -1133,7 +1133,7 @@ sub_408498a0:
 
 	.align	16
 
-sub_408498d0:
+__v__gestaltFolderMgr:
 	linkw	%fp,#0			/* 408498d0 4e56 0000 */
 	.short	0x303c	/* 408498d4 303c */
 	.short	0xea51	/* 408498d6 ea51 */
@@ -1163,7 +1163,7 @@ sub_408498d0:
 
 	.align	16
 
-sub_40849910:
+__v__FindFolder:
 	linkw	%fp,#0			/* 40849910 4e56 0000 */
 	.short	0x558f	/* 40849914 558f */
 	.short	0x3f2e	/* 40849916 3f2e */
@@ -1188,7 +1188,7 @@ sub_40849910:
 	.short	0x0010	/* 4084993c 0010 */
 	.short	0x4ed0	/* 4084993e 4ed0 */
 
-sub_40849940:
+FindFolder:
 	.short	0x2f30	/* 40849940 2f30 */
 	.short	0x81e2	/* 40849942 81e2 */
 	.short	0x2018	/* 40849944 2018 */
@@ -1197,7 +1197,7 @@ sub_40849940:
 
 	.align	16
 
-sub_40849950:
+__v__GetFolderName:
 	linkw	%fp,#0			/* 40849950 4e56 0000 */
 	.short	0x222e	/* 40849954 222e */
 	.short	0x0010	/* 40849956 0010 */
@@ -1249,14 +1249,14 @@ sub_40849950:
 	.short	0x000e	/* 408499b2 000e */
 	.short	0x4ed0	/* 408499b4 4ed0 */
 
-sub_408499b6:
+GetFolderName:
 	.short	0x2f30	/* 408499b6 2f30 */
 	.short	0x81e2	/* 408499b8 81e2 */
 	.short	0x2018	/* 408499ba 2018 */
 	.short	0x0028	/* 408499bc 0028 */
 	rts				/* 408499be 4e75 */
 
-sub_408499c0:
+__v__FindFolderInternal:
 	linkw	%fp,#-320		/* 408499c0 4e56 fec0 */
 	moveml	%d2-%d7/%a2,%sp@-	/* 408499c4 48e7 3f20 */
 	moveq	#-1,%d6			/* 408499c8 7cff */
@@ -1291,7 +1291,7 @@ loc_40849a0a:
 	subql	#4,%sp			/* 40849a20 598f */
 	movel	%a0,%sp@-		/* 40849a22 2f08 */
 	movel	%a2,%sp@-		/* 40849a24 2f0a */
-	jsr	%pc@(sub_40849e3a)	/* 40849a26 4eba 0412 */
+	jsr	%pc@(FindFolderInCache)	/* 40849a26 4eba 0412 */
 	lea	%fp@(-122),%a0		/* 40849a2a 41ee ff86 */
 	movel	%sp@+,%d0		/* 40849a2e 201f */
 	beqs	loc_40849a46		/* 40849a30 6714 */
@@ -1419,7 +1419,7 @@ loc_40849b4e:
 	tstb	%fp@(20)		/* 40849b6e 4a2e 0014 */
 	beqw	loc_40849c1e		/* 40849b72 6700 00aa */
 	movew	%d4,%d0			/* 40849b76 3004 */
-	jsr	%pc@(sub_4084a46e)	/* 40849b78 4eba 08f4 */
+	jsr	%pc@(GetNetTrashID)	/* 40849b78 4eba 08f4 */
 	bnew	loc_40849c5e		/* 40849b7c 6600 00e0 */
 	movel	%d1,%d5			/* 40849b80 2a01 */
 	braw	loc_40849cce		/* 40849b82 6000 014a */
@@ -1427,7 +1427,7 @@ loc_40849b4e:
 loc_40849b86:
 	subql	#4,%sp			/* 40849b86 598f */
 	movew	%d4,%sp@-		/* 40849b88 3f04 */
-	jsr	%pc@(sub_40849f64)	/* 40849b8a 4eba 03d8 */
+	jsr	%pc@(FindSpecialCacheEntry)	/* 40849b8a 4eba 03d8 */
 	movel	%sp@+,%d0		/* 40849b8e 201f */
 	beqs	loc_40849b9c		/* 40849b90 670a */
 	moveal	%d0,%a0			/* 40849b92 2040 */
@@ -1439,28 +1439,28 @@ loc_40849b9c:
 	tstb	%fp@(20)		/* 40849ba0 4a2e 0014 */
 	beqw	loc_40849c5e		/* 40849ba4 6700 00b8 */
 	movew	%d4,%d0			/* 40849ba8 3004 */
-	jsr	%pc@(sub_4084a46e)	/* 40849baa 4eba 08c2 */
+	jsr	%pc@(GetNetTrashID)	/* 40849baa 4eba 08c2 */
 	bnew	loc_40849c5e		/* 40849bae 6600 00ae */
 	movel	%d1,%fp@(-318)		/* 40849bb2 2d41 fec2 */
 	pea	%fp@(-122)		/* 40849bb6 486e ff86 */
 	movel	#1701671028,%sp@-	/* 40849bba 2f3c 656d 7074 */
 	movel	%d1,%sp@-		/* 40849bc0 2f01 */
-	jsr	%pc@(sub_40849e00)	/* 40849bc2 4eba 023c */
+	jsr	%pc@(EnterFolderInCache)	/* 40849bc2 4eba 023c */
 	movew	%d4,%d0			/* 40849bc6 3004 */
 	movel	%fp@(-318),%d1		/* 40849bc8 222e fec2 */
-	jsr	%pc@(sub_4084a464)	/* 40849bcc 4eba 0896 */
+	jsr	%pc@(GetTrashMapRefnum)	/* 40849bcc 4eba 0896 */
 	bnew	loc_40849c5e		/* 40849bd0 6600 008c */
 	movew	%d1,%fp@(-320)		/* 40849bd4 3d41 fec0 */
 	movew	%d4,%d0			/* 40849bd8 3004 */
 	movel	%fp@(-318),%d1		/* 40849bda 222e fec2 */
 	movew	%fp@(-320),%d2		/* 40849bde 342e fec0 */
-	jsr	%pc@(sub_4084a45a)	/* 40849be2 4eba 0876 */
+	jsr	%pc@(GetTrashCanID)	/* 40849be2 4eba 0876 */
 	bnes	loc_40849bfa		/* 40849be6 6612 */
 	movel	%d1,%d5			/* 40849be8 2a01 */
 	movew	%d4,%sp@-		/* 40849bea 3f04 */
 	movew	%fp@(-320),%sp@-	/* 40849bec 3f2e fec0 */
 	movel	%d5,%sp@-		/* 40849bf0 2f05 */
-	jsr	%pc@(sub_40849fca)	/* 40849bf2 4eba 03d6 */
+	jsr	%pc@(AddSpecialCacheEntry)	/* 40849bf2 4eba 03d6 */
 	braw	loc_40849cce		/* 40849bf6 6000 00d6 */
 
 loc_40849bfa:
@@ -1555,7 +1555,7 @@ loc_40849cce:
 	pea	%fp@(-122)		/* 40849cce 486e ff86 */
 	movel	%a2,%sp@-		/* 40849cd2 2f0a */
 	movel	%d5,%sp@-		/* 40849cd4 2f05 */
-	jsr	%pc@(sub_40849e00)	/* 40849cd6 4eba 0128 */
+	jsr	%pc@(EnterFolderInCache)	/* 40849cd6 4eba 0128 */
 
 loc_40849cda:
 	cmpil	#-65536,%d5		/* 40849cda 0c85 ffff 0000 */
@@ -1593,7 +1593,7 @@ loc_40849d14:
 	addaw	#20,%sp			/* 40849d22 defc 0014 */
 	jmp	%a0@			/* 40849d26 4ed0 */
 
-sub_40849d28:
+FindFolderInternal:
 	.short	0x2f30	/* 40849d28 2f30 */
 	.short	0x81e2	/* 40849d2a 81e2 */
 	.short	0x2018	/* 40849d2c 2018 */
@@ -1602,7 +1602,7 @@ sub_40849d28:
 
 	.align	16
 
-sub_40849d40:
+__v__EnterFolderInCache:
 	.short	0x4e56	/* 40849d40 4e56 */
 	.short	0xffe6	/* 40849d42 ffe6 */
 	.short	0x2f0b	/* 40849d44 2f0b */
@@ -1700,7 +1700,7 @@ sub_40849d40:
 	.short	0x000c	/* 40849dfc 000c */
 	.short	0x4ed0	/* 40849dfe 4ed0 */
 
-sub_40849e00:
+EnterFolderInCache:
 	.short	0x2f30	/* 40849e00 2f30 */
 	.short	0x81e2	/* 40849e02 81e2 */
 	.short	0x2018	/* 40849e04 2018 */
@@ -1709,7 +1709,7 @@ sub_40849e00:
 
 	.align	16
 
-sub_40849e10:
+__v__FindFolderInCache:
 	linkw	%fp,#0			/* 40849e10 4e56 0000 */
 	.short	0x598f	/* 40849e14 598f */
 	.short	0x2f2e	/* 40849e16 2f2e */
@@ -1731,7 +1731,7 @@ sub_40849e10:
 	.short	0x508f	/* 40849e36 508f */
 	.short	0x4ed0	/* 40849e38 4ed0 */
 
-sub_40849e3a:
+FindFolderInCache:
 	.short	0x2f30	/* 40849e3a 2f30 */
 	.short	0x81e2	/* 40849e3c 81e2 */
 	.short	0x2018	/* 40849e3e 2018 */
@@ -1740,7 +1740,7 @@ sub_40849e3a:
 
 	.align	16
 
-sub_40849e50:
+__v__FindEntryInCache:
 	linkw	%fp,#0			/* 40849e50 4e56 0000 */
 	.short	0x48e7	/* 40849e54 48e7 */
 	.short	0x0038	/* 40849e56 0038 */
@@ -1843,7 +1843,7 @@ sub_40849e50:
 
 	.align	16
 
-sub_40849f20:
+__v__FindSpecialCacheEntry:
 	linkw	%fp,#0			/* 40849f20 4e56 0000 */
 	.short	0x2f01	/* 40849f24 2f01 */
 	.short	0x42ae	/* 40849f26 42ae */
@@ -1878,7 +1878,7 @@ sub_40849f20:
 	.short	0x548f	/* 40849f60 548f */
 	.short	0x4ed0	/* 40849f62 4ed0 */
 
-sub_40849f64:
+FindSpecialCacheEntry:
 	.short	0x2f30	/* 40849f64 2f30 */
 	.short	0x81e2	/* 40849f66 81e2 */
 	.short	0x2018	/* 40849f68 2018 */
@@ -1887,7 +1887,7 @@ sub_40849f64:
 
 	.align	16
 
-sub_40849f70:
+__v__AddSpecialCacheEntry:
 	linkw	%fp,#0			/* 40849f70 4e56 0000 */
 	.short	0x48e7	/* 40849f74 48e7 */
 	.short	0x2040	/* 40849f76 2040 */
@@ -1933,7 +1933,7 @@ sub_40849f70:
 	.short	0x508f	/* 40849fc6 508f */
 	.short	0x4ed0	/* 40849fc8 4ed0 */
 
-sub_40849fca:
+AddSpecialCacheEntry:
 	.short	0x2f30	/* 40849fca 2f30 */
 	.short	0x81e2	/* 40849fcc 81e2 */
 	.short	0x2018	/* 40849fce 2018 */
@@ -1942,7 +1942,7 @@ sub_40849fca:
 
 	.align	16
 
-sub_40849fe0:
+__v__ReleaseFolder:
 	.short	0x4e56	/* 40849fe0 4e56 */
 	.short	0xff94	/* 40849fe2 ff94 */
 	.short	0x2f09	/* 40849fe4 2f09 */

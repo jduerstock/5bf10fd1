@@ -64,14 +64,14 @@
 
 	.align	16
 
-sub_40858080:
+__v__NEGWORDS:
 	.short	0x446f	/* 40858080 446f */
 	.short	0x0004	/* 40858082 0004 */
 	.short	0x446f	/* 40858084 446f */
 	.short	0x0006	/* 40858086 0006 */
 	rts				/* 40858088 4e75 */
 
-sub_4085808a:
+NEGWORDS:
 	CallVector	0x2084 97	/* 4085808a 2f30 81e2 2084 0184 */
 	rts				/* 40858092 4e75 */
 
@@ -166,7 +166,7 @@ sub_4085808a:
 	.short	0x0000	/* 4085814c 0000 */
 	.short	0x0000	/* 4085814e 0000 */
 
-sub_40858150:
+BEGINUPDATE:
 	.short	0x48e7	/* 40858150 48e7 */
 	.short	0x1810	/* 40858152 1810 */
 	.short	0x266f	/* 40858154 266f */
@@ -208,7 +208,7 @@ sub_40858150:
 	.short	0x2e9f	/* 4085819c 2e9f */
 	rts				/* 4085819e 4e75 */
 
-sub_408581a0:
+ENDUPDATE:
 	.short	0x2038	/* 408581a0 2038 */
 	.short	0x0afc	/* 408581a2 0afc */
 	.short	0xb0af	/* 408581a4 b0af */
@@ -350,7 +350,7 @@ sub_408581a0:
 	.short	0xaa55	/* 408582b4 aa55 */
 	.short	0xaa55	/* 408582b6 aa55 */
 
-sub_408582b8:
+DRAGGRAYRGN:
 	.short	0x21fa	/* 408582b8 21fa */
 	.short	0xfff6	/* 408582ba fff6 */
 	.short	0x0a34	/* 408582bc 0a34 */
@@ -358,7 +358,7 @@ sub_408582b8:
 	.short	0xfff4	/* 408582c0 fff4 */
 	.short	0x0a38	/* 408582c2 0a38 */
 
-sub_408582c4:
+DRAGTHERGN:
 	.short	0x4e56	/* 408582c4 4e56 */
 	.short	0xffd4	/* 408582c6 ffd4 */
 	.short	0x48e7	/* 408582c8 48e7 */
@@ -591,7 +591,7 @@ sub_408582c4:
 	.short	0x0016	/* 4085848e 0016 */
 	.short	0x4ed0	/* 40858490 4ed0 */
 
-sub_40858492:
+__v__CALLDRAGHOOK:
 	.short	0x2038	/* 40858492 2038 */
 	.short	0x09f6	/* 40858494 09f6 */
 	.short	0x6704	/* 40858496 6704 */
@@ -667,25 +667,25 @@ sub_40858492:
 	.short	0x2e9f	/* 40858522 2e9f */
 	rts				/* 40858524 4e75 */
 
-sub_40858526:
+CALLDRAGHOOK:
 	CallVector	0x2084 98	/* 40858526 2f30 81e2 2084 0188 */
 	rts				/* 4085852e 4e75 */
 
-sub_40858530:
+INVALRGN:
 	moveq	#0,%d0			/* 40858530 7000 */
 
-sub_40858532:
+__v__IVALCOMMON:
 	moveml	%d3-%d5/%a3,%sp@-	/* 40858532 48e7 1c10 */
 	movew	%d0,%d5			/* 40858536 3a00 */
 	moveal	%a5@,%a0		/* 40858538 2055 */
 	moveal	%a0@,%a3		/* 4085853a 2650 */
 	movel	%sp@(20),%d4		/* 4085853c 282f 0014 */
 	moveal	%a3,%a0			/* 40858540 204b */
-	bsrw	sub_4085704e		/* 40858542 6100 eb0a */
+	bsrw	PORTTOBITMAP		/* 40858542 6100 eb0a */
 	movel	%a0@(6),%d3		/* 40858546 2628 0006 */
 	movel	%d4,%sp@-		/* 4085854a 2f04 */
 	movel	%d3,%sp@-		/* 4085854c 2f03 */
-	bsrw	sub_4085808a		/* 4085854e 6100 fb3a */
+	bsrw	NEGWORDS		/* 4085854e 6100 fb3a */
 	.short	0xa8e0			/* 40858552 a8e0 */
 	movel	%a3@(122),%sp@-		/* 40858554 2f2b 007a */
 	movel	%d4,%sp@-		/* 40858558 2f04 */
@@ -703,7 +703,7 @@ loc_40858568:
 	movel	%d3,%sp@-		/* 4085856a 2f03 */
 	.short	0xa8e0			/* 4085856c a8e0 */
 
-sub_4085856e:
+__v__GOEXIT1:
 	moveml	%sp@+,%d3-%d5/%a3	/* 4085856e 4cdf 0838 */
 	movel	%sp@+,%sp@		/* 40858572 2e9f */
 	rts				/* 40858574 4e75 */
@@ -720,7 +720,7 @@ loc_40858580:
 
 	moveq	#0,%d0			/* 40858590 7000 */
 
-sub_40858592:
+__v__IRECTCOMMON:
 	.short	0x48e7	/* 40858592 48e7 */
 	.short	0x3c10	/* 40858594 3c10 */
 	.short	0x3a00	/* 40858596 3a00 */
@@ -745,14 +745,14 @@ sub_40858592:
 	.short	0x0000	/* 408585bc 0000 */
 	.short	0x0000	/* 408585be 0000 */
 
-sub_408585c0:
+VALIDRGN:
 	moveq	#-1,%d0			/* 408585c0 70ff */
 	.short	0x6000	/* 408585c2 6000 */
 	.short	0xffbc	/* 408585c4 ffbc */
 
 	.align	16
 
-sub_408585d0:
+GROWWINDOW:
 	.short	0x4e56	/* 408585d0 4e56 */
 	.short	0xffa4	/* 408585d2 ffa4 */
 	.short	0x48e7	/* 408585d4 48e7 */
@@ -844,7 +844,7 @@ sub_408585d0:
 	.short	0x18f8	/* 40858680 18f8 */
 	.short	0x4e5e	/* 40858682 4e5e */
 
-sub_40858684:
+__v__TWELVEBYTEXIT:
 	.short	0x205f	/* 40858684 205f */
 	.short	0x4fef	/* 40858686 4fef */
 	.short	0x000c	/* 40858688 000c */
@@ -857,7 +857,7 @@ sub_40858684:
 
 	.align	16
 
-sub_408586a0:
+__v__CALLGROW:
 	.short	0x2f03	/* 408586a0 2f03 */
 	.short	0x7005	/* 408586a2 7005 */
 	.short	0x260c	/* 408586a4 260c */
@@ -873,7 +873,7 @@ sub_408586a0:
 
 	.align	16
 
-sub_408586c0:
+__v__GETPINMOUSE:
 	.short	0x2f2c	/* 408586c0 2f2c */
 	.short	0x0004	/* 408586c2 0004 */
 	.short	0x514f	/* 408586c4 514f */
@@ -926,7 +926,7 @@ sub_408586c0:
 
 	.align	16
 
-sub_40858730:
+__v__GWCALCSIZE:
 	.short	0x594f	/* 40858730 594f */
 	.short	0x2f2c	/* 40858732 2f2c */
 	.short	0x0004	/* 40858734 0004 */
@@ -943,7 +943,7 @@ sub_40858730:
 
 	.align	16
 
-sub_40858750:
+__v____FINDLAYER:
 	.short	0x48e7	/* 40858750 48e7 */
 	.short	0x5010	/* 40858752 5010 */
 	.short	0x41ef	/* 40858754 41ef */
@@ -1018,7 +1018,7 @@ sub_40858750:
 
 	.align	16
 
-sub_408587e0:
+DRAWGROWICON:
 	.short	0x48e7	/* 408587e0 48e7 */
 	.short	0x0810	/* 408587e2 0810 */
 	.short	0x266f	/* 408587e4 266f */
@@ -1037,7 +1037,7 @@ sub_408587e0:
 
 	.align	16
 
-sub_40858800:
+SETDESKCPAT:
 	.short	0x4aaf	/* 40858800 4aaf */
 	.short	0x0004	/* 40858802 0004 */
 	.short	0x6732	/* 40858804 6732 */
@@ -1083,7 +1083,7 @@ sub_40858800:
 
 	.align	16
 
-sub_40858860:
+__v__SETWINCOLOR:
 	.short	0x48e7	/* 40858860 48e7 */
 	.short	0x0030	/* 40858862 0030 */
 	.short	0x2478	/* 40858864 2478 */
@@ -1143,7 +1143,7 @@ sub_40858860:
 	.short	0xa90c	/* 408588d0 a90c */
 	.short	0x6022	/* 408588d2 6022 */
 
-sub_408588d4:
+__v__SETCTLCOLOR:
 	.short	0x48e7	/* 408588d4 48e7 */
 	.short	0x0030	/* 408588d6 0030 */
 	.short	0x2478	/* 408588d8 2478 */
@@ -1307,7 +1307,7 @@ sub_408588d4:
 	.short	0x2278	/* 40858a16 2278 */
 	.short	0x0cd4	/* 40858a18 0cd4 */
 
-sub_40858a1a:
+__v__GETAUXGUTS:
 	.short	0x1f7c	/* 40858a1a 1f7c */
 	.short	0x0001	/* 40858a1c 0001 */
 	.short	0x000c	/* 40858a1e 000c */
@@ -1348,7 +1348,7 @@ sub_40858a1a:
 
 	.align	16
 
-sub_40858a70:
+INITWINDOWS:
 	.short	0x554f	/* 40858a70 554f */
 	.short	0x4eba	/* 40858a72 4eba */
 	.short	0x159c	/* 40858a74 159c */
@@ -1357,20 +1357,20 @@ sub_40858a70:
 
 	.align	16
 
-sub_40858a80:
+__v__MAKEDEACTIVEGLUE:
 	.short	0x205f	/* 40858a80 205f */
 	.short	0x2017	/* 40858a82 2017 */
 	.short	0x2e88	/* 40858a84 2e88 */
 	.short	0x4efa	/* 40858a86 4efa */
 	.short	0xee26	/* 40858a88 ee26 */
 
-sub_40858a8a:
+MAKEDEACTIVEGLUE:
 	CallVector	0x2084 109	/* 40858a8a 2f30 81e2 2084 01b4 */
 	rts				/* 40858a92 4e75 */
 
 	.align	16
 
-sub_40858aa0:
+__v__CALLWINDOWGLUE:
 	.short	0x48e7	/* 40858aa0 48e7 */
 	.short	0x1010	/* 40858aa2 1010 */
 	.short	0x262f	/* 40858aa4 262f */
@@ -1387,13 +1387,13 @@ sub_40858aa0:
 	.short	0x588f	/* 40858aba 588f */
 	.short	0x4ed0	/* 40858abc 4ed0 */
 
-sub_40858abe:
+CALLWINDOWGLUE:
 	CallVector	0x2084 110	/* 40858abe 2f30 81e2 2084 01b8 */
 	rts				/* 40858ac6 4e75 */
 
 	.align	16
 
-sub_40858ad0:
+__v__CALLWINDOWCALCGLUE:
 	.short	0x2f0b	/* 40858ad0 2f0b */
 	.short	0x266f	/* 40858ad2 266f */
 	.short	0x0008	/* 40858ad4 0008 */
@@ -1404,7 +1404,7 @@ sub_40858ad0:
 	.short	0x588f	/* 40858ade 588f */
 	.short	0x4ed0	/* 40858ae0 4ed0 */
 
-sub_40858ae2:
+CALLWINDOWCALCGLUE:
 	CallVector	0x2084 111	/* 40858ae2 2f30 81e2 2084 01bc */
 	rts				/* 40858aea 4e75 */
 
@@ -1459,7 +1459,7 @@ sub_40858ae2:
 	.short	0x0000	/* 40858b4c 0000 */
 	.short	0x0000	/* 40858b4e 0000 */
 
-sub_40858b50:
+__SELECTWINDOW:
 	.short	0x41fa	/* 40858b50 41fa */
 	.short	0xf3fe	/* 40858b52 f3fe */
 	.short	0x4efa	/* 40858b54 4efa */
@@ -1469,7 +1469,7 @@ sub_40858b50:
 	.short	0x0000	/* 40858b5c 0000 */
 	.short	0x0000	/* 40858b5e 0000 */
 
-sub_40858b60:
+__BRINGTOFRONT:
 	.short	0x41fa	/* 40858b60 41fa */
 	.short	0xf506	/* 40858b62 f506 */
 	.short	0x4efa	/* 40858b64 4efa */
@@ -1479,7 +1479,7 @@ sub_40858b60:
 	.short	0x0000	/* 40858b6c 0000 */
 	.short	0x0000	/* 40858b6e 0000 */
 
-sub_40858b70:
+__SENDBEHIND:
 	.short	0x41fa	/* 40858b70 41fa */
 	.short	0xf52e	/* 40858b72 f52e */
 	.short	0x4efa	/* 40858b74 4efa */
@@ -1489,11 +1489,11 @@ sub_40858b70:
 	.short	0x0000	/* 40858b7c 0000 */
 	.short	0x0000	/* 40858b7e 0000 */
 
-sub_40858b80:
+__SHOWWINDOW:
 	.short	0x41fa	/* 40858b80 41fa */
 	.short	0xed4e	/* 40858b82 ed4e */
 
-sub_40858b84:
+__v__TWOBYFOUR:
 	.short	0x7202	/* 40858b84 7202 */
 	.short	0x202f	/* 40858b86 202f */
 	.short	0x0004	/* 40858b88 0004 */
@@ -1507,7 +1507,7 @@ sub_40858b84:
 
 	.align	16
 
-sub_40858ba0:
+__DRAGWINDOW:
 	.short	0x41fa	/* 40858ba0 41fa */
 	.short	0xf63e	/* 40858ba2 f63e */
 	.short	0x7206	/* 40858ba4 7206 */
@@ -1517,7 +1517,7 @@ sub_40858ba0:
 	.short	0xff44	/* 40858bac ff44 */
 	.short	0x0000	/* 40858bae 0000 */
 
-sub_40858bb0:
+__MOVEWINDOW:
 	.short	0x41fa	/* 40858bb0 41fa */
 	.short	0xef0e	/* 40858bb2 ef0e */
 	.short	0x7205	/* 40858bb4 7205 */
@@ -1528,14 +1528,14 @@ sub_40858bb0:
 
 	.align	16
 
-sub_40858bc0:
+__ZOOMWINDOW:
 	.short	0x41fa	/* 40858bc0 41fa */
 	.short	0xf28e	/* 40858bc2 f28e */
 
-sub_40858bc4:
+__v__FOURBYEIGHT:
 	.short	0x7204	/* 40858bc4 7204 */
 
-sub_40858bc6:
+__v__WINDOWAT8:
 	.short	0x202f	/* 40858bc6 202f */
 	.short	0x0008	/* 40858bc8 0008 */
 	.short	0x4efa	/* 40858bca 4efa */
@@ -1553,7 +1553,7 @@ sub_40858bc6:
 
 	.align	16
 
-sub_40858bf0:
+__GETAUXWIN:
 	.short	0x41fa	/* 40858bf0 41fa */
 	.short	0xfe1e	/* 40858bf2 fe1e */
 	.short	0x7205	/* 40858bf4 7205 */
@@ -1562,7 +1562,7 @@ sub_40858bf0:
 
 	.align	16
 
-sub_40858c00:
+__SETWINCOLOR:
 	.short	0x41fa	/* 40858c00 41fa */
 	.short	0xfdf4	/* 40858c02 fdf4 */
 	.short	0x4efa	/* 40858c04 4efa */
@@ -1570,7 +1570,7 @@ sub_40858c00:
 
 	.align	16
 
-sub_40858c10:
+__SETCTLCOLOR:
 	.short	0x41fa	/* 40858c10 41fa */
 	.short	0xfdee	/* 40858c12 fdee */
 	.short	0x7204	/* 40858c14 7204 */
@@ -1579,12 +1579,12 @@ sub_40858c10:
 
 	.align	16
 
-sub_40858c20:
+__GETAUXCTL:
 	.short	0x41fa	/* 40858c20 41fa */
 	.short	0xfdf4	/* 40858c22 fdf4 */
 	.short	0x7205	/* 40858c24 7205 */
 
-sub_40858c26:
+__v__CONTROLOWNER:
 	.short	0x202f	/* 40858c26 202f */
 	.short	0x0008	/* 40858c28 0008 */
 	.short	0x6708	/* 40858c2a 6708 */
@@ -1602,7 +1602,7 @@ sub_40858c26:
 
 	.align	16
 
-sub_40858c50:
+__DRAWNEW:
 	.short	0x41fa	/* 40858c50 41fa */
 	.short	0xe75e	/* 40858c52 e75e */
 	.short	0x7203	/* 40858c54 7203 */
@@ -1613,7 +1613,7 @@ sub_40858c50:
 
 	.align	16
 
-sub_40858c60:
+LAYERDISPATCH:
 	.short	0x41fa	/* 40858c60 41fa */
 	.short	0x0008	/* 40858c62 0008 */
 	.short	0x2f38	/* 40858c64 2f38 */
@@ -1662,11 +1662,11 @@ INITFASTERINVALS:
 
 	.align	16
 
-sub_40858cc0:
+FASTERVALIDRECT:
 	moveq	#-1,%d0			/* 40858cc0 70ff */
 	.short	0x6002	/* 40858cc2 6002 */
 
-sub_40858cc4:
+FASTERINVALRECT:
 	moveq	#0,%d0			/* 40858cc4 7000 */
 	.short	0x206f	/* 40858cc6 206f */
 	.short	0x0004	/* 40858cc8 0004 */
@@ -1701,7 +1701,7 @@ sub_40858cc4:
 
 	.align	16
 
-sub_40858d10:
+ACTIVATEPALETTELAYERBRACKET:
 	.short	0x41fa	/* 40858d10 41fa */
 	.short	0x000e	/* 40858d12 000e */
 	.short	0x4efa	/* 40858d14 4efa */
@@ -1715,7 +1715,7 @@ sub_40858d10:
 
 	.align	16
 
-sub_40858d30:
+__v__GETREARWINDOW:
 	.short	0x2038	/* 40858d30 2038 */
 	.short	0x09d6	/* 40858d32 09d6 */
 	.short	0x2240	/* 40858d34 2240 */
@@ -1737,7 +1737,7 @@ sub_40858d30:
 
 	.align	16
 
-sub_40858d60:
+__v__CHECKPROC:
 	.short	0x4e56	/* 40858d60 4e56 */
 	.short	0xfff0	/* 40858d62 fff0 */
 	.short	0x48e7	/* 40858d64 48e7 */
@@ -1823,7 +1823,7 @@ sub_40858d60:
 
 	.align	16
 
-sub_40858e10:
+__v__ScreenWithMostOf:
 	.short	0x4e56	/* 40858e10 4e56 */
 	.short	0xffec	/* 40858e12 ffec */
 	.short	0x2f0c	/* 40858e14 2f0c */
@@ -1863,7 +1863,7 @@ sub_40858e10:
 
 	.align	16
 
-sub_40858e60:
+__v__TestContent:
 	.short	0x4e56	/* 40858e60 4e56 */
 	.short	0xfff8	/* 40858e62 fff8 */
 	.short	0x48e7	/* 40858e64 48e7 */
@@ -1929,7 +1929,7 @@ sub_40858e60:
 	.short	0x000c	/* 40858edc 000c */
 	jmp	%a1@			/* 40858ede 4ed1 */
 
-sub_40858ee0:
+__v__GetNewStructRect:
 	.short	0x4e56	/* 40858ee0 4e56 */
 	.short	0xffec	/* 40858ee2 ffec */
 	.short	0x48e7	/* 40858ee4 48e7 */
@@ -2017,7 +2017,7 @@ sub_40858ee0:
 	.short	0x4e5e	/* 40858f88 4e5e */
 	rts				/* 40858f8a 4e75 */
 
-sub_40858f8c:
+GetNewStructRect:
 	.short	0x2278	/* 40858f8c 2278 */
 	.short	0x2084	/* 40858f8e 2084 */
 	.short	0x2269	/* 40858f90 2269 */
@@ -2026,7 +2026,7 @@ sub_40858f8c:
 
 	.align	16
 
-sub_40858fa0:
+__v__CreateCheckRect:
 	linkw	%fp,#0			/* 40858fa0 4e56 0000 */
 	.short	0x2f0c	/* 40858fa4 2f0c */
 	.short	0x286e	/* 40858fa6 286e */
@@ -2051,7 +2051,7 @@ sub_40858fa0:
 	.short	0x0014	/* 40858fcc 0014 */
 	jmp	%a1@			/* 40858fce 4ed1 */
 
-sub_40858fd0:
+__v__WindowAtPos:
 	linkw	%fp,#0			/* 40858fd0 4e56 0000 */
 	.short	0x2f0c	/* 40858fd4 2f0c */
 	.short	0x286e	/* 40858fd6 286e */

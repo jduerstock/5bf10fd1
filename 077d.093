@@ -43,7 +43,7 @@ loc_4085d04c:
 	moveml	%sp@+,%d0-%d2/%a0-%a2	/* 4085d04c 4cdf 0707 */
 	rts				/* 4085d050 4e75 */
 
-sub_4085d052:	
+GETNEWDIALOG:	
 	bsrw	sub_4085d398		/* 4085d052 6100 0344 */
 	clrl	%fp@(18)		/* 4085d056 42ae 0012 */
 	movew	%fp@(16),%d0		/* 4085d05a 302e 0010 */
@@ -114,11 +114,11 @@ loc_4085d0e4:
 	moveal	%fp@(-90),%a0		/* 4085d0e4 206e ffa6 */
 	jmp	%a0@			/* 4085d0e8 4ed0 */
 
-sub_4085d0ea:
+NEWCDIALOG:
 	moveq	#-1,%d1			/* 4085d0ea 72ff */
 	bras	sub_4085d0f0		/* 4085d0ec 6002 */
 
-sub_4085d0ee:
+NEWDIALOG:
 	moveq	#0,%d1			/* 4085d0ee 7200 */
 
 sub_4085d0f0:
@@ -215,7 +215,7 @@ sub_4085d0f0:
 	.short	0x6000	/* 4085d1a4 6000 */
 	.short	0x01fe	/* 4085d1a6 01fe */
 
-sub_4085d1a8:
+__v__CLAIMEVENT:
 	.short	0x3612	/* 4085d1a8 3612 */
 	.short	0x5d43	/* 4085d1aa 5d43 */
 	.short	0x670c	/* 4085d1ac 670c */
@@ -229,7 +229,7 @@ sub_4085d1a8:
 	.short	0x0002	/* 4085d1bc 0002 */
 	rts				/* 4085d1be 4e75 */
 
-sub_4085d1c0:
+ISDIALOGEVENT:
 	.short	0x6100	/* 4085d1c0 6100 */
 	.short	0x01d6	/* 4085d1c2 01d6 */
 	.short	0x4eba	/* 4085d1c4 4eba */
@@ -297,7 +297,7 @@ sub_4085d1c0:
 	.short	0x6000	/* 4085d240 6000 */
 	.short	0x0162	/* 4085d242 0162 */
 
-sub_4085d244:
+DIALOGSELECT:
 	.short	0x6100	/* 4085d244 6100 */
 	.short	0x0152	/* 4085d246 0152 */
 	.short	0x426e	/* 4085d248 426e */
@@ -371,7 +371,7 @@ sub_4085d244:
 	.short	0x6000	/* 4085d2d0 6000 */
 	.short	0x00d2	/* 4085d2d2 00d2 */
 
-sub_4085d2d4:
+MODALDIALOG:
 	bsrw	sub_4085d398		/* 4085d2d4 6100 00c2 */
 	jsr	%pc@(sub_408574c0)	/* 4085d2d8 4eba a1e6 */
 	beqs	loc_4085d2e8		/* 4085d2dc 670a */
@@ -389,12 +389,12 @@ loc_4085d2e8:
 	orib	#0xc0,%a0@(113)		/* 4085d2f2 0028 00c0 0071 */
 	movel	%fp@(12),%d0		/* 4085d2f8 202e 000c */
 	bnes	loc_4085d314		/* 4085d2fc 6616 */
-	lea	%pc@(sub_4085f1b0),%a1	/* 4085d2fe 43fa 1eb0 */
+	lea	%pc@(STDFILTER),%a1	/* 4085d2fe 43fa 1eb0 */
 	movel	%a1,%fp@(12)		/* 4085d302 2d49 000c */
 	bset	#2,%a0@(113)		/* 4085d306 08e8 0002 0071 */
 	moveq	#1,%d0			/* 4085d30c 7001 */
 	movel	%d0,%sp@-		/* 4085d30e 2f00 */
-	jsr	%pc@(sub_4085e4d0)	/* 4085d310 4eba 11be */
+	jsr	%pc@(SETANALYZEDWINDOW)	/* 4085d310 4eba 11be */
 
 loc_4085d314:
 	.short	0xa9b4			/* 4085d314 a9b4 */
@@ -466,7 +466,7 @@ loc_4085d3a4:
 	addal	%d0,%sp			/* 4085d3ac dfc0 */
 	jmp	%a0@			/* 4085d3ae 4ed0 */
 
-sub_4085d3b0:
+DRAWDIALOG:
 	bsrs	sub_4085d398		/* 4085d3b0 61e6 */
 	moveal	%fp@(8),%a4		/* 4085d3b2 286e 0008 */
 	bsrw	sub_4085d43c		/* 4085d3b6 6100 0084 */
@@ -477,7 +477,7 @@ sub_4085d3b0:
 	bsrw	sub_4085d3e8		/* 4085d3c4 6100 0022 */
 	bras	loc_4085d424		/* 4085d3c8 605a */
 
-sub_4085d3ca:
+UPDTDIALOG:
 	bsrs	sub_4085d398		/* 4085d3ca 61cc */
 	moveal	%fp@(12),%a4		/* 4085d3cc 286e 000c */
 	bsrw	sub_4085d43c		/* 4085d3d0 6100 006a */
@@ -496,7 +496,7 @@ sub_4085d3e8:
 	.short	0xa02a			/* 4085d3f0 a02a */
 	rts				/* 4085d3f2 4e75 */
 
-sub_4085d3f4:
+CLOSEDIALOG:
 	bsrs	sub_4085d398		/* 4085d3f4 61a2 */
 	moveal	%fp@(8),%a4		/* 4085d3f6 286e 0008 */
 	bsrs	sub_4085d43c		/* 4085d3fa 6140 */
@@ -570,7 +570,7 @@ loc_4085d476:
 loc_4085d478:
 	rts				/* 4085d478 4e75 */
 
-sub_4085d47a:
+DISPOSDIALOG:
 	.short	0x5d4f	/* 4085d47a 5d4f */
 	.short	0x2f2f	/* 4085d47c 2f2f */
 	.short	0x000a	/* 4085d47e 000a */
@@ -632,11 +632,11 @@ sub_4085d4d6:
 	.short	0xffb0	/* 4085d4ea ffb0 */
 	rts				/* 4085d4ec 4e75 */
 
-sub_4085d4ee:
+COULDDIALOG:
 	.short	0x6000	/* 4085d4ee 6000 */
 	.short	0x00e8	/* 4085d4f0 00e8 */
 
-sub_4085d4f2:
+COULDALERT:
 	.short	0x6000	/* 4085d4f2 6000 */
 	.short	0x00e4	/* 4085d4f4 00e4 */
 	.short	0x3f00	/* 4085d4f6 3f00 */
@@ -753,16 +753,16 @@ sub_4085d524:
 	.short	0x4a9f	/* 4085d5d0 4a9f */
 	rts				/* 4085d5d2 4e75 */
 
-sub_4085d5d4:
+FREEDIALOG:
 	.short	0x6000	/* 4085d5d4 6000 */
 	.short	0x0002	/* 4085d5d6 0002 */
 
-sub_4085d5d8:
+FREEALERT:
 	.short	0x205f	/* 4085d5d8 205f */
 	.short	0x544f	/* 4085d5da 544f */
 	.short	0x4ed0	/* 4085d5dc 4ed0 */
 
-sub_4085d5de:
+PARAMTEXT:
 	.short	0x43f8	/* 4085d5de 43f8 */
 	.short	0x0ab0	/* 4085d5e0 0ab0 */
 	.short	0x7403	/* 4085d5e2 7403 */
@@ -782,13 +782,13 @@ sub_4085d5de:
 	.short	0xffe6	/* 4085d5fe ffe6 */
 	rts				/* 4085d600 4e75 */
 
-sub_4085d602:
+ERRORSOUND:
 	.short	0x205f	/* 4085d602 205f */
 	.short	0x21df	/* 4085d604 21df */
 	.short	0x0a9c	/* 4085d606 0a9c */
 	.short	0x4ed0	/* 4085d608 4ed0 */
 
-sub_4085d60a:
+GETDITEM:
 	.short	0x6100	/* 4085d60a 6100 */
 	.short	0xfd8c	/* 4085d60c fd8c */
 	.short	0x286e	/* 4085d60e 286e */
@@ -825,7 +825,7 @@ sub_4085d60a:
 	.short	0x6000	/* 4085d64c 6000 */
 	.short	0xfd56	/* 4085d64e fd56 */
 
-sub_4085d650:
+SETDITEM:
 	.short	0x6100	/* 4085d650 6100 */
 	.short	0xfd46	/* 4085d652 fd46 */
 	.short	0x286e	/* 4085d654 286e */
@@ -855,7 +855,7 @@ sub_4085d650:
 	.short	0x6000	/* 4085d684 6000 */
 	.short	0xfd1e	/* 4085d686 fd1e */
 
-sub_4085d688:
+GETITEXT:
 	.short	0x7200	/* 4085d688 7200 */
 	.short	0x5301	/* 4085d68a 5301 */
 	.short	0x6100	/* 4085d68c 6100 */
@@ -873,7 +873,7 @@ sub_4085d688:
 	.short	0xa02e	/* 4085d6a4 a02e */
 	.short	0x6066	/* 4085d6a6 6066 */
 
-sub_4085d6a8:
+SETITEXT:
 	.short	0x6100	/* 4085d6a8 6100 */
 	.short	0xfcee	/* 4085d6aa fcee */
 	.short	0x206e	/* 4085d6ac 206e */
@@ -930,7 +930,7 @@ loc_4085d70e:
 	moveq	#8,%d0			/* 4085d70e 7008 */
 	braw	loc_4085d3a4		/* 4085d710 6000 fc92 */
 
-sub_4085d714:
+SELITEXT:
 	.short	0x6100	/* 4085d714 6100 */
 	.short	0xfc82	/* 4085d716 fc82 */
 	.short	0x286e	/* 4085d718 286e */
@@ -978,7 +978,7 @@ sub_4085d714:
 	.short	0xa8a9	/* 4085d76c a8a9 */
 	rts				/* 4085d76e 4e75 */
 
-sub_4085d770:
+HIDEDITEM:
 	.short	0x6100	/* 4085d770 6100 */
 	.short	0xfc26	/* 4085d772 fc26 */
 	.short	0x286e	/* 4085d774 286e */
@@ -1027,7 +1027,7 @@ sub_4085d770:
 	.short	0x504f	/* 4085d7ca 504f */
 	.short	0x60c4	/* 4085d7cc 60c4 */
 
-sub_4085d7ce:
+SHOWDITEM:
 	.short	0x6100	/* 4085d7ce 6100 */
 	.short	0xfbc8	/* 4085d7d0 fbc8 */
 	.short	0x286e	/* 4085d7d2 286e */
@@ -1087,7 +1087,7 @@ sub_4085d7ce:
 	.short	0x0002	/* 4085d83e 0002 */
 	rts				/* 4085d840 4e75 */
 
-sub_4085d842:
+FINDDITEM:
 	.short	0x6100	/* 4085d842 6100 */
 	.short	0xfb54	/* 4085d844 fb54 */
 	.short	0x286e	/* 4085d846 286e */
@@ -1918,7 +1918,7 @@ sub_4085de7a:
 	.short	0x504f	/* 4085dea4 504f */
 	rts				/* 4085dea6 4e75 */
 
-sub_4085dea8:
+__v__FRAMEOUT:
 	.short	0x2f08	/* 4085dea8 2f08 */
 	.short	0x3f02	/* 4085deaa 3f02 */
 	.short	0x3f02	/* 4085deac 3f02 */
@@ -2000,7 +2000,7 @@ sub_4085dee4:
 	.short	0x0000	/* 4085df3c 0000 */
 	.short	0x0000	/* 4085df3e 0000 */
 
-sub_4085df40:
+__v__NOTOWNACTIVATOR:
 	.short	0x4e56	/* 4085df40 4e56 */
 	.short	0xffbc	/* 4085df42 ffbc */
 	.short	0x703c	/* 4085df44 703c */
@@ -2042,7 +2042,7 @@ sub_4085df40:
 	.short	0x0000	/* 4085df8c 0000 */
 	.short	0x0000	/* 4085df8e 0000 */
 
-sub_4085df90:
+__v__FAKEUPEVENT:
 	.short	0x265f	/* 4085df90 265f */
 	.short	0x204a	/* 4085df92 204a */
 	.short	0xd0fc	/* 4085df94 d0fc */
@@ -2076,7 +2076,7 @@ sub_4085df90:
 	rts				/* 4085dfcc 4e75 */
 	.short	0x0000	/* 4085dfce 0000 */
 
-sub_4085dfd0:
+__v__DSEDIT:
 	.short	0x206e	/* 4085dfd0 206e */
 	.short	0x0010	/* 4085dfd2 0010 */
 	.short	0x2028	/* 4085dfd4 2028 */

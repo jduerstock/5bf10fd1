@@ -329,13 +329,13 @@ sub_40801340:
 	.align	16
 
 FINDSTARTUPDEVICE:
-	bsrl	sub_4082002c		/* 40801350 61ff 0001 ecda */
+	bsrl	IsItt		/* 40801350 61ff 0001 ecda */
 	tstb	%d0			/* 40801356 4a00 */
 	beqs	loc_4080136a		/* 40801358 6710 */
 	subqw	#4,%sp			/* 4080135a 594f */
 	moveal	%sp,%a0			/* 4080135c 204f */
 	bsrw	GETDEFAULTSTARTUP	/* 4080135e 6100 00a0 */
-	bsrl	sub_40820192		/* 40801362 61ff 0001 ee2e */
+	bsrl	InitSCSIBoot		/* 40801362 61ff 0001 ee2e */
 	addql	#4,%sp			/* 40801368 588f */
 
 loc_4080136a:
@@ -516,11 +516,11 @@ loc_408014ea:
 	.short	0xa07f			/* 408014f2 a07f */
 
 loc_408014f4:
-	bsrl	sub_4082002c		/* 408014f4 61ff 0001 eb36 */
+	bsrl	IsItt		/* 408014f4 61ff 0001 eb36 */
 	tstb	%d0			/* 408014fa 4a00 */
 	beqs	loc_40801518		/* 408014fc 671a */
 	pea	0x1			/* 408014fe 4878 0001 */
-	bsrl	sub_408204d6		/* 40801502 61ff 0001 efd2 */
+	bsrl	IttBoot		/* 40801502 61ff 0001 efd2 */
 	addqw	#4,%sp			/* 40801508 584f */
 	cmpiw	#1,%d0			/* 4080150a 0c40 0001 */
 	beqs	loc_40801574		/* 4080150e 6764 */
@@ -627,11 +627,11 @@ loc_408015e8:
 	.align	16
 
 sub_408015f0:
-	bsrl	sub_4082002c		/* 408015f0 61ff 0001 ea3a */
+	bsrl	IsItt		/* 408015f0 61ff 0001 ea3a */
 	tstb	%d0			/* 408015f6 4a00 */
 	beqs	loc_4080160c		/* 408015f8 6712 */
 	clrl	%sp@-			/* 408015fa 42a7 */
-	bsrl	sub_408204d6		/* 408015fc 61ff 0001 eed8 */
+	bsrl	IttBoot		/* 408015fc 61ff 0001 eed8 */
 	addqw	#4,%sp			/* 40801602 584f */
 	tstw	%d0			/* 40801604 4a40 */
 	beqs	loc_4080160a		/* 40801606 6702 */
@@ -724,7 +724,7 @@ sub_408016a0:
 	.short	0xa002			/* 408016b6 a002 */
 	bnes	loc_408016c8		/* 408016b8 660e */
 	movel	%a0,%sp@-		/* 408016ba 2f08 */
-	bsrl	sub_40813a2e		/* 408016bc 61ff 0001 2370 */
+	bsrl	CACHEFLUSH		/* 408016bc 61ff 0001 2370 */
 	moveal	%sp@+,%a0		/* 408016c2 205f */
 	cmpiw	#19531,%fp@		/* 408016c4 0c56 4c4b */
 
@@ -1496,8 +1496,8 @@ loc_40801dcc:
 	movel	%a0,0x2aa		/* 40801dd4 21c8 02aa */
 	movel	%a0@,0x114		/* 40801dd8 21d0 0114 */
 	movel	%a0,%sp@-		/* 40801ddc 2f08 */
-	bsrl	sub_40893ef0		/* 40801dde 61ff 0009 2110 */
-	bsrl	sub_40894040		/* 40801de4 61ff 0009 225a */
+	bsrl	INSTALLBASSCOMMON		/* 40801dde 61ff 0009 2110 */
+	bsrl	FORCEINITFONTSCALL		/* 40801de4 61ff 0009 225a */
 	moveal	%sp@+,%a0		/* 40801dea 205f */
 	movel	#1718646048,%d0		/* 40801dec 203c 6670 7520 */
 	.short	0xa1ad			/* 40801df2 a1ad */
@@ -1675,7 +1675,7 @@ loc_40801f94:
 	moveal	%sp,%a0			/* 40801f98 204f */
 	jsr	%pc@(sub_40802270)	/* 40801f9a 4eba 02d4 */
 	lea	%sp@(56),%sp		/* 40801f9e 4fef 0038 */
-	bsrl	sub_40839ece		/* 40801fa2 61ff 0003 7f2a */
+	bsrl	INITADBDRVR		/* 40801fa2 61ff 0003 7f2a */
 	bsrw	sub_40802360		/* 40801fa8 6100 03b6 */
 	bsrw	sub_408025b0		/* 40801fac 6100 0602 */
 	moveq	#2,%d0			/* 40801fb0 7002 */

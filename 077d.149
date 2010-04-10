@@ -57,11 +57,11 @@ loc_40895046:
 	.align	16
 
 sub_40895070:
-	bral	sub_4089f88c		/* 40895070 60ff 0000 a81a */
+	bral	ApplyFontMap		/* 40895070 60ff 0000 a81a */
 
 	.align	16
 
-sub_40895080:
+__v__fs_FillWidthTable:
 	linkw	%fp,#-550		/* 40895080 4e56 fdda */
 	moveml	%d4-%d7/%a3-%a4,%sp@-	/* 40895084 48e7 0f18 */
 	lea	%fp@(-528),%a0		/* 40895088 41ee fdf0 */
@@ -71,7 +71,7 @@ sub_40895080:
 	moveq	#7,%d0			/* 4089509a 7007 */
 	movel	%d0,%sp@-		/* 4089509c 2f00 */
 	movel	%fp@(8),%sp@-		/* 4089509e 2f2e 0008 */
-	jsr	%pc@(sub_4089623e)	/* 408950a2 4eba 119a */
+	jsr	%pc@(fs_SetUpKey)	/* 408950a2 4eba 119a */
 	movel	%d0,%fp@(-4)		/* 408950a6 2d40 fffc */
 	tstl	%fp@(-8)		/* 408950aa 4aae fff8 */
 	lea	%sp@(12),%sp		/* 408950ae 4fef 000c */
@@ -95,7 +95,7 @@ loc_408950d8:
 	movel	%d0,%sp@-		/* 408950de 2f00 */
 	movel	%fp@(-16),%sp@-		/* 408950e0 2f2e fff0 */
 	movel	%fp@(16),%sp@-		/* 408950e4 2f2e 0010 */
-	jsr	%pc@(sub_40894f60)	/* 408950e8 4eba fe76 */
+	jsr	%pc@(Map256Chars)	/* 408950e8 4eba fe76 */
 	movel	%d0,%fp@(-8)		/* 408950ec 2d40 fff8 */
 	lea	%sp@(12),%sp		/* 408950f0 4fef 000c */
 	beqs	loc_408950fe		/* 408950f4 6708 */
@@ -155,7 +155,7 @@ loc_408950fe:
 	extl	%d0			/* 408951a4 48c0 */
 	movel	%d0,%sp@-		/* 408951a6 2f00 */
 	movel	%a0@(264),%sp@-		/* 408951a8 2f28 0108 */
-	jsr	%pc@(sub_40896142)	/* 408951ac 4eba 0f94 */
+	jsr	%pc@(ShortMulDiv)	/* 408951ac 4eba 0f94 */
 	movel	%fp@(20),%d6		/* 408951b0 2c2e 0014 */
 	addl	%d0,%d6			/* 408951b4 dc80 */
 	moveal	%fp@(-4),%a0		/* 408951b6 206e fffc */
@@ -180,7 +180,7 @@ loc_408950fe:
 	extl	%d0			/* 408951f4 48c0 */
 	movel	%d0,%sp@-		/* 408951f6 2f00 */
 	movel	%fp@(-538),%sp@-	/* 408951f8 2f2e fde6 */
-	jsr	%pc@(sub_40896142)	/* 408951fc 4eba 0f44 */
+	jsr	%pc@(ShortMulDiv)	/* 408951fc 4eba 0f44 */
 	movel	%fp@(20),%d6		/* 40895200 2c2e 0014 */
 	addl	%d0,%d6			/* 40895204 dc80 */
 	lea	%sp@(12),%sp		/* 40895206 4fef 000c */
@@ -201,7 +201,7 @@ loc_4089520a:
 	movel	%fp@(-16),%sp@-		/* 40895236 2f2e fff0 */
 	movel	%fp@(-12),%sp@-		/* 4089523a 2f2e fff4 */
 	movel	%fp@(-544),%sp@-	/* 4089523e 2f2e fde0 */
-	jsr	%pc@(sub_40894ed0)	/* 40895242 4eba fc8c */
+	jsr	%pc@(FillDeviceWidths)	/* 40895242 4eba fc8c */
 	moveb	%d0,%fp@(-545)		/* 40895246 1d40 fddf */
 	movel	%fp@(-544),%sp@-	/* 4089524a 2f2e fde0 */
 	movel	%fp@(16),%sp@-		/* 4089524e 2f2e 0010 */
@@ -246,7 +246,7 @@ loc_408952a8:
 	movew	%a4@(0x0000,%d4:l:4),%d0	/* 408952ba 3034 4c00 */
 	movel	%d0,%sp@-		/* 408952be 2f00 */
 	movel	%fp@(-538),%sp@-	/* 408952c0 2f2e fde6 */
-	jsr	%pc@(sub_40896142)	/* 408952c4 4eba 0e7c */
+	jsr	%pc@(ShortMulDiv)	/* 408952c4 4eba 0e7c */
 	movel	%fp@(20),%d1		/* 408952c8 222e 0014 */
 	addl	%d0,%d1			/* 408952cc d280 */
 	movel	#-65536,%d0		/* 408952ce 203c ffff 0000 */
@@ -279,7 +279,7 @@ loc_408952e8:
 	movew	%a0@,%d0		/* 40895318 3010 */
 	movel	%d0,%sp@-		/* 4089531a 2f00 */
 	movel	%fp@(-538),%sp@-	/* 4089531c 2f2e fde6 */
-	jsr	%pc@(sub_40896142)	/* 40895320 4eba 0e20 */
+	jsr	%pc@(ShortMulDiv)	/* 40895320 4eba 0e20 */
 	movel	%fp@(20),%d1		/* 40895324 222e 0014 */
 	addl	%d0,%d1			/* 40895328 d280 */
 	movel	#-65536,%d0		/* 4089532a 203c ffff 0000 */
@@ -326,7 +326,7 @@ loc_40895380:
 	movew	%a4@(0x0000,%d5:l:4),%d0	/* 40895392 3034 5c00 */
 	movel	%d0,%sp@-		/* 40895396 2f00 */
 	movel	%fp@(-538),%sp@-	/* 40895398 2f2e fde6 */
-	jsr	%pc@(sub_40896142)	/* 4089539c 4eba 0da4 */
+	jsr	%pc@(ShortMulDiv)	/* 4089539c 4eba 0da4 */
 	movel	%fp@(20),%d1		/* 408953a0 222e 0014 */
 	addl	%d0,%d1			/* 408953a4 d280 */
 	movel	%fp@(-12),%d0		/* 408953a6 202e fff4 */
@@ -357,7 +357,7 @@ loc_408953b8:
 	movew	%a0@,%d0		/* 408953e8 3010 */
 	movel	%d0,%sp@-		/* 408953ea 2f00 */
 	movel	%fp@(-538),%sp@-	/* 408953ec 2f2e fde6 */
-	jsr	%pc@(sub_40896142)	/* 408953f0 4eba 0d50 */
+	jsr	%pc@(ShortMulDiv)	/* 408953f0 4eba 0d50 */
 	movel	%fp@(20),%d1		/* 408953f4 222e 0014 */
 	addl	%d0,%d1			/* 408953f8 d280 */
 	moveal	%fp@(-12),%a0		/* 408953fa 206e fff4 */
@@ -435,7 +435,7 @@ sub_408954a0:
 
 	.align	16
 
-sub_408954b0:
+__v__fs_FillLayoutInfo:
 	.short	0x4e56	/* 408954b0 4e56 */
 	.short	0xfff4	/* 408954b2 fff4 */
 	.short	0x48e7	/* 408954b4 48e7 */
@@ -730,7 +730,7 @@ sub_408954b0:
 
 	.align	16
 
-sub_40895700:
+__v__FS_LOWESTPPEM:
 	.short	0x4e56	/* 40895700 4e56 */
 	.short	0x0000	/* 40895702 0000 */
 	.short	0x48e7	/* 40895704 48e7 */
@@ -768,7 +768,7 @@ sub_40895700:
 
 	.align	16
 
-sub_40895750:
+__v__MapString0:
 	.short	0x4e56	/* 40895750 4e56 */
 	.short	0x0000	/* 40895752 0000 */
 	.short	0x48e7	/* 40895754 48e7 */
@@ -807,7 +807,7 @@ sub_40895750:
 
 	.align	16
 
-sub_408957a0:
+__v__MapString2:
 	.short	0x4e56	/* 408957a0 4e56 */
 	.short	0xfff8	/* 408957a2 fff8 */
 	.short	0x48e7	/* 408957a4 48e7 */
@@ -1181,7 +1181,7 @@ sub_408957a0:
 
 	.align	16
 
-sub_40895a90:
+__v__MapString4_8:
 	.short	0x4e56	/* 40895a90 4e56 */
 	.short	0x0000	/* 40895a92 0000 */
 	.short	0x48e7	/* 40895a94 48e7 */
@@ -1223,7 +1223,7 @@ sub_40895a90:
 	.short	0x0214	/* 40895adc 0214 */
 	jmp	%a1@			/* 40895ade 4ed1 */
 
-sub_40895ae0:
+__v__MapString4_16:
 	.short	0x4e56	/* 40895ae0 4e56 */
 	.short	0x0000	/* 40895ae2 0000 */
 	.short	0x48e7	/* 40895ae4 48e7 */
@@ -1268,7 +1268,7 @@ sub_40895ae0:
 
 	.align	16
 
-sub_40895b40:
+__v__MapString6_8:
 	.short	0x4e56	/* 40895b40 4e56 */
 	.short	0xfffc	/* 40895b42 fffc */
 	.short	0x48e7	/* 40895b44 48e7 */
@@ -1323,7 +1323,7 @@ sub_40895b40:
 
 	.align	16
 
-sub_40895bb0:
+__v__MapString6_16:
 	.short	0x4e56	/* 40895bb0 4e56 */
 	.short	0xfffc	/* 40895bb2 fffc */
 	.short	0x48e7	/* 40895bb4 48e7 */
@@ -1649,7 +1649,7 @@ sub_40895bb0:
 
 	.align	16
 
-sub_40895e40:
+__v__LongMulDiv:
 	.short	0x4e56	/* 40895e40 4e56 */
 	.short	0xfff8	/* 40895e42 fff8 */
 	.short	0x2f0c	/* 40895e44 2f0c */
@@ -1679,7 +1679,7 @@ sub_40895e40:
 
 	.align	16
 
-sub_40895e80:
+__v__ShortFracDot:
 	.short	0x4e56	/* 40895e80 4e56 */
 	.short	0x0000	/* 40895e82 0000 */
 	.short	0x302e	/* 40895e84 302e */
@@ -1701,7 +1701,7 @@ sub_40895e80:
 
 	.align	16
 
-sub_40895eb0:
+__v__Mul26Dot6:
 	.short	0x4e56	/* 40895eb0 4e56 */
 	.short	0xffee	/* 40895eb2 ffee */
 	.short	0x48e7	/* 40895eb4 48e7 */
@@ -1832,7 +1832,7 @@ sub_40895eb0:
 	.short	0x4e5e	/* 40895fae 4e5e */
 	rts				/* 40895fb0 4e75 */
 
-sub_40895fb2:
+Mul26Dot6:
 	.short	0x2f30	/* 40895fb2 2f30 */
 	.short	0x81e2	/* 40895fb4 81e2 */
 	.short	0x202c	/* 40895fb6 202c */
@@ -1841,7 +1841,7 @@ sub_40895fb2:
 
 	.align	16
 
-sub_40895fc0:
+__v__Div26Dot6:
 	.short	0x4e56	/* 40895fc0 4e56 */
 	.short	0xfff4	/* 40895fc2 fff4 */
 	.short	0x48e7	/* 40895fc4 48e7 */

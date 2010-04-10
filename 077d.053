@@ -3,7 +3,7 @@
 
 loc_40835004:
 	pea	%a3@(26)		/* 40835004 486b 001a */
-	jsr	%pc@(sub_40832412)	/* 40835008 4eba d408 */
+	jsr	%pc@(ServeQueue)	/* 40835008 4eba d408 */
 	moveal	%d0,%a4			/* 4083500c 2840 */
 	movel	%a4,%d0			/* 4083500e 200c */
 	addqw	#4,%sp			/* 40835010 584f */
@@ -13,12 +13,12 @@ loc_40835004:
 loc_40835016:
 	movel	#-917,%sp@-		/* 40835016 2f3c ffff fc6b */
 	movel	%a4,%sp@-		/* 4083501c 2f0c */
-	jsr	%pc@(sub_40834154)	/* 4083501e 4eba f134 */
+	jsr	%pc@(CompleteWithResult)	/* 4083501e 4eba f134 */
 	addqw	#8,%sp			/* 40835022 504f */
 
 loc_40835024:
 	pea	%a3@(38)		/* 40835024 486b 0026 */
-	jsr	%pc@(sub_40832412)	/* 40835028 4eba d3e8 */
+	jsr	%pc@(ServeQueue)	/* 40835028 4eba d3e8 */
 	moveal	%d0,%a4			/* 4083502c 2840 */
 	movel	%a4,%d0			/* 4083502e 200c */
 	addqw	#4,%sp			/* 40835030 584f */
@@ -27,19 +27,19 @@ loc_40835024:
 	unlk	%fp			/* 4083503a 4e5e */
 	rts				/* 4083503c 4e75 */
 
-sub_4083503e:
+KillReadAndWrite:
 	moveal	0x2050,%a1		/* 4083503e 2278 2050 */
 	moveal	%a1@(692),%a1		/* 40835042 2269 02b4 */
 	jmp	%a1@			/* 40835046 4ed1 */
 
 	.align	16
 
-sub_40835050:
+__v__GetLocSess:
 	linkw	%fp,#0			/* 40835050 4e56 0000 */
 	moveml	%a3-%a4,%sp@-		/* 40835054 48e7 0018 */
 	moveal	%fp@(8),%a3		/* 40835058 266e 0008 */
 	pea	%a3@(60)		/* 4083505c 486b 003c */
-	jsr	%pc@(sub_40832412)	/* 40835060 4eba d3b0 */
+	jsr	%pc@(ServeQueue)	/* 40835060 4eba d3b0 */
 	moveal	%d0,%a4			/* 40835064 2840 */
 	movel	%a4,%d0			/* 40835066 200c */
 	addqw	#4,%sp			/* 40835068 584f */
@@ -62,14 +62,14 @@ loc_4083508c:
 	unlk	%fp			/* 40835094 4e5e */
 	rts				/* 40835096 4e75 */
 
-sub_40835098:
+GetLocSess:
 	moveal	0x2050,%a1		/* 40835098 2278 2050 */
 	moveal	%a1@(356),%a1		/* 4083509c 2269 0164 */
 	jmp	%a1@			/* 408350a0 4ed1 */
 
 	.align	16
 
-sub_408350b0:
+__v__FreeLocSess:
 	linkw	%fp,#-4			/* 408350b0 4e56 fffc */
 	moveml	%a3-%a4,%sp@-		/* 408350b4 48e7 0018 */
 	moveal	%fp@(8),%a4		/* 408350b8 286e 0008 */
@@ -80,7 +80,7 @@ sub_408350b0:
 	movel	%a4,%sp@-		/* 408350cc 2f0c */
 	moveal	%fp@(-4),%a0		/* 408350ce 206e fffc */
 	pea	%a0@(108)		/* 408350d2 4868 006c */
-	jsr	%pc@(sub_4083251c)	/* 408350d6 4eba d444 */
+	jsr	%pc@(DeleteFromQueue)	/* 408350d6 4eba d444 */
 	movel	%a3,%d0			/* 408350da 200b */
 	beqs	loc_408350e2		/* 408350dc 6704 */
 	subqw	#1,%a3@(6)		/* 408350de 536b 0006 */
@@ -94,74 +94,74 @@ loc_408350e2:
 	unlk	%fp			/* 408350f6 4e5e */
 	rts				/* 408350f8 4e75 */
 
-sub_408350fa:
+FreeLocSess:
 	moveal	0x2050,%a1		/* 408350fa 2278 2050 */
 	moveal	%a1@(360),%a1		/* 408350fe 2269 0168 */
 	jmp	%a1@			/* 40835102 4ed1 */
 
 	.align	16
 
-sub_40835110:
+__v__StartLocalSession:
 	linkw	%fp,#-16		/* 40835110 4e56 fff0 */
 	moveml	%d7/%a3-%a4,%sp@-	/* 40835114 48e7 0118 */
 	moveal	%fp@(8),%a3		/* 40835118 266e 0008 */
 	lea	%a3@(18),%a4		/* 4083511c 49eb 0012 */
 	movel	%fp@(16),%sp@-		/* 40835120 2f2e 0010 */
 	movel	%a3@(46),%sp@-		/* 40835124 2f2b 002e */
-	jsr	%pc@(sub_4083471c)	/* 40835128 4eba f5f2 */
+	jsr	%pc@(CheckPortName)	/* 40835128 4eba f5f2 */
 	movel	%d0,%fp@(-16)		/* 4083512c 2d40 fff0 */
 	addqw	#8,%sp			/* 40835130 504f */
 	bnes	loc_40835146		/* 40835132 6612 */
 	movel	#-906,%sp@-		/* 40835134 2f3c ffff fc76 */
 	movel	%a3,%sp@-		/* 4083513a 2f0b */
-	jsr	%pc@(sub_40834154)	/* 4083513c 4eba f016 */
+	jsr	%pc@(CompleteWithResult)	/* 4083513c 4eba f016 */
 	addqw	#8,%sp			/* 40835140 504f */
 	braw	loc_408352ea		/* 40835142 6000 01a6 */
 
 loc_40835146:
 	moveal	%fp@(-16),%a0		/* 40835146 206e fff0 */
 	pea	%a0@(12)		/* 4083514a 4868 000c */
-	jsr	%pc@(sub_40832412)	/* 4083514e 4eba d2c2 */
+	jsr	%pc@(ServeQueue)	/* 4083514e 4eba d2c2 */
 	moveal	%d0,%a4			/* 40835152 2840 */
 	movel	%a4,%d0			/* 40835154 200c */
 	addqw	#4,%sp			/* 40835156 584f */
 	bnes	loc_4083516c		/* 40835158 6612 */
 	movel	#-926,%sp@-		/* 4083515a 2f3c ffff fc62 */
 	movel	%a3,%sp@-		/* 40835160 2f0b */
-	jsr	%pc@(sub_40834154)	/* 40835162 4eba eff0 */
+	jsr	%pc@(CompleteWithResult)	/* 40835162 4eba eff0 */
 	addqw	#8,%sp			/* 40835166 504f */
 	braw	loc_408352ea		/* 40835168 6000 0180 */
 
 loc_4083516c:
 	movel	%fp@(16),%sp@-		/* 4083516c 2f2e 0010 */
-	jsr	%pc@(sub_40835098)	/* 40835170 4eba ff26 */
+	jsr	%pc@(GetLocSess)	/* 40835170 4eba ff26 */
 	movel	%d0,%fp@(-12)		/* 40835174 2d40 fff4 */
 	addqw	#4,%sp			/* 40835178 584f */
 	bnes	loc_4083519a		/* 4083517a 661e */
 	movel	%fp@(-16),%sp@-		/* 4083517c 2f2e fff0 */
 	movel	%a4,%sp@-		/* 40835180 2f0c */
-	jsr	%pc@(sub_40834b08)	/* 40835182 4eba f984 */
+	jsr	%pc@(SetPortInformQue)	/* 40835182 4eba f984 */
 	movel	#-907,%sp@-		/* 40835186 2f3c ffff fc75 */
 	movel	%a3,%sp@-		/* 4083518c 2f0b */
-	jsr	%pc@(sub_40834154)	/* 4083518e 4eba efc4 */
+	jsr	%pc@(CompleteWithResult)	/* 4083518e 4eba efc4 */
 	lea	%sp@(16),%sp		/* 40835192 4fef 0010 */
 	braw	loc_408352ea		/* 40835196 6000 0152 */
 
 loc_4083519a:
 	movel	%fp@(16),%sp@-		/* 4083519a 2f2e 0010 */
-	jsr	%pc@(sub_40835098)	/* 4083519e 4eba fef8 */
+	jsr	%pc@(GetLocSess)	/* 4083519e 4eba fef8 */
 	movel	%d0,%fp@(-8)		/* 408351a2 2d40 fff8 */
 	addqw	#4,%sp			/* 408351a6 584f */
 	bnes	loc_408351d2		/* 408351a8 6628 */
 	movel	%fp@(-12),%sp@-		/* 408351aa 2f2e fff4 */
-	jsr	%pc@(sub_408350fa)	/* 408351ae 4eba ff4a */
+	jsr	%pc@(FreeLocSess)	/* 408351ae 4eba ff4a */
 	movel	%fp@(-16),%sp@-		/* 408351b2 2f2e fff0 */
 	movel	%a4,%sp@-		/* 408351b6 2f0c */
-	jsr	%pc@(sub_40834b08)	/* 408351b8 4eba f94e */
+	jsr	%pc@(SetPortInformQue)	/* 408351b8 4eba f94e */
 	lea	%sp@(12),%sp		/* 408351bc 4fef 000c */
 	movel	#-907,%sp@-		/* 408351c0 2f3c ffff fc75 */
 	movel	%a3,%sp@-		/* 408351c6 2f0b */
-	jsr	%pc@(sub_40834154)	/* 408351c8 4eba ef8a */
+	jsr	%pc@(CompleteWithResult)	/* 408351c8 4eba ef8a */
 	addqw	#8,%sp			/* 408351cc 504f */
 	braw	loc_408352ea		/* 408351ce 6000 011a */
 
@@ -169,11 +169,11 @@ loc_408351d2:
 	movel	%fp@(16),%sp@-		/* 408351d2 2f2e 0010 */
 	movel	%fp@(12),%sp@-		/* 408351d6 2f2e 000c */
 	movel	%fp@(-12),%sp@-		/* 408351da 2f2e fff4 */
-	jsr	%pc@(sub_40834eee)	/* 408351de 4eba fd0e */
+	jsr	%pc@(SetSessionTable)	/* 408351de 4eba fd0e */
 	movel	%fp@(16),%sp@-		/* 408351e2 2f2e 0010 */
 	movel	%fp@(-16),%sp@-		/* 408351e6 2f2e fff0 */
 	movel	%fp@(-8),%sp@-		/* 408351ea 2f2e fff8 */
-	jsr	%pc@(sub_40834eee)	/* 408351ee 4eba fcfe */
+	jsr	%pc@(SetSessionTable)	/* 408351ee 4eba fcfe */
 	moveal	%fp@(-8),%a0		/* 408351f2 206e fff8 */
 	moveal	%fp@(-12),%a1		/* 408351f6 226e fff4 */
 	movel	%a0@(10),%a1@(14)	/* 408351fa 2368 000a 000e */
@@ -236,11 +236,11 @@ loc_4083527a:
 	moveq	#0,%d0			/* 408352a8 7000 */
 	movel	%d0,%sp@-		/* 408352aa 2f00 */
 	movel	%a4,%sp@-		/* 408352ac 2f0c */
-	jsr	%pc@(sub_40834154)	/* 408352ae 4eba eea4 */
+	jsr	%pc@(CompleteWithResult)	/* 408352ae 4eba eea4 */
 	moveq	#0,%d0			/* 408352b2 7000 */
 	movel	%d0,%sp@-		/* 408352b4 2f00 */
 	movel	%a3,%sp@-		/* 408352b6 2f0b */
-	jsr	%pc@(sub_40834154)	/* 408352b8 4eba ee9a */
+	jsr	%pc@(CompleteWithResult)	/* 408352b8 4eba ee9a */
 	lea	%sp@(16),%sp		/* 408352bc 4fef 0010 */
 	bras	loc_408352ea		/* 408352c0 6028 */
 
@@ -254,7 +254,7 @@ loc_408352c2:
 	moveq	#0,%d0			/* 408352de 7000 */
 	movel	%d0,%sp@-		/* 408352e0 2f00 */
 	movel	%a4,%sp@-		/* 408352e2 2f0c */
-	jsr	%pc@(sub_40834154)	/* 408352e4 4eba ee6e */
+	jsr	%pc@(CompleteWithResult)	/* 408352e4 4eba ee6e */
 	addqw	#8,%sp			/* 408352e8 504f */
 
 loc_408352ea:
@@ -262,29 +262,29 @@ loc_408352ea:
 	unlk	%fp			/* 408352f0 4e5e */
 	rts				/* 408352f2 4e75 */
 
-sub_408352f4:
+StartLocalSession:
 	moveal	0x2050,%a1		/* 408352f4 2278 2050 */
 	moveal	%a1@(364),%a1		/* 408352f8 2269 016c */
 	jmp	%a1@			/* 408352fc 4ed1 */
 
 	.align	16
 
-sub_40835300:
+__v__AcceptLocalSession:
 	linkw	%fp,#-4			/* 40835300 4e56 fffc */
 	moveml	%a3-%a4,%sp@-		/* 40835304 48e7 0018 */
 	moveal	%fp@(12),%a3		/* 40835308 266e 000c */
 	movel	%fp@(16),%sp@-		/* 4083530c 2f2e 0010 */
 	movel	%a3@(14),%sp@-		/* 40835310 2f2b 000e */
-	jsr	%pc@(sub_40834dc4)	/* 40835314 4eba faae */
+	jsr	%pc@(SessRefNumtoPtr)	/* 40835314 4eba faae */
 	moveal	%d0,%a4			/* 40835318 2840 */
 	movel	%a4,%d0			/* 4083531a 200c */
 	addqw	#8,%sp			/* 4083531c 504f */
 	bnes	loc_4083533a		/* 4083531e 661a */
 	movel	%a3,%sp@-		/* 40835320 2f0b */
-	jsr	%pc@(sub_408350fa)	/* 40835322 4eba fdd6 */
+	jsr	%pc@(FreeLocSess)	/* 40835322 4eba fdd6 */
 	movel	#-908,%sp@-		/* 40835326 2f3c ffff fc74 */
 	movel	%fp@(8),%sp@-		/* 4083532c 2f2e 0008 */
-	jsr	%pc@(sub_40834154)	/* 40835330 4eba ee22 */
+	jsr	%pc@(CompleteWithResult)	/* 40835330 4eba ee22 */
 	lea	%sp@(12),%sp		/* 40835334 4fef 000c */
 	bras	loc_4083537a		/* 40835338 6040 */
 
@@ -300,11 +300,11 @@ loc_4083533a:
 	moveq	#0,%d0			/* 4083535e 7000 */
 	movel	%d0,%sp@-		/* 40835360 2f00 */
 	movel	%fp@(-4),%sp@-		/* 40835362 2f2e fffc */
-	jsr	%pc@(sub_40834154)	/* 40835366 4eba edec */
+	jsr	%pc@(CompleteWithResult)	/* 40835366 4eba edec */
 	moveq	#0,%d0			/* 4083536a 7000 */
 	movel	%d0,%sp@-		/* 4083536c 2f00 */
 	movel	%fp@(8),%sp@-		/* 4083536e 2f2e 0008 */
-	jsr	%pc@(sub_40834154)	/* 40835372 4eba ede0 */
+	jsr	%pc@(CompleteWithResult)	/* 40835372 4eba ede0 */
 	lea	%sp@(16),%sp		/* 40835376 4fef 0010 */
 
 loc_4083537a:
@@ -312,29 +312,29 @@ loc_4083537a:
 	unlk	%fp			/* 40835380 4e5e */
 	rts				/* 40835382 4e75 */
 
-sub_40835384:
+AcceptLocalSession:
 	moveal	0x2050,%a1		/* 40835384 2278 2050 */
 	moveal	%a1@(368),%a1		/* 40835388 2269 0170 */
 	jmp	%a1@			/* 4083538c 4ed1 */
 
 	.align	16
 
-sub_40835390:
+__v__RejectLocalSession:
 	linkw	%fp,#-8			/* 40835390 4e56 fff8 */
 	moveml	%a3-%a4,%sp@-		/* 40835394 48e7 0018 */
 	moveal	%fp@(12),%a3		/* 40835398 266e 000c */
 	moveal	%fp@(8),%a4		/* 4083539c 286e 0008 */
 	movel	%fp@(16),%sp@-		/* 408353a0 2f2e 0010 */
 	movel	%a3@(14),%sp@-		/* 408353a4 2f2b 000e */
-	jsr	%pc@(sub_40834dc4)	/* 408353a8 4eba fa1a */
+	jsr	%pc@(SessRefNumtoPtr)	/* 408353a8 4eba fa1a */
 	movel	%d0,%fp@(-8)		/* 408353ac 2d40 fff8 */
 	addqw	#8,%sp			/* 408353b0 504f */
 	bnes	loc_408353cc		/* 408353b2 6618 */
 	movel	%a3,%sp@-		/* 408353b4 2f0b */
-	jsr	%pc@(sub_408350fa)	/* 408353b6 4eba fd42 */
+	jsr	%pc@(FreeLocSess)	/* 408353b6 4eba fd42 */
 	movel	#-908,%sp@-		/* 408353ba 2f3c ffff fc74 */
 	movel	%a4,%sp@-		/* 408353c0 2f0c */
-	jsr	%pc@(sub_40834154)	/* 408353c2 4eba ed90 */
+	jsr	%pc@(CompleteWithResult)	/* 408353c2 4eba ed90 */
 	lea	%sp@(12),%sp		/* 408353c6 4fef 000c */
 	bras	loc_4083540a		/* 408353ca 603e */
 
@@ -342,18 +342,18 @@ loc_408353cc:
 	moveal	%fp@(-8),%a0		/* 408353cc 206e fff8 */
 	movel	%a0@(58),%fp@(-4)	/* 408353d0 2d68 003a fffc */
 	movel	%a3,%sp@-		/* 408353d6 2f0b */
-	jsr	%pc@(sub_408350fa)	/* 408353d8 4eba fd20 */
+	jsr	%pc@(FreeLocSess)	/* 408353d8 4eba fd20 */
 	movel	%fp@(-8),%sp@-		/* 408353dc 2f2e fff8 */
-	jsr	%pc@(sub_408350fa)	/* 408353e0 4eba fd18 */
+	jsr	%pc@(FreeLocSess)	/* 408353e0 4eba fd18 */
 	moveal	%fp@(-4),%a0		/* 408353e4 206e fffc */
 	movel	%a4@(54),%a0@(54)	/* 408353e8 216c 0036 0036 */
 	movel	#-912,%sp@-		/* 408353ee 2f3c ffff fc70 */
 	movel	%fp@(-4),%sp@-		/* 408353f4 2f2e fffc */
-	jsr	%pc@(sub_40834154)	/* 408353f8 4eba ed5a */
+	jsr	%pc@(CompleteWithResult)	/* 408353f8 4eba ed5a */
 	moveq	#0,%d0			/* 408353fc 7000 */
 	movel	%d0,%sp@-		/* 408353fe 2f00 */
 	movel	%a4,%sp@-		/* 40835400 2f0c */
-	jsr	%pc@(sub_40834154)	/* 40835402 4eba ed50 */
+	jsr	%pc@(CompleteWithResult)	/* 40835402 4eba ed50 */
 	lea	%sp@(24),%sp		/* 40835406 4fef 0018 */
 
 loc_4083540a:
@@ -361,14 +361,14 @@ loc_4083540a:
 	unlk	%fp			/* 40835410 4e5e */
 	rts				/* 40835412 4e75 */
 
-sub_40835414:
+RejectLocalSession:
 	moveal	0x2050,%a1		/* 40835414 2278 2050 */
 	moveal	%a1@(372),%a1		/* 40835418 2269 0174 */
 	jmp	%a1@			/* 4083541c 4ed1 */
 
 	.align	16
 
-sub_40835420:
+__v__WriteLocalData:
 	linkw	%fp,#-8			/* 40835420 4e56 fff8 */
 	moveml	%a3-%a4,%sp@-		/* 40835424 48e7 0018 */
 	moveal	%fp@(8),%a3		/* 40835428 266e 0008 */
@@ -380,7 +380,7 @@ sub_40835420:
 	movel	%a3@(44),%a0@(12)	/* 40835442 216b 002c 000c */
 	movel	%fp@(16),%sp@-		/* 40835448 2f2e 0010 */
 	movel	%a4@(14),%sp@-		/* 4083544c 2f2c 000e */
-	jsr	%pc@(sub_40834dc4)	/* 40835450 4eba f972 */
+	jsr	%pc@(SessRefNumtoPtr)	/* 40835450 4eba f972 */
 	movel	%d0,%fp@(-8)		/* 40835454 2d40 fff8 */
 	addqw	#8,%sp			/* 40835458 504f */
 	beqs	loc_40835492		/* 4083545a 6736 */
@@ -391,7 +391,7 @@ sub_40835420:
 	addqw	#8,%sp			/* 4083546a 504f */
 	bnes	loc_408354a0		/* 4083546c 6632 */
 	pea	%a4@(38)		/* 4083546e 486c 0026 */
-	jsr	%pc@(sub_40832412)	/* 40835472 4eba cf9e */
+	jsr	%pc@(ServeQueue)	/* 40835472 4eba cf9e */
 	movel	%d0,%a4@(54)		/* 40835476 2940 0036 */
 	moveal	%fp@(-8),%a0		/* 4083547a 206e fff8 */
 	tstl	%a0@(50)		/* 4083547e 4aa8 0032 */
@@ -399,14 +399,14 @@ sub_40835420:
 	beqs	loc_408354a0		/* 40835484 671a */
 	movel	%a0,%sp@-		/* 40835486 2f08 */
 	movel	%a4,%sp@-		/* 40835488 2f0c */
-	jsr	%pc@(sub_408357a0)	/* 4083548a 4eba 0314 */
+	jsr	%pc@(LocalTransfer)	/* 4083548a 4eba 0314 */
 	addqw	#8,%sp			/* 4083548e 504f */
 	bras	loc_408354a0		/* 40835490 600e */
 
 loc_40835492:
 	movel	#-908,%sp@-		/* 40835492 2f3c ffff fc74 */
 	movel	%a3,%sp@-		/* 40835498 2f0b */
-	jsr	%pc@(sub_40834154)	/* 4083549a 4eba ecb8 */
+	jsr	%pc@(CompleteWithResult)	/* 4083549a 4eba ecb8 */
 	addqw	#8,%sp			/* 4083549e 504f */
 
 loc_408354a0:
@@ -414,14 +414,14 @@ loc_408354a0:
 	unlk	%fp			/* 408354a6 4e5e */
 	rts				/* 408354a8 4e75 */
 
-sub_408354aa:
+WriteLocalData:
 	moveal	0x2050,%a1		/* 408354aa 2278 2050 */
 	moveal	%a1@(376),%a1		/* 408354ae 2269 0178 */
 	jmp	%a1@			/* 408354b2 4ed1 */
 
 	.align	16
 
-sub_408354c0:
+__v__ReadLocalData:
 	linkw	%fp,#-8			/* 408354c0 4e56 fff8 */
 	moveml	%a3-%a4,%sp@-		/* 408354c4 48e7 0018 */
 	moveal	%fp@(8),%a3		/* 408354c8 266e 0008 */
@@ -430,7 +430,7 @@ sub_408354c0:
 	movel	%a0,%fp@(-4)		/* 408354d4 2d48 fffc */
 	movel	%fp@(16),%sp@-		/* 408354d8 2f2e 0010 */
 	movel	%a4@(14),%sp@-		/* 408354dc 2f2c 000e */
-	jsr	%pc@(sub_40834dc4)	/* 408354e0 4eba f8e2 */
+	jsr	%pc@(SessRefNumtoPtr)	/* 408354e0 4eba f8e2 */
 	movel	%d0,%fp@(-8)		/* 408354e4 2d40 fff8 */
 	addqw	#8,%sp			/* 408354e8 504f */
 	beqs	loc_40835522		/* 408354ea 6736 */
@@ -441,7 +441,7 @@ sub_408354c0:
 	addqw	#8,%sp			/* 408354fa 504f */
 	bnes	loc_40835530		/* 408354fc 6632 */
 	pea	%a4@(26)		/* 408354fe 486c 001a */
-	jsr	%pc@(sub_40832412)	/* 40835502 4eba cf0e */
+	jsr	%pc@(ServeQueue)	/* 40835502 4eba cf0e */
 	movel	%d0,%a4@(50)		/* 40835506 2940 0032 */
 	moveal	%fp@(-8),%a0		/* 4083550a 206e fff8 */
 	tstl	%a0@(54)		/* 4083550e 4aa8 0036 */
@@ -449,14 +449,14 @@ sub_408354c0:
 	beqs	loc_40835530		/* 40835514 671a */
 	movel	%a4,%sp@-		/* 40835516 2f0c */
 	movel	%a0,%sp@-		/* 40835518 2f08 */
-	jsr	%pc@(sub_408357a0)	/* 4083551a 4eba 0284 */
+	jsr	%pc@(LocalTransfer)	/* 4083551a 4eba 0284 */
 	addqw	#8,%sp			/* 4083551e 504f */
 	bras	loc_40835530		/* 40835520 600e */
 
 loc_40835522:
 	movel	#-908,%sp@-		/* 40835522 2f3c ffff fc74 */
 	movel	%a3,%sp@-		/* 40835528 2f0b */
-	jsr	%pc@(sub_40834154)	/* 4083552a 4eba ec28 */
+	jsr	%pc@(CompleteWithResult)	/* 4083552a 4eba ec28 */
 	addqw	#8,%sp			/* 4083552e 504f */
 
 loc_40835530:
@@ -464,21 +464,21 @@ loc_40835530:
 	unlk	%fp			/* 40835536 4e5e */
 	rts				/* 40835538 4e75 */
 
-sub_4083553a:
+ReadLocalData:
 	moveal	0x2050,%a1		/* 4083553a 2278 2050 */
 	moveal	%a1@(380),%a1		/* 4083553e 2269 017c */
 	jmp	%a1@			/* 40835542 4ed1 */
 
 	.align	16
 
-sub_40835550:
+__v__EndLocalSession:
 	linkw	%fp,#-4			/* 40835550 4e56 fffc */
 	moveml	%a3-%a4,%sp@-		/* 40835554 48e7 0018 */
 	moveal	%fp@(12),%a4		/* 40835558 286e 000c */
 	movel	%a4@(18),%fp@(-4)	/* 4083555c 2d6c 0012 fffc */
 	movel	%fp@(16),%sp@-		/* 40835562 2f2e 0010 */
 	movel	%a4@(14),%sp@-		/* 40835566 2f2c 000e */
-	jsr	%pc@(sub_40834e10)	/* 4083556a 4eba f8a4 */
+	jsr	%pc@(DeleteSessByRefNum)	/* 4083556a 4eba f8a4 */
 	moveal	%d0,%a3			/* 4083556e 2640 */
 	moveq	#0,%d0			/* 40835570 7000 */
 	movew	%a4@(4),%d0		/* 40835572 302c 0004 */
@@ -489,15 +489,15 @@ sub_40835550:
 	movel	%a3,%d0			/* 4083557e 200b */
 	beqs	loc_4083558a		/* 40835580 6708 */
 	movel	%a3,%sp@-		/* 40835582 2f0b */
-	jsr	%pc@(sub_408350fa)	/* 40835584 4eba fb74 */
+	jsr	%pc@(FreeLocSess)	/* 40835584 4eba fb74 */
 	addqw	#4,%sp			/* 40835588 584f */
 
 loc_4083558a:
 	movel	#-916,%sp@-		/* 4083558a 2f3c ffff fc6c */
 	movel	%a4@(58),%sp@-		/* 40835590 2f2c 003a */
-	jsr	%pc@(sub_40834154)	/* 40835594 4eba ebbe */
+	jsr	%pc@(CompleteWithResult)	/* 40835594 4eba ebbe */
 	movel	%a4,%sp@-		/* 40835598 2f0c */
-	jsr	%pc@(sub_408350fa)	/* 4083559a 4eba fb5e */
+	jsr	%pc@(FreeLocSess)	/* 4083559a 4eba fb5e */
 	lea	%sp@(12),%sp		/* 4083559e 4fef 000c */
 	bras	loc_40835602		/* 408355a2 605e */
 
@@ -511,14 +511,14 @@ loc_408355a4:
 	beqs	loc_408355cc		/* 408355b2 6718 */
 	movel	#-906,%sp@-		/* 408355b4 2f3c ffff fc76 */
 	movel	%a3@(58),%sp@-		/* 408355ba 2f2b 003a */
-	jsr	%pc@(sub_40834154)	/* 408355be 4eba eb94 */
+	jsr	%pc@(CompleteWithResult)	/* 408355be 4eba eb94 */
 	movel	%a3,%sp@-		/* 408355c2 2f0b */
-	jsr	%pc@(sub_408350fa)	/* 408355c4 4eba fb34 */
+	jsr	%pc@(FreeLocSess)	/* 408355c4 4eba fb34 */
 	lea	%sp@(12),%sp		/* 408355c8 4fef 000c */
 
 loc_408355cc:
 	movel	%a4,%sp@-		/* 408355cc 2f0c */
-	jsr	%pc@(sub_408350fa)	/* 408355ce 4eba fb2a */
+	jsr	%pc@(FreeLocSess)	/* 408355ce 4eba fb2a */
 	addqw	#4,%sp			/* 408355d2 584f */
 	bras	loc_40835602		/* 408355d4 602c */
 
@@ -531,16 +531,16 @@ loc_408355d6:
 	movel	%a3,%d0			/* 408355e2 200b */
 	beqs	loc_408355f4		/* 408355e4 670e */
 	movel	%a3,%sp@-		/* 408355e6 2f0b */
-	jsr	%pc@(sub_4083503e)	/* 408355e8 4eba fa54 */
+	jsr	%pc@(KillReadAndWrite)	/* 408355e8 4eba fa54 */
 	movel	%a3,%sp@-		/* 408355ec 2f0b */
-	jsr	%pc@(sub_408350fa)	/* 408355ee 4eba fb0a */
+	jsr	%pc@(FreeLocSess)	/* 408355ee 4eba fb0a */
 	addqw	#8,%sp			/* 408355f2 504f */
 
 loc_408355f4:
 	movel	%a4,%sp@-		/* 408355f4 2f0c */
-	jsr	%pc@(sub_4083503e)	/* 408355f6 4eba fa46 */
+	jsr	%pc@(KillReadAndWrite)	/* 408355f6 4eba fa46 */
 	movel	%a4,%sp@-		/* 408355fa 2f0c */
-	jsr	%pc@(sub_408350fa)	/* 408355fc 4eba fafc */
+	jsr	%pc@(FreeLocSess)	/* 408355fc 4eba fafc */
 	addqw	#8,%sp			/* 40835600 504f */
 
 loc_40835602:
@@ -549,13 +549,13 @@ loc_40835602:
 	moveq	#0,%d0			/* 40835608 7000 */
 	movel	%d0,%sp@-		/* 4083560a 2f00 */
 	movel	%fp@(8),%sp@-		/* 4083560c 2f2e 0008 */
-	jsr	%pc@(sub_40834154)	/* 40835610 4eba eb42 */
+	jsr	%pc@(CompleteWithResult)	/* 40835610 4eba eb42 */
 	addqw	#8,%sp			/* 40835614 504f */
 	bras	loc_40835622		/* 40835616 600a */
 
 loc_40835618:
 	movel	%fp@(-4),%sp@-		/* 40835618 2f2e fffc */
-	jsr	%pc@(sub_408346ca)	/* 4083561c 4eba f0ac */
+	jsr	%pc@(CompleteClosePort)	/* 4083561c 4eba f0ac */
 	addqw	#4,%sp			/* 40835620 584f */
 
 loc_40835622:
@@ -563,14 +563,14 @@ loc_40835622:
 	unlk	%fp			/* 40835628 4e5e */
 	rts				/* 4083562a 4e75 */
 
-sub_4083562c:
+EndLocalSession:
 	moveal	0x2050,%a1		/* 4083562c 2278 2050 */
 	moveal	%a1@(384),%a1		/* 40835630 2269 0180 */
 	jmp	%a1@			/* 40835634 4ed1 */
 
 	.align	16
 
-sub_40835640:
+__v__ListLocalPorts:
 	linkw	%fp,#0			/* 40835640 4e56 0000 */
 	movel	%a4,%sp@-		/* 40835644 2f0c */
 	moveal	%fp@(8),%a4		/* 40835646 286e 0008 */
@@ -591,17 +591,17 @@ sub_40835640:
 	moveq	#0,%d0			/* 40835674 7000 */
 	movel	%d0,%sp@-		/* 40835676 2f00 */
 	movel	%a4,%sp@-		/* 40835678 2f0c */
-	jsr	%pc@(sub_40834154)	/* 4083567a 4eba ead8 */
+	jsr	%pc@(CompleteWithResult)	/* 4083567a 4eba ead8 */
 	moveal	%fp@(-4),%a4		/* 4083567e 286e fffc */
 	unlk	%fp			/* 40835682 4e5e */
 	rts				/* 40835684 4e75 */
 
-sub_40835686:
+ListLocalPorts:
 	moveal	0x2050,%a1		/* 40835686 2278 2050 */
 	moveal	%a1@(388),%a1		/* 4083568a 2269 0184 */
 	jmp	%a1@			/* 4083568e 4ed1 */
 
-sub_40835690:
+__v__LocalTransfer:
 	linkw	%fp,#-8			/* 40835690 4e56 fff8 */
 	moveml	%d7/%a3-%a4,%sp@-	/* 40835694 48e7 0118 */
 	braw	loc_4083577c		/* 40835698 6000 00e2 */
@@ -652,10 +652,10 @@ loc_40835722:
 	moveq	#0,%d0			/* 40835728 7000 */
 	movel	%d0,%sp@-		/* 4083572a 2f00 */
 	movel	%a3,%sp@-		/* 4083572c 2f0b */
-	jsr	%pc@(sub_40834154)	/* 4083572e 4eba ea24 */
+	jsr	%pc@(CompleteWithResult)	/* 4083572e 4eba ea24 */
 	moveal	%fp@(8),%a0		/* 40835732 206e 0008 */
 	pea	%a0@(38)		/* 40835736 4868 0026 */
-	jsr	%pc@(sub_40832412)	/* 4083573a 4eba ccd6 */
+	jsr	%pc@(ServeQueue)	/* 4083573a 4eba ccd6 */
 	moveal	%fp@(8),%a0		/* 4083573e 206e 0008 */
 	movel	%d0,%a0@(54)		/* 40835742 2140 0036 */
 	lea	%sp@(12),%sp		/* 40835746 4fef 000c */
@@ -671,10 +671,10 @@ loc_4083575a:
 	moveq	#0,%d0			/* 4083575a 7000 */
 	movel	%d0,%sp@-		/* 4083575c 2f00 */
 	movel	%a4,%sp@-		/* 4083575e 2f0c */
-	jsr	%pc@(sub_40834154)	/* 40835760 4eba e9f2 */
+	jsr	%pc@(CompleteWithResult)	/* 40835760 4eba e9f2 */
 	moveal	%fp@(12),%a0		/* 40835764 206e 000c */
 	pea	%a0@(26)		/* 40835768 4868 001a */
-	jsr	%pc@(sub_40832412)	/* 4083576c 4eba cca4 */
+	jsr	%pc@(ServeQueue)	/* 4083576c 4eba cca4 */
 	moveal	%fp@(12),%a0		/* 40835770 206e 000c */
 	movel	%d0,%a0@(50)		/* 40835774 2140 0032 */
 	lea	%sp@(12),%sp		/* 40835778 4fef 000c */
@@ -694,19 +694,19 @@ loc_40835796:
 	unlk	%fp			/* 4083579c 4e5e */
 	rts				/* 4083579e 4e75 */
 
-sub_408357a0:
+LocalTransfer:
 	moveal	0x2050,%a1		/* 408357a0 2278 2050 */
 	moveal	%a1@(392),%a1		/* 408357a4 2269 0188 */
 	jmp	%a1@			/* 408357a8 4ed1 */
 
 	.align	16
 
-sub_408357b0:
+__v__GetRemSess:
 	linkw	%fp,#0			/* 408357b0 4e56 0000 */
 	moveml	%a3-%a4,%sp@-		/* 408357b4 48e7 0018 */
 	moveal	%fp@(8),%a3		/* 408357b8 266e 0008 */
 	pea	%a3@(72)		/* 408357bc 486b 0048 */
-	jsr	%pc@(sub_40832412)	/* 408357c0 4eba cc50 */
+	jsr	%pc@(ServeQueue)	/* 408357c0 4eba cc50 */
 	moveal	%d0,%a4			/* 408357c4 2840 */
 	movel	%a4,%d0			/* 408357c6 200c */
 	addqw	#4,%sp			/* 408357c8 584f */
@@ -728,14 +728,14 @@ loc_408357ee:
 	unlk	%fp			/* 408357f6 4e5e */
 	rts				/* 408357f8 4e75 */
 
-sub_408357fa:
+GetRemSess:
 	moveal	0x2050,%a1		/* 408357fa 2278 2050 */
 	moveal	%a1@(408),%a1		/* 408357fe 2269 0198 */
 	jmp	%a1@			/* 40835802 4ed1 */
 
 	.align	16
 
-sub_40835810:
+__v__FreeRemSess:
 	linkw	%fp,#-4			/* 40835810 4e56 fffc */
 	moveml	%a3-%a4,%sp@-		/* 40835814 48e7 0018 */
 	moveal	%fp@(8),%a4		/* 40835818 286e 0008 */
@@ -746,7 +746,7 @@ sub_40835810:
 	movel	%a4,%sp@-		/* 4083582c 2f0c */
 	moveal	%fp@(-4),%a0		/* 4083582e 206e fffc */
 	pea	%a0@(120)		/* 40835832 4868 0078 */
-	jsr	%pc@(sub_4083251c)	/* 40835836 4eba cce4 */
+	jsr	%pc@(DeleteFromQueue)	/* 40835836 4eba cce4 */
 	movel	%a3,%d0			/* 4083583a 200b */
 	beqs	loc_40835842		/* 4083583c 6704 */
 	subqw	#1,%a3@(6)		/* 4083583e 536b 0006 */
@@ -762,14 +762,14 @@ loc_40835842:
 	unlk	%fp			/* 4083585c 4e5e */
 	rts				/* 4083585e 4e75 */
 
-sub_40835860:
+FreeRemSess:
 	moveal	0x2050,%a1		/* 40835860 2278 2050 */
 	moveal	%a1@(412),%a1		/* 40835864 2269 019c */
 	jmp	%a1@			/* 40835868 4ed1 */
 
 	.align	16
 
-sub_40835870:
+__v__RemoveNetworkConnection:
 	linkw	%fp,#0			/* 40835870 4e56 0000 */
 	moveml	%d7/%a3-%a4,%sp@-	/* 40835874 48e7 0118 */
 	moveal	%fp@(8),%a3		/* 40835878 266e 0008 */
@@ -790,7 +790,7 @@ sub_40835870:
 	pea	%pc@(PointerCompare)	/* 408358a8 487a caba */
 	movel	%a3,%sp@-		/* 408358ac 2f0b */
 	pea	%a4@(120)		/* 408358ae 486c 0078 */
-	jsr	%pc@(sub_4083251c)	/* 408358b2 4eba cc68 */
+	jsr	%pc@(DeleteFromQueue)	/* 408358b2 4eba cc68 */
 	pea	%a4@(144)		/* 408358b6 486c 0090 */
 	movel	%a3,%sp@-		/* 408358ba 2f0b */
 	jsr	%pc@(EnQueue)		/* 408358bc 4eba cb02 */
@@ -798,7 +798,7 @@ sub_40835870:
 	lea	%sp@(20),%sp		/* 408358c4 4fef 0014 */
 	bnes	loc_4083590a		/* 408358c8 6640 */
 	pea	%a4@(144)		/* 408358ca 486c 0090 */
-	jsr	%pc@(sub_40832412)	/* 408358ce 4eba cb42 */
+	jsr	%pc@(ServeQueue)	/* 408358ce 4eba cb42 */
 	movel	%d0,%a4@(184)		/* 408358d2 2940 00b8 */
 	extl	%d7			/* 408358d6 48c7 */
 	movel	%d7,%sp@-		/* 408358d8 2f07 */
@@ -831,14 +831,14 @@ loc_40835916:
 	unlk	%fp			/* 4083591c 4e5e */
 	rts				/* 4083591e 4e75 */
 
-sub_40835920:
+RemoveNetworkConnection:
 	moveal	0x2050,%a1		/* 40835920 2278 2050 */
 	moveal	%a1@(416),%a1		/* 40835924 2269 01a0 */
 	jmp	%a1@			/* 40835928 4ed1 */
 
 	.align	16
 
-sub_40835930:
+__v__RemoveCompletion:
 	linkw	%fp,#-8			/* 40835930 4e56 fff8 */
 	moveml	%a3-%a4,%sp@-		/* 40835934 48e7 0018 */
 	jsr	%pc@(getGlobal)		/* 40835938 4eba dc26 */
@@ -846,17 +846,17 @@ sub_40835930:
 	moveal	%a3@(184),%a4		/* 4083593e 286b 00b8 */
 	movel	%a4@(22),%fp@(-4)	/* 40835942 2d6c 0016 fffc */
 	movel	%a4,%sp@-		/* 40835948 2f0c */
-	jsr	%pc@(sub_4083503e)	/* 4083594a 4eba f6f2 */
+	jsr	%pc@(KillReadAndWrite)	/* 4083594a 4eba f6f2 */
 	movel	%a4@(18),%fp@(-8)	/* 4083594e 2d6c 0012 fff8 */
 	movel	%a4,%sp@-		/* 40835954 2f0c */
-	jsr	%pc@(sub_40835860)	/* 40835956 4eba ff08 */
+	jsr	%pc@(FreeRemSess)	/* 40835956 4eba ff08 */
 	tstl	%fp@(-4)		/* 4083595a 4aae fffc */
 	addqw	#8,%sp			/* 4083595e 504f */
 	beqs	loc_40835972		/* 40835960 6710 */
 	moveq	#0,%d0			/* 40835962 7000 */
 	movel	%d0,%sp@-		/* 40835964 2f00 */
 	movel	%fp@(-4),%sp@-		/* 40835966 2f2e fffc */
-	jsr	%pc@(sub_40834154)	/* 4083596a 4eba e7e8 */
+	jsr	%pc@(CompleteWithResult)	/* 4083596a 4eba e7e8 */
 	addqw	#8,%sp			/* 4083596e 504f */
 	bras	loc_40835982		/* 40835970 6010 */
 
@@ -864,12 +864,12 @@ loc_40835972:
 	tstl	%fp@(-8)		/* 40835972 4aae fff8 */
 	beqs	loc_40835982		/* 40835976 670a */
 	movel	%fp@(-8),%sp@-		/* 40835978 2f2e fff8 */
-	jsr	%pc@(sub_408346ca)	/* 4083597c 4eba ed4c */
+	jsr	%pc@(CompleteClosePort)	/* 4083597c 4eba ed4c */
 	addqw	#4,%sp			/* 40835980 584f */
 
 loc_40835982:
 	pea	%a3@(144)		/* 40835982 486b 0090 */
-	jsr	%pc@(sub_40832412)	/* 40835986 4eba ca8a */
+	jsr	%pc@(ServeQueue)	/* 40835986 4eba ca8a */
 	moveal	%d0,%a4			/* 4083598a 2840 */
 	movel	%a4,%a3@(184)		/* 4083598c 274c 00b8 */
 	movel	%a4,%d0			/* 40835990 200c */
@@ -901,33 +901,33 @@ RemoveCompletion:
 
 	.align	16
 
-sub_408359e0:
+__v__StartNetworkSession:
 	linkw	%fp,#0			/* 408359e0 4e56 0000 */
 	moveml	%a3-%a4,%sp@-		/* 408359e4 48e7 0018 */
 	moveal	%fp@(8),%a4		/* 408359e8 286e 0008 */
 	tstl	%a4@(62)		/* 408359ec 4aac 003e */
 	beqs	loc_40835a10		/* 408359f0 671e */
 	movel	%a4@(62),%sp@-		/* 408359f2 2f2c 003e */
-	jsr	%pc@(sub_40837f80)	/* 408359f6 4eba 2588 */
+	jsr	%pc@(findUserByRef)	/* 408359f6 4eba 2588 */
 	tstl	%d0			/* 408359fa 4a80 */
 	addqw	#4,%sp			/* 408359fc 584f */
 	bnes	loc_40835a10		/* 408359fe 6610 */
 	movel	#-928,%sp@-		/* 40835a00 2f3c ffff fc60 */
 	movel	%a4,%sp@-		/* 40835a06 2f0c */
-	jsr	%pc@(sub_40834154)	/* 40835a08 4eba e74a */
+	jsr	%pc@(CompleteWithResult)	/* 40835a08 4eba e74a */
 	addqw	#8,%sp			/* 40835a0c 504f */
 	bras	loc_40835a4c		/* 40835a0e 603c */
 
 loc_40835a10:
 	movel	%fp@(16),%sp@-		/* 40835a10 2f2e 0010 */
-	jsr	%pc@(sub_408357fa)	/* 40835a14 4eba fde4 */
+	jsr	%pc@(GetRemSess)	/* 40835a14 4eba fde4 */
 	moveal	%d0,%a3			/* 40835a18 2640 */
 	movel	%a3,%d0			/* 40835a1a 200b */
 	addqw	#4,%sp			/* 40835a1c 584f */
 	bnes	loc_40835a30		/* 40835a1e 6610 */
 	movel	#-907,%sp@-		/* 40835a20 2f3c ffff fc75 */
 	movel	%a4,%sp@-		/* 40835a26 2f0c */
-	jsr	%pc@(sub_40834154)	/* 40835a28 4eba e72a */
+	jsr	%pc@(CompleteWithResult)	/* 40835a28 4eba e72a */
 	addqw	#8,%sp			/* 40835a2c 504f */
 	bras	loc_40835a4c		/* 40835a2e 601c */
 
@@ -935,10 +935,10 @@ loc_40835a30:
 	movel	%fp@(16),%sp@-		/* 40835a30 2f2e 0010 */
 	movel	%fp@(12),%sp@-		/* 40835a34 2f2e 000c */
 	movel	%a3,%sp@-		/* 40835a38 2f0b */
-	jsr	%pc@(sub_40834eee)	/* 40835a3a 4eba f4b2 */
+	jsr	%pc@(SetSessionTable)	/* 40835a3a 4eba f4b2 */
 	movel	%a4,%a3@(58)		/* 40835a3e 274c 003a */
 	movel	%a3,%sp@-		/* 40835a42 2f0b */
-	jsr	%pc@(sub_40835cd4)	/* 40835a44 4eba 028e */
+	jsr	%pc@(BeginNetworkConnection)	/* 40835a44 4eba 028e */
 	lea	%sp@(16),%sp		/* 40835a48 4fef 0010 */
 
 loc_40835a4c:
@@ -946,12 +946,12 @@ loc_40835a4c:
 	unlk	%fp			/* 40835a52 4e5e */
 	rts				/* 40835a54 4e75 */
 
-sub_40835a56:
+StartNetworkSession:
 	moveal	0x2050,%a1		/* 40835a56 2278 2050 */
 	moveal	%a1@(424),%a1		/* 40835a5a 2269 01a8 */
 	jmp	%a1@			/* 40835a5e 4ed1 */
 
-sub_40835a60:
+__v__AcceptNetworkSession:
 	linkw	%fp,#0			/* 40835a60 4e56 0000 */
 	moveml	%a3-%a4,%sp@-		/* 40835a64 48e7 0018 */
 	moveal	%fp@(12),%a4		/* 40835a68 286e 000c */
@@ -959,19 +959,19 @@ sub_40835a60:
 	movel	#1396789332,%a3@	/* 40835a70 26bc 5341 5054 */
 	movel	%fp@(8),%a4@(58)	/* 40835a76 296e 0008 003a */
 	movel	%a4,%sp@-		/* 40835a7c 2f0c */
-	jsr	%pc@(sub_40835d24)	/* 40835a7e 4eba 02a4 */
+	jsr	%pc@(AcceptNetworkConnection)	/* 40835a7e 4eba 02a4 */
 	moveml	%fp@(-8),%a3-%a4	/* 40835a82 4cee 1800 fff8 */
 	unlk	%fp			/* 40835a88 4e5e */
 	rts				/* 40835a8a 4e75 */
 
-sub_40835a8c:
+AcceptNetworkSession:
 	moveal	0x2050,%a1		/* 40835a8c 2278 2050 */
 	moveal	%a1@(428),%a1		/* 40835a90 2269 01ac */
 	jmp	%a1@			/* 40835a94 4ed1 */
 
 	.align	16
 
-sub_40835aa0:
+__v__RejectNetworkSession:
 	linkw	%fp,#0			/* 40835aa0 4e56 0000 */
 	moveml	%a3-%a4,%sp@-		/* 40835aa4 48e7 0018 */
 	moveal	%fp@(12),%a4		/* 40835aa8 286e 000c */
@@ -981,17 +981,17 @@ sub_40835aa0:
 	movel	%a0@(54),%a3@(4)	/* 40835aba 2768 0036 0004 */
 	movel	%fp@(8),%a4@(58)	/* 40835ac0 296e 0008 003a */
 	movel	%a4,%sp@-		/* 40835ac6 2f0c */
-	jsr	%pc@(sub_40835d24)	/* 40835ac8 4eba 025a */
+	jsr	%pc@(AcceptNetworkConnection)	/* 40835ac8 4eba 025a */
 	moveml	%fp@(-8),%a3-%a4	/* 40835acc 4cee 1800 fff8 */
 	unlk	%fp			/* 40835ad2 4e5e */
 	rts				/* 40835ad4 4e75 */
 
-sub_40835ad6:
+RejectNetworkSession:
 	moveal	0x2050,%a1		/* 40835ad6 2278 2050 */
 	moveal	%a1@(432),%a1		/* 40835ada 2269 01b0 */
 	jmp	%a1@			/* 40835ade 4ed1 */
 
-sub_40835ae0:
+__v__WriteNetworkData:
 	linkw	%fp,#0			/* 40835ae0 4e56 0000 */
 	moveml	%d7/%a4,%sp@-		/* 40835ae4 48e7 0108 */
 	moveal	%fp@(12),%a4		/* 40835ae8 286e 000c */
@@ -1006,14 +1006,14 @@ sub_40835ae0:
 	lea	%sp@(12),%sp		/* 40835b08 4fef 000c */
 	bnes	loc_40835b30		/* 40835b0c 6622 */
 	pea	%a4@(38)		/* 40835b0e 486c 0026 */
-	jsr	%pc@(sub_40832412)	/* 40835b12 4eba c8fe */
+	jsr	%pc@(ServeQueue)	/* 40835b12 4eba c8fe */
 	movel	%d0,%a4@(54)		/* 40835b16 2940 0036 */
 	extl	%d7			/* 40835b1a 48c7 */
 	movel	%d7,%sp@-		/* 40835b1c 2f07 */
 	movew	%sr,%d0			/* 40835b1e 40c0 */
 	movew	%sp@(2),%sr		/* 40835b20 46ef 0002 */
 	movel	%a4,%sp@-		/* 40835b24 2f0c */
-	jsr	%pc@(sub_408371e8)	/* 40835b26 4eba 16c0 */
+	jsr	%pc@(BeginWriteBlock)	/* 40835b26 4eba 16c0 */
 	lea	%sp@(12),%sp		/* 40835b2a 4fef 000c */
 	bras	loc_40835b3c		/* 40835b2e 600c */
 
@@ -1029,12 +1029,12 @@ loc_40835b3c:
 	unlk	%fp			/* 40835b42 4e5e */
 	rts				/* 40835b44 4e75 */
 
-sub_40835b46:
+WriteNetworkData:
 	moveal	0x2050,%a1		/* 40835b46 2278 2050 */
 	moveal	%a1@(436),%a1		/* 40835b4a 2269 01b4 */
 	jmp	%a1@			/* 40835b4e 4ed1 */
 
-sub_40835b50:
+__v__ReadNetworkData:
 	linkw	%fp,#0			/* 40835b50 4e56 0000 */
 	moveml	%d7/%a4,%sp@-		/* 40835b54 48e7 0108 */
 	moveal	%fp@(12),%a4		/* 40835b58 286e 000c */
@@ -1049,14 +1049,14 @@ sub_40835b50:
 	lea	%sp@(12),%sp		/* 40835b78 4fef 000c */
 	bnes	loc_40835ba0		/* 40835b7c 6622 */
 	pea	%a4@(26)		/* 40835b7e 486c 001a */
-	jsr	%pc@(sub_40832412)	/* 40835b82 4eba c88e */
+	jsr	%pc@(ServeQueue)	/* 40835b82 4eba c88e */
 	movel	%d0,%a4@(50)		/* 40835b86 2940 0032 */
 	extl	%d7			/* 40835b8a 48c7 */
 	movel	%d7,%sp@-		/* 40835b8c 2f07 */
 	movew	%sr,%d0			/* 40835b8e 40c0 */
 	movew	%sp@(2),%sr		/* 40835b90 46ef 0002 */
 	movel	%a4,%sp@-		/* 40835b94 2f0c */
-	jsr	%pc@(sub_4083746e)	/* 40835b96 4eba 18d6 */
+	jsr	%pc@(BeginReadBlock)	/* 40835b96 4eba 18d6 */
 	lea	%sp@(12),%sp		/* 40835b9a 4fef 000c */
 	bras	loc_40835bac		/* 40835b9e 600c */
 
@@ -1072,12 +1072,12 @@ loc_40835bac:
 	unlk	%fp			/* 40835bb2 4e5e */
 	rts				/* 40835bb4 4e75 */
 
-sub_40835bb6:
+ReadNetworkData:
 	moveal	0x2050,%a1		/* 40835bb6 2278 2050 */
 	moveal	%a1@(440),%a1		/* 40835bba 2269 01b8 */
 	jmp	%a1@			/* 40835bbe 4ed1 */
 
-sub_40835bc0:
+__v__EndNetworkSession:
 	linkw	%fp,#0			/* 40835bc0 4e56 0000 */
 	movel	%a4,%sp@-		/* 40835bc4 2f0c */
 	moveal	%fp@(12),%a4		/* 40835bc6 286e 000c */
@@ -1085,25 +1085,25 @@ sub_40835bc0:
 	moveq	#1,%d0			/* 40835bd0 7001 */
 	movel	%d0,%sp@-		/* 40835bd2 2f00 */
 	movel	%a4,%sp@-		/* 40835bd4 2f0c */
-	jsr	%pc@(sub_40835920)	/* 40835bd6 4eba fd48 */
+	jsr	%pc@(RemoveNetworkConnection)	/* 40835bd6 4eba fd48 */
 	moveal	%fp@(-4),%a4		/* 40835bda 286e fffc */
 	unlk	%fp			/* 40835bde 4e5e */
 	rts				/* 40835be0 4e75 */
 
-sub_40835be2:
+EndNetworkSession:
 	moveal	0x2050,%a1		/* 40835be2 2278 2050 */
 	moveal	%a1@(444),%a1		/* 40835be6 2269 01bc */
 	jmp	%a1@			/* 40835bea 4ed1 */
 
 	.align	16
 
-sub_40835bf0:
+__v__ListNetworkPorts:
 	linkw	%fp,#0			/* 40835bf0 4e56 0000 */
 	moveml	%a3-%a4,%sp@-		/* 40835bf4 48e7 0018 */
 	moveal	%fp@(8),%a3		/* 40835bf8 266e 0008 */
 	lea	%a3@(18),%a4		/* 40835bfc 49eb 0012 */
 	movel	%fp@(12),%sp@-		/* 40835c00 2f2e 000c */
-	jsr	%pc@(sub_408357fa)	/* 40835c04 4eba fbf4 */
+	jsr	%pc@(GetRemSess)	/* 40835c04 4eba fbf4 */
 	moveal	%d0,%a4			/* 40835c08 2840 */
 	movel	%a4,%d0			/* 40835c0a 200c */
 	addqw	#4,%sp			/* 40835c0c 584f */
@@ -1112,19 +1112,19 @@ sub_40835bf0:
 	moveq	#0,%d0			/* 40835c14 7000 */
 	movel	%d0,%sp@-		/* 40835c16 2f00 */
 	movel	%a4,%sp@-		/* 40835c18 2f0c */
-	jsr	%pc@(sub_40834eee)	/* 40835c1a 4eba f2d2 */
+	jsr	%pc@(SetSessionTable)	/* 40835c1a 4eba f2d2 */
 	movel	%a3,%a4@(58)		/* 40835c1e 294b 003a */
 	moveq	#0,%d0			/* 40835c22 7000 */
 	movel	%d0,%a4@(18)		/* 40835c24 2940 0012 */
 	movel	%a4,%sp@-		/* 40835c28 2f0c */
-	jsr	%pc@(sub_40835cd4)	/* 40835c2a 4eba 00a8 */
+	jsr	%pc@(BeginNetworkConnection)	/* 40835c2a 4eba 00a8 */
 	lea	%sp@(16),%sp		/* 40835c2e 4fef 0010 */
 	bras	loc_40835c42		/* 40835c32 600e */
 
 loc_40835c34:
 	movel	#-907,%sp@-		/* 40835c34 2f3c ffff fc75 */
 	movel	%a3,%sp@-		/* 40835c3a 2f0b */
-	jsr	%pc@(sub_40834154)	/* 40835c3c 4eba e516 */
+	jsr	%pc@(CompleteWithResult)	/* 40835c3c 4eba e516 */
 	addqw	#8,%sp			/* 40835c40 504f */
 
 loc_40835c42:
@@ -1132,14 +1132,14 @@ loc_40835c42:
 	unlk	%fp			/* 40835c48 4e5e */
 	rts				/* 40835c4a 4e75 */
 
-sub_40835c4c:
+ListNetworkPorts:
 	moveal	0x2050,%a1		/* 40835c4c 2278 2050 */
 	moveal	%a1@(448),%a1		/* 40835c50 2269 01c0 */
 	jmp	%a1@			/* 40835c54 4ed1 */
 
 	.align	16
 
-sub_40835c60:
+__v__BeginNetworkConnection:
 	linkw	%fp,#-8			/* 40835c60 4e56 fff8 */
 	moveml	%a3-%a4,%sp@-		/* 40835c64 48e7 0018 */
 	moveal	%fp@(8),%a4		/* 40835c68 286e 0008 */
@@ -1168,7 +1168,7 @@ loc_40835c94:
 	pea	%a4@(64)		/* 40835cae 486c 0040 */
 	pea	0xc8			/* 40835cb2 4878 00c8 */
 	pea	%a4@(210)		/* 40835cb6 486c 00d2 */
-	pea	%pc@(sub_40835de6)	/* 40835cba 487a 012a */
+	pea	%pc@(NetLookUpCompletion)	/* 40835cba 487a 012a */
 	moveq	#1,%d0			/* 40835cbe 7001 */
 	movel	%d0,%sp@-		/* 40835cc0 2f00 */
 	pea	%a4@(108)		/* 40835cc2 486c 006c */
@@ -1177,7 +1177,7 @@ loc_40835c94:
 	unlk	%fp			/* 40835cd0 4e5e */
 	rts				/* 40835cd2 4e75 */
 
-sub_40835cd4:
+BeginNetworkConnection:
 	moveal	0x2050,%a1		/* 40835cd4 2278 2050 */
 	moveal	%a1@(452),%a1		/* 40835cd8 2269 01c4 */
 	jmp	%a1@			/* 40835cdc 4ed1 */
@@ -1189,13 +1189,13 @@ sub_40835ce0:
 
 	.align	16
 
-sub_40835cf0:
+__v__AcceptNetworkConnection:
 	linkw	%fp,#0			/* 40835cf0 4e56 0000 */
 	movel	%a4,%sp@-		/* 40835cf4 2f0c */
 	moveal	%fp@(8),%a4		/* 40835cf6 286e 0008 */
 	movew	#11,%a4@(4)		/* 40835cfa 397c 000b 0004 */
 	pea	%a4@(3906)		/* 40835d00 486c 0f42 */
-	pea	%pc@(sub_40836e08)	/* 40835d04 487a 1102 */
+	pea	%pc@(RespSendCompletion)	/* 40835d04 487a 1102 */
 	moveq	#1,%d0			/* 40835d08 7001 */
 	movel	%d0,%sp@-		/* 40835d0a 2f00 */
 	movel	%d0,%sp@-		/* 40835d0c 2f00 */
@@ -1208,14 +1208,14 @@ sub_40835cf0:
 	unlk	%fp			/* 40835d20 4e5e */
 	rts				/* 40835d22 4e75 */
 
-sub_40835d24:
+AcceptNetworkConnection:
 	moveal	0x2050,%a1		/* 40835d24 2278 2050 */
 	moveal	%a1@(456),%a1		/* 40835d28 2269 01c8 */
 	jmp	%a1@			/* 40835d2c 4ed1 */
 
 	.align	16
 
-sub_40835d30:
+__v__NetLookUpCompletion:
 	linkw	%fp,#-4			/* 40835d30 4e56 fffc */
 	moveml	%a3-%a4,%sp@-		/* 40835d34 48e7 0018 */
 	movel	%a0,%d0			/* 40835d38 2008 */
@@ -1226,12 +1226,12 @@ sub_40835d30:
 	tstw	%a3@(16)		/* 40835d48 4a6b 0010 */
 	beqs	loc_40835d6a		/* 40835d4c 671c */
 	movel	%a4,%sp@-		/* 40835d4e 2f0c */
-	jsr	%pc@(sub_40835860)	/* 40835d50 4eba fb0e */
+	jsr	%pc@(FreeRemSess)	/* 40835d50 4eba fb0e */
 	movew	%a3@(16),%d0		/* 40835d54 302b 0010 */
 	extl	%d0			/* 40835d58 48c0 */
 	movel	%d0,%sp@-		/* 40835d5a 2f00 */
 	movel	%fp@(-4),%sp@-		/* 40835d5c 2f2e fffc */
-	jsr	%pc@(sub_40834154)	/* 40835d60 4eba e3f2 */
+	jsr	%pc@(CompleteWithResult)	/* 40835d60 4eba e3f2 */
 	lea	%sp@(12),%sp		/* 40835d64 4fef 000c */
 	bras	loc_40835ddc		/* 40835d68 6072 */
 
@@ -1239,10 +1239,10 @@ loc_40835d6a:
 	tstw	%a3@(42)		/* 40835d6a 4a6b 002a */
 	bnes	loc_40835d8a		/* 40835d6e 661a */
 	movel	%a4,%sp@-		/* 40835d70 2f0c */
-	jsr	%pc@(sub_40835860)	/* 40835d72 4eba faec */
+	jsr	%pc@(FreeRemSess)	/* 40835d72 4eba faec */
 	movel	#-915,%sp@-		/* 40835d76 2f3c ffff fc6d */
 	movel	%fp@(-4),%sp@-		/* 40835d7c 2f2e fffc */
-	jsr	%pc@(sub_40834154)	/* 40835d80 4eba e3d2 */
+	jsr	%pc@(CompleteWithResult)	/* 40835d80 4eba e3d2 */
 	lea	%sp@(12),%sp		/* 40835d84 4fef 000c */
 	bras	loc_40835ddc		/* 40835d88 6052 */
 
@@ -1255,7 +1255,7 @@ loc_40835d8a:
 	moveal	%d0,%a3			/* 40835d9a 2640 */
 	movew	#4,%a4@(4)		/* 40835d9c 397c 0004 0004 */
 	pea	%a4@(3536)		/* 40835da2 486c 0dd0 */
-	pea	%pc@(sub_40835e68)	/* 40835da6 487a 00c0 */
+	pea	%pc@(ConnectionEndCompletion)	/* 40835da6 487a 00c0 */
 	moveq	#1,%d0			/* 40835daa 7001 */
 	movel	%d0,%sp@-		/* 40835dac 2f00 */
 	movew	%a3@(190),%d1		/* 40835dae 322b 00be */
@@ -1270,7 +1270,7 @@ loc_40835d8a:
 	pea	0x481			/* 40835dca 4878 0481 */
 	movel	%d1,%sp@-		/* 40835dce 2f01 */
 	pea	%a4@(418)		/* 40835dd0 486c 01a2 */
-	jsr	%pc@(sub_40838262)	/* 40835dd4 4eba 248c */
+	jsr	%pc@(CreateConnectionEnd)	/* 40835dd4 4eba 248c */
 	lea	%sp@(48),%sp		/* 40835dd8 4fef 0030 */
 
 loc_40835ddc:
@@ -1278,7 +1278,7 @@ loc_40835ddc:
 	unlk	%fp			/* 40835de2 4e5e */
 	rts				/* 40835de4 4e75 */
 
-sub_40835de6:
+NetLookUpCompletion:
 	moveal	0x2050,%a1		/* 40835de6 2278 2050 */
 	moveal	%a1@(460),%a1		/* 40835dea 2269 01cc */
 	jmp	%a1@			/* 40835dee 4ed1 */
@@ -1297,18 +1297,18 @@ __v__ConnectionEndCompletion:
 	extl	%d0			/* 40835e12 48c0 */
 	movel	%d0,%sp@-		/* 40835e14 2f00 */
 	movel	%fp@(-4),%sp@-		/* 40835e16 2f2e fffc */
-	jsr	%pc@(sub_40834154)	/* 40835e1a 4eba e338 */
+	jsr	%pc@(CompleteWithResult)	/* 40835e1a 4eba e338 */
 	movel	%a4,%sp@-		/* 40835e1e 2f0c */
-	jsr	%pc@(sub_40835860)	/* 40835e20 4eba fa3e */
+	jsr	%pc@(FreeRemSess)	/* 40835e20 4eba fa3e */
 	lea	%sp@(12),%sp		/* 40835e24 4fef 000c */
 	bras	loc_40835e5e		/* 40835e28 6034 */
 
 loc_40835e2a:
 	movew	#5,%a4@(4)		/* 40835e2a 397c 0005 0004 */
 	movel	%a4,%sp@-		/* 40835e30 2f0c */
-	jsr	%pc@(sub_4083772e)	/* 40835e32 4eba 18fa */
+	jsr	%pc@(CopyReadBlk)	/* 40835e32 4eba 18fa */
 	pea	%a4@(3536)		/* 40835e36 486c 0dd0 */
-	pea	%pc@(sub_40836040)	/* 40835e3a 487a 0204 */
+	pea	%pc@(OpenCompletion)	/* 40835e3a 487a 0204 */
 	moveq	#1,%d0			/* 40835e3e 7001 */
 	movel	%d0,%sp@-		/* 40835e40 2f00 */
 	movel	%d0,%sp@-		/* 40835e42 2f00 */
@@ -1319,7 +1319,7 @@ loc_40835e2a:
 	pea	%a4@(414)		/* 40835e4c 486c 019e */
 	pea	%a4@(414)		/* 40835e50 486c 019e */
 	movel	%d1,%sp@-		/* 40835e54 2f01 */
-	jsr	%pc@(sub_40838326)	/* 40835e56 4eba 24ce */
+	jsr	%pc@(OpenConnectionEnd)	/* 40835e56 4eba 24ce */
 	lea	%sp@(44),%sp		/* 40835e5a 4fef 002c */
 
 loc_40835e5e:
@@ -1327,7 +1327,7 @@ loc_40835e5e:
 	unlk	%fp			/* 40835e64 4e5e */
 	rts				/* 40835e66 4e75 */
 
-sub_40835e68:
+ConnectionEndCompletion:
 	moveal	0x2050,%a1		/* 40835e68 2278 2050 */
 	moveal	%a1@(464),%a1		/* 40835e6c 2269 01d0 */
 	jmp	%a1@			/* 40835e70 4ed1 */
@@ -1359,19 +1359,19 @@ loc_40835eb6:
 loc_40835ebc:
 	movel	%d0,%sp@-		/* 40835ebc 2f00 */
 	movel	%a3,%sp@-		/* 40835ebe 2f0b */
-	jsr	%pc@(sub_40834154)	/* 40835ec0 4eba e292 */
+	jsr	%pc@(CompleteWithResult)	/* 40835ec0 4eba e292 */
 	moveq	#0,%d0			/* 40835ec4 7000 */
 	movel	%d0,%a4@(58)		/* 40835ec6 2940 003a */
 	moveq	#0,%d0			/* 40835eca 7000 */
 	movel	%d0,%sp@-		/* 40835ecc 2f00 */
 	movel	%a4,%sp@-		/* 40835ece 2f0c */
-	jsr	%pc@(sub_40835920)	/* 40835ed0 4eba fa4e */
+	jsr	%pc@(RemoveNetworkConnection)	/* 40835ed0 4eba fa4e */
 	lea	%sp@(16),%sp		/* 40835ed4 4fef 0010 */
 	braw	loc_40836036		/* 40835ed8 6000 015c */
 
 loc_40835edc:
 	movel	%a4,%sp@-		/* 40835edc 2f0c */
-	jsr	%pc@(sub_4083772e)	/* 40835ede 4eba 184e */
+	jsr	%pc@(CopyReadBlk)	/* 40835ede 4eba 184e */
 	moveq	#0,%d0			/* 40835ee2 7000 */
 	movew	%a3@(4),%d0		/* 40835ee4 302b 0004 */
 	moveq	#2,%d1			/* 40835ee8 7202 */
@@ -1387,17 +1387,17 @@ loc_40835edc:
 
 loc_40835f06:
 	movel	%a3@(62),%sp@-		/* 40835f06 2f2b 003e */
-	jsr	%pc@(sub_40837f80)	/* 40835f0a 4eba 2074 */
+	jsr	%pc@(findUserByRef)	/* 40835f0a 4eba 2074 */
 	movel	%d0,%fp@(-4)		/* 40835f0e 2d40 fffc */
 	addqw	#4,%sp			/* 40835f12 584f */
 	bnes	loc_40835f34		/* 40835f14 661e */
 	movel	#-928,%sp@-		/* 40835f16 2f3c ffff fc60 */
 	movel	%a3,%sp@-		/* 40835f1c 2f0b */
-	jsr	%pc@(sub_40834154)	/* 40835f1e 4eba e234 */
+	jsr	%pc@(CompleteWithResult)	/* 40835f1e 4eba e234 */
 	moveq	#0,%d0			/* 40835f22 7000 */
 	movel	%d0,%sp@-		/* 40835f24 2f00 */
 	movel	%a4,%sp@-		/* 40835f26 2f0c */
-	jsr	%pc@(sub_40835920)	/* 40835f28 4eba f9f6 */
+	jsr	%pc@(RemoveNetworkConnection)	/* 40835f28 4eba f9f6 */
 	lea	%sp@(16),%sp		/* 40835f2c 4fef 0010 */
 	braw	loc_40836036		/* 40835f30 6000 0104 */
 
@@ -1407,7 +1407,7 @@ loc_40835f34:
 	moveal	%fp@(-4),%a0		/* 40835f3c 206e fffc */
 	pea	%a0@(8)			/* 40835f40 4868 0008 */
 	pea	0xa5			/* 40835f44 4878 00a5 */
-	jsr	%pc@(sub_40838028)	/* 40835f48 4eba 20de */
+	jsr	%pc@(scramble)	/* 40835f48 4eba 20de */
 	lea	%sp@(12),%sp		/* 40835f4c 4fef 000c */
 
 loc_40835f50:
@@ -1432,9 +1432,9 @@ loc_40835f50:
 	movel	%a4@(18),%sp@-		/* 40835f94 2f2c 0012 */
 	jsr	%pc@(getGlobal)		/* 40835f98 4eba d5c6 */
 	movel	%d0,%sp@-		/* 40835f9c 2f00 */
-	jsr	%pc@(sub_4083489e)	/* 40835f9e 4eba e8fe */
+	jsr	%pc@(GetLocationName)	/* 40835f9e 4eba e8fe */
 	pea	%a4@(3906)		/* 40835fa2 486c 0f42 */
-	pea	%pc@(sub_408360d6)	/* 40835fa6 487a 012e */
+	pea	%pc@(StartSendCompletion)	/* 40835fa6 487a 012e */
 	moveq	#1,%d0			/* 40835faa 7001 */
 	movel	%d0,%sp@-		/* 40835fac 2f00 */
 	movel	%d0,%sp@-		/* 40835fae 2f00 */

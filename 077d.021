@@ -691,7 +691,7 @@ loc_40815562:
 	addqw	#4,%sp			/* 40815562 584f */
 	rts				/* 40815564 4e75 */
 
-sub_40815566:
+SINTINSTALL:
 	bsrs	SINTCORE		/* 40815566 61d8 */
 	moveb	%a0@(7),%d0		/* 40815568 1028 0007 */
 	movew	%sr,%sp@-		/* 4081556c 40e7 */
@@ -712,7 +712,7 @@ loc_40815580:
 	moveq	#0,%d0			/* 40815586 7000 */
 	rts				/* 40815588 4e75 */
 
-sub_4081558a:
+SINTREMOVE:
 	bsrs	SINTCORE		/* 4081558a 61b4 */
 	moveq	#-1,%d0			/* 4081558c 70ff */
 	movew	%sr,%sp@-		/* 4081558e 40e7 */
@@ -732,14 +732,14 @@ loc_408155a4:
 	movew	%sp@+,%sr		/* 408155a4 46df */
 	rts				/* 408155a6 4e75 */
 
-sub_408155a8:
+PSCVIA2SLOTINT:
 	moveq	#-121,%d0		/* 408155a8 7087 */
 	orb	%a1@(7680),%d0		/* 408155aa 8029 1e00 */
 	notl	%d0			/* 408155ae 4680 */
 	bnel	loc_40815624		/* 408155b0 66ff 0000 0072 */
 	rts				/* 408155b6 4e75 */
 
-sub_408155b8:
+DAFBVIA2SLOTINT:
 	moveb	#2,%a1@(6656)		/* 408155b8 137c 0002 1a00 */
 	moveq	#-128,%d0		/* 408155be 7080 */
 	orb	%a1@(7680),%d0		/* 408155c0 8029 1e00 */
@@ -760,7 +760,7 @@ sub_408155b8:
 loc_408155f0:
 	rts				/* 408155f0 4e75 */
 
-sub_408155f2:
+VIA2SLOTINT:
 	moveb	#2,%a1@(6656)		/* 408155f2 137c 0002 1a00 */
 	moveq	#-64,%d0		/* 408155f8 70c0 */
 	orb	%a1@(7680),%d0		/* 408155fa 8029 1e00 */
@@ -768,7 +768,7 @@ sub_408155f2:
 	bnes	loc_40815624		/* 40815600 6622 */
 	rts				/* 40815602 4e75 */
 
-sub_40815604:
+RBVSLOTINT:
 	moveb	#0x82,%a1@(3)		/* 40815604 137c 0082 0003 */
 	moveq	#-128,%d0		/* 4081560a 7080 */
 	orb	%a1@(2),%d0		/* 4081560c 8029 0002 */
@@ -790,7 +790,7 @@ loc_40815628:
 	moveb	%pc@(word_4081566e,%d0:w),%d0	/* 40815628 103b 0044 */
 	bclr	%d0,%sp@		/* 4081562c 0197 */
 	lsrb	#4,%d0			/* 4081562e e808 */
-	bsrs	sub_40815646		/* 40815630 6114 */
+	bsrs	RUNSLOTHANDLERS		/* 40815630 6114 */
 	bnes	loc_40815644		/* 40815632 6610 */
 	moveb	%sp@,%d0		/* 40815634 1017 */
 	bnes	loc_40815628		/* 40815636 66f0 */
@@ -802,7 +802,7 @@ loc_40815628:
 loc_40815644:
 	_SysError			/* 40815644 a9c9 */
 
-sub_40815646:
+RUNSLOTHANDLERS:
 	lea	@(0x0d04)@(0x40,%d0:w:4),%a1	/* 40815646 43f0 05a6 0d04 0040 */
 
 loc_4081564e:
@@ -905,7 +905,7 @@ loc_40815700:
 
 	rts				/* 4081570e 4e75 */
 
-sub_40815710:
+INITJMPTBL:
 	moveml	%a0-%a2,%sp@-		/* 40815710 48e7 00e0 */
 	movel	#244,%d0		/* 40815714 203c 0000 00f4 */
 	.short	0xa71e			/* 4081571a a71e */
@@ -920,7 +920,7 @@ loc_40815726:
 	dbf	%d0,loc_40815726	/* 4081572c 51c8 fff8 */
 	cmpib	#4,0x12f		/* 40815730 0c38 0004 012f */
 	bnes	loc_40815744		/* 40815736 660c */
-	lea	%pc@(sub_408172be),%a0	/* 40815738 41fa 1b84 */
+	lea	%pc@(P040BUSEXCEPTION),%a0	/* 40815738 41fa 1b84 */
 	.short	0x2188,0x81e2,0x0db8,0x00e4	/* movel %a0,@(0x0db8)@(0xe4) /* 4081573c 2188 81e2 0db8 00e4 */
 
 loc_40815744:
@@ -937,69 +937,69 @@ off_40815750:
 	.short	GETCSTRING-.		/* 40815756 098e 3 */
 	.short	SLOTEMPTY-.		/* 40815758 085c 4 */
 	.short	GETSLOTBLOCK-.		/* 4081575a 09dc 5 */
-	.short	sub_4081614c-.		/* 4081575c 09f0 6 */
-	.short	sub_408161e8-.		/* 4081575e 0a8a 7 */
-	.short	sub_4081698e-.		/* 40815760 122e 8 */
-	.short	sub_40816ea8-.		/* 40815762 1746 9 */
-	.short	sub_40816ee4-.		/* 40815764 1780 10 */
-	.short	sub_40816f0c-.		/* 40815766 17a6 11 */
-	.short	sub_40816ef8-.		/* 40815768 1790 12 */
+	.short	FINDSLOTSTRUCT-.		/* 4081575c 09f0 6 */
+	.short	READSLOTSTRUCT-.		/* 4081575e 0a8a 7 */
+	.short	SLOTVERSION-.		/* 40815760 122e 8 */
+	.short	SETSRSRCSTATE-.		/* 40815762 1746 9 */
+	.short	INSERTSRT-.		/* 40815764 1780 10 */
+	.short	GETSRSRC-.		/* 40815766 17a6 11 */
+	.short	GETTYPESRSRC-.		/* 40815768 1790 12 */
 	.short	SLOTEMPTY-.		/* 4081576a 084a 13 */
 	.short	SLOTEMPTY-.		/* 4081576c 0848 14 */
-	.short	sub_40815f78-.		/* 4081576e 080a 15 */
-	.short	sub_40816224-.		/* 40815770 0ab4 16 */
-	.short	sub_4081682a-.		/* 40815772 10b8 17 */
-	.short	sub_40816820-.		/* 40815774 10ac 18 */
-	.short	sub_40816942-.		/* 40815776 11cc 19 */
-	.short	sub_40816e6c-.		/* 40815778 16f4 20 */
-	.short	sub_40816f02-.		/* 4081577a 1788 21 */
-	.short	sub_40816ebc-.		/* 4081577c 1740 22 */
-	.short	sub_40816244-.		/* 4081577e 0ac6 23 */
-	.short	sub_4081696e-.		/* 40815780 11ee 24 */
-	.short	sub_408162c2-.		/* 40815782 0b40 25 */
-	.short	sub_40816ed0-.		/* 40815784 174c 26 */
-	.short	sub_40816396-.		/* 40815786 0c10 27 */
-	.short	sub_40816396-.		/* 40815788 0c0e 28 */
-	.short	sub_40816898-.		/* 4081578a 110e 29 */
-	.short	sub_40815e62-.		/* 4081578c 06d6 30 */
-	.short	sub_40815e58-.		/* 4081578e 06ca 31 */
-	.short	sub_40815e9e-.		/* 40815790 070e 32 */
-	.short	sub_40815e76-.		/* 40815792 06e4 33 */
-	.short	sub_408163ba-.		/* 40815794 0c26 34 */
-	.short	sub_4081647e-.		/* 40815796 0ce8 35 */
-	.short	sub_408170f0-.		/* 40815798 1958 36 */
-	.short	sub_40815e80-.		/* 4081579a 06e6 37 */
+	.short	SECONDARYEND-.		/* 4081576e 080a 15 */
+	.short	READSLOTINFO-.		/* 40815770 0ab4 16 */
+	.short	READSLOTPRAM-.		/* 40815772 10b8 17 */
+	.short	PUTSLOTPRAM-.		/* 40815774 10ac 18 */
+	.short	READFHEADER-.		/* 40815776 11cc 19 */
+	.short	NEXTSRSRC-.		/* 40815778 16f4 20 */
+	.short	NEXTTYPESRSRC-.		/* 4081577a 1788 21 */
+	.short	SLOTRSRCINFO-.		/* 4081577c 1740 22 */
+	.short	SLOTDISPOSPTR-.		/* 4081577e 0ac6 23 */
+	.short	CKCARDSTAT-.		/* 40815780 11ee 24 */
+	.short	READSLOTDRVRNAME-.		/* 40815782 0b40 25 */
+	.short	FINDSRTREC-.		/* 40815784 174c 26 */
+	.short	FINDDEVBASE-.		/* 40815786 0c10 27 */
+	.short	FINDDEVBASE-.		/* 40815788 0c0e 28 */
+	.short	GETSRSRCPTR-.		/* 4081578a 110e 29 */
+	.short	STUBADDCARD-.		/* 4081578c 06d6 30 */
+	.short	STUBREMOVECARD-.		/* 4081578e 06ca 31 */
+	.short	INITSINFO-.		/* 40815790 070e 32 */
+	.short	INITPRIMARY-.		/* 40815792 06e4 33 */
+	.short	CARDCHANGED-.		/* 40815794 0c26 34 */
+	.short	SLOTEXEC-.		/* 40815796 0ce8 35 */
+	.short	OFFSETDATA-.		/* 40815798 1958 36 */
+	.short	INITSPRAM-.		/* 4081579a 06e6 37 */
 	.short	READPBSIZE-.		/* 4081579c 19cc 38 */
 	.short	STUBCHECKSLOT-.		/* 4081579e 06ce 39 */
-	.short	sub_40817050-.		/* 408157a0 18b0 */
-	.short	sub_40815e8a-.		/* 408157a2 06e8 */
-	.short	sub_40816eda-.		/* 408157a4 1736 */
-	.short	sub_40816eee-.		/* 408157a6 1748 */
-	.short	sub_40816520-.		/* 408157a8 0d78 */
-	.short	sub_4081660c-.		/* 408157aa 0e62 */
-	.short	sub_408168f2-.		/* 408157ac 1146 */
-	.short	sub_4081685c-.		/* 408157ae 10ae */
-	.short	sub_4081688e-.		/* 408157b0 10de */
-	.short	sub_40816ec6-.		/* 408157b2 1714 */
-	.short	sub_40815f82-.		/* 408157b4 07ce */
-	.short	sub_40816816-.		/* 408157b6 1060 */
-	.short	sub_40816e9e-.		/* 408157b8 16e6 */
-	.short	sub_40816e94-.		/* 408157ba 16da */
-	.short	sub_40816e76-.		/* 408157bc 16ba */
-	.short	sub_4081720c-.		/* 408157be 1a4e */
-	.short	sub_40817216-.		/* 408157c0 1a56 */
-	.short	sub_408175e4-.		/* 408157c2 1e22 */
-	.short	sub_40817620-.		/* 408157c4 1e5c */
-	.short	sub_40817616-.		/* 408157c6 1e50 */
-	.short	sub_40816e8a-.		/* 408157c8 16c2 */
-	.short	sub_40816e80-.		/* 408157ca 16b6 */
+	.short	CALCSTEP-.		/* 408157a0 18b0 */
+	.short	INITSRSRC-.		/* 408157a2 06e8 */
+	.short	SEARCHSRT-.		/* 408157a4 1736 */
+	.short	UPDATESRT-.		/* 408157a6 1748 */
+	.short	CALCSPOINTER-.		/* 408157a8 0d78 */
+	.short	GETSLOTDRVR-.		/* 408157aa 0e62 */
+	.short	PTRTOSLOT-.		/* 408157ac 1146 */
+	.short	FINDSINFORECPTR-.		/* 408157ae 10ae */
+	.short	FINDSRSRCPTR-.		/* 408157b0 10de */
+	.short	DELETESRTREC-.		/* 408157b2 1714 */
+	.short	SECONDARY_INIT-.		/* 408157b4 07ce */
+	.short	INITSLOTPRAM-.		/* 408157b6 1060 */
+	.short	PNEWSRTENTRY-.		/* 408157b8 16e6 */
+	.short	PINITENTRY-.		/* 408157ba 16da */
+	.short	PSRTOSPBLOCK-.		/* 408157bc 16ba */
+	.short	PREAD4BYTES-.		/* 408157be 1a4e */
+	.short	PGETBOARD-.		/* 408157c0 1a56 */
+	.short	PBUSEXCEPTION-.		/* 408157c2 1e22 */
+	.short	PINSTALLBUS-.		/* 408157c4 1e5c */
+	.short	PRESTOREBUS-.		/* 408157c6 1e50 */
+	.short	PALLOCSRTBLK-.		/* 408157c8 16c2 */
+	.short	GETSRTENTRY-.		/* 408157ca 16b6 */
 
 	.align	16
 
 STARTSDECLMGR:
 	subaw	#56,%sp			/* 408157d0 9efc 0038 */
 	moveal	%sp,%a0			/* 408157d4 204f */
-	jsr	%pc@(sub_40815710)	/* 408157d6 4eba ff38 */
+	jsr	%pc@(INITJMPTBL)	/* 408157d6 4eba ff38 */
 	bnew	loc_4081589a		/* 408157da 6600 00be */
 	bsrw	sub_408158a2		/* 408157de 6100 00c2 */
 	bnew	loc_4081589a		/* 408157e2 6600 00b6 */
@@ -1007,9 +1007,9 @@ STARTSDECLMGR:
 
 loc_408157e8:
 	moveb	%d1,%a0@(49)		/* 408157e8 1141 0031 */
-	bsrw	sub_408158f8		/* 408157ec 6100 010a */
-	bsrw	sub_40815be2		/* 408157f0 6100 03f0 */
-	bsrw	sub_40815c66		/* 408157f4 6100 0470 */
+	bsrw	__v__INITSINFO		/* 408157ec 6100 010a */
+	bsrw	__v__INITSRSRC		/* 408157f0 6100 03f0 */
+	bsrw	__v__INITSPRAM		/* 408157f4 6100 0470 */
 	dbf	%d1,loc_408157e8	/* 408157f8 51c9 ffee */
 	bsrl	sub_4080d44c		/* 408157fc 61ff ffff 7c4e */
 	moveq	#0,%d2			/* 40815802 7400 */
@@ -1043,12 +1043,12 @@ loc_40815812:
 	cmpil	#1399548272,%d0		/* 40815862 0c80 536b 6970 */
 	beqs	loc_40815872		/* 40815868 6708 */
 	moveb	%d2,%a0@(54)		/* 4081586a 1142 0036 */
-	bsrw	sub_40815d1a		/* 4081586e 6100 04aa */
+	bsrw	__v__INITPRIMARY		/* 4081586e 6100 04aa */
 
 loc_40815872:
 	clrb	%a0@(49)		/* 40815872 4228 0031 */
 	moveb	%d2,%a0@(54)		/* 40815876 1142 0036 */
-	bsrw	sub_40815d1a		/* 4081587a 6100 049e */
+	bsrw	__v__INITPRIMARY		/* 4081587a 6100 049e */
 	moveq	#14,%d1			/* 4081587e 720e */
 
 loc_40815880:
@@ -1056,7 +1056,7 @@ loc_40815880:
 	cmpb	%sp@,%d1		/* 40815884 b217 */
 	beqs	loc_40815894		/* 40815886 670c */
 	moveb	%d2,%a0@(54)		/* 40815888 1142 0036 */
-	bsrw	sub_40815d1a		/* 4081588c 6100 048c */
+	bsrw	__v__INITPRIMARY		/* 4081588c 6100 048c */
 	bsrw	sub_40815dec		/* 40815890 6100 055a */
 
 loc_40815894:
@@ -1095,7 +1095,7 @@ loc_408158f0:
 	moveml	%sp@+,%a0-%a1		/* 408158f2 4cdf 0300 */
 	rts				/* 408158f6 4e75 */
 
-sub_408158f8:
+__v__INITSINFO:
 	moveml	%d1/%a0-%a3,%sp@-	/* 408158f8 48e7 40f0 */
 	moveq	#0,%d1			/* 408158fc 7200 */
 	moveb	%a0@(49),%d1		/* 408158fe 1228 0031 */
@@ -1158,13 +1158,13 @@ loc_40815988:
 	movew	#100,%a1@(12)		/* 40815998 337c 0064 000c */
 	moveb	%d1,%a1@(20)		/* 4081599e 1341 0014 */
 	movel	%a3,%a1@(16)		/* 408159a2 234b 0010 */
-	bsrs	sub_408159ae		/* 408159a6 6106 */
+	bsrs	__v__VERIFYSLOT		/* 408159a6 6106 */
 
 loc_408159a8:
 	moveml	%sp@+,%d1/%a0-%a3	/* 408159a8 4cdf 0f02 */
 	rts				/* 408159ac 4e75 */
 
-sub_408159ae:
+__v__VERIFYSLOT:
 	moveml	%d1/%a2,%sp@-		/* 408159ae 48e7 4020 */
 	subaw	#20,%sp			/* 408159b2 9efc 0014 */
 	moveal	%sp,%a2			/* 408159b6 244f */
@@ -1381,7 +1381,7 @@ loc_40815bdc:
 	moveml	%sp@+,%d1-%d4/%a2-%a4	/* 40815bdc 4cdf 1c1e */
 	rts				/* 40815be0 4e75 */
 
-sub_40815be2:
+__v__INITSRSRC:
 	moveml	%d1-%d3/%a1-%a2,%sp@-	/* 40815be2 48e7 7060 */
 	moveq	#47,%d0			/* 40815be6 702f */
 	.short	0xa06e			/* 40815be8 a06e */
@@ -1442,7 +1442,7 @@ loc_40815c60:
 	.short	0x060e	/* 40815c62 060e */
 	rts				/* 40815c64 4e75 */
 
-sub_40815c66:
+__v__INITSPRAM:
 	.short	0x48e7	/* 40815c66 48e7 */
 	.short	0x7060	/* 40815c68 7060 */
 	.short	0x514f	/* 40815c6a 514f */
@@ -1528,7 +1528,7 @@ sub_40815c66:
 	.short	0x060e	/* 40815d16 060e */
 	rts				/* 40815d18 4e75 */
 
-sub_40815d1a:
+__v__INITPRIMARY:
 	.short	0x48e7	/* 40815d1a 48e7 */
 	.short	0x7070	/* 40815d1c 7070 */
 	.short	0x9efc	/* 40815d1e 9efc */
@@ -1621,17 +1621,17 @@ sub_40815d1a:
 	.short	0x0f0a	/* 40815dd6 0f0a */
 	rts				/* 40815dd8 4e75 */
 
-sub_40815dda:
+__v__STUBCHECKSLOT:
 	.short	0x60ff	/* 40815dda 60ff */
 	.short	0x0000	/* 40815ddc 0000 */
 	.short	0x181c	/* 40815dde 181c */
 
-sub_40815de0:
+__v__STUBADDCARD:
 	.short	0x60ff	/* 40815de0 60ff */
 	.short	0x0000	/* 40815de2 0000 */
 	.short	0x182a	/* 40815de4 182a */
 
-sub_40815de6:
+__v__STUBREMOVECARD:
 	.short	0x60ff	/* 40815de6 60ff */
 	.short	0x0000	/* 40815de8 0000 */
 	.short	0x181a	/* 40815dea 181a */
@@ -1672,11 +1672,11 @@ loc_40815e52:
 loc_40815e56:
 	rts				/* 40815e56 4e75 */
 
-sub_40815e58:
+STUBREMOVECARD:
 	CallVector	0x206c 67	/* 40815e58 2f30 81e2 206c 010c */
 	rts				/* 40815e60 4e75 */
 
-sub_40815e62:
+STUBADDCARD:
 	CallVector	0x206c 66	/* 40815e62 2f30 81e2 206c 0108 */
 	rts				/* 40815e6a 4e75 */
 
@@ -1684,28 +1684,28 @@ STUBCHECKSLOT:
 	CallVector	0x206c 65	/* 40815e6c 2f30 81e2 206c 0104 */
 	rts				/* 40815e74 4e75 */
 
-sub_40815e76:
+INITPRIMARY:
 	CallVector	0x206c 64	/* 40815e76 2f30 81e2 206c 0100 */
 	rts				/* 40815e7e 4e75 */
 
-sub_40815e80:
+INITSPRAM:
 	CallVector	0x206c 63	/* 40815e80 2f30 81e2 206c 00fc */
 	rts				/* 40815e88 4e75 */
 
-sub_40815e8a:
+INITSRSRC:
 	CallVector	0x206c 62	/* 40815e8a 2f30 81e2 206c 00f8 */
 	rts				/* 40815e92 4e75 */
 
 	CallVector	0x206c 61	/* 40815e94 2f30 81e2 206c 00f4 */
 	rts				/* 40815e9c 4e75 */
 
-sub_40815e9e:
+INITSINFO:
 	CallVector	0x206c 60	/* 40815e9e 2f30 81e2 206c 00f0 */
 	rts				/* 40815ea6 4e75 */
 
 	.align	16
 
-sub_40815eb0:
+__v__SECONDARY_INIT:
 	moveml	%d1-%d2/%a1-%a3,%sp@-	/* 40815eb0 48e7 6070 */
 	subaw	#24,%sp			/* 40815eb4 9efc 0018 */
 	moveal	%sp,%a2			/* 40815eb8 244f */
@@ -1715,7 +1715,7 @@ sub_40815eb0:
 
 loc_40815ec6:
 	moveb	%d1,%a0@(49)		/* 40815ec6 1141 0031 */
-	bsrs	sub_40815ee0		/* 40815eca 6114 */
+	bsrs	__v__DOSECONDARYINIT		/* 40815eca 6114 */
 	dbf	%d1,loc_40815ec6	/* 40815ecc 51c9 fff8 */
 	cmpib	#14,%d1			/* 40815ed0 0c01 000e */
 	blss	loc_40815ec6		/* 40815ed4 63f0 */
@@ -1723,7 +1723,7 @@ loc_40815ec6:
 	moveml	%sp@+,%d1-%d2/%a1-%a3	/* 40815eda 4cdf 0e06 */
 	rts				/* 40815ede 4e75 */
 
-sub_40815ee0:
+__v__DOSECONDARYINIT:
 	moveml	%d0-%d2/%a1/%a3,%sp@-	/* 40815ee0 48e7 e050 */
 	clrb	%a0@(50)		/* 40815ee4 4228 0032 */
 	pea	%pc@(sub_40815ef6)	/* 40815ee8 487a 000c */
@@ -1771,11 +1771,11 @@ loc_40815f72:
 	moveml	%sp@+,%d0-%d2/%a1/%a3	/* 40815f72 4cdf 0a07 */
 	rts				/* 40815f76 4e75 */
 
-sub_40815f78:
+SECONDARYEND:
 	CallVector	0x206c 69	/* 40815f78 2f30 81e2 206c 0114 */
 	rts				/* 40815f80 4e75 */
 
-sub_40815f82:
+SECONDARY_INIT:
 	CallVector	0x206c 68	/* 40815f82 2f30 81e2 206c 0110 */
 	rts				/* 40815f8a 4e75 */
 
@@ -1783,13 +1783,13 @@ sub_40815f82:
 
 	.ascii	"slot version 2.3"	/* 40815f90 736c 6f74 2076 6572 7369 6f6e 2032 2e33 */
 
-sub_40815fa0:
+SLOTMANAGER:
 	cmpiw	#0x3d,%d0		/* 40815fa0 0c40 003d */
-	bhis	sub_40815fae		/* 40815fa4 6208 */
+	bhis	__v__SLOTEMPTY		/* 40815fa4 6208 */
 	moveal	@(0xdb8)@(%d0:w:4),%a1	/* 40815fa6 2270 05a5 0db8 */
 	jmp	%a1@			/* 40815fac 4ed1 */
 
-sub_40815fae:
+__v__SLOTEMPTY:
 	movew	#-338,%d0		/* 40815fae 303c feae */
 	rts				/* 40815fb2 4e75 */
 
@@ -1799,7 +1799,7 @@ SLOTEMPTY:
 
 	.align	16
 
-sub_40815fc0:
+__v__READSLOTBYTE:
 	movel	%a0@(4),%sp@-		/* 40815fc0 2f28 0004 */
 	clrb	%a0@(3)			/* 40815fc4 4228 0003 */
 	_SOffsetData			/* 40815fc8 7024 a06e */
@@ -1817,7 +1817,7 @@ READSLOTBYTE:
 
 	.align	16
 
-sub_40815ff0:
+__v__READSLOTWORD:
 	movel	%a0@(4),%sp@-		/* 40815ff0 2f28 0004 */
 	clrw	%a0@(2)			/* 40815ff4 4268 0002 */
 	_SOffsetData			/* 40815ff8 7024 a06e */

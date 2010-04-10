@@ -353,7 +353,7 @@ loc_40850340:
 
 	.align	16
 
-sub_40850380:
+IsAscMac:
 	linkw	%fp,#-4			/* 40850380 4e56 fffc */
 	movel	%d7,%sp@-		/* 40850384 2f07 */
 	movel	#1751414642,%d0		/* 40850386 203c 6864 7772 */
@@ -386,7 +386,7 @@ INITGLOBALS:
 loc_408503d4:
 	movew	#100,%a3@(22)		/* 408503d4 377c 0064 0016 */
 	movew	#1,%a3@(24)		/* 408503da 377c 0001 0018 */
-	jsr	%pc@(sub_40850380)	/* 408503e0 4eba ff9e */
+	jsr	%pc@(IsAscMac)	/* 408503e0 4eba ff9e */
 	tstw	%d0			/* 408503e4 4a40 */
 	beqw	loc_408504b8		/* 408503e6 6700 00d0 */
 	movel	#1024,%d0		/* 408503ea 203c 0000 0400 */
@@ -423,7 +423,7 @@ loc_40850432:
 	addw	%d0,%d0			/* 40850434 d040 */
 	lea	%pc@(word_4084f7f0),%a0	/* 40850436 41fa f3b8 */
 	pea	%a0@(0x0000,%d0:w)	/* 4085043a 4870 0000 */
-	jsr	%pc@(sub_4084f820)	/* 4085043e 4eba f3e0 */
+	jsr	%pc@(CalculateSlod)	/* 4085043e 4eba f3e0 */
 	extl	%d7			/* 40850442 48c7 */
 	movel	%d7,%d1			/* 40850444 2207 */
 	addl	%d1,%d1			/* 40850446 d281 */
@@ -472,7 +472,7 @@ loc_408504be:
 
 	.align	16
 
-sub_408504d0:
+SetDivTable:
 	link	%fp,#0			/* 408504d0 4e56 0000 */
 	moveml	%d3/%d5-%d7/%a3-%a4,%sp@-	/* 408504d4 48e7 1718 */
 	moveal	%fp@(8),%a3		/* 408504d8 266e 0008 */
@@ -528,11 +528,11 @@ loc_40850528:
 
 	.align	16
 
-sub_40850540:
+insertInQueue:
 	linkw	%fp,#0			/* 40850540 4e56 0000 */
 	moveml	%d7/%a4,%sp@-		/* 40850544 48e7 0108 */
 	moveal	%fp@(8),%a4		/* 40850548 286e 0008 */
-	jsr	%pc@(sub_4084f850)	/* 4085054c 4eba f302 */
+	jsr	%pc@(BlockInts)	/* 4085054c 4eba f302 */
 	movew	%d0,%d7			/* 40850550 3e00 */
 	movew	%a4@(32),%d0		/* 40850552 302c 0020 */
 	cmpw	%a4@(34),%d0		/* 40850556 b06c 0022 */
@@ -574,7 +574,7 @@ loc_408505a6:
 	unlk	%fp			/* 408505ac 4e5e */
 	rts				/* 408505ae 4e75 */
 
-sub_408505b0:
+nextFromQueue:
 	linkw	%fp,#0			/* 408505b0 4e56 0000 */
 	movel	%a4,%sp@-		/* 408505b4 2f0c */
 	moveal	%fp@(8),%a4		/* 408505b6 286e 0008 */
@@ -614,7 +614,7 @@ loc_40850602:
 
 	.align	16
 
-sub_40850610:
+ChannelModifier:
 	linkw	%fp,#0			/* 40850610 4e56 0000 */
 	moveml	%d3/%a3-%a4,%sp@-	/* 40850614 48e7 1018 */
 	moveal	%fp@(8),%a0		/* 40850618 206e 0008 */
@@ -699,7 +699,7 @@ loc_408506b4:
 	moveq	#0,%d0			/* 408506de 7000 */
 	movel	%d0,%sp@-		/* 408506e0 2f00 */
 	movel	%fp@(8),%sp@-		/* 408506e2 2f2e 0008 */
-	jsr	%pc@(sub_4084f7b0)	/* 408506e6 4eba f0c8 */
+	jsr	%pc@(SetNextInterrupt)	/* 408506e6 4eba f0c8 */
 	lea	%sp@(16),%sp		/* 408506ea 4fef 0010 */
 	braw	loc_40850840		/* 408506ee 6000 0150 */
 
@@ -724,7 +724,7 @@ loc_40850700:
 	movel	%d0,%sp@-		/* 4085072c 2f00 */
 	movel	%d0,%sp@-		/* 4085072e 2f00 */
 	movel	%a0,%sp@-		/* 40850730 2f08 */
-	jsr	%pc@(sub_4084f7b0)	/* 40850732 4eba f07c */
+	jsr	%pc@(SetNextInterrupt)	/* 40850732 4eba f07c */
 	lea	%sp@(16),%sp		/* 40850736 4fef 0010 */
 	braw	loc_40850840		/* 4085073a 6000 0104 */
 
@@ -783,7 +783,7 @@ loc_408507ae:
 	movel	%d0,%sp@-		/* 408507c8 2f00 */
 	movel	%d0,%sp@-		/* 408507ca 2f00 */
 	movel	%a0,%sp@-		/* 408507cc 2f08 */
-	jsr	%pc@(sub_4084f7b0)	/* 408507ce 4eba efe0 */
+	jsr	%pc@(SetNextInterrupt)	/* 408507ce 4eba efe0 */
 	lea	%sp@(16),%sp		/* 408507d2 4fef 0010 */
 
 loc_408507d6:
@@ -807,7 +807,7 @@ loc_408507de:
 	movel	%a4,%sp@-		/* 40850802 2f0c */
 	moveq	#0,%d0			/* 40850804 7000 */
 	movel	%d0,%sp@-		/* 40850806 2f00 */
-	jsr	%pc@(sub_4084f7b0)	/* 40850808 4eba efa6 */
+	jsr	%pc@(SetNextInterrupt)	/* 40850808 4eba efa6 */
 	lea	%sp@(16),%sp		/* 4085080c 4fef 0010 */
 	bras	loc_40850840		/* 40850810 602e */
 
@@ -823,7 +823,7 @@ loc_40850812:
 	movel	%a4,%sp@-		/* 40850832 2f0c */
 	moveq	#0,%d0			/* 40850834 7000 */
 	movel	%d0,%sp@-		/* 40850836 2f00 */
-	jsr	%pc@(sub_4084f7b0)	/* 40850838 4eba ef76 */
+	jsr	%pc@(SetNextInterrupt)	/* 40850838 4eba ef76 */
 	lea	%sp@(16),%sp		/* 4085083c 4fef 0010 */
 
 loc_40850840:
@@ -833,7 +833,7 @@ loc_40850840:
 
 	.align	16
 
-sub_40850850:
+processCommandFrom:
 	linkw	%fp,#0			/* 40850850 4e56 0000 */
 	moveml	%d6-%d7/%a3-%a4,%sp@-	/* 40850854 48e7 0318 */
 	moveal	%fp@(16),%a3		/* 40850858 266e 0010 */
@@ -857,7 +857,7 @@ loc_40850862:
 	movel	%a3@,%sp@-		/* 40850880 2f13 */
 	movel	%a4,%sp@-		/* 40850882 2f0c */
 	movel	%fp@(8),%sp@-		/* 40850884 2f2e 0008 */
-	jsr	%pc@(sub_40850850)	/* 40850888 4eba ffc6 */
+	jsr	%pc@(processCommandFrom)	/* 40850888 4eba ffc6 */
 	lea	%sp@(12),%sp		/* 4085088c 4fef 000c */
 	bras	loc_408508a0		/* 40850890 600e */
 
@@ -865,7 +865,7 @@ loc_40850892:
 	clrb	%d7			/* 40850892 4207 */
 	movel	%a4,%sp@-		/* 40850894 2f0c */
 	movel	%fp@(8),%sp@-		/* 40850896 2f2e 0008 */
-	jsr	%pc@(sub_40850610)	/* 4085089a 4eba fd74 */
+	jsr	%pc@(ChannelModifier)	/* 4085089a 4eba fd74 */
 	addqw	#8,%sp			/* 4085089e 504f */
 
 loc_408508a0:
@@ -880,13 +880,13 @@ loc_408508a0:
 
 	.align	16
 
-sub_408508c0:
+processNextCommand:
 	linkw	%fp,#-8			/* 408508c0 4e56 fff8 */
 	movel	%a4,%sp@-		/* 408508c4 2f0c */
 	moveal	%fp@(8),%a4		/* 408508c6 286e 0008 */
 	pea	%fp@(-8)		/* 408508ca 486e fff8 */
 	movel	%a4,%sp@-		/* 408508ce 2f0c */
-	jsr	%pc@(sub_408505b0)	/* 408508d0 4eba fcde */
+	jsr	%pc@(nextFromQueue)	/* 408508d0 4eba fcde */
 	tstb	%d0			/* 408508d4 4a00 */
 	addqw	#8,%sp			/* 408508d6 504f */
 	beqs	loc_408508de		/* 408508d8 6704 */
@@ -897,7 +897,7 @@ loc_408508de:
 	movel	%a4@(4),%sp@-		/* 408508de 2f2c 0004 */
 	pea	%fp@(-8)		/* 408508e2 486e fff8 */
 	movel	%a4,%sp@-		/* 408508e6 2f0c */
-	jsr	%pc@(sub_40850850)	/* 408508e8 4eba ff66 */
+	jsr	%pc@(processCommandFrom)	/* 408508e8 4eba ff66 */
 	moveq	#0,%d0			/* 408508ec 7000 */
 	lea	%sp@(12),%sp		/* 408508ee 4fef 000c */
 
@@ -908,7 +908,7 @@ loc_408508f2:
 
 	.align	16
 
-sub_40850900:
+sendEmptyCommand:
 	linkw	%fp,#-8			/* 40850900 4e56 fff8 */
 	moveml	%a3-%a4,%sp@-		/* 40850904 48e7 0018 */
 	moveal	%fp@(8),%a3		/* 40850908 266e 0008 */
@@ -919,7 +919,7 @@ sub_40850900:
 	movel	%a3@(4),%sp@-		/* 4085091a 2f2b 0004 */
 	pea	%fp@(-8)		/* 4085091e 486e fff8 */
 	movel	%a3,%sp@-		/* 40850922 2f0b */
-	jsr	%pc@(sub_40850850)	/* 40850924 4eba ff2a */
+	jsr	%pc@(processCommandFrom)	/* 40850924 4eba ff2a */
 	andiw	#-17,%a3@(28)		/* 40850928 026b ffef 001c */
 	moveal	%a3@(4),%a4		/* 4085092e 286b 0004 */
 	lea	%sp@(12),%sp		/* 40850932 4fef 000c */
@@ -932,7 +932,7 @@ loc_4085093a:
 	tstl	%a4@			/* 4085093a 4a94 */
 	bnes	loc_40850938		/* 4085093c 66fa */
 	movel	%a4@(66),%sp@-		/* 4085093e 2f2c 0042 */
-	jsr	%pc@(sub_4084f7a0)	/* 40850942 4eba ee5c */
+	jsr	%pc@(CancelDriftOfTimer)	/* 40850942 4eba ee5c */
 	addqw	#4,%sp			/* 40850946 584f */
 
 loc_40850948:
@@ -942,19 +942,19 @@ loc_40850948:
 
 	.align	16
 
-sub_40850960:
+tickleModifier:
 	linkw	%fp,#-8			/* 40850960 4e56 fff8 */
 	movew	#20,%fp@(-8)		/* 40850964 3d7c 0014 fff8 */
 	movel	%fp@(12),%sp@-		/* 4085096a 2f2e 000c */
 	pea	%fp@(-8)		/* 4085096e 486e fff8 */
 	movel	%fp@(8),%sp@-		/* 40850972 2f2e 0008 */
-	jsr	%pc@(sub_40850850)	/* 40850976 4eba fed8 */
+	jsr	%pc@(processCommandFrom)	/* 40850976 4eba fed8 */
 	unlk	%fp			/* 4085097a 4e5e */
 	rts				/* 4085097c 4e75 */
 
 	.align	16
 
-sub_40850980:
+findModifier:
 	linkw	%fp,#-4			/* 40850980 4e56 fffc */
 	moveml	%d3/%a3-%a4,%sp@-	/* 40850984 48e7 1018 */
 	movel	%fp@(8),%d0		/* 40850988 202e 0008 */
@@ -997,7 +997,7 @@ loc_408509c2:
 
 	.align	16
 
-sub_408509d0:
+disposeChannel:
 	linkw	%fp,#-8			/* 408509d0 4e56 fff8 */
 	moveml	%d3/%a3-%a4,%sp@-	/* 408509d4 48e7 1018 */
 	movel	%fp@(8),%d0		/* 408509d8 202e 0008 */
@@ -1036,9 +1036,9 @@ loc_40850a0e:
 	movel	%a4,%sp@-		/* 40850a16 2f0c */
 	pea	%fp@(-8)		/* 40850a18 486e fff8 */
 	movel	%fp@(8),%sp@-		/* 40850a1c 2f2e 0008 */
-	jsr	%pc@(sub_40850850)	/* 40850a20 4eba fe2e */
+	jsr	%pc@(processCommandFrom)	/* 40850a20 4eba fe2e */
 	movel	%a4@(4),%sp@-		/* 40850a24 2f2c 0004 */
-	jsr	%pc@(sub_40850980)	/* 40850a28 4eba ff56 */
+	jsr	%pc@(findModifier)	/* 40850a28 4eba ff56 */
 	tstl	%d0			/* 40850a2c 4a80 */
 	lea	%sp@(16),%sp		/* 40850a2e 4fef 0010 */
 	bnes	loc_40850a40		/* 40850a32 660c */
@@ -1077,7 +1077,7 @@ loc_40850a72:
 	moveal	ExpandMem,%a0		/* 40850a80 2078 02b6 */
 	moveal	%a0@(272),%a0		/* 40850a84 2068 0110 */
 	subqw	#1,%a0@(4)		/* 40850a88 5368 0004 */
-	jsr	%pc@(sub_40850380)	/* 40850a8c 4eba f8f2 */
+	jsr	%pc@(IsAscMac)	/* 40850a8c 4eba f8f2 */
 	tstw	%d0			/* 40850a90 4a40 */
 	beqs	loc_40850ab6		/* 40850a92 6722 */
 	moveal	ExpandMem,%a0		/* 40850a94 2078 02b6 */
@@ -1088,7 +1088,7 @@ loc_40850a72:
 	moveal	ExpandMem,%a0		/* 40850aa4 2078 02b6 */
 	moveal	%a0@(272),%a0		/* 40850aa8 2068 0110 */
 	movel	%a0@(6),%sp@-		/* 40850aac 2f28 0006 */
-	jsr	%pc@(sub_408504d0)	/* 40850ab0 4eba fa1e */
+	jsr	%pc@(SetDivTable)	/* 40850ab0 4eba fa1e */
 	addqw	#8,%sp			/* 40850ab4 504f */
 
 loc_40850ab6:
@@ -1096,7 +1096,7 @@ loc_40850ab6:
 	unlk	%fp			/* 40850abc 4e5e */
 	rts				/* 40850abe 4e75 */
 
-sub_40850ac0:
+pumpResource:
 	linkw	%fp,#-12		/* 40850ac0 4e56 fff4 */
 	moveml	%d3/%d6-%d7/%a3-%a4,%sp@-	/* 40850ac4 48e7 1318 */
 	moveal	%fp@(12),%a0		/* 40850ac8 206e 000c */
@@ -1168,7 +1168,7 @@ loc_40850b4a:
 
 	.align	16
 
-sub_40850b60:
+OnHowOften:
 	linkw	%fp,#-4			/* 40850b60 4e56 fffc */
 	moveml	%a3-%a4,%sp@-		/* 40850b64 48e7 0018 */
 	movel	%a1,%d0			/* 40850b68 2009 */
@@ -1177,7 +1177,7 @@ sub_40850b60:
 	moveal	%a3@(26),%a4		/* 40850b72 286b 001a */
 	movel	%a4,%sp@-		/* 40850b76 2f0c */
 	movel	%fp@(-4),%sp@-		/* 40850b78 2f2e fffc */
-	jsr	%pc@(sub_40850960)	/* 40850b7c 4eba fde2 */
+	jsr	%pc@(tickleModifier)	/* 40850b7c 4eba fde2 */
 	tstl	%a4@(16)		/* 40850b80 4aac 0010 */
 	addqw	#8,%sp			/* 40850b84 504f */
 	bles	loc_40850bac		/* 40850b86 6f24 */
@@ -1189,7 +1189,7 @@ sub_40850b60:
 	movel	%a4,%sp@-		/* 40850b9e 2f0c */
 	moveq	#0,%d0			/* 40850ba0 7000 */
 	movel	%d0,%sp@-		/* 40850ba2 2f00 */
-	jsr	%pc@(sub_4084f7b0)	/* 40850ba4 4eba ec0a */
+	jsr	%pc@(SetNextInterrupt)	/* 40850ba4 4eba ec0a */
 	lea	%sp@(16),%sp		/* 40850ba8 4fef 0010 */
 
 loc_40850bac:
@@ -1199,7 +1199,7 @@ loc_40850bac:
 
 	.align	16
 
-sub_40850bc0:
+OnWait:
 	linkw	%fp,#-4			/* 40850bc0 4e56 fffc */
 	moveml	%d7/%a3-%a4,%sp@-	/* 40850bc4 48e7 0118 */
 	movel	%a1,%d0			/* 40850bc8 2009 */
@@ -1223,20 +1223,20 @@ loc_40850bf2:
 	tstl	%a3@			/* 40850bf2 4a93 */
 	bnes	loc_40850bf0		/* 40850bf4 66fa */
 	movel	%a3@(66),%sp@-		/* 40850bf6 2f2b 0042 */
-	jsr	%pc@(sub_4084f7a0)	/* 40850bfa 4eba eba4 */
+	jsr	%pc@(CancelDriftOfTimer)	/* 40850bfa 4eba eba4 */
 	addqw	#4,%sp			/* 40850bfe 584f */
 	bras	loc_40850c1c		/* 40850c00 601a */
 
 loc_40850c02:
 	movel	%a4,%sp@-		/* 40850c02 2f0c */
-	jsr	%pc@(sub_408508c0)	/* 40850c04 4eba fcba */
+	jsr	%pc@(processNextCommand)	/* 40850c04 4eba fcba */
 	tstb	%d0			/* 40850c08 4a00 */
 	addqw	#4,%sp			/* 40850c0a 584f */
 	beqs	loc_40850c1c		/* 40850c0c 670e */
 	tstl	%d7			/* 40850c0e 4a87 */
 	beqs	loc_40850c2a		/* 40850c10 6718 */
 	movel	%a4,%sp@-		/* 40850c12 2f0c */
-	jsr	%pc@(sub_40850900)	/* 40850c14 4eba fcea */
+	jsr	%pc@(sendEmptyCommand)	/* 40850c14 4eba fcea */
 	addqw	#4,%sp			/* 40850c18 584f */
 	bras	loc_40850c2a		/* 40850c1a 600e */
 
@@ -1254,7 +1254,7 @@ loc_40850c2a:
 
 	.align	16
 
-sub_40850c40:
+deadProcess:
 	linkw	%fp,#-10		/* 40850c40 4e56 fff6 */
 	clrb	%fp@(-1)		/* 40850c44 422e ffff */
 	subql	#4,%sp			/* 40850c48 598f */
@@ -1292,11 +1292,11 @@ loc_40850c90:
 	.align	16
 
 sub_40850ca0:
-	bral	sub_408a3790		/* 40850ca0 60ff 0005 2aee */
+	bral	NGETTRAPADDRESS		/* 40850ca0 60ff 0005 2aee */
 
 	.align	16
 
-sub_40850cb0:
+SNDAPPDEAD:
 	linkw	%fp,#-4			/* 40850cb0 4e56 fffc */
 	moveml	%d3/%a3-%a4,%sp@-	/* 40850cb4 48e7 1018 */
 	moveal	ExpandMem,%a0		/* 40850cb8 2078 02b6 */
@@ -1313,7 +1313,7 @@ loc_40850cce:
 	lea	%a4@(132),%a0		/* 40850cce 41ec 0084 */
 	movel	%a0@-,%sp@-		/* 40850cd2 2f20 */
 	movel	%a0@-,%sp@-		/* 40850cd4 2f20 */
-	jsr	%pc@(sub_40850c40)	/* 40850cd6 4eba ff68 */
+	jsr	%pc@(deadProcess)	/* 40850cd6 4eba ff68 */
 	tstb	%d0			/* 40850cda 4a00 */
 	addqw	#8,%sp			/* 40850cdc 504f */
 	beqs	loc_40850cee		/* 40850cde 670e */
@@ -1349,7 +1349,7 @@ loc_40850d0e:
 	lea	%a3@(92),%a0		/* 40850d10 41eb 005c */
 	movel	%a0@-,%sp@-		/* 40850d14 2f20 */
 	movel	%a0@-,%sp@-		/* 40850d16 2f20 */
-	jsr	%pc@(sub_40850c40)	/* 40850d18 4eba ff26 */
+	jsr	%pc@(deadProcess)	/* 40850d18 4eba ff26 */
 	tstb	%d0			/* 40850d1c 4a00 */
 	addqw	#8,%sp			/* 40850d1e 504f */
 	beqs	loc_40850d30		/* 40850d20 670e */
@@ -1369,7 +1369,7 @@ loc_40850d32:
 	moveal	%a0@(272),%a0		/* 40850d3a 2068 0110 */
 	tstw	%a0@(4)			/* 40850d3e 4a68 0004 */
 	bnes	loc_40850d48		/* 40850d42 6604 */
-	jsr	%pc@(sub_4084f840)	/* 40850d44 4eba eafa */
+	jsr	%pc@(SndAllOff)	/* 40850d44 4eba eafa */
 
 loc_40850d48:
 	moveml	%fp@(-16),%d3/%a3-%a4	/* 40850d48 4cee 1808 fff0 */
@@ -1408,7 +1408,7 @@ loc_40850d96:
 loc_40850d9a:
 	movel	%fp@(10),%sp@-		/* 40850d9a 2f2e 000a */
 	movel	%a3,%sp@-		/* 40850d9e 2f0b */
-	jsr	%pc@(sub_40850540)	/* 40850da0 4eba f79e */
+	jsr	%pc@(insertInQueue)	/* 40850da0 4eba f79e */
 	moveb	%d0,%d7			/* 40850da4 1e00 */
 	addqw	#8,%sp			/* 40850da6 504f */
 	beqs	loc_40850dae		/* 40850da8 6704 */
@@ -1416,7 +1416,7 @@ loc_40850d9a:
 	beqs	loc_40850d9a		/* 40850dac 67ec */
 
 loc_40850dae:
-	jsr	%pc@(sub_4084f850)	/* 40850dae 4eba eaa0 */
+	jsr	%pc@(BlockInts)	/* 40850dae 4eba eaa0 */
 	movew	%d0,%d6			/* 40850db2 3c00 */
 	tstl	%a3@(16)		/* 40850db4 4aab 0010 */
 	bgts	loc_40850dde		/* 40850db8 6e24 */
@@ -1431,7 +1431,7 @@ loc_40850dae:
 	movel	%d0,%sp@-		/* 40850dd0 2f00 */
 	movel	%d0,%sp@-		/* 40850dd2 2f00 */
 	movel	%a3,%sp@-		/* 40850dd4 2f0b */
-	jsr	%pc@(sub_4084f7b0)	/* 40850dd6 4eba e9d8 */
+	jsr	%pc@(SetNextInterrupt)	/* 40850dd6 4eba e9d8 */
 	lea	%sp@(16),%sp		/* 40850dda 4fef 0010 */
 
 loc_40850dde:
@@ -1487,7 +1487,7 @@ loc_40850e46:
 	movel	%a4,%d0			/* 40850e4a 200c */
 	beqs	loc_40850e58		/* 40850e4c 670a */
 	movel	%a4@(66),%sp@-		/* 40850e4e 2f2c 0042 */
-	jsr	%pc@(sub_4084f7a0)	/* 40850e52 4eba e94c */
+	jsr	%pc@(CancelDriftOfTimer)	/* 40850e52 4eba e94c */
 	addqw	#4,%sp			/* 40850e56 584f */
 
 loc_40850e58:
@@ -1495,12 +1495,12 @@ loc_40850e58:
 	lea	%fp@(-8),%a1		/* 40850e5c 43ee fff8 */
 	movel	%a0@+,%a1@+		/* 40850e60 22d8 */
 	movel	%a0@+,%a1@+		/* 40850e62 22d8 */
-	jsr	%pc@(sub_4084f850)	/* 40850e64 4eba e9ea */
+	jsr	%pc@(BlockInts)	/* 40850e64 4eba e9ea */
 	movew	%d0,%d7			/* 40850e68 3e00 */
 	movel	%a3@(4),%sp@-		/* 40850e6a 2f2b 0004 */
 	pea	%fp@(-8)		/* 40850e6e 486e fff8 */
 	movel	%a3,%sp@-		/* 40850e72 2f0b */
-	jsr	%pc@(sub_40850850)	/* 40850e74 4eba f9da */
+	jsr	%pc@(processCommandFrom)	/* 40850e74 4eba f9da */
 	extl	%d7			/* 40850e78 48c7 */
 	movel	%d7,%d0			/* 40850e7a 2007 */
 	movew	%d0,%sr			/* 40850e7c 46c0 */
@@ -1514,7 +1514,7 @@ loc_40850e86:
 
 	.align	16
 
-sub_40850ea0:
+_SNDNEWCHANNEL:
 	linkw	%fp,#-4			/* 40850ea0 4e56 fffc */
 	moveml	%d3/%d5-%d7/%a3-%a4,%sp@-	/* 40850ea4 48e7 1718 */
 	movew	%fp@(16),%d5		/* 40850ea8 3a2e 0010 */
@@ -1560,7 +1560,7 @@ loc_40850f10:
 	andw	%a4@(28),%d0		/* 40850f12 c06c 001c */
 	beqs	loc_40850f20		/* 40850f16 6708 */
 	movel	%a4,%sp@-		/* 40850f18 2f0c */
-	jsr	%pc@(sub_408509d0)	/* 40850f1a 4eba fab4 */
+	jsr	%pc@(disposeChannel)	/* 40850f1a 4eba fab4 */
 	addqw	#4,%sp			/* 40850f1e 584f */
 
 loc_40850f20:
@@ -1632,13 +1632,13 @@ loc_40850f74:
 
 loc_40850fcc:
 	movel	%a4,%sp@-		/* 40850fcc 2f0c */
-	jsr	%pc@(sub_408509d0)	/* 40850fce 4eba fa00 */
+	jsr	%pc@(disposeChannel)	/* 40850fce 4eba fa00 */
 	movew	%d6,%fp@(22)		/* 40850fd2 3d46 0016 */
 	addqw	#4,%sp			/* 40850fd6 584f */
 	bras	loc_40851054		/* 40850fd8 607a */
 
 loc_40850fda:
-	jsr	%pc@(sub_4084f850)	/* 40850fda 4eba e874 */
+	jsr	%pc@(BlockInts)	/* 40850fda 4eba e874 */
 	movew	%d0,%d5			/* 40850fde 3a00 */
 	moveal	ExpandMem,%a0		/* 40850fe0 2078 02b6 */
 	moveal	%a0@(272),%a0		/* 40850fe4 2068 0110 */

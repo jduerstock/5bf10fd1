@@ -51,7 +51,7 @@ loc_40819034:
 	bnes	loc_408190b2		/* 4081905a 6656 */
 	movel	0x16a,%d4		/* 4081905c 2838 016a */
 	addl	%fp@(8),%d4		/* 40819060 d8ae 0008 */
-	jsr	%pc@(sub_4081af58)	/* 40819064 4eba 1ef2 */
+	jsr	%pc@(HANDLESELINPROGPSC)	/* 40819064 4eba 1ef2 */
 	bnew	loc_408190c4		/* 40819068 6600 005a */
 
 loc_4081906c:
@@ -62,7 +62,7 @@ loc_4081906c:
 
 loc_4081907a:
 	moveb	#17,%a3@(48)		/* 4081907a 177c 0011 0030 */
-	jsr	%pc@(sub_4081afda)	/* 40819080 4eba 1f58 */
+	jsr	%pc@(WAITFORSCSIINTRP_PSC)	/* 40819080 4eba 1f58 */
 	beqw	loc_408190e4		/* 40819084 6700 005e */
 	moveq	#0,%d2			/* 40819088 7400 */
 	moveb	%a3@(32),%d2		/* 4081908a 142b 0020 */
@@ -72,7 +72,7 @@ loc_4081907a:
 	moveal	%fp@(12),%a1		/* 40819098 226e 000c */
 	movew	%d2,%a1@		/* 4081909c 3282 */
 	moveb	#18,%a3@(48)		/* 4081909e 177c 0012 0030 */
-	jsr	%pc@(sub_4081afda)	/* 408190a4 4eba 1f34 */
+	jsr	%pc@(WAITFORSCSIINTRP_PSC)	/* 408190a4 4eba 1f34 */
 	beqw	loc_408190e4		/* 408190a8 6700 003a */
 	bclr	#5,%a4@(344)		/* 408190ac 08ac 0005 0158 */
 
@@ -101,7 +101,7 @@ loc_408190e4:
 	movew	#2,%sp@			/* 408190e4 3ebc 0002 */
 	movel	%sp@,%d0		/* 408190e8 2017 */
 	moveq	#4,%d6			/* 408190ea 7c04 */
-	bsrw	sub_408194fe		/* 408190ec 6100 0410 */
+	bsrw	ERROR_PSC		/* 408190ec 6100 0410 */
 	bras	loc_408190b2		/* 408190f0 60c0 */
 	bsrw	sub_408192c8		/* 408190f2 6100 01d4 */
 	bnes	loc_40819108		/* 408190f6 6610 */
@@ -115,7 +115,7 @@ loc_408190fe:
 
 loc_40819108:
 	moveq	#12,%d6			/* 40819108 7c0c */
-	bsrw	sub_408194fe		/* 4081910a 6100 03f2 */
+	bsrw	ERROR_PSC		/* 4081910a 6100 03f2 */
 	bras	loc_408190fe		/* 4081910e 60ee */
 	movew	%fp@(8),%d2		/* 40819110 342e 0008 */
 	bsrw	sub_40819302		/* 40819114 6100 01ec */
@@ -128,7 +128,7 @@ loc_4081911a:
 
 loc_40819124:
 	moveq	#12,%d6			/* 40819124 7c0c */
-	bsrw	sub_408194fe		/* 40819126 6100 03d6 */
+	bsrw	ERROR_PSC		/* 40819126 6100 03d6 */
 	bras	loc_4081911a		/* 4081912a 60ee */
 
 sub_4081912c:
@@ -208,7 +208,7 @@ loc_408191f2:
 	btst	#1,%a4@(344)		/* 408191f6 082c 0001 0158 */
 	beqw	loc_408192b6		/* 408191fc 6700 00b8 */
 	moveb	#2,%d1			/* 40819200 123c 0002 */
-	jsr	%pc@(sub_4081afa2)	/* 40819204 4eba 1d9c */
+	jsr	%pc@(WT4DREQORINTPSC)	/* 40819204 4eba 1d9c */
 	beqw	loc_4081928e		/* 40819208 6700 0084 */
 
 loc_4081920c:
@@ -281,7 +281,7 @@ loc_4081928e:
 loc_408192ac:
 	moveq	#5,%d0			/* 408192ac 7005 */
 	moveq	#3,%d6			/* 408192ae 7c03 */
-	bsrw	sub_408194fe		/* 408192b0 6100 024c */
+	bsrw	ERROR_PSC		/* 408192b0 6100 024c */
 	bras	loc_40819264		/* 408192b4 60ae */
 
 loc_408192b6:
@@ -298,11 +298,11 @@ sub_408192c8:
 	cmpib	#7,%d3			/* 408192ce 0c03 0007 */
 	bnes	loc_408192f8		/* 408192d2 6624 */
 	moveb	#16,%a3@(48)		/* 408192d4 177c 0010 0030 */
-	jsr	%pc@(sub_4081afda)	/* 408192da 4eba 1cfe */
+	jsr	%pc@(WAITFORSCSIINTRP_PSC)	/* 408192da 4eba 1cfe */
 	beqs	loc_408192f4		/* 408192de 6714 */
 	moveb	%a3@(32),%d2		/* 408192e0 142b 0020 */
 	moveb	#18,%a3@(48)		/* 408192e4 177c 0012 0030 */
-	jsr	%pc@(sub_4081afda)	/* 408192ea 4eba 1cee */
+	jsr	%pc@(WAITFORSCSIINTRP_PSC)	/* 408192ea 4eba 1cee */
 	beqs	loc_408192f4		/* 408192ee 6704 */
 	moveq	#0,%d0			/* 408192f0 7000 */
 	rts				/* 408192f2 4e75 */
@@ -323,7 +323,7 @@ sub_40819302:
 	btst	#2,%a4@(344)		/* 40819302 082c 0002 0158 */
 	beqs	loc_4081933c		/* 40819308 6732 */
 	moveb	#6,%d1			/* 4081930a 123c 0006 */
-	jsr	%pc@(sub_4081afa2)	/* 4081930e 4eba 1c92 */
+	jsr	%pc@(WT4DREQORINTPSC)	/* 4081930e 4eba 1c92 */
 	beqs	loc_40819364		/* 40819312 6750 */
 	moveb	%a3@(64),%d3		/* 40819314 162b 0040 */
 	andib	#7,%d3			/* 40819318 0203 0007 */
@@ -338,11 +338,11 @@ loc_40819322:
 	bras	loc_40819384		/* 40819334 604e */
 
 loc_40819336:
-	jsr	%pc@(sub_4081ac5c)	/* 40819336 4eba 1924 */
+	jsr	%pc@(XFER1BYTE_PSC)	/* 40819336 4eba 1924 */
 	bras	loc_40819384		/* 4081933a 6048 */
 
 loc_4081933c:
-	jsr	%pc@(sub_4081af58)	/* 4081933c 4eba 1c1a */
+	jsr	%pc@(HANDLESELINPROGPSC)	/* 4081933c 4eba 1c1a */
 	bnes	loc_4081937c		/* 40819340 663a */
 	moveq	#0,%d1			/* 40819342 7200 */
 	movew	0xb24,%d1		/* 40819344 3238 0b24 */
@@ -415,14 +415,14 @@ loc_408193d0:
 loc_408193e8:
 	cmpib	#0,%d0			/* 408193e8 0c00 0000 */
 	beqs	loc_408193fa		/* 408193ec 670c */
-	jsr	%pc@(sub_4081ac5c)	/* 408193ee 4eba 186c */
+	jsr	%pc@(XFER1BYTE_PSC)	/* 408193ee 4eba 186c */
 	bnes	loc_408193cc		/* 408193f2 66d8 */
 	moveb	%a3@(32),%d0		/* 408193f4 102b 0020 */
 	bras	loc_40819398		/* 408193f8 609e */
 
 loc_408193fa:
 	moveb	#0xee,%a3@(32)		/* 408193fa 177c 00ee 0020 */
-	jsr	%pc@(sub_4081ac5c)	/* 40819400 4eba 185a */
+	jsr	%pc@(XFER1BYTE_PSC)	/* 40819400 4eba 185a */
 	bnes	loc_408193cc		/* 40819404 66c6 */
 	bras	loc_40819398		/* 40819406 6090 */
 
@@ -431,7 +431,7 @@ loc_40819408:
 	beqs	loc_40819430		/* 4081940e 6720 */
 	moveb	#0xee,%a3@(256)		/* 40819410 177c 00ee 0100 */
 	bset	#4,%a4@(344)		/* 40819416 08ec 0004 0158 */
-	jsr	%pc@(sub_4081afda)	/* 4081941c 4eba 1bbc */
+	jsr	%pc@(WAITFORSCSIINTRP_PSC)	/* 4081941c 4eba 1bbc */
 	beqs	loc_4081942e		/* 40819420 670c */
 	bclr	#4,%a4@(344)		/* 40819422 08ac 0004 0158 */
 	bclr	#3,%a4@(344)		/* 40819428 08ac 0003 0158 */
@@ -441,7 +441,7 @@ loc_4081942e:
 
 loc_40819430:
 	moveb	#0xee,%a3@(32)		/* 40819430 177c 00ee 0020 */
-	jsr	%pc@(sub_4081ac5c)	/* 40819436 4eba 1824 */
+	jsr	%pc@(XFER1BYTE_PSC)	/* 40819436 4eba 1824 */
 	bnes	loc_408193cc		/* 4081943a 6690 */
 
 loc_4081943c:
@@ -455,25 +455,25 @@ loc_40819440:
 	bras	loc_4081945e		/* 40819454 6008 */
 
 loc_40819456:
-	jsr	%pc@(sub_4081ac5c)	/* 40819456 4eba 1804 */
+	jsr	%pc@(XFER1BYTE_PSC)	/* 40819456 4eba 1804 */
 	bnew	loc_408193cc		/* 4081945a 6600 ff70 */
 
 loc_4081945e:
 	braw	loc_40819398		/* 4081945e 6000 ff38 */
 
 loc_40819462:
-	jsr	%pc@(sub_4081ac5c)	/* 40819462 4eba 17f8 */
+	jsr	%pc@(XFER1BYTE_PSC)	/* 40819462 4eba 17f8 */
 	bnew	loc_408193cc		/* 40819466 6600 ff64 */
 	moveb	%a3@(32),%d0		/* 4081946a 102b 0020 */
 	moveb	#18,%a3@(48)		/* 4081946e 177c 0012 0030 */
-	jsr	%pc@(sub_4081afda)	/* 40819474 4eba 1b64 */
+	jsr	%pc@(WAITFORSCSIINTRP_PSC)	/* 40819474 4eba 1b64 */
 	braw	loc_40819398		/* 40819478 6000 ff1e */
 
 loc_4081947c:
-	jsr	%pc@(sub_408194dc)	/* 4081947c 4eba 005e */
+	jsr	%pc@(SCSIPCTO32BIT_PSC)	/* 4081947c 4eba 005e */
 	moveb	0xcb2,%sp@-		/* 40819480 1f38 0cb2 */
 	moveq	#1,%d0			/* 40819484 7001 */
-	jsr	%pc@(sub_40818d36)	/* 40819486 4eba f8ae */
+	jsr	%pc@(SWAPMMU)	/* 40819486 4eba f8ae */
 	moveal	%a4@(316),%a0		/* 4081948a 206c 013c */
 	moveq	#7,%d0			/* 4081948e 7007 */
 	andb	%a3@(64),%d0		/* 40819490 c02b 0040 */
@@ -490,7 +490,7 @@ loc_4081949a:
 	bras	loc_4081949a		/* 408194ae 60ea */
 
 loc_408194b0:
-	jsr	%pc@(sub_4081af32)	/* 408194b0 4eba 1a80 */
+	jsr	%pc@(WAITFORINTNOTIME_PSC)	/* 408194b0 4eba 1a80 */
 	bras	loc_408194d2		/* 408194b4 601c */
 
 loc_408194b6:
@@ -503,29 +503,29 @@ loc_408194b6:
 	bras	loc_408194b6		/* 408194cc 60e8 */
 
 loc_408194ce:
-	jsr	%pc@(sub_4081af32)	/* 408194ce 4eba 1a62 */
+	jsr	%pc@(WAITFORINTNOTIME_PSC)	/* 408194ce 4eba 1a62 */
 
 loc_408194d2:
 	moveb	%sp@+,%d0		/* 408194d2 101f */
-	jsr	%pc@(sub_40818d36)	/* 408194d4 4eba f860 */
+	jsr	%pc@(SWAPMMU)	/* 408194d4 4eba f860 */
 	braw	loc_40819398		/* 408194d8 6000 febe */
 
-sub_408194dc:
+SCSIPCTO32BIT_PSC:
 	movel	%sp@,%d0		/* 408194dc 2017 */
 	.short	0xa091			/* 408194de a091 */
 	movel	%d0,%sp@		/* 408194e0 2e80 */
 	rts				/* 408194e2 4e75 */
 
-	jsr	%pc@(sub_408194dc)	/* 408194e4 4eba fff6 */
+	jsr	%pc@(SCSIPCTO32BIT_PSC)	/* 408194e4 4eba fff6 */
 	moveq	#1,%d0			/* 408194e8 7001 */
-	jsr	%pc@(sub_40818d36)	/* 408194ea 4eba f84a */
+	jsr	%pc@(SWAPMMU)	/* 408194ea 4eba f84a */
 	moveal	%a4@(316),%a0		/* 408194ee 206c 013c */
 	movel	%a0@,%d5		/* 408194f2 2a10 */
-	jsr	%pc@(sub_40818d36)	/* 408194f4 4eba f840 */
+	jsr	%pc@(SWAPMMU)	/* 408194f4 4eba f840 */
 	btst	#9,%d5			/* 408194f8 0805 0009 */
 	rts				/* 408194fc 4e75 */
 
-sub_408194fe:
+ERROR_PSC:
 	moveal	%a4@(468),%a0		/* 408194fe 206c 01d4 */
 	jsr	%a0@			/* 40819502 4e90 */
 	rts				/* 40819504 4e75 */
@@ -534,7 +534,7 @@ sub_408194fe:
 
 	.align	16
 
-sub_40819510:
+DOSPINDOWN:
 	linkw	%fp,#-14		/* 40819510 4e56 fff2 */
 	lea	%fp@(-14),%a0		/* 40819514 41ee fff2 */
 	movew	#16,%a0@		/* 40819518 30bc 0010 */
@@ -553,7 +553,7 @@ loc_40819542:
 	unlk	%fp			/* 40819542 4e5e */
 	rts				/* 40819544 4e75 */
 
-sub_40819546:
+SLEEPTASK:
 	movel	%a1,%sp@-		/* 40819546 2f09 */
 	cmpiw	#2,%d0			/* 40819548 0c40 0002 */
 	beqs	loc_40819564		/* 4081954c 6716 */
@@ -577,11 +577,11 @@ loc_40819570:
 	moveal	%sp@+,%a1		/* 40819570 225f */
 	rts				/* 40819572 4e75 */
 
-sub_40819574:
+__v__CLEARIRQ:
 	moveb	%a3@(112),%d1		/* 40819574 122b 0070 */
 	bral	CLEARSCSIINT		/* 40819578 60ff ffff 691c */
 
-sub_4081957e:
+__v__DISENABLE:
 	tstl	%d0			/* 4081957e 4a80 */
 	beqs	loc_40819588		/* 40819580 6706 */
 	bral	loc_4080fe7a		/* 40819582 60ff ffff 68f6 */
@@ -589,7 +589,7 @@ sub_4081957e:
 loc_40819588:
 	bral	DISABLESCSIINTS		/* 40819588 60ff ffff 68fe */
 
-sub_4081958e:
+__v__BUSERRHANDLER:
 	movel	%d0,%sp@-		/* 4081958e 2f00 */
 	moveq	#-100,%d0		/* 40819590 709c */
 	andl	%sp@(20),%d0		/* 40819592 c0af 0014 */
@@ -659,7 +659,7 @@ loc_408195c0:
 	.short	0x7005	/* 40819616 7005 */
 	rts				/* 40819618 4e75 */
 
-sub_4081961a:
+__v__ARB:
 	.short	0x48e7	/* 4081961a 48e7 */
 	.short	0x60f0	/* 4081961c 60f0 */
 	.short	0x3b7c	/* 4081961e 3b7c */
@@ -746,7 +746,7 @@ sub_4081961a:
 	.short	0x4a80	/* 408196c0 4a80 */
 	rts				/* 408196c2 4e75 */
 
-sub_408196c4:
+__v__SEL:
 	.short	0x48e7	/* 408196c4 48e7 */
 	.short	0x7ffc	/* 408196c6 7ffc */
 	.short	0x3b7c	/* 408196c8 3b7c */
@@ -827,7 +827,7 @@ sub_408196c4:
 	.short	0x4a80	/* 4081975e 4a80 */
 	rts				/* 40819760 4e75 */
 
-sub_40819762:
+__v__DELAY22:
 	.short	0x2078	/* 40819762 2078 */
 	.short	0x01d4	/* 40819764 01d4 */
 	.short	0x4a28	/* 40819766 4a28 */
@@ -838,7 +838,7 @@ sub_40819762:
 	.short	0x1a00	/* 40819770 1a00 */
 	rts				/* 40819772 4e75 */
 
-sub_40819774:
+__v__SCSIINTHND:
 	.short	0x48e7	/* 40819774 48e7 */
 	.short	0xfffc	/* 40819776 fffc */
 	.short	0x2878	/* 40819778 2878 */
@@ -967,7 +967,7 @@ sub_40819774:
 	.short	0x3fff	/* 4081986e 3fff */
 	rts				/* 40819870 4e75 */
 
-sub_40819872:
+__v__TRANSFER:
 	linkw	%fp,#-6			/* 40819872 4e56 fffa */
 	moveq	#5,%d0			/* 40819876 7005 */
 	cmpib	#4,0x12f		/* 40819878 0c38 0004 012f */
@@ -997,7 +997,7 @@ loc_408198b8:
 	unlk	%fp			/* 408198b8 4e5e */
 	rts				/* 408198ba 4e75 */
 
-sub_408198bc:
+__v__SLOWREAD:
 	.short	0x206c	/* 408198bc 206c */
 	.short	0x0044	/* 408198be 0044 */
 	.short	0xd0fc	/* 408198c0 d0fc */
@@ -1044,7 +1044,7 @@ sub_408198bc:
 	.short	0x9285	/* 40819912 9285 */
 	rts				/* 40819914 4e75 */
 
-sub_40819916:
+__v__SLOWWRITE:
 	.short	0x206c	/* 40819916 206c */
 	.short	0x0044	/* 40819918 0044 */
 	.short	0xd0ec	/* 4081991a d0ec */
@@ -1129,7 +1129,7 @@ sub_40819916:
 	.short	0x9285	/* 408199b8 9285 */
 	rts				/* 408199ba 4e75 */
 
-sub_408199bc:
+__v__VFASTWRITEOSS:
 	.short	0x206d	/* 408199bc 206d */
 	.short	0x0004	/* 408199be 0004 */
 	.short	0x41e8	/* 408199c0 41e8 */
@@ -1156,7 +1156,7 @@ sub_408199bc:
 	.short	0x4ed0	/* 408199ea 4ed0 */
 	rts				/* 408199ec 4e75 */
 
-sub_408199ee:
+__v__PFASTWRITEOSS:
 	moveq	#0,%d0			/* 408199ee 7000 */
 	.short	0x1747	/* 408199f0 1747 */
 	.short	0x0030	/* 408199f2 0030 */
@@ -1197,10 +1197,10 @@ sub_408199ee:
 	.short	0x007d	/* 40819a38 007d */
 	rts				/* 40819a3a 4e75 */
 
-sub_40819a3c:
+__v__PFASTWRITE:
 	rts				/* 40819a3c 4e75 */
 
-sub_40819a3e:
+__v__FASTWRITE:
 	.short	0x0838	/* 40819a3e 0838 */
 	.short	0x0000	/* 40819a40 0000 */
 	.short	0x0dd2	/* 40819a42 0dd2 */
@@ -1287,7 +1287,7 @@ sub_40819a3e:
 	.short	0x66ea	/* 40819ae4 66ea */
 	rts				/* 40819ae6 4e75 */
 
-sub_40819ae8:
+__v__FASTWRITEOSS:
 	.short	0x200a	/* 40819ae8 200a */
 	.short	0x4eb0	/* 40819aea 4eb0 */
 	.short	0x81e1	/* 40819aec 81e1 */
@@ -1432,7 +1432,7 @@ sub_40819ae8:
 	.short	0x60d6	/* 40819c02 60d6 */
 	rts				/* 40819c04 4e75 */
 
-sub_40819c06:
+__v__VFASTREADOSS:
 	.short	0x206d	/* 40819c06 206d */
 	.short	0x0004	/* 40819c08 0004 */
 	.short	0x41e8	/* 40819c0a 41e8 */
@@ -1459,7 +1459,7 @@ sub_40819c06:
 	.short	0x4ed0	/* 40819c34 4ed0 */
 	rts				/* 40819c36 4e75 */
 
-sub_40819c38:
+__v__PFASTREADOSS:
 	moveq	#0,%d0			/* 40819c38 7000 */
 	.short	0x277c	/* 40819c3a 277c */
 	.short	0xffff	/* 40819c3c ffff */
@@ -1483,10 +1483,10 @@ sub_40819c38:
 	.short	0x007d	/* 40819c60 007d */
 	rts				/* 40819c62 4e75 */
 
-sub_40819c64:
+__v__PFASTREAD:
 	rts				/* 40819c64 4e75 */
 
-sub_40819c66:
+__v__FASTREAD:
 	.short	0x206c	/* 40819c66 206c */
 	.short	0x0048	/* 40819c68 0048 */
 	.short	0xd0fc	/* 40819c6a d0fc */
@@ -1566,7 +1566,7 @@ sub_40819c66:
 	.short	0x66ea	/* 40819cfe 66ea */
 	rts				/* 40819d00 4e75 */
 
-sub_40819d02:
+__v__FASTREADOSS:
 	.short	0x200a	/* 40819d02 200a */
 	.short	0x4eb0	/* 40819d04 4eb0 */
 	.short	0x81e1	/* 40819d06 81e1 */
@@ -1689,7 +1689,7 @@ sub_40819d02:
 	.short	0x60e4	/* 40819df0 60e4 */
 	rts				/* 40819df2 4e75 */
 
-sub_40819df4:
+__v__SLOWCOMP:
 	.short	0x206c	/* 40819df4 206c */
 	.short	0x0044	/* 40819df6 0044 */
 	.short	0xd0fc	/* 40819df8 d0fc */
@@ -1742,7 +1742,7 @@ sub_40819df4:
 	.short	0x7606	/* 40819e56 7606 */
 	rts				/* 40819e58 4e75 */
 
-sub_40819e5a:
+__v__FASTCOMP:
 	.short	0x206c	/* 40819e5a 206c */
 	.short	0x0048	/* 40819e5c 0048 */
 	.short	0xd0fc	/* 40819e5e d0fc */
@@ -1832,7 +1832,7 @@ sub_40819e5a:
 	CallVector	0x205c 34	/* 40819f78 2f30 81e2 205c 0088 */
 	rts				/* 40819f80 4e75 */
 
-sub_40819f82:
+SCSIINTHND:
 	CallVector	0x205c 33	/* 40819f82 2f30 81e2 205c 0084 */
 	rts				/* 40819f8a 4e75 */
 
@@ -1845,7 +1845,7 @@ sub_40819f82:
 
 	.align	16
 
-sub_40819fb0:
+INITHW_SCSI96:
 	moveb	#2,%a3@(48)		/* 40819fb0 177c 0002 0030 */
 	clrb	%a3@(48)		/* 40819fb6 422b 0030 */
 	moveb	#1,%a3@(48)		/* 40819fba 177c 0001 0030 */

@@ -78,7 +78,7 @@ loc_408880d4:
 	bnes	loc_4088811e		/* 408880e6 6636 */
 	clrl	%sp@-			/* 408880e8 42a7 */
 	movel	%fp@(-18),%sp@-		/* 408880ea 2f2e ffee */
-	jsr	%pc@(sub_408882fe)	/* 408880ee 4eba 020e */
+	jsr	%pc@(FINDINVERSETABLE)	/* 408880ee 4eba 020e */
 	moveal	%sp@+,%a0		/* 408880f2 205f */
 	tstl	%a0			/* 408880f4 4a88 */
 	bnes	loc_4088811e		/* 408880f6 6626 */
@@ -245,7 +245,7 @@ byte_4088829e:
 
 	.align	16
 
-sub_408882d0:
+__v__FINDINVERSETABLE:
 	.short	0x2077,0x8161,0x0004	/* moveal ([4,%sp]),%a0	/* 408882d0 2077 8161 0004 */
 	movel	%a0@,%d0		/* 408882d6 2010 */
 	moveal	0x8a8,%a0		/* 408882d8 2078 08a8 */
@@ -267,13 +267,13 @@ loc_408882f6:
 	movel	%a2,%sp@(8)		/* 408882f6 2f4a 0008 */
 	rtd	#4			/* 408882fa 4e74 0004 */
 
-sub_408882fe:
+FINDINVERSETABLE:
 	CallVector	0x2054 35	/* 408882fe 2f30 81e2 2054 008c */
 	rts				/* 40888306 4e75 */
 
 	.align	16
 
-sub_40888310:
+__v__GETGWORLD:
 	moveal	%sp@(8),%a0		/* 40888310 206f 0008 */
 	moveal	%a5@,%a1		/* 40888314 2255 */
 	movel	%a1@,%a0@		/* 40888316 2091 */
@@ -286,7 +286,7 @@ sub_40888310:
 
 	.align	16
 
-sub_40888330:
+__v__SETGWORLD:
 	moveal	%a5@,%a0		/* 40888330 2055 */
 	movel	%sp@(8),%a0@		/* 40888332 20af 0008 */
 	moveal	%sp@(4),%a1		/* 40888336 226f 0004 */
@@ -310,7 +310,7 @@ loc_4088835e:
 	CallVector	0x2054 37	/* 40888366 2f30 81e2 2054 0094 */
 	rts				/* 4088836e 4e75 */
 
-sub_40888370:
+__v__DISPOSEGWORLD:
 	moveal	%sp@(4),%a0		/* 40888370 206f 0004 */
 	movew	%a0@(6),%d0		/* 40888374 3028 0006 */
 	andiw	#-16383,%d0		/* 40888378 0240 c001 */
@@ -357,7 +357,7 @@ loc_408883d8:
 
 	.align	16
 
-sub_408883f0:
+__v__GETGWORLDDEVICE:
 	moveal	%sp@(4),%a0		/* 408883f0 206f 0004 */
 	movew	%a0@(6),%d0		/* 408883f4 3028 0006 */
 	andiw	#0xc001,%d0		/* 408883f8 0240 c001 */
@@ -378,7 +378,7 @@ loc_40888416:
 
 	.align	16
 
-sub_40888430:
+__v__UPDATEGWORLD:
 	.short	0x4e56	/* 40888430 4e56 */
 	.short	0xff9a	/* 40888432 ff9a */
 	.short	0x48e7	/* 40888434 48e7 */
@@ -1741,7 +1741,7 @@ sub_40888430:
 
 	.align	16
 
-sub_40888ed0:
+__v__QDDONE:
 	.short	0x1f7c	/* 40888ed0 1f7c */
 	.short	0x0001	/* 40888ed2 0001 */
 	.short	0x0008	/* 40888ed4 0008 */
@@ -1755,7 +1755,7 @@ sub_40888ed0:
 
 	.align	16
 
-sub_40888ef0:
+__v__LOCKPIXELS:
 	.short	0x1f7c	/* 40888ef0 1f7c */
 	.short	0x0001	/* 40888ef2 0001 */
 	.short	0x0008	/* 40888ef4 0008 */
@@ -1792,7 +1792,7 @@ sub_40888ef0:
 
 	.align	16
 
-sub_40888f40:
+__v__UNLOCKPIXELS:
 	.short	0x2277	/* 40888f40 2277 */
 	.short	0x8161	/* 40888f42 8161 */
 	.short	0x0004	/* 40888f44 0004 */
@@ -1821,7 +1821,7 @@ sub_40888f40:
 
 	.align	16
 
-sub_40888f80:
+__v__PORTCHANGED:
 	.short	0x4e74	/* 40888f80 4e74 */
 	.short	0x0004	/* 40888f82 0004 */
 	.short	0x2f30	/* 40888f84 2f30 */
@@ -1832,7 +1832,7 @@ sub_40888f80:
 
 	.align	16
 
-sub_40888f90:
+__v__PIXPATCHANGED:
 	.short	0x206f	/* 40888f90 206f */
 	.short	0x0004	/* 40888f92 0004 */
 	.short	0x2050	/* 40888f94 2050 */
@@ -1849,7 +1849,7 @@ sub_40888f90:
 
 	.align	16
 
-sub_40888fb0:
+__v__CTABCHANGED:
 	.short	0x42a7	/* 40888fb0 42a7 */
 	.short	0x4eb0	/* 40888fb2 4eb0 */
 	.short	0x81e1	/* 40888fb4 81e1 */
@@ -1867,7 +1867,7 @@ sub_40888fb0:
 	.short	0x00b8	/* 40888fcc 00b8 */
 	rts				/* 40888fce 4e75 */
 
-sub_40888fd0:
+__v__GDEVICECHANGED:
 	.short	0x4e74	/* 40888fd0 4e74 */
 	.short	0x0004	/* 40888fd2 0004 */
 	.short	0x2f30	/* 40888fd4 2f30 */
@@ -1878,7 +1878,7 @@ sub_40888fd0:
 
 	.align	16
 
-sub_40888fe0:
+__v__ALLOWPURGEPIXELS:
 	.short	0x2277	/* 40888fe0 2277 */
 	.short	0x8161	/* 40888fe2 8161 */
 	.short	0x0004	/* 40888fe4 0004 */

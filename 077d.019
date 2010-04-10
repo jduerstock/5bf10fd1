@@ -1164,7 +1164,7 @@ SETSUPERVISORMODE:
 
 	.align	16
 
-sub_40813940:
+NONVMDEFERUSERFN:
 	.short	0x48e7	/* 40813940 48e7 */
 	.short	0x70f0	/* 40813942 70f0 */
 	.short	0x2248	/* 40813944 2248 */
@@ -1239,7 +1239,7 @@ sub_408139e4:
 loc_408139ea:
 	andiw	#1023,%d0		/* 408139ea 0240 03ff */
 	lea	@(0x0e00,%d0:w:4),%a1	/* 408139ee 43f0 05a0 0e00 */
-	bras	sub_40813a2e		/* 408139f4 6038 */
+	bras	CACHEFLUSH		/* 408139f4 6038 */
 
 loc_408139f6:
 	andiw	#511,%d0		/* 408139f6 0240 01ff */
@@ -1255,27 +1255,27 @@ loc_408139f6:
 loc_40813a0a:
 	andiw	#255,%d0		/* 40813a0a 0240 00ff */
 	lea	@(0x0400,%d0:w:4),%a1	/* 40813a0e 43f0 05a0 0400 */
-	bras	sub_40813a2e		/* 40813a14 6018 */
+	bras	CACHEFLUSH		/* 40813a14 6018 */
 
-sub_40813a16:
+GETTRAPADDRESSTRAP:
 	bsrw	TRAPADDRESSBITS		/* 40813a16 6100 00f6 */
 	bsrs	sub_408139e4		/* 40813a1a 61c8 */
 	moveal	%a1@,%a0		/* 40813a1c 2051 */
 	moveq	#0,%d0			/* 40813a1e 7000 */
 	rts				/* 40813a20 4e75 */
 
-sub_40813a22:
+SETTRAPADDRESSTRAP:
 	bsrw	TRAPADDRESSBITS		/* 40813a22 6100 00ea */
 	bsrs	sub_408139e4		/* 40813a26 61bc */
 	movel	%a0,%a1@		/* 40813a28 2288 */
 	moveq	#0,%d0			/* 40813a2a 7000 */
 	rts				/* 40813a2c 4e75 */
 
-sub_40813a2e:
+CACHEFLUSH:
 	movel	0x6f4,%sp@-		/* 40813a2e 2f38 06f4 */
 	rts				/* 40813a32 4e75 */
 
-sub_40813a34:
+VCACHEFLUSH:
 	.short	0x2f01	/* 40813a34 2f01 */
 	.short	0x4e7a	/* 40813a36 4e7a */
 	.short	0x1002	/* 40813a38 1002 */
@@ -1297,7 +1297,7 @@ loc_40813a52:
 	movel	%a0,0x28		/* 40813a52 21c8 0028 */
 
 INITDISPATCHER:
-	lea	%pc@(sub_40813aae),%a4	/* 40813a56 49fa 0056 */
+	lea	%pc@(__v__BADTRAP),%a4	/* 40813a56 49fa 0056 */
 	moveal	0x2ae,%a3		/* 40813a5a 2678 02ae */
 	moveal	%a3,%a2			/* 40813a5e 244b */
 	addal	%a3@(34),%a2		/* 40813a60 d5eb 0022 */
@@ -1341,7 +1341,7 @@ loc_40813aa8:
 	movel	%a0,0x28		/* 40813aa8 21c8 0028 */
 	rts				/* 40813aac 4e75 */
 
-sub_40813aae:
+__v__BADTRAP:
 	moveml	%d0-%sp,0xc30		/* 40813aae 48f8 */
 	moveq	#12,%d0			/* 40813ab4 700c */
 	jmp	%pc@(sub_40813ad0)	/* 40813ab6 4efa 0018 */

@@ -46,7 +46,7 @@ loc_4084f09c:
 	unlk	%fp			/* 4084f09c 4e5e */
 	rts				/* 4084f09e 4e75 */
 
-sub_4084f0a0:
+LoadSoundInputDriver:
 	CallVector	0x2070 24	/* 4084f0a0 2f30 81e2 2070 0060 */
 	rts				/* 4084f0a8 4e75 */
 
@@ -120,7 +120,7 @@ sub_4084f128:
 	bnes	loc_4084f17a		/* 4084f15a 661e */
 	moveq	#14,%d0			/* 4084f15c 700e */
 	.short	0xa71e			/* 4084f15e a71e */
-	lea	%pc@(sub_4084f78a),%a1	/* 4084f160 43fa 0628 */
+	lea	%pc@(SndVBLInt),%a1	/* 4084f160 43fa 0628 */
 	movel	%a1,%a0@(6)		/* 4084f164 2149 0006 */
 	movew	#1,%a0@(4)		/* 4084f168 317c 0001 0004 */
 	movew	#30,%a0@(10)		/* 4084f16e 317c 001e 000a */
@@ -744,7 +744,7 @@ byte_4084f202:
 	.short	0x0001	/* 4084f638 0001 */
 	.short	0x0200	/* 4084f63a 0200 */
 
-sub_4084f63c:
+__v__EnableASCInts:
 	.short	0x2f08	/* 4084f63c 2f08 */
 	.short	0x2078	/* 4084f63e 2078 */
 	.short	0x0cec	/* 4084f640 0cec */
@@ -754,7 +754,7 @@ sub_4084f63c:
 	.short	0x205f	/* 4084f648 205f */
 	rts				/* 4084f64a 4e75 */
 
-sub_4084f64c:
+__v__DisableASCInts:
 	.short	0x2f08	/* 4084f64c 2f08 */
 	.short	0x2078	/* 4084f64e 2078 */
 	.short	0x0cec	/* 4084f650 0cec */
@@ -764,7 +764,7 @@ sub_4084f64c:
 	.short	0x205f	/* 4084f658 205f */
 	rts				/* 4084f65a 4e75 */
 
-sub_4084f65c:
+__v__ClearASCInt:
 	.short	0x2f08	/* 4084f65c 2f08 */
 	.short	0x2078	/* 4084f65e 2078 */
 	.short	0x0cec	/* 4084f660 0cec */
@@ -804,7 +804,7 @@ sub_4084f65c:
 	.short	0x46df	/* 4084f6a4 46df */
 	rts				/* 4084f6a6 4e75 */
 
-sub_4084f6a8:
+__v__SndVBLInt:
 	.short	0x317c	/* 4084f6a8 317c */
 	.short	0x001e	/* 4084f6aa 001e */
 	.short	0x000a	/* 4084f6ac 000a */
@@ -929,13 +929,13 @@ sub_4084f730:
 	.short	0x0064	/* 4084f786 0064 */
 	rts				/* 4084f788 4e75 */
 
-sub_4084f78a:
+SndVBLInt:
 	CallVector	0x2070 28	/* 4084f78a 2f30 81e2 2070 0070 */
 	rts				/* 4084f792 4e75 */
 
 	.align	16
 
-sub_4084f7a0:
+CancelDriftOfTimer:
 	moveal	%sp@(4),%a0		/* 4084f7a0 206f 0004 */
 	.short	0xa059			/* 4084f7a4 a059 */
 	clrl	%a0@(14)		/* 4084f7a6 42a8 000e */
@@ -944,7 +944,7 @@ sub_4084f7a0:
 
 	.align	16
 
-sub_4084f7b0:
+SetNextInterrupt:
 	moveal	%sp@(16),%a0		/* 4084f7b0 206f 0010 */
 	tstl	%sp@(8)			/* 4084f7b4 4aaf 0008 */
 	bnes	loc_4084f7ce		/* 4084f7b8 6614 */
@@ -1003,7 +1003,7 @@ word_4084f7f0:
 	.short	0x0000	/* 4084f81c 0000 */
 	.short	0x0000	/* 4084f81e 0000 */
 
-sub_4084f820:
+CalculateSlod:
 	.short	0x206f	/* 4084f820 206f */
 	.short	0x0004	/* 4084f822 0004 */
 	moveq	#0,%d0			/* 4084f824 7000 */
@@ -1021,7 +1021,7 @@ sub_4084f820:
 
 	.align	16
 
-sub_4084f840:
+SndAllOff:
 	.short	0x2078	/* 4084f840 2078 */
 	.short	0x01d4	/* 4084f842 01d4 */
 	.short	0x08d0	/* 4084f844 08d0 */
@@ -1030,7 +1030,7 @@ sub_4084f840:
 
 	.align	16
 
-sub_4084f850:
+BlockInts:
 	.short	0x40c0	/* 4084f850 40c0 */
 	.short	0x3200	/* 4084f852 3200 */
 	.short	0x0241	/* 4084f854 0241 */
@@ -1048,7 +1048,7 @@ sub_4084f850:
 
 	.align	16
 
-sub_4084f870:
+__v__gestaltSound:
 	linkw	%fp,#-256		/* 4084f870 4e56 ff00 */
 	movel	%d3,%sp@-		/* 4084f874 2f03 */
 	movel	#1835098984,%d0		/* 4084f876 203c 6d61 6368 */
@@ -1170,13 +1170,13 @@ byte_4084f954:
 	.short	0x0000	/* 4084f97c 0000 */
 	.short	0x5b00	/* 4084f97e 5b00 */
 
-sub_4084f980:
+gestaltSound:
 	CallVector	0x2070 21	/* 4084f980 2f30 81e2 2070 0054 */
 	rts				/* 4084f988 4e75 */
 
 	.align	16
 
-sub_4084f990:
+_UTOX:
 	movel	%sp@,%sp@-		/* 4084f990 2f17 */
 	clrl	%sp@(4)			/* 4084f992 42af 0004 */
 	pea	%sp@(4)			/* 4084f996 486f 0004 */
@@ -1202,27 +1202,27 @@ sub_4084f990:
 	.short	0x756e	/* 4084f9c6 756e */
 	.short	0x6420	/* 4084f9c8 6420 */
 
-sub_4084f9ca:
+__v__SOUNDOPENCOMMON:
 	.short	0x6124	/* 4084f9ca 6124 */
 	.short	0x6734	/* 4084f9cc 6734 */
 	.short	0x6000	/* 4084f9ce 6000 */
 	.short	0x04bc	/* 4084f9d0 04bc */
 
-sub_4084f9d2:
+__v__SOUNDPRIMECOMMON:
 	.short	0x611c	/* 4084f9d2 611c */
 	.short	0x6700	/* 4084f9d4 6700 */
 	.short	0x0150	/* 4084f9d6 0150 */
 	.short	0x6000	/* 4084f9d8 6000 */
 	.short	0x058a	/* 4084f9da 058a */
 
-sub_4084f9dc:
+__v__SOUNDCTLCOMMON:
 	.short	0x6112	/* 4084f9dc 6112 */
 	.short	0x6700	/* 4084f9de 6700 */
 	.short	0x0124	/* 4084f9e0 0124 */
 	.short	0x6000	/* 4084f9e2 6000 */
 	.short	0x0532	/* 4084f9e4 0532 */
 
-sub_4084f9e6:
+__v__SOUNDCLOSECOMMON:
 	.short	0x6108	/* 4084f9e6 6108 */
 	.short	0x6700	/* 4084f9e8 6700 */
 	.short	0x0076	/* 4084f9ea 0076 */
@@ -1384,7 +1384,7 @@ sub_4084fa7e:
 	.short	0x6100	/* 4084fb16 6100 */
 	.short	0xff66	/* 4084fb18 ff66 */
 
-sub_4084fb1a:
+__v__SOUNDSTATUS:
 	.short	0x6000	/* 4084fb1a 6000 */
 	.short	0x0186	/* 4084fb1c 0186 */
 	.short	0x3028	/* 4084fb1e 3028 */

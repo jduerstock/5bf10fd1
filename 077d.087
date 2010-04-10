@@ -30,7 +30,7 @@
 
 	.align	16
 
-sub_40857040:
+__v__PORTTOBITMAP:
 	.short	0x5448	/* 40857040 5448 */
 	.short	0x4a68	/* 40857042 4a68 */
 	.short	0x0004	/* 40857044 0004 */
@@ -39,13 +39,13 @@ sub_40857040:
 	.short	0x2050	/* 4085704a 2050 */
 	rts				/* 4085704c 4e75 */
 
-sub_4085704e:
+PORTTOBITMAP:
 	CallVector	0x2084 52	/* 4085704e 2f30 81e2 2084 00d0 */
 	rts				/* 40857056 4e75 */
 
 	.align	16
 
-sub_40857060:
+__v__SETUPCOLOR:
 	.short	0x48e7	/* 40857060 48e7 */
 	.short	0x5000	/* 40857062 5000 */
 	.short	0x3600	/* 40857064 3600 */
@@ -87,8 +87,8 @@ sub_40857060:
 
 	.align	16
 
-sub_408570b0:
-	bsrs	sub_408570cc		/* 408570b0 611a */
+NEWSTRING:
+	bsrs	GETSPTR		/* 408570b0 611a */
 	.short	0xa9e3			/* 408570b2 a9e3 */
 	movel	%a0,%sp@(8)		/* 408570b4 2f48 0008 */
 	movel	%sp@+,%sp@		/* 408570b8 2e9f */
@@ -96,14 +96,14 @@ sub_408570b0:
 
 	.align	16
 
-sub_408570c0:
+__v__GETSPTR:
 	moveal	%sp@(8),%a0		/* 408570c0 206f 0008 */
 	moveq	#0,%d0			/* 408570c4 7000 */
 	moveb	%a0@,%d0		/* 408570c6 1010 */
 	addqw	#1,%d0			/* 408570c8 5240 */
 	rts				/* 408570ca 4e75 */
 
-sub_408570cc:
+GETSPTR:
 	.short	0x2f30	/* 408570cc 2f30 */
 	.short	0x81e2	/* 408570ce 81e2 */
 	.short	0x2084	/* 408570d0 2084 */
@@ -112,15 +112,15 @@ sub_408570cc:
 
 	.align	16
 
-sub_408570e0:
+SETSTRING:
 	moveal	%sp@(8),%a1		/* 408570e0 226f 0008 */
-	bsrs	sub_408570cc		/* 408570e4 61e6 */
+	bsrs	GETSPTR		/* 408570e4 61e6 */
 	.short	0xa9e2			/* 408570e6 a9e2 */
-	braw	sub_40857162		/* 408570e8 6000 0078 */
+	braw	TWOPARMEXIT		/* 408570e8 6000 0078 */
 
 	.align	16
 
-sub_408570f0:
+__v__PREVWINDOW:
 	movel	%d0,%sp@-		/* 408570f0 2f00 */
 	moveal	0x9d6,%a1		/* 408570f2 2278 09d6 */
 	subal	%a0,%a0			/* 408570f6 91c8 */
@@ -145,7 +145,7 @@ loc_40857106:
 
 	.align	16
 
-sub_40857120:
+__v__INSERTWINDOW:
 	.short	0x222f	/* 40857120 222f */
 	.short	0x0008	/* 40857122 0008 */
 	.short	0x2241	/* 40857124 2241 */
@@ -172,22 +172,22 @@ sub_40857120:
 	.short	0x2141	/* 4085714e 2141 */
 	.short	0x0090	/* 40857150 0090 */
 
-sub_40857152:
+__v__TWOPARMEXIT:
 	.short	0x205f	/* 40857152 205f */
 	.short	0x504f	/* 40857154 504f */
 	.short	0x4ed0	/* 40857156 4ed0 */
 
-sub_40857158:
+INSERTWINDOW:
 	CallVector	0x2084 56	/* 40857158 2f30 81e2 2084 00e0 */
 	rts				/* 40857160 4e75 */
 
-sub_40857162:
+TWOPARMEXIT:
 	CallVector	0x2084 57	/* 40857162 2f30 81e2 2084 00e4 */
 	rts				/* 4085716a 4e75 */
 
 	.align	16
 
-sub_40857170:
+__v__DELETEWINDOW:
 	.short	0x202f	/* 40857170 202f */
 	.short	0x0004	/* 40857172 0004 */
 	.short	0x6100	/* 40857174 6100 */
@@ -201,10 +201,10 @@ sub_40857170:
 	.short	0x0090	/* 40857184 0090 */
 	.short	0x0090	/* 40857186 0090 */
 
-sub_40857188:
+__v__ONEPARMEXIT:
 	.short	0x2e9f	/* 40857188 2e9f */
 
-sub_4085718a:
+__v__WRTS1:
 	rts				/* 4085718a 4e75 */
 
 	CallVector	0x2084 58	/* 4085718c 2f30 81e2 2084 00e8 */
@@ -218,7 +218,7 @@ sub_4085718a:
 
 	.align	16
 
-sub_408571b0:
+__v__CLIPABOVEGUTS:
 	.short	0x48e7	/* 408571b0 48e7 */
 	.short	0x0830	/* 408571b2 0830 */
 	.short	0x2078	/* 408571b4 2078 */
@@ -244,7 +244,7 @@ sub_408571b0:
 	.short	0x00f4	/* 408571dc 00f4 */
 	rts				/* 408571de 4e75 */
 
-sub_408571e0:
+__v__SUBSTRUCTLOOP:
 	.short	0x2678	/* 408571e0 2678 */
 	.short	0x09d6	/* 408571e2 09d6 */
 	.short	0xb7ca	/* 408571e4 b7ca */
@@ -265,7 +265,7 @@ sub_408571e0:
 
 	.align	16
 
-sub_40857210:
+__v__PAINTONEGUTS:
 	.short	0x48e7	/* 40857210 48e7 */
 	.short	0x1830	/* 40857212 1830 */
 	.short	0x246f	/* 40857214 246f */
@@ -275,7 +275,7 @@ sub_40857210:
 	.short	0x200a	/* 4085721c 200a */
 	.short	0x6608	/* 4085721e 6608 */
 
-sub_40857220:
+__v__PAINTODONE:
 	.short	0x4cdf	/* 40857220 4cdf */
 	.short	0x0c18	/* 40857222 0c18 */
 	.short	0x6000	/* 40857224 6000 */
@@ -356,7 +356,7 @@ sub_40857220:
 
 	.align	16
 
-sub_408572c0:
+__v__SETWPCLIP:
 	.short	0x6100	/* 408572c0 6100 */
 	.short	0x0218	/* 408572c2 0218 */
 	.short	0x2678	/* 408572c4 2678 */
@@ -370,7 +370,7 @@ sub_408572c0:
 
 	.align	16
 
-sub_408572e0:
+__v__TESTCLIP:
 	.short	0x554f	/* 408572e0 554f */
 	.short	0x2f03	/* 408572e2 2f03 */
 	.short	0xa8e2	/* 408572e4 a8e2 */
@@ -388,7 +388,7 @@ sub_408572e0:
 
 	.align	16
 
-sub_40857300:
+__v__PAINTDESK:
 	.short	0x2038	/* 40857300 2038 */
 	.short	0x0a6c	/* 40857302 0a6c */
 	.short	0x6706	/* 40857304 6706 */
@@ -437,7 +437,7 @@ sub_40857300:
 
 	.align	16
 
-sub_40857360:
+__v__GETNEWRGN:
 	.short	0x594f	/* 40857360 594f */
 	.short	0xa8d8	/* 40857362 a8d8 */
 	.short	0x206f	/* 40857364 206f */
@@ -445,7 +445,7 @@ sub_40857360:
 	.short	0x2e9f	/* 40857368 2e9f */
 	.short	0x4ed0	/* 4085736a 4ed0 */
 
-sub_4085736c:
+GETNEWRGN:
 	.short	0x2f30	/* 4085736c 2f30 */
 	.short	0x81e2	/* 4085736e 81e2 */
 	.short	0x2084	/* 40857370 2084 */
@@ -454,7 +454,7 @@ sub_4085736c:
 
 	.align	16
 
-sub_40857380:
+SAVEOLD:
 	.short	0x48e7	/* 40857380 48e7 */
 	.short	0x1820	/* 40857382 1820 */
 	.short	0x61e6	/* 40857384 61e6 */
@@ -529,12 +529,12 @@ sub_40857380:
 	.short	0x4cdf	/* 4085740e 4cdf */
 	.short	0x0418	/* 40857410 0418 */
 
-sub_40857412:
+__v__SIXBYTEXIT:
 	.short	0x205f	/* 40857412 205f */
 	.short	0x5c4f	/* 40857414 5c4f */
 	.short	0x4ed0	/* 40857416 4ed0 */
 
-sub_40857418:
+SIXBYTEXIT:
 	.short	0x2f30	/* 40857418 2f30 */
 	.short	0x81e2	/* 4085741a 81e2 */
 	.short	0x2084	/* 4085741c 2084 */
@@ -543,7 +543,7 @@ sub_40857418:
 
 	.align	16
 
-sub_40857430:
+SHOWHIDE:
 	.short	0x2f09	/* 40857430 2f09 */
 	.short	0x4eba	/* 40857432 4eba */
 	.short	0x008c	/* 40857434 008c */
@@ -616,36 +616,36 @@ sub_40857430:
 	.align	16
 
 sub_408574c0:
-	bral	sub_4084c83e		/* 408574c0 60ff ffff 537c */
+	bral	PTCHHMGETBALLOONS		/* 408574c0 60ff ffff 537c */
 
 	.align	16
 
-sub_408574d0:
+__v__SETWPORT:
 	.short	0x2055	/* 408574d0 2055 */
 	.short	0x2810	/* 408574d2 2810 */
 	.short	0x20b8	/* 408574d4 20b8 */
 	.short	0x09de	/* 408574d6 09de */
 	rts				/* 408574d8 4e75 */
 
-sub_408574da:
+SETWPORT:
 	CallVector	0x2084	70	/* 408574da 2f30 81e2 2084 0118 */
 	rts				/* 408574e2 4e75 */
 
 	.align	16
 
-sub_408574f0:
+__v__RESTOREPORT:
 	.short	0x2f04	/* 408574f0 2f04 */
 	.short	0xa873	/* 408574f2 a873 */
 	rts				/* 408574f4 4e75 */
 
-sub_408574f6:
+RESTOREPORT:
 	.short	0x2f30	/* 408574f6 2f30 */
 	.short	0x81e2	/* 408574f8 81e2 */
 	.short	0x2084	/* 408574fa 2084 */
 	.short	0x011c	/* 408574fc 011c */
 	rts				/* 408574fe 4e75 */
 
-sub_40857500:
+GETWMGRPORT:
 	.short	0x225f	/* 40857500 225f */
 	.short	0x205f	/* 40857502 205f */
 	.short	0x20b8	/* 40857504 20b8 */
@@ -654,7 +654,7 @@ sub_40857500:
 
 	.align	16
 
-sub_40857510:
+GETCWMGRPORT:
 	.short	0x225f	/* 40857510 225f */
 	.short	0x205f	/* 40857512 205f */
 	.short	0x20b8	/* 40857514 20b8 */
@@ -663,14 +663,14 @@ sub_40857510:
 
 	.align	16
 
-sub_40857520:
+__v__ALLOCPORT:
 	.short	0x706c	/* 40857520 706c */
 	.short	0x7200	/* 40857522 7200 */
 
-sub_40857524:
+__v__ALLOCP1:
 	.short	0xa11e	/* 40857524 a11e */
 
-sub_40857526:
+__v__ALLOCP2:
 	.short	0x2648	/* 40857526 2648 */
 	.short	0x2f08	/* 40857528 2f08 */
 	.short	0x4a41	/* 4085752a 4a41 */
@@ -678,7 +678,7 @@ sub_40857526:
 	.short	0xa86f	/* 4085752e a86f */
 	rts				/* 40857530 4e75 */
 
-sub_40857532:
+__v__ALLOCCPORT:
 	.short	0xaa00			/* 40857532 aa00 */
 	rts				/* 40857534 4e75 */
 
@@ -696,7 +696,7 @@ sub_40857532:
 
 	.align	16
 
-sub_40857560:
+__v__INITWINDOWSGUTS:
 	linkw	%fp,#0			/* 40857560 4e56 0000 */
 	.short	0x48e7	/* 40857564 48e7 */
 	.short	0x1f18	/* 40857566 1f18 */
@@ -935,7 +935,7 @@ sub_40857560:
 	CallVector	0x2084 76	/* 40857736 2f30 81e2 2084 0130 */
 	rts				/* 4085773e 4e75 */
 
-sub_40857740:
+NEWCWINDOW:
 	.short	0x205f	/* 40857740 205f */
 	.short	0x50e7	/* 40857742 50e7 */
 	.short	0x2f08	/* 40857744 2f08 */
@@ -944,7 +944,7 @@ sub_40857740:
 
 	.align	16
 
-sub_40857750:
+NEWWINDOW:
 	.short	0x205f	/* 40857750 205f */
 	.short	0x4227	/* 40857752 4227 */
 	.short	0x2f08	/* 40857754 2f08 */
@@ -953,7 +953,7 @@ sub_40857750:
 
 	.align	16
 
-sub_40857760:
+__v__CANCELACTIVATE:
 	.short	0x41f8	/* 40857760 41f8 */
 	.short	0x0a64	/* 40857762 0a64 */
 	.short	0x200b	/* 40857764 200b */
@@ -973,7 +973,7 @@ sub_40857760:
 
 	.align	16
 
-sub_40857790:
+__v__CLOSEWINDOWGUTS:
 	.short	0x48e7	/* 40857790 48e7 */
 	.short	0x1830	/* 40857792 1830 */
 	.short	0x266f	/* 40857794 266f */
@@ -1101,7 +1101,7 @@ sub_40857790:
 
 	.align	16
 
-sub_40857890:
+__v__MAKEDEACTIVE:
 	.short	0x2f00	/* 40857890 2f00 */
 	.short	0x2f00	/* 40857892 2f00 */
 	.short	0x4267	/* 40857894 4267 */
@@ -1125,7 +1125,7 @@ sub_40857890:
 
 	.align	16
 
-sub_408578c0:
+DISPOSEWINDOW:
 	.short	0x2f2f	/* 408578c0 2f2f */
 	.short	0x0004	/* 408578c2 0004 */
 	.short	0xa92d	/* 408578c4 a92d */
@@ -1159,7 +1159,7 @@ sub_408578c0:
 	.short	0x60ea	/* 408578fc 60ea */
 	.short	0x0000	/* 408578fe 0000 */
 
-sub_40857900:
+HIDEWINDOW:
 	.short	0x594f	/* 40857900 594f */
 	.short	0x4eba	/* 40857902 4eba */
 	.short	0x2ee4	/* 40857904 2ee4 */
@@ -1185,11 +1185,11 @@ sub_40857900:
 	.short	0x584f	/* 4085792c 584f */
 	.short	0x60f8	/* 4085792e 60f8 */
 
-sub_40857930:
+GETWREFCON:
 	.short	0x323c	/* 40857930 323c */
 	.short	0x0098	/* 40857932 0098 */
 
-sub_40857934:
+__v__GETWCOMMON:
 	.short	0x205f	/* 40857934 205f */
 	.short	0x225f	/* 40857936 225f */
 	.short	0x2eb1	/* 40857938 2eb1 */
@@ -1203,11 +1203,11 @@ sub_40857934:
 
 	.align	16
 
-sub_40857950:
+SETWREFCON:
 	.short	0x323c	/* 40857950 323c */
 	.short	0x0098	/* 40857952 0098 */
 
-sub_40857954:
+__v__SETWCOMMON:
 	.short	0x205f	/* 40857954 205f */
 	.short	0x201f	/* 40857956 201f */
 	.short	0x225f	/* 40857958 225f */
@@ -1222,7 +1222,7 @@ sub_40857954:
 
 	.align	16
 
-sub_40857970:
+SETWINDOWPIC:
 	.short	0x323c	/* 40857970 323c */
 	.short	0x0094	/* 40857972 0094 */
 	.short	0x6000	/* 40857974 6000 */
@@ -1230,7 +1230,7 @@ sub_40857970:
 
 	.align	16
 
-sub_40857980:
+GETWINDOWPIC:
 	.short	0x323c	/* 40857980 323c */
 	.short	0x0094	/* 40857982 0094 */
 	.short	0x6000	/* 40857984 6000 */
@@ -1238,7 +1238,7 @@ sub_40857980:
 
 	.align	16
 
-sub_40857990:
+GETWTITLE:
 	.short	0x4cdf	/* 40857990 4cdf */
 	.short	0x0302	/* 40857992 0302 */
 	.short	0x2269	/* 40857994 2269 */
@@ -1254,11 +1254,11 @@ sub_40857990:
 
 	.align	16
 
-sub_408579b0:
+SETWTITLE:
 	moveml	%d3-%d5/%a2-%a3,%sp@-	/* 408579b0 48e7 1c30 */
 	movel	%sp@(24),%d5		/* 408579b4 2a2f 0018 */
 	moveal	%sp@(28),%a3		/* 408579b8 266f 001c */
-	bsrw	sub_408574da		/* 408579bc 6100 fb1c */
+	bsrw	SETWPORT		/* 408579bc 6100 fb1c */
 	moveal	%a3@(114),%a0		/* 408579c0 206b 0072 */
 	.short	0xa9e1			/* 408579c4 a9e1 */
 	movel	%a0,%d3			/* 408579c6 2608 */
@@ -1271,14 +1271,14 @@ sub_408579b0:
 	movel	%d5,%sp@-		/* 408579d6 2f05 */
 	.short	0xa88c			/* 408579d8 a88c */
 	movew	%sp@+,%a3@(138)		/* 408579da 375f 008a */
-	bsrw	sub_40857d66		/* 408579de 6100 0386 */
+	bsrw	CALLWCALC		/* 408579de 6100 0386 */
 	clrw	%sp@-			/* 408579e2 4267 */
 	movel	%a3@(114),%sp@-		/* 408579e4 2f2b 0072 */
 	movel	%d3,%sp@-		/* 408579e8 2f03 */
 	.short	0xa8e3			/* 408579ea a8e3 */
 	movew	%sp@+,%d0		/* 408579ec 301f */
 	beqs	loc_408579fa		/* 408579ee 670a */
-	bsrs	sub_40857a3c		/* 408579f0 614a */
+	bsrs	REMOVECONTENT		/* 408579f0 614a */
 	movel	%a3,%sp@-		/* 408579f2 2f0b */
 	movel	%d3,%sp@-		/* 408579f4 2f03 */
 	.short	0xa90c			/* 408579f6 a90c */
@@ -1291,7 +1291,7 @@ loc_408579fa:
 	movel	%d3,%sp@-		/* 40857a02 2f03 */
 	movel	%d3,%sp@-		/* 40857a04 2f03 */
 	.short	0xa8e5			/* 40857a06 a8e5 */
-	bsrs	sub_40857a3c		/* 40857a08 6132 */
+	bsrs	REMOVECONTENT		/* 40857a08 6132 */
 	movel	%a3,%sp@-		/* 40857a0a 2f0b */
 	movel	%d3,%sp@-		/* 40857a0c 2f03 */
 	.short	0xa90d			/* 40857a0e a90d */
@@ -1302,47 +1302,47 @@ loc_408579fa:
 loc_40857a16:
 	movel	%d3,%sp@-		/* 40857a16 2f03 */
 	.short	0xa8d9			/* 40857a18 a8d9 */
-	bsrw	sub_408574f6		/* 40857a1a 6100 fada */
+	bsrw	RESTOREPORT		/* 40857a1a 6100 fada */
 	moveml	%sp@+,%d3-%d5/%a2-%a3	/* 40857a1e 4cdf 0c38 */
-	braw	sub_40857162		/* 40857a22 6000 f73e */
+	braw	TWOPARMEXIT		/* 40857a22 6000 f73e */
 
 	.align	16
 
-sub_40857a30:
+__v__REMOVECONTENT:
 	movel	%d3,%sp@-		/* 40857a30 2f03 */
 	movel	%a3@(118),%sp@-		/* 40857a32 2f2b 0076 */
 	movel	%d3,%sp@-		/* 40857a36 2f03 */
 	.short	0xa8e6			/* 40857a38 a8e6 */
 	rts				/* 40857a3a 4e75 */
 
-sub_40857a3c:
+REMOVECONTENT:
 	CallVector	0x2084 82	/* 40857a3c 2f30 81e2 2084 0148 */
 	rts				/* 40857a44 4e75 */
 
 	.align	16
 
-sub_40857a50:
+DELTAPOINT:
 	movew	%sp@(8),%d0		/* 40857a50 302f 0008 */
 	subw	%sp@(4),%d0		/* 40857a54 906f 0004 */
 	movew	%d0,%sp@(12)		/* 40857a58 3f40 000c */
 	movew	%sp@(10),%d0		/* 40857a5c 302f 000a */
 	subw	%sp@(6),%d0		/* 40857a60 906f 0006 */
 	movew	%d0,%sp@(14)		/* 40857a64 3f40 000e */
-	braw	sub_40857162		/* 40857a68 6000 f6f8 */
+	braw	TWOPARMEXIT		/* 40857a68 6000 f6f8 */
 
 	.align	16
 
-sub_40857a70:
+__v__MOVEGUTS:
 	movel	%a4,%sp@-		/* 40857a70 2f0c */
 	subqw	#4,%sp			/* 40857a72 594f */
 	movel	%d0,%sp@-		/* 40857a74 2f00 */
 	subqw	#4,%sp			/* 40857a76 594f */
 	movel	%a3@(16),%sp@-		/* 40857a78 2f2b 0010 */
 	moveal	%a3,%a0			/* 40857a7c 204b */
-	bsrw	sub_4085704e		/* 40857a7e 6100 f5ce */
+	bsrw	PORTTOBITMAP		/* 40857a7e 6100 f5ce */
 	movel	%a0@(6),%sp@-		/* 40857a82 2f28 0006 */
-	bsrs	sub_40857a50		/* 40857a86 61c8 */
-	bsrs	sub_40857a50		/* 40857a88 61c6 */
+	bsrs	DELTAPOINT		/* 40857a86 61c8 */
+	bsrs	DELTAPOINT		/* 40857a88 61c6 */
 	movel	%sp@,%d3		/* 40857a8a 2617 */
 	.short	0xa8e0			/* 40857a8c a8e0 */
 	movel	%a3@(118),%sp@-		/* 40857a8e 2f2b 0076 */
@@ -1352,24 +1352,24 @@ sub_40857a70:
 	movel	%d3,%sp@-		/* 40857a9a 2f03 */
 	.short	0xa8e0			/* 40857a9c a8e0 */
 	moveal	%a3,%a0			/* 40857a9e 204b */
-	bsrw	sub_4085704e		/* 40857aa0 6100 f5ac */
+	bsrw	PORTTOBITMAP		/* 40857aa0 6100 f5ac */
 	pea	%a0@(6)			/* 40857aa4 4868 0006 */
 	movel	%d3,%sp@-		/* 40857aa8 2f03 */
-	bsrw	sub_4085808a		/* 40857aaa 6100 05de */
+	bsrw	NEGWORDS		/* 40857aaa 6100 05de */
 	.short	0xa8a8			/* 40857aae a8a8 */
 	rts				/* 40857ab0 4e75 */
 
-sub_40857ab2:
+MOVEGUTS:
 	CallVector	0x2084 83	/* 40857ab2 2f30 */
 	rts				/* 40857aba 4e75 */
 
 	.align	16
 
 	moveml	%d3-%d6/%a3-%a4,%sp@-	/* 40857ac0 48e7 1e18 */
-	bsrw	sub_408574da		/* 40857ac4 6100 fa14 */
+	bsrw	SETWPORT		/* 40857ac4 6100 fa14 */
 	moveal	%sp@(34),%a3		/* 40857ac8 266f 0022 */
-	bsrw	sub_40857dbc		/* 40857acc 6100 02ee */
-	bsrw	sub_4085736c		/* 40857ad0 6100 f89a */
+	bsrw	CLIPGABOVE		/* 40857acc 6100 02ee */
+	bsrw	GETNEWRGN		/* 40857ad0 6100 f89a */
 	movel	%sp@+,%d5		/* 40857ad4 2a1f */
 	moveal	%a3@(114),%a4		/* 40857ad6 286b 0072 */
 	movel	%a4,%sp@-		/* 40857ada 2f0c */
@@ -1381,15 +1381,15 @@ sub_40857ab2:
 	.short	0xa9e1			/* 40857aea a9e1 */
 	movel	%a0,%d6			/* 40857aec 2c08 */
 	movel	%sp@(30),%d0		/* 40857aee 202f 001e */
-	bsrw	sub_40857ab2		/* 40857af2 6100 ffbe */
-	bsrw	sub_40857c56		/* 40857af6 6100 015e */
+	bsrw	MOVEGUTS		/* 40857af2 6100 ffbe */
+	bsrw	SMARTMOVE		/* 40857af6 6100 015e */
 	movel	%d5,%sp@-		/* 40857afa 2f05 */
 	movel	%d3,%sp@-		/* 40857afc 2f03 */
 	.short	0xa8e0			/* 40857afe a8e0 */
 	tstb	%sp@(28)		/* 40857b00 4a2f 001c */
 	beqs	loc_40857b12		/* 40857b04 670c */
 	moveal	0x9d6,%a3		/* 40857b06 2678 09d6 */
-	bsrw	sub_40857dbc		/* 40857b0a 6100 02b0 */
+	bsrw	CLIPGABOVE		/* 40857b0a 6100 02b0 */
 	moveal	%sp@(34),%a3		/* 40857b0e 266f 0022 */
 
 loc_40857b12:
@@ -1415,7 +1415,7 @@ loc_40857b12:
 	beqs	loc_40857b56		/* 40857b44 6710 */
 	movel	%a3,%sp@-		/* 40857b46 2f0b */
 	movew	#-1,0xa44		/* 40857b48 31fc ffff 0a44 */
-	bsrw	sub_40857fb4		/* 40857b4e 6100 0464 */
+	bsrw	SELWIN1		/* 40857b4e 6100 0464 */
 	clrw	0xa44			/* 40857b52 4278 0a44 */
 
 loc_40857b56:
@@ -1437,13 +1437,13 @@ loc_40857b56:
 	.short	0xa8d9			/* 40857b78 a8d9 */
 	movel	%a3,%sp@-		/* 40857b7a 2f0b */
 	.short	0xaa94			/* 40857b7c aa94 */
-	bsrw	sub_408574f6		/* 40857b7e 6100 f976 */
+	bsrw	RESTOREPORT		/* 40857b7e 6100 f976 */
 	moveml	%sp@+,%d3-%d6/%a3-%a4	/* 40857b82 4cdf 1878 */
-	braw	sub_40857e12		/* 40857b86 6000 028a */
+	braw	TENBYTEXIT		/* 40857b86 6000 028a */
 
 	.align	16
 
-sub_40857b90:
+__v__SMARTMOVE:
 	moveml	%d5-%d7/%a2-%a4,%sp@-	/* 40857b90 48e7 0738 */
 	subqw	#8,%sp			/* 40857b94 514f */
 	moveal	%sp,%a2			/* 40857b96 244f */
@@ -1496,7 +1496,7 @@ loc_40857bd0:
 	movel	%a0@,%a1@		/* 40857c04 2290 */
 	movel	%a2,%sp@-		/* 40857c06 2f0a */
 	movel	%d3,%sp@-		/* 40857c08 2f03 */
-	bsrw	sub_4085808a		/* 40857c0a 6100 047e */
+	bsrw	NEGWORDS		/* 40857c0a 6100 047e */
 	.short	0xa8a8			/* 40857c0e a8a8 */
 	movel	%d6,%sp@-		/* 40857c10 2f06 */
 	movel	%a2,%sp@-		/* 40857c12 2f0a */
@@ -1534,11 +1534,11 @@ loc_40857c3a:
 	moveml	%sp@+,%d5-%d7/%a2-%a4	/* 40857c50 4cdf 1ce0 */
 	rts				/* 40857c54 4e75 */
 
-sub_40857c56:
+SMARTMOVE:
 	CallVector	0x2084 84	/* 40857c56 2f30 81e2 2084 0150 */
 	rts				/* 40857c5e 4e75 */
 
-sub_40857c60:
+GETWVARIANT:
 	moveal	%sp@(4),%a1		/* 40857c60 226f 0004 */
 	tstb	0xcb2			/* 40857c64 4a38 0cb2 */
 	beqs	loc_40857c82		/* 40857c68 6718 */
@@ -1566,7 +1566,7 @@ loc_40857c8c:
 
 	.align	16
 
-sub_40857ca0:
+__v__CALLWINDOW:
 	movel	%a4,%sp@-		/* 40857ca0 2f0c */
 	clrl	%sp@-			/* 40857ca2 42a7 */
 	subqw	#2,%sp			/* 40857ca4 554f */
@@ -1603,27 +1603,27 @@ loc_40857cdc:
 	moveal	%sp@+,%a4		/* 40857cea 285f */
 	rts				/* 40857cec 4e75 */
 
-sub_40857cee:
+CALLWINDOW:
 	CallVector	0x2084 85	/* 40857cee 2f30 81e2 2084 0154 */
 	rts				/* 40857cf6 4e75 */
 
 	.align	16
 
-sub_40857d00:
+__v__CALLDWINDOW:
 	moveml	%d3,%sp@-		/* 40857d00 48e7 1000 */
 	moveq	#0,%d3			/* 40857d04 7600 */
 	moveq	#0,%d0			/* 40857d06 7000 */
-	bsrs	sub_40857cee		/* 40857d08 61e4 */
+	bsrs	CALLWINDOW		/* 40857d08 61e4 */
 	movel	%sp@+,%d3		/* 40857d0a 261f */
 	rts				/* 40857d0c 4e75 */
 
-sub_40857d0e:
+CALLDWINDOW:
 	CallVector	0x2084 86	/* 40857d0e 2f30 81e2 2084 0158 */
 	rts				/* 40857d16 4e75 */
 
 	.align	16
 
-sub_40857d20:
+__v__CALLWCALC:
 	moveq	#2,%d0			/* 40857d20 7002 */
 	tstb	%a3@(110)		/* 40857d22 4a2b 006e */
 	beqs	loc_40857d52		/* 40857d26 672a */
@@ -1638,7 +1638,7 @@ sub_40857d20:
 	movel	%a0@(6),%a1@-		/* 40857d40 2328 0006 */
 
 loc_40857d44:
-	bsrw	sub_40857cee		/* 40857d44 6100 ffa8 */
+	bsrw	CALLWINDOW		/* 40857d44 6100 ffa8 */
 	movel	%sp@+,%a3@(12)		/* 40857d48 275f 000c */
 	movel	%sp@+,%a3@(8)		/* 40857d4c 275f 0008 */
 	rts				/* 40857d50 4e75 */
@@ -1652,30 +1652,30 @@ loc_40857d52:
 	.short	0xa8dd			/* 40857d62 a8dd */
 	rts				/* 40857d64 4e75 */
 
-sub_40857d66:
+CALLWCALC:
 	CallVector 	0x2084 87	/* 40857d66 2f30 81e2 2084 015c */
 	rts				/* 40857d6e 4e75 */
 
 
-sub_40857d70:
+HILITEWINDOW:
 	moveml	%d3-%d4/%a3-%a4,%sp@-	/* 40857d70 48e7 1818 */
 	moveal	%sp@(22),%a3		/* 40857d74 266f 0016 */
 	moveb	%sp@(20),%d3		/* 40857d78 162f 0014 */
-	bsrw	sub_408574da		/* 40857d7c 6100 f75c */
+	bsrw	SETWPORT		/* 40857d7c 6100 f75c */
 	moveb	%a3@(111),%d0		/* 40857d80 102b 006f */
 	eorw	%d3,%d0			/* 40857d84 b740 */
 	lsrw	#1,%d0			/* 40857d86 e248 */
 	bccs	loc_40857d94		/* 40857d88 640a */
 	moveb	%d3,%a3@(111)		/* 40857d8a 1743 006f */
-	bsrs	sub_40857db2		/* 40857d8e 6122 */
-	bsrw	sub_40857d0e		/* 40857d90 6100 ff7c */
+	bsrs	CLIPVSTRUCT		/* 40857d8e 6122 */
+	bsrw	CALLDWINDOW		/* 40857d90 6100 ff7c */
 
 loc_40857d94:
-	bsrw	sub_408574f6		/* 40857d94 6100 f760 */
+	bsrw	RESTOREPORT		/* 40857d94 6100 f760 */
 	moveml	%sp@+,%d3-%d4/%a3-%a4	/* 40857d98 4cdf 1818 */
-	braw	sub_40857418		/* 40857d9c 6000 f67a */
+	braw	SIXBYTEXIT		/* 40857d9c 6000 f67a */
 
-sub_40857da0:
+__v__CLIPVSTRUCT:
 	movel	%a3@(114),%sp@-		/* 40857da0 2f2b 0072 */
 
 loc_40857da4:
@@ -1684,21 +1684,21 @@ loc_40857da4:
 	.short	0xa90b			/* 40857da8 a90b */
 	rts				/* 40857daa 4e75 */
 
-sub_40857dac:
+__v__CLIPGABOVE:
 	movel	0x9ee,%sp@-		/* 40857dac 2f38 09ee */
 	bras	loc_40857da4		/* 40857db0 60f2 */
 
-sub_40857db2:
+CLIPVSTRUCT:
 	CallVector	0x2084 88	/* 40857db2 2f30 81e2 2084 0160 */
 	rts	/* 40857dba 4e75 */
 
-sub_40857dbc:
+CLIPGABOVE:
 	CallVector	0x2084 89	/* 40857dbc 2f30 81e2 2084 0164 */
 	rts	/* 40857dc4 4e75 */
 
 	.align	16
 
-sub_40857dd0:
+SIZEWINDOW:
 	moveml	%d3-%d4/%a3-%a4,%sp@-	/* 40857dd0 48e7 1818 */
 	movel	%sp@(22),%d3		/* 40857dd4 262f 0016 */
 	beqs	loc_40857e06		/* 40857dd8 672c */
@@ -1711,47 +1711,47 @@ sub_40857dd0:
 	movew	%d3,%a4@+		/* 40857dec 38c3 */
 	tstb	%a3@(110)		/* 40857dee 4a2b 006e */
 	beqs	loc_40857e06		/* 40857df2 6712 */
-	bsrw	sub_408574da		/* 40857df4 6100 f6e4 */
+	bsrw	SETWPORT		/* 40857df4 6100 f6e4 */
 	movel	%a3,%sp@-		/* 40857df8 2f0b */
 	.short	0xa90e			/* 40857dfa a90e */
 	moveb	%sp@(20),%d3		/* 40857dfc 162f 0014 */
-	bsrs	sub_40857e38		/* 40857e00 6136 */
+	bsrs	SIZEGUTS		/* 40857e00 6136 */
 	movel	%a3,%sp@-		/* 40857e02 2f0b */
 	.short	0xaa94			/* 40857e04 aa94 */
 
 loc_40857e06:
 	moveml	%sp@+,%d3-%d4/%a3-%a4	/* 40857e06 4cdf 1818 */
-sub_40857e0a:
+__v__TENBYTEXIT:
 	moveal	%sp@+,%a0		/* 40857e0a 205f */
 	lea	%sp@(10),%sp		/* 40857e0c 4fef 000a */
 	jmp	%a0@			/* 40857e10 4ed0 */
 
-sub_40857e12:
+TENBYTEXIT:
 	CallVector	0x2084 90	/* 40857e12 2f30 81e2 2084 0168 */
 	rts				/* 40857e1a 4e75 */
 
 	.align	16
 
-sub_40857e20:
-	bsrw	sub_40857d66		/* 40857e20 6100 ff44 */
-	bsrw	sub_40857db2		/* 40857e24 6100 ff8c */
-	bsrw	sub_40857d0e		/* 40857e28 6100 fee4 */
+__v__SIZEGUTS:
+	bsrw	CALLWCALC		/* 40857e20 6100 ff44 */
+	bsrw	CLIPVSTRUCT		/* 40857e24 6100 ff8c */
+	bsrw	CALLDWINDOW		/* 40857e28 6100 fee4 */
 	movel	%a3,%sp@-		/* 40857e2c 2f0b */
 	moveb	%d3,%sp@-		/* 40857e2e 1f03 */
 	.short	0xa90f			/* 40857e30 a90f */
-	bsrw	sub_408574f6		/* 40857e32 6100 f6c2 */
+	bsrw	RESTOREPORT		/* 40857e32 6100 f6c2 */
 	rts				/* 40857e36 4e75 */
 
-sub_40857e38:
+SIZEGUTS:
 	CallVector	0x2084 91	/* 40857e38 2f30 81e2 2084 016c */
 	rts				/* 40857e40 4e75 */
 
 	.align	16
 
 	moveml	%d3-%d6/%a2-%a4,%sp@-	/* 408575e0 48e7 1e38 */
-	bsrw	sub_408574da		/* 40857e54 6100 f684 */
+	bsrw	SETWPORT		/* 40857e54 6100 f684 */
 	moveal	%sp@(36),%a3		/* 40857e58 266f 0024 */
-	bsrw	sub_40857d66		/* 40857e5c 6100 ff08 */
+	bsrw	CALLWCALC		/* 40857e5c 6100 ff08 */
 	movel	%a3,%sp@-		/* 40857e60 2f0b */
 	.short	0xa90e			/* 40857e62 a90e */
 	moveal	%a3@(130),%a2		/* 40857e64 246b 0082 */
@@ -1763,7 +1763,7 @@ sub_40857e38:
 loc_40857e74:
 	moveal	%a3@(114),%a4		/* 40857e74 286b 0072 */
 	movel	%a2@+,%d0		/* 40857e78 201a */
-	bsrw	sub_40857ab2		/* 40857e7a 6100 fc36 */
+	bsrw	MOVEGUTS		/* 40857e7a 6100 fc36 */
 	movew	%a2@+,%d0		/* 40857e7e 301a */
 	movew	%a2@+,%d1		/* 40857e80 321a */
 	subqw	#8,%a2			/* 40857e82 514a */
@@ -1775,31 +1775,31 @@ loc_40857e74:
 	movew	%d0,%a0@+		/* 40857e90 30c0 */
 	movew	%d1,%a0@+		/* 40857e92 30c1 */
 	moveq	#1,%d3			/* 40857e94 7601 */
-	bsrs	sub_40857e38		/* 40857e96 61a0 */
+	bsrs	SIZEGUTS		/* 40857e96 61a0 */
 	tstb	%sp@(32)		/* 40857e98 4a2f 0020 */
 	beqs	loc_40857eae		/* 40857e9c 6710 */
 	movel	%a3,%sp@-		/* 40857e9e 2f0b */
 	movew	#-1,0xa44		/* 40857ea0 31fc ffff 0a44 */
-	bsrw	sub_40857fb4		/* 40857ea6 6100 010c */
+	bsrw	SELWIN1		/* 40857ea6 6100 010c */
 	clrw	0xa44			/* 40857eaa 4278 0a44 */
 
 loc_40857eae:
 	pea	%a3@(16)		/* 40857eae 486b 0010 */
 	.short	0xa928			/* 40857eb2 a928 */
 	moveml	%sp@+,%d3-%d6/%a2-%a4	/* 40857eb4 4cdf 1c78 */
-	braw	sub_40857162		/* 40857eb8 6000 f2a8 */
+	braw	TWOPARMEXIT		/* 40857eb8 6000 f2a8 */
 
 	.align	16
 
-sub_40857ec0:
+TRACKGOAWAY:
 	moveal	%sp@+,%a0		/* 40857ec0 205f */
 	movew	#6,%sp@-		/* 40857ec2 3f3c 0006 */
 	movel	%a0,%sp@-		/* 40857ec6 2f08 */
 
-sub_40857ec8:
+TRACKBOX:
 	linkw	%fp,#-4			/* 40857ec8 4e56 fffc */
 	moveml	%d3-%d6/%a3,%sp@-	/* 40857ecc 48e7 1e10 */
-	bsrw	sub_408574da		/* 40857ed0 6100 f608 */
+	bsrw	SETWPORT		/* 40857ed0 6100 f608 */
 	lea	%fp@(8),%a0		/* 40857ed4 41ee 0008 */
 	movew	%a0@+,%d6		/* 40857ed8 3c18 */
 	subqw	#2,%d6			/* 40857eda 5546 */
@@ -1807,12 +1807,12 @@ sub_40857ec8:
 	moveal	%a0@+,%a3		/* 40857ee0 2658 */
 	clrw	%a0@			/* 40857ee2 4250 */
 	moveq	#0,%d5			/* 40857ee4 7a00 */
-	bsrw	sub_40857db2		/* 40857ee6 6100 feca */
+	bsrw	CLIPVSTRUCT		/* 40857ee6 6100 feca */
 
 loc_40857eea:
 	moveq	#1,%d0			/* 40857eea 7001 */
 	movel	%fp@(-4),%d3		/* 40857eec 262e fffc */
-	bsrw	sub_40857cee		/* 40857ef0 6100 fdfc */
+	bsrw	CALLWINDOW		/* 40857ef0 6100 fdfc */
 	cmpw	%d6,%d0			/* 40857ef4 b046 */
 	beqs	loc_40857efa		/* 40857ef6 6702 */
 	moveq	#0,%d0			/* 40857ef8 7000 */
@@ -1821,12 +1821,12 @@ loc_40857efa:
 	cmpw	%d0,%d5			/* 40857efa ba40 */
 	beqs	loc_40857f02		/* 40857efc 6704 */
 	movew	%d0,%d5			/* 40857efe 3a00 */
-	bsrs	sub_40857f3c		/* 40857f00 613a */
+	bsrs	EORSYMBOL		/* 40857f00 613a */
 
 loc_40857f02:
 	pea	%fp@(-4)		/* 40857f02 486e fffc */
 	.short	0xa972			/* 40857f06 a972 */
-	bsrw	sub_40858526		/* 40857f08 6100 061c */
+	bsrw	CALLDRAGHOOK		/* 40857f08 6100 061c */
 	clrw	%sp@-			/* 40857f0c 4267 */
 	.short	0xa977			/* 40857f0e a977 */
 	tstb	%sp@+			/* 40857f10 4a1f */
@@ -1834,24 +1834,24 @@ loc_40857f02:
 	tstw	%d5			/* 40857f14 4a45 */
 	beqs	loc_40857f1e		/* 40857f16 6706 */
 	addqb	#1,%fp@(18)		/* 40857f18 522e 0012 */
-	bsrs	sub_40857f3c		/* 40857f1c 611e */
+	bsrs	EORSYMBOL		/* 40857f1c 611e */
 
 loc_40857f1e:
-	bsrw	sub_408574f6		/* 40857f1e 6100 f5d6 */
+	bsrw	RESTOREPORT		/* 40857f1e 6100 f5d6 */
 	moveml	%sp@+,%d3-%d6/%a3	/* 40857f22 4cdf 0878 */
 	unlk	%fp			/* 40857f26 4e5e */
-	braw	sub_40857e12		/* 40857f28 6000 fee8 */
+	braw	TENBYTEXIT		/* 40857f28 6000 fee8 */
 
 	.align	16
 
-sub_40857f30:
+__v__EORSYMBOL:
 	moveq	#0,%d0			/* 40857f30 7000 */
 	moveq	#0,%d3			/* 40857f32 7600 */
 	movew	%d6,%d3			/* 40857f34 3606 */
-	bsrw	sub_40857cee		/* 40857f36 6100 fdb6 */
+	bsrw	CALLWINDOW		/* 40857f36 6100 fdb6 */
 	rts				/* 40857f3a 4e75 */
 
-sub_40857f3c:
+EORSYMBOL:
 	CallVector	0x2084 92	/* 40857f3c 2f30 81e2 2084 0170 */
 	rts				/* 40857f44 4e75 */
 
@@ -1860,7 +1860,7 @@ sub_40857f3c:
 	.short	0x4278	/* 40857f50 4278 */
 	.short	0x0a44	/* 40857f52 0a44 */
 
-sub_40857f54:
+__v__SELWIN1:
 	.short	0x594f	/* 40857f54 594f */
 	.short	0x4eba	/* 40857f56 4eba */
 	.short	0x2890	/* 40857f58 2890 */
@@ -1893,7 +1893,7 @@ sub_40857f54:
 	.short	0x4eba	/* 40857f8e 4eba */
 	.short	0xf91e	/* 40857f90 f91e */
 
-sub_40857f92:
+__v__DOACTIVATE:
 	.short	0x202f	/* 40857f92 202f */
 	.short	0x0004	/* 40857f94 0004 */
 	.short	0x21c0	/* 40857f96 21c0 */
@@ -1912,7 +1912,7 @@ sub_40857f92:
 	.short	0x0178	/* 40857fb0 0178 */
 	rts				/* 40857fb2 4e75 */
 
-sub_40857fb4:
+SELWIN1:
 	.short	0x2f30	/* 40857fb4 2f30 */
 	.short	0x81e2	/* 40857fb6 81e2 */
 	.short	0x2084	/* 40857fb8 2084 */
@@ -1921,11 +1921,11 @@ sub_40857fb4:
 
 	.align	16
 
-sub_40857fc0:
+__v__BRINGTOFRONT:
 	.short	0x4278	/* 40857fc0 4278 */
 	.short	0x0a44	/* 40857fc2 0a44 */
 
-sub_40857fc4:
+__v__BTF1:
 	.short	0x48e7	/* 40857fc4 48e7 */
 	.short	0x1e38	/* 40857fc6 1e38 */
 	.short	0x266f	/* 40857fc8 266f */

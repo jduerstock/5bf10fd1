@@ -24,7 +24,7 @@
 
 	.align	16
 
-sub_408ab030:
+BitWalk16:
 	.short	0x4e56	/* 408ab030 4e56 */
 	.short	0x0000	/* 408ab032 0000 */
 	.short	0x48e7	/* 408ab034 48e7 */
@@ -176,7 +176,7 @@ sub_408ab030:
 
 	.align	16
 
-sub_408ab160:
+BitWalk32:
 	.short	0x4e56	/* 408ab160 4e56 */
 	.short	0x0000	/* 408ab162 0000 */
 	.short	0x48e7	/* 408ab164 48e7 */
@@ -309,7 +309,7 @@ sub_408ab160:
 
 	.align	16
 
-sub_408ab270:
+InstallExceptionHandler:
 	.short	0x4e56	/* 408ab270 4e56 */
 	.short	0x0000	/* 408ab272 0000 */
 	.short	0x48e7	/* 408ab274 48e7 */
@@ -367,7 +367,7 @@ sub_408ab270:
 
 	.align	16
 
-sub_408ab2e0:
+RemoveExceptionHandler:
 	.short	0x4e56	/* 408ab2e0 4e56 */
 	.short	0x0000	/* 408ab2e2 0000 */
 	.short	0x48e7	/* 408ab2e4 48e7 */
@@ -564,7 +564,7 @@ sub_408ab2e0:
 
 	.align	16
 
-sub_408ab470:
+ExecuteSubtest:
 	.short	0x4e56	/* 408ab470 4e56 */
 	.short	0x0000	/* 408ab472 0000 */
 	.short	0x48e7	/* 408ab474 48e7 */
@@ -614,10 +614,10 @@ GI_InitInterface:
 	movel	%fp@(12),%sp@-		/* 408ab4ce 2f2e 000c */
 	movel	%a4,%sp@-		/* 408ab4d2 2f0c */
 	movel	%a4,%sp@-		/* 408ab4d4 2f0c */
-	jsr	%pc@(sub_408ab680)	/* 408ab4d6 4eba 01a8 */
+	jsr	%pc@(InitHeap)	/* 408ab4d6 4eba 01a8 */
 	pea	0x46c			/* 408ab4da 4878 046c */
 	movel	%a4,%sp@-		/* 408ab4de 2f0c */
-	jsr	%pc@(sub_408ab6d0)	/* 408ab4e0 4eba 01ee */
+	jsr	%pc@(AllocPermMem)	/* 408ab4e0 4eba 01ee */
 	tstl	%d0			/* 408ab4e4 4a80 */
 	lea	%sp@(20),%sp		/* 408ab4e6 4fef 0014 */
 	bnes	loc_408ab4f0		/* 408ab4ea 6604 */
@@ -626,31 +626,31 @@ GI_InitInterface:
 
 loc_408ab4f0:
 	movel	#34635776,%a4@		/* 408ab4f0 28bc 0210 8000 */
-	lea	%pc@(sub_408ab470),%a0	/* 408ab4f6 41fa ff78 */
+	lea	%pc@(ExecuteSubtest),%a0	/* 408ab4f6 41fa ff78 */
 	movel	%a0,%a4@(44)		/* 408ab4fa 2948 002c */
-	lea	%pc@(sub_408ab7a0),%a0	/* 408ab4fe 41fa 02a0 */
+	lea	%pc@(CTEDoIdle),%a0	/* 408ab4fe 41fa 02a0 */
 	movel	%a0,%a4@(48)		/* 408ab502 2948 0030 */
-	lea	%pc@(sub_408aaf00),%a0	/* 408ab506 41fa f9f8 */
+	lea	%pc@(BitWalk8),%a0	/* 408ab506 41fa f9f8 */
 	movel	%a0,%a4@(60)		/* 408ab50a 2948 003c */
-	lea	%pc@(sub_408ab030),%a0	/* 408ab50e 41fa fb20 */
+	lea	%pc@(BitWalk16),%a0	/* 408ab50e 41fa fb20 */
 	movel	%a0,%a4@(64)		/* 408ab512 2948 0040 */
-	lea	%pc@(sub_408ab160),%a0	/* 408ab516 41fa fc48 */
+	lea	%pc@(BitWalk32),%a0	/* 408ab516 41fa fc48 */
 	movel	%a0,%a4@(68)		/* 408ab51a 2948 0044 */
-	lea	%pc@(sub_408ab270),%a0	/* 408ab51e 41fa fd50 */
+	lea	%pc@(InstallExceptionHandler),%a0	/* 408ab51e 41fa fd50 */
 	movel	%a0,%a4@(72)		/* 408ab522 2948 0048 */
-	lea	%pc@(sub_408ab2e0),%a0	/* 408ab526 41fa fdb8 */
+	lea	%pc@(RemoveExceptionHandler),%a0	/* 408ab526 41fa fdb8 */
 	movel	%a0,%a4@(76)		/* 408ab52a 2948 004c */
-	lea	%pc@(sub_408aaed0),%a0	/* 408ab52e 41fa f9a0 */
+	lea	%pc@(FakeExceptionCall),%a0	/* 408ab52e 41fa f9a0 */
 	movel	%a0,%a4@(80)		/* 408ab532 2948 0050 */
-	lea	%pc@(sub_408aae50),%a0	/* 408ab536 41fa f918 */
+	lea	%pc@(SetInterruptLevel),%a0	/* 408ab536 41fa f918 */
 	movel	%a0,%a4@(84)		/* 408ab53a 2948 0054 */
-	lea	%pc@(sub_408aae70),%a0	/* 408ab53e 41fa f930 */
+	lea	%pc@(GetInterruptLevel),%a0	/* 408ab53e 41fa f930 */
 	movel	%a0,%a4@(88)		/* 408ab542 2948 0058 */
-	lea	%pc@(sub_408aae80),%a0	/* 408ab546 41fa f938 */
+	lea	%pc@(InstallExceptionVector),%a0	/* 408ab546 41fa f938 */
 	movel	%a0,%a4@(92)		/* 408ab54a 2948 005c */
-	lea	%pc@(sub_408ab6d0),%a0	/* 408ab54e 41fa 0180 */
+	lea	%pc@(AllocPermMem),%a0	/* 408ab54e 41fa 0180 */
 	movel	%a0,%a4@(96)		/* 408ab552 2948 0060 */
-	lea	%pc@(sub_408ab720),%a0	/* 408ab556 41fa 01c8 */
+	lea	%pc@(AllocTempMem),%a0	/* 408ab556 41fa 01c8 */
 	movel	%a0,%a4@(100)		/* 408ab55a 2948 0064 */
 	lea	%pc@(sub_408ab572),%a0	/* 408ab55e 41fa 0012 */
 	movel	%a0,%a4@(1128)		/* 408ab562 2948 0468 */
@@ -800,7 +800,7 @@ GI_ExecuteDTM:
 	.short	0x4e5e	/* 408ab67c 4e5e */
 	rts				/* 408ab67e 4e75 */
 
-sub_408ab680:
+InitHeap:
 	.short	0x4e56	/* 408ab680 4e56 */
 	.short	0x0000	/* 408ab682 0000 */
 	.short	0x48e7	/* 408ab684 48e7 */
@@ -837,7 +837,7 @@ sub_408ab680:
 
 	.align	16
 
-sub_408ab6d0:
+AllocPermMem:
 	.short	0x4e56	/* 408ab6d0 4e56 */
 	.short	0xfffc	/* 408ab6d2 fffc */
 	.short	0x48e7	/* 408ab6d4 48e7 */
@@ -877,7 +877,7 @@ sub_408ab6d0:
 
 	.align	16
 
-sub_408ab720:
+AllocTempMem:
 	.short	0x4e56	/* 408ab720 4e56 */
 	.short	0xfffc	/* 408ab722 fffc */
 	.short	0x48e7	/* 408ab724 48e7 */
@@ -941,7 +941,7 @@ sub_408ab720:
 
 	.align	16
 
-sub_408ab7a0:
+CTEDoIdle:
 	.short	0x4e56	/* 408ab7a0 4e56 */
 	.short	0x0000	/* 408ab7a2 0000 */
 	.short	0x48e7	/* 408ab7a4 48e7 */

@@ -13,15 +13,15 @@
 
 	.align	16
 
-	bral	sub_4089f110		/* 40894020 60ff 0000 b0ee */
+	bral	INITIALIZEPARTIALFONTS		/* 40894020 60ff 0000 b0ee */
 
 	.align	16
 
-	bral	sub_408a0a60		/* 40894030 60ff 0000 ca2e */
+	bral	INITIALIZEDISKCACHE		/* 40894030 60ff 0000 ca2e */
 
 	.align	16
 
-sub_40894040:
+FORCEINITFONTSCALL:
 	st	0xd42			/* 40894040 50f8 0d42 */
 	rts				/* 40894044 4e75 */
 
@@ -50,7 +50,7 @@ sub_40894040:
 	moveq	#1,%d0			/* 4089408a 7001 */
 	movel	%d0,%sp@-		/* 4089408c 2f00 */
 	movel	%fp@(8),%sp@-		/* 4089408e 2f2e 0008 */
-	jsr	%pc@(sub_40892e1c)	/* 40894092 4eba ed88 */
+	jsr	%pc@(fsg_SetUpElement)	/* 40894092 4eba ed88 */
 	addqw	#8,%sp			/* 40894096 504f */
 	bras	loc_408940c0		/* 40894098 6026 */
 
@@ -66,7 +66,7 @@ loc_4089409a:
 	moveq	#1,%d0			/* 408940b2 7001 */
 	movel	%d0,%sp@-		/* 408940b4 2f00 */
 	movel	%a0,%sp@-		/* 408940b6 2f08 */
-	jsr	%pc@(sub_40892ea6)	/* 408940b8 4eba edec */
+	jsr	%pc@(fsg_IncrementElement)	/* 408940b8 4eba edec */
 	lea	%sp@(16),%sp		/* 408940bc 4fef 0010 */
 
 loc_408940c0:
@@ -357,7 +357,7 @@ loc_40894352:
 
 	.align	16
 
-sub_40894360:
+sfnt_Classify:
 	linkw	%fp,#0			/* 40894360 4e56 0000 */
 	moveml	%d7/%a4,%sp@-		/* 40894364 48e7 0108 */
 	movew	%fp@(18),%d7		/* 40894368 3e2e 0012 */
@@ -431,7 +431,7 @@ loc_40894400:
 
 	.align	16
 
-sub_40894410:
+__v__sfnt_DoOffsetTableMap:
 	linkw	%fp,#0			/* 40894410 4e56 0000 */
 	moveml	%d6-%d7/%a3-%a4,%sp@-	/* 40894414 48e7 0318 */
 	moveal	%fp@(8),%a3		/* 40894418 266e 0008 */
@@ -459,7 +459,7 @@ loc_4089444a:
 	movel	%d7,%sp@-		/* 4089444c 2f07 */
 	movel	%a4@,%sp@-		/* 4089444e 2f14 */
 	movel	%a3,%sp@-		/* 40894450 2f0b */
-	jsr	%pc@(sub_40894360)	/* 40894452 4eba ff0c */
+	jsr	%pc@(sfnt_Classify)	/* 40894452 4eba ff0c */
 	lea	%a4@(-16),%a4		/* 40894456 49ec fff0 */
 	lea	%sp@(12),%sp		/* 4089445a 4fef 000c */
 	dbf	%d7,loc_4089444a	/* 4089445e 51cf ffea */
@@ -475,7 +475,7 @@ loc_40894462:
 
 	.align	16
 
-sub_40894480:
+__v__sfnt_GetOffsetAndLength:
 	linkw	%fp,#0			/* 40894480 4e56 0000 */
 	moveml	%d7/%a3-%a4,%sp@-	/* 40894484 48e7 0118 */
 	moveal	%fp@(8),%a4		/* 40894488 286e 0008 */
@@ -508,12 +508,12 @@ loc_408944cc:
 	unlk	%fp			/* 408944d2 4e5e */
 	rts				/* 408944d4 4e75 */
 
-sub_408944d6:
+sfnt_GetOffsetAndLength:
 	moveal	0x202c,%a1		/* 408944d6 2278 202c */
 	moveal	%a1@(748),%a1		/* 408944da 2269 02ec */
 	jmp	%a1@			/* 408944de 4ed1 */
 
-sub_408944e0:
+__v__sfnt_GetTablePtr:
 	linkw	%fp,#0			/* 408944e0 4e56 0000 */
 	movel	%fp@(16),%sp@-		/* 408944e4 2f2e 0010 */
 	moveq	#0,%d0			/* 408944e8 7000 */
@@ -524,7 +524,7 @@ sub_408944e0:
 	moveq	#0,%d1			/* 408944f4 7200 */
 	movel	%d1,%sp@-		/* 408944f6 2f01 */
 	movel	%fp@(8),%sp@-		/* 408944f8 2f2e 0008 */
-	jsr	%pc@(sub_40894510)	/* 408944fc 4eba 0012 */
+	jsr	%pc@(sfnt_GetDataPtr)	/* 408944fc 4eba 0012 */
 	unlk	%fp			/* 40894500 4e5e */
 	rts				/* 40894502 4e75 */
 
@@ -534,7 +534,7 @@ sub_408944e0:
 
 	.align	16
 
-sub_40894510:
+sfnt_GetDataPtr:
 	linkw	%fp,#-8			/* 40894510 4e56 fff8 */
 	moveml	%d6-%d7/%a3-%a4,%sp@-	/* 40894514 48e7 0318 */
 	movel	%fp@(12),%d6		/* 40894518 2c2e 000c */
@@ -546,7 +546,7 @@ sub_40894510:
 	pea	%fp@(-4)		/* 4089452c 486e fffc */
 	pea	%fp@(-8)		/* 40894530 486e fff8 */
 	movel	%a4,%sp@-		/* 40894534 2f0c */
-	jsr	%pc@(sub_408944d6)	/* 40894536 4eba ff9e */
+	jsr	%pc@(sfnt_GetOffsetAndLength)	/* 40894536 4eba ff9e */
 	tstl	%fp@(-4)		/* 4089453a 4aae fffc */
 	lea	%sp@(16),%sp		/* 4089453e 4fef 0010 */
 	beqs	loc_4089457c		/* 40894542 6738 */
@@ -651,7 +651,7 @@ loc_40894594:
 
 	.align	16
 
-sub_40894610:
+__v__sfnt_ComputeIndex2:
 	.short	0x4e56	/* 40894610 4e56 */
 	.short	0xfff6	/* 40894612 fff6 */
 	.short	0x48e7	/* 40894614 48e7 */
@@ -708,7 +708,7 @@ sub_40894610:
 
 	.align	16
 
-sub_40894680:
+__v__sfnt_ComputeIndex4:
 	.short	0x4e56	/* 40894680 4e56 */
 	.short	0xfffa	/* 40894682 fffa */
 	.short	0x48e7	/* 40894684 48e7 */
@@ -757,7 +757,7 @@ sub_40894680:
 
 	.align	16
 
-sub_408946e0:
+__v__sfnt_ComputeIndex6:
 	.short	0x4e56	/* 408946e0 4e56 */
 	.short	0xfffa	/* 408946e2 fffa */
 	.short	0x48e7	/* 408946e4 48e7 */
@@ -806,7 +806,7 @@ sub_408946e0:
 
 	.align	16
 
-sub_40894740:
+__v__sfnt_ComputeMapping:
 	.short	0x4e56	/* 40894740 4e56 */
 	.short	0xfff4	/* 40894742 fff4 */
 	.short	0x48e7	/* 40894744 48e7 */
@@ -957,7 +957,7 @@ sub_40894740:
 
 	.align	16
 
-sub_40894870:
+__v__sfnt_ReadSFNTMetrics:
 	.short	0x4e56	/* 40894870 4e56 */
 	.short	0x0000	/* 40894872 0000 */
 	.short	0x48e7	/* 40894874 48e7 */
@@ -1092,7 +1092,7 @@ sub_40894870:
 
 	.align	16
 
-sub_40894980:
+__v__sfnt_GetGlyphLocation:
 	.short	0x4e56	/* 40894980 4e56 */
 	.short	0xfffc	/* 40894982 fffc */
 	.short	0x48e7	/* 40894984 48e7 */
@@ -1217,7 +1217,7 @@ sub_40894980:
 
 	.align	16
 
-sub_40894a80:
+__v__sfnt_ReadSFNT:
 	.short	0x4e56	/* 40894a80 4e56 */
 	.short	0xff56	/* 40894a82 ff56 */
 	.short	0x48e7	/* 40894a84 48e7 */
@@ -1681,7 +1681,7 @@ sub_40894a80:
 
 	.align	16
 
-sub_40894e20:
+__v__MultiFinderExist:
 	.short	0x203c	/* 40894e20 203c */
 	.short	0x0000	/* 40894e22 0000 */
 	.short	0xa89f	/* 40894e24 a89f */
@@ -1736,11 +1736,11 @@ sub_40894e20:
 
 	.align	16
 
-sub_40894e90:
+__v__CtempBufHand:
 	.short	0x202f	/* 40894e90 202f */
 	.short	0x0004	/* 40894e92 0004 */
 
-sub_40894e94:
+__v__GETSTYLEBUFHAND:
 	.short	0x2600	/* 40894e94 2600 */
 	.short	0x6100	/* 40894e96 6100 */
 	.short	0xffb8	/* 40894e98 ffb8 */
@@ -1769,7 +1769,7 @@ sub_40894e94:
 
 	.align	16
 
-sub_40894ed0:
+FillDeviceWidths:
 	.short	0x4e56	/* 40894ed0 4e56 */
 	.short	0xfffc	/* 40894ed2 fffc */
 	.short	0x48e7	/* 40894ed4 48e7 */
@@ -1843,7 +1843,7 @@ sub_40894ed0:
 	.short	0x4e5e	/* 40894f5c 4e5e */
 	rts				/* 40894f5e 4e75 */
 
-sub_40894f60:
+Map256Chars:
 	.short	0x4e56	/* 40894f60 4e56 */
 	.short	0xfdfe	/* 40894f62 fdfe */
 	.short	0x48e7	/* 40894f64 48e7 */

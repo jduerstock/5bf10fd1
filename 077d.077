@@ -21,13 +21,13 @@ __v__GetSoundProcResources:
 	movel	%sp@+,%a1@(20)		/* 4084d044 235f 0014 */
 	rts				/* 4084d048 4e75 */
 
-sub_4084d04a:	
+GetSoundProcResources:	
 	CallVector	0x2070 19	/* 4084d04a 2f30 81e2 2070 004c */
 	rts				/* 4084d052 4e75 */
 
 	.align	16
 
-sub_4084d060:
+__v__SoundInDispatch:
 	tstb	%d0			/* 4084d060 4a00 */
 	bnes	loc_4084d06e		/* 4084d062 660a */
 	moveal	%sp@+,%a0		/* 4084d064 205f */
@@ -60,13 +60,13 @@ loc_4084d0a8:
 	jmp	%pc@(sub_4084d0d4)	/* 4084d0ac 4efa 0026 */
 	jmp	%pc@(sub_4084d0d4)	/* 4084d0b0 4efa 0022 */
 	jmp	%pc@(_SNDSOUNDMANAGERVERSION)	/* 4084d0b4 4efa f9ca */
-	jmp	%pc@(sub_4084caa0)	/* 4084d0b8 4efa f9e6 */
-	jmp	%pc@(sub_4084cc30)	/* 4084d0bc 4efa fb72 */
-	jmp	%pc@(sub_4084cd20)	/* 4084d0c0 4efa fc5e */
-	jmp	%pc@(sub_4084cd40)	/* 4084d0c4 4efa fc7a */
-	jmp	%pc@(sub_4084cdc0)	/* 4084d0c8 4efa fcf6 */
-	jmp	%pc@(sub_4084ce10)	/* 4084d0cc 4efa fd42 */
-	jmp	%pc@(sub_4084cee0)	/* 4084d0d0 4efa fe0e */
+	jmp	%pc@(_SNDCHANNELSTATUS)	/* 4084d0b8 4efa f9e6 */
+	jmp	%pc@(_SNDMANAGERSTATUS)	/* 4084d0bc 4efa fb72 */
+	jmp	%pc@(_SNDGETSYSBEEPSTATE)	/* 4084d0c0 4efa fc5e */
+	jmp	%pc@(_SNDSETSYSBEEPSTATE)	/* 4084d0c4 4efa fc7a */
+	jmp	%pc@(_SNDPLAYDOUBLEBUFFER)	/* 4084d0c8 4efa fcf6 */
+	jmp	%pc@(_SNDGETBUFFERSTUFFERLOAD)	/* 4084d0cc 4efa fd42 */
+	jmp	%pc@(_SNDGETMIXERLOAD)	/* 4084d0d0 4efa fe0e */
 
 sub_4084d0d4:
 	moveal	ExpandMem,%a1		/* 4084d0d4 2278 02b6 */
@@ -78,29 +78,29 @@ sub_4084d0d4:
 	movel	0x668,%sp@-		/* 4084d0ea 2f38 0668 */
 	rts				/* 4084d0ee 4e75 */
 
-sub_4084d0f0:
+__v__INITSNDDISPATCH:
 	moveq	#52,%d0			/* 4084d0f0 7034 */
 	.short	0xa51e			/* 4084d0f2 a51e */
 	moveal	ExpandMem,%a1		/* 4084d0f4 2278 02b6 */
 	moveal	%a1@(272),%a1		/* 4084d0f8 2269 0110 */
 	movel	%a0,%a1@(42)		/* 4084d0fc 2348 002a */
-	lea	%pc@(sub_4084d180),%a1	/* 4084d100 43fa 007e */
+	lea	%pc@(DispFuncDisp),%a1	/* 4084d100 43fa 007e */
 	movel	%a1,%a0@+		/* 4084d104 20c9 */
 	moveq	#7,%d1			/* 4084d106 7207 */
-	lea	%pc@(sub_4084d176),%a1	/* 4084d108 43fa 006c */
+	lea	%pc@(UnimplFunction),%a1	/* 4084d108 43fa 006c */
 
 loc_4084d10c:
 	movel	%a1,%a0@+		/* 4084d10c 20c9 */
 	dbf	%d1,loc_4084d10c	/* 4084d10e 51c9 fffc */
-	lea	%pc@(sub_4084d190),%a1	/* 4084d112 43fa 007c */
+	lea	%pc@(DispVersion),%a1	/* 4084d112 43fa 007c */
 	movel	%a1,%a0@+		/* 4084d116 20c9 */
-	lea	%pc@(sub_4084d202),%a1	/* 4084d118 43fa 00e8 */
+	lea	%pc@(DispAddTool),%a1	/* 4084d118 43fa 00e8 */
 	movel	%a1,%a0@+		/* 4084d11c 20c9 */
-	lea	%pc@(sub_4084d210),%a1	/* 4084d11e 43fa 00f0 */
+	lea	%pc@(DispRemTool),%a1	/* 4084d11e 43fa 00f0 */
 	movel	%a1,%a0@+		/* 4084d122 20c9 */
-	lea	%pc@(sub_4084d240),%a1	/* 4084d124 43fa 011a */
+	lea	%pc@(DispToolAddr),%a1	/* 4084d124 43fa 011a */
 	movel	%a1,%a0@+		/* 4084d128 20c9 */
-	lea	%pc@(sub_4084d140),%a0	/* 4084d12a 41fa 0014 */
+	lea	%pc@(SOUNDDISPATCHER),%a0	/* 4084d12a 41fa 0014 */
 	moveq	#0,%d0			/* 4084d12e 7000 */
 	.short	0xa647			/* 4084d130 a647 */
 	rts				/* 4084d132 4e75 */
@@ -111,7 +111,7 @@ INITSNDDISPATCH:
 
 	.align	16
 
-sub_4084d140:
+SOUNDDISPATCHER:
 	moveal	ExpandMem,%a0		/* 4084d140 2078 02b6 */
 	moveal	%a0@(272),%a0		/* 4084d144 2068 0110 */
 	moveal	%a0@(42),%a0		/* 4084d148 2068 002a */
@@ -119,16 +119,16 @@ sub_4084d140:
 	swap	%d0			/* 4084d150 4840 */
 	jmp	%a0@			/* 4084d152 4ed0 */
 
-sub_4084d154:
+__v__DispFuncDisp:
 	cmpiw	#16,%d0			/* 4084d154 0c40 0010 */
-	bccs	sub_4084d16c		/* 4084d158 6412 */
+	bccs	__v__UnimplFunction		/* 4084d158 6412 */
 	moveal	ExpandMem,%a0		/* 4084d15a 2078 02b6 */
 	moveal	%a0@(272),%a0		/* 4084d15e 2068 0110 */
 	moveal	%a0@(42),%a0		/* 4084d162 2068 002a */
 	moveal	%a0@(0x0024,%d0:w),%a0	/* 4084d166 2070 0024 */
 	jmp	%a0@			/* 4084d16a 4ed0 */
 
-sub_4084d16c:
+__v__UnimplFunction:
 	tstw	%d0			/* 4084d16c 4a40 */
 	bnes	loc_4084d174		/* 4084d16e 6604 */
 	clrl	%sp@(4)			/* 4084d170 42af 0004 */
@@ -136,17 +136,17 @@ sub_4084d16c:
 loc_4084d174:
 	rts				/* 4084d174 4e75 */
 
-sub_4084d176:
+UnimplFunction:
 	CallVector	0x2070 7	/* 4084d176 2f30 81e2 2070 001c */
 	rts				/* 4084d17e 4e75 */
 
-sub_4084d180:
+DispFuncDisp:
 	CallVector	0x2070 6	/* 4084d180 2f30 81e2 2070 0018 */
 	rts				/* 4084d188 4e75 */
 
 	.align	16
 
-sub_4084d190:
+DispVersion:
 	movew	%sp@(4),%d0		/* 4084d190 302f 0004 */
 	beqs	loc_4084d1b2		/* 4084d194 671c */
 	cmpiw	#36,%d0			/* 4084d196 0c40 0024 */
@@ -155,7 +155,7 @@ sub_4084d190:
 	addql	#6,%sp			/* 4084d19e 5c8f */
 	movel	%a0,%sp@-		/* 4084d1a0 2f08 */
 	andil	#65535,%d0		/* 4084d1a2 0280 0000 ffff */
-	jmp	%pc@(sub_4084d140)	/* 4084d1a8 4efa ff96 */
+	jmp	%pc@(SOUNDDISPATCHER)	/* 4084d1a8 4efa ff96 */
 
 loc_4084d1ac:
 	clrl	%sp@(6)			/* 4084d1ac 42af 0006 */
@@ -173,7 +173,7 @@ loc_4084d1ba:
 
 	.align	16
 
-sub_4084d1d0:
+__v__DispAddTool:
 	movew	%sp@(8),%d0		/* 4084d1d0 302f 0008 */
 	cmpiw	#36,%d0			/* 4084d1d4 0c40 0024 */
 	bges	loc_4084d1f4		/* 4084d1d8 6c1a */
@@ -193,20 +193,20 @@ loc_4084d1fa:
 	addaw	#10,%sp			/* 4084d1fc defc 000a */
 	jmp	%a0@			/* 4084d200 4ed0 */
 
-sub_4084d202:
+DispAddTool:
 	CallVector	0x2070 8	/* 4084d202 2f30 81e2 2070 0020 */
 	rts				/* 4084d20a 4e75 */
 
 	.align	16
 
-sub_4084d210:
+DispRemTool:
 	movew	%sp@(4),%d0		/* 4084d210 302f 0004 */
 	cmpiw	#36,%d0			/* 4084d214 0c40 0024 */
 	bccs	loc_4084d234		/* 4084d218 641a */
 	moveal	ExpandMem,%a1		/* 4084d21a 2278 02b6 */
 	moveal	%a1@(272),%a1		/* 4084d21e 2269 0110 */
 	moveal	%a1@(42),%a1		/* 4084d222 2269 002a */
-	lea	%pc@(sub_4084d176),%a0	/* 4084d226 41fa ff4e */
+	lea	%pc@(UnimplFunction),%a0	/* 4084d226 41fa ff4e */
 	movel	%a0,%a1@(0x0000,%d0:w)	/* 4084d22a 2388 0000 */
 	clrw	%sp@(6)			/* 4084d22e 426f 0006 */
 	bras	loc_4084d23a		/* 4084d232 6006 */
@@ -219,7 +219,7 @@ loc_4084d23a:
 	addql	#6,%sp			/* 4084d23c 5c8f */
 	jmp	%a0@			/* 4084d23e 4ed0 */
 
-sub_4084d240:
+DispToolAddr:
 	movew	%sp@(4),%d0		/* 4084d240 302f 0004 */
 	cmpiw	#36,%d0			/* 4084d244 0c40 0024 */
 	bccs	loc_4084d262		/* 4084d248 6418 */
@@ -227,7 +227,7 @@ sub_4084d240:
 	moveal	%a1@(272),%a1		/* 4084d24e 2269 0110 */
 	moveal	%a1@(42),%a1		/* 4084d252 2269 002a */
 	movel	%a1@(0x0000,%d0:w),%d0	/* 4084d256 2031 0000 */
-	lea	%pc@(sub_4084d176),%a0	/* 4084d25a 41fa ff1a */
+	lea	%pc@(UnimplFunction),%a0	/* 4084d25a 41fa ff1a */
 	cmpl	%a0,%d0			/* 4084d25e b088 */
 	bnes	loc_4084d264		/* 4084d260 6602 */
 
@@ -242,10 +242,10 @@ loc_4084d264:
 
 	.align	16
 
-sub_4084d270:
+__v__INITMACEDISPATCH:
 	clrw	%sp@-			/* 4084d270 4267 */
 	movew	#16,%sp@-		/* 4084d272 3f3c 0010 */
-	pea	%pc@(sub_4084d2a8)	/* 4084d276 487a 0030 */
+	pea	%pc@(MACEDispatch)	/* 4084d276 487a 0030 */
 	movel	#262144,%d0		/* 4084d27a 203c 0004 0000 */
 	.short	0xa800			/* 4084d280 a800 */
 	movew	%sp@+,%d0		/* 4084d282 301f */
@@ -255,23 +255,23 @@ INITMACEDISPATCH:
 	CallVector	0x2070 9	/* 4084d286 2f30 81e2 2070 0024 */
 	rts				/* 4084d28e 4e75 */
 
-sub_4084d290:
+__v__MACEDispatch:
 	jmp	%pc@(loc_4084d294,%d0:w)	/* 4084d290 4efb 0002 */
 
 loc_4084d294:
-	jmp	%pc@(sub_4084ca90)	/* 4084d294 4efa f7fa */
-	jmp	%pc@(sub_4084d536)	/* 4084d298 4efa 029c */
-	jmp	%pc@(sub_4084d738)	/* 4084d29c 4efa 049a */
-	jmp	%pc@(sub_4084db3c)	/* 4084d2a0 4efa 089a */
-	jmp	%pc@(sub_4084dda0)	/* 4084d2a4 4efa 0afa */
+	jmp	%pc@(_MACEVERSION)	/* 4084d294 4efa f7fa */
+	jmp	%pc@(Comp3to1)	/* 4084d298 4efa 029c */
+	jmp	%pc@(Exp1to3)	/* 4084d29c 4efa 049a */
+	jmp	%pc@(Comp6to1)	/* 4084d2a0 4efa 089a */
+	jmp	%pc@(Exp1to6)	/* 4084d2a4 4efa 0afa */
 
-sub_4084d2a8:
+MACEDispatch:
 	CallVector	0x2070 10	/* 4084d2a8 2f30 81e2 2070 0028 */
 	rts				/* 4084d2b0 4e75 */
 
 	.align	16
 
-sub_4084d2c0:
+__v__Comp3to1:
 	linkw	%fp,#0			/* 4084d2c0 4e56 0000 */
 	moveml	%d0-%a5,%sp@-		/* 4084d2c4 48e7 fffc */
 	cmpil	#6,%fp@(24)		/* 4084d2c8 0cae 0000 0006 0018 */
@@ -600,11 +600,11 @@ loc_4084d526:
 	addaw	#32,%sp			/* 4084d530 defc 0020 */
 	jmp	%a0@			/* 4084d534 4ed0 */
 
-sub_4084d536:
+Comp3to1:
 	CallVector	0x2070	1	/* 4084d536 2f30 81e2 2070 0004 */
 	rts				/* 4084d53e 4e75 */
 
-sub_4084d540:
+__v__Exp1to3:
 	linkw	%fp,#0			/* 4084d540 4e56 0000 */
 	moveml	%d0-%a5,%sp@-		/* 4084d544 48e7 fffc */
 	cmpil	#1,%fp@(24)		/* 4084d548 0cae 0000 0001 0018 */
@@ -854,13 +854,13 @@ loc_4084d728:
 	addaw	#32,%sp			/* 4084d732 defc 0020 */
 	jmp	%a0@			/* 4084d736 4ed0 */
 
-sub_4084d738:
+Exp1to3:
 	CallVector	0x2070 2	/* 4084d738 2f30 81e2 2070 0008 */
 	rts				/* 4084d740 4e75 */
 
 	.align	16
 
-sub_4084d750:
+__v__Comp6to1:
 	linkw	%fp,#-4			/* 4084d750 4e56 fffc */
 	moveml	%d0-%a5,%sp@-		/* 4084d754 48e7 fffc */
 	cmpil	#6,%fp@(24)		/* 4084d758 0cae 0000 0006 0018 */
@@ -1374,13 +1374,13 @@ loc_4084db2c:
 	addaw	#32,%sp			/* 4084db36 defc 0020 */
 	jmp	%a0@			/* 4084db3a 4ed0 */
 
-sub_4084db3c:
+Comp6to1:
 	CallVector	0x2070 4	/* 4084db3c 2f30 81e2 2070 0010 */
 	rts				/* 4084db44 4e75 */
 
 	.align	16
 
-sub_4084db50:
+__v__Exp1to6:
 	linkw	%fp,#-4			/* 4084db50 4e56 fffc */
 	moveml	%d0-%a5,%sp@-		/* 4084db54 48e7 fffc */
 	cmpil	#1,%fp@(24)		/* 4084db58 0cae 0000 0001 0018 */
@@ -1665,7 +1665,7 @@ loc_4084dd90:
 	addaw	#32,%sp			/* 4084dd9a defc 0020 */
 	jmp	%a0@			/* 4084dd9e 4ed0 */
 
-sub_4084dda0:
+Exp1to6:
 	CallVector	0x2070 3	/* 4084dda0 2f30 81e2 2070 000c */
 	rts				/* 4084dda8 4e75 */
 

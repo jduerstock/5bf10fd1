@@ -19,13 +19,13 @@ loc_40887016:
 	unlk	%fp			/* 40887028 4e5e */
 	rtd	#4			/* 4088702a 4e74 0004 */
 
-sub_4088702e:
+CLEARONE:
 	CallVector	0x2054 125	/* 4088702e 2f30 81e2 2054 01f4 */
 	rts				/* 40887036 4e75 */
 
 	.align	16
 
-sub_40887040:
+COPYPALETTE:
 	linkw	%fp,#-2			/* 40887040 4e56 fffe */
 	moveml	%d3-%d4/%a2-%a4,%sp@-	/* 40887044 48e7 1838 */
 	moveal	0xdc8,%a4		/* 40887048 2878 0dc8 */
@@ -87,7 +87,7 @@ loc_408870ca:
 	cmpal	%a2,%a3			/* 408870ca b7ca */
 	beqs	loc_4088712a		/* 408870cc 675c */
 	movel	%a3,%sp@-		/* 408870ce 2f0b */
-	bsrw	sub_40886460		/* 408870d0 6100 f38e */
+	bsrw	DIRTYSEEDS		/* 408870d0 6100 f38e */
 	moveal	%a3@,%a1		/* 408870d4 2253 */
 	moveq	#0,%d0			/* 408870d6 7000 */
 	movew	%fp@(10),%d0		/* 408870d8 302e 000a */
@@ -106,7 +106,7 @@ loc_408870f2:
 	moveml	%a0-%a1,%sp@-		/* 408870f8 48e7 00c0 */
 	movel	%a0,%sp@-		/* 408870fc 2f08 */
 	movel	%a4@,%sp@-		/* 408870fe 2f14 */
-	jsr	%pc@(sub_4088702e)	/* 40887100 4eba ff2c */
+	jsr	%pc@(CLEARONE)	/* 40887100 4eba ff2c */
 	moveml	%sp@+,%a0-%a1		/* 40887104 4cdf 0300 */
 
 loc_40887108:
@@ -129,7 +129,7 @@ loc_4088712a:
 
 	.align	16
 
-sub_40887140:
+__v__UPDATEDEVICE:
 	linkw	%fp,#-14		/* 40887140 4e56 fff2 */
 	moveml	%d0-%d3/%a0-%a3,%sp@-	/* 40887144 48e7 f0f0 */
 	subqw	#4,%sp			/* 40887148 594f */
@@ -142,7 +142,7 @@ sub_40887140:
 	movew	%fp@(8),%d0		/* 40887162 302e 0008 */
 	moveal	%a1@(0x0038,%d0:w:8),%a2	/* 40887166 2471 0638 */
 	moveal	%a2,%a0			/* 4088716a 204a */
-	jsr	%pc@(sub_40885e34)	/* 4088716c 4eba ecc6 */
+	jsr	%pc@(DEVSETENTRIES)	/* 4088716c 4eba ecc6 */
 	moveal	%a2@,%a0		/* 40887170 2052 */
 	lea	%a0@(34),%a2		/* 40887172 45e8 0022 */
 	movew	%a0@(20),%d0		/* 40887176 3028 0014 */
@@ -173,7 +173,7 @@ loc_408871aa:
 
 loc_408871b4:
 	movew	%d0,%fp@(-14)		/* 408871b4 3d40 fff2 */
-	jsr	%pc@(sub_408857fa)	/* 408871b8 4eba e640 */
+	jsr	%pc@(CHECKFORJUGGLER)	/* 408871b8 4eba e640 */
 	bnes	loc_408871d2		/* 408871bc 6614 */
 	movel	%a2,%sp@-		/* 408871be 2f0a */
 	movew	%fp@(8),%sp@-		/* 408871c0 3f2e 0008 */
@@ -263,7 +263,7 @@ loc_40887290:
 	CallVector	0x2054 126	/* 408872a6 2f30 81e2 2054 01f8 */
 	rts				/* 408872ae 4e75 */
 
-sub_408872b0:
+__v__UPDATEDEVICES:
 	.short	0x48e7	/* 408872b0 48e7 */
 	.short	0xc080	/* 408872b2 c080 */
 	.short	0x0cb8	/* 408872b4 0cb8 */
@@ -304,7 +304,7 @@ sub_408872b0:
 
 	.align	16
 
-sub_40887300:
+__v__WHATPAL:
 	.short	0x206f	/* 40887300 206f */
 	.short	0x0004	/* 40887302 0004 */
 	.short	0x4a68	/* 40887304 4a68 */
@@ -336,7 +336,7 @@ sub_40887300:
 
 	.align	16
 
-sub_40887340:
+__v__CALCDEVS:
 	.short	0x48e7	/* 40887340 48e7 */
 	.short	0x1f30	/* 40887342 1f30 */
 	.short	0x514f	/* 40887344 514f */
@@ -449,7 +449,7 @@ sub_40887340:
 
 	.align	16
 
-sub_40887420:
+__v__UNHOOKDEVICE:
 	.short	0x4e56	/* 40887420 4e56 */
 	.short	0xff8c	/* 40887422 ff8c */
 	.short	0x48e7	/* 40887424 48e7 */
@@ -515,7 +515,7 @@ sub_40887420:
 	.short	0x0208	/* 4088749c 0208 */
 	rts				/* 4088749e 4e75 */
 
-sub_408874a0:
+__v__UNRESERVEDEVICES:
 	.short	0x48e7	/* 408874a0 48e7 */
 	.short	0x7838	/* 408874a2 7838 */
 	.short	0x45e8	/* 408874a4 45e8 */
@@ -577,7 +577,7 @@ sub_408874a0:
 
 	.align	16
 
-sub_40887520:
+__v__ZAPLINKS:
 	linkw	%fp,#0			/* 40887520 4e56 0000 */
 	.short	0x48e7	/* 40887524 48e7 */
 	.short	0xf8e0	/* 40887526 f8e0 */
@@ -746,7 +746,7 @@ sub_40887520:
 	.short	0x0210	/* 4088766c 0210 */
 	rts				/* 4088766e 4e75 */
 
-sub_40887670:
+__v__RESIZEPALETTE:
 	linkw	%fp,#0			/* 40887670 4e56 0000 */
 	.short	0x48e7	/* 40887674 48e7 */
 	.short	0x1820	/* 40887676 1820 */
@@ -826,7 +826,7 @@ sub_40887670:
 
 	.align	16
 
-sub_40887710:
+__v__RESTOREDEVICECLUT:
 	.short	0x4aaf	/* 40887710 4aaf */
 	.short	0x0004	/* 40887712 0004 */
 	.short	0x6600	/* 40887714 6600 */
@@ -852,7 +852,7 @@ sub_40887710:
 	.short	0x0218	/* 4088773c 0218 */
 	rts				/* 4088773e 4e75 */
 
-sub_40887740:
+__v__NEWHILITECOLOR:
 	.short	0x2238	/* 40887740 2238 */
 	.short	0x0dc8	/* 40887742 0dc8 */
 	.short	0x6732	/* 40887744 6732 */
@@ -890,11 +890,11 @@ sub_40887740:
 
 	.align	16
 
-sub_40887790:
+__v__SAVEFORE:
 	moveq	#0,%d0			/* 40887790 7000 */
 	.short	0x6002	/* 40887792 6002 */
 
-sub_40887794:
+__v__SAVEBACK:
 	moveq	#1,%d0			/* 40887794 7001 */
 	.short	0x226f	/* 40887796 226f */
 	.short	0x0004	/* 40887798 0004 */
@@ -950,7 +950,7 @@ sub_40887794:
 
 	.align	16
 
-sub_40887800:
+__v__RESTOREFORE:
 	.short	0x226f	/* 40887800 226f */
 	.short	0x0004	/* 40887802 0004 */
 	.short	0x4a59	/* 40887804 4a59 */
@@ -967,7 +967,7 @@ sub_40887800:
 	.short	0x185c	/* 4088781a 185c */
 	.short	0x60f2	/* 4088781c 60f2 */
 
-sub_4088781e:
+__v__RESTOREBACK:
 	.short	0x226f	/* 4088781e 226f */
 	.short	0x0004	/* 40887820 0004 */
 	.short	0x4a59	/* 40887822 4a59 */
@@ -995,7 +995,7 @@ sub_4088781e:
 
 	.align	16
 
-sub_40887850:
+__v__RELEASELIST:
 	.short	0x4ab8	/* 40887850 4ab8 */
 	.short	0x0dc8	/* 40887852 0dc8 */
 	.short	0x673e	/* 40887854 673e */
@@ -1040,7 +1040,7 @@ sub_40887850:
 
 	.align	16
 
-sub_408878b0:
+__v__FINDMODEID:
 	.short	0x4e56	/* 408878b0 4e56 */
 	.short	0xffc4	/* 408878b2 ffc4 */
 	.short	0x48e7	/* 408878b4 48e7 */
@@ -1116,7 +1116,7 @@ sub_408878b0:
 
 	.align	16
 
-sub_40887950:
+__v__SETDEPTH:
 	.short	0x4e56	/* 40887950 4e56 */
 	.short	0xfff0	/* 40887952 fff0 */
 	.short	0x48e7	/* 40887954 48e7 */
@@ -1274,7 +1274,7 @@ sub_40887950:
 
 	.align	16
 
-sub_40887a90:
+__v__HASDEPTH:
 	linkw	%fp,#0			/* 40887a90 4e56 0000 */
 	.short	0x426e	/* 40887a94 426e */
 	.short	0x0012	/* 40887a96 0012 */
@@ -1305,7 +1305,7 @@ sub_40887a90:
 
 	.align	16
 
-sub_40887ad0:
+__v__PMGRVERSION:
 	.short	0x3f7c	/* 40887ad0 3f7c */
 	.short	0x0202	/* 40887ad2 0202 */
 	.short	0x0004	/* 40887ad4 0004 */
@@ -1319,7 +1319,7 @@ sub_40887ad0:
 
 	.align	16
 
-sub_40887af0:
+__v__SETPALETTEUPDATES:
 	linkw	%fp,#0			/* 40887af0 4e56 0000 */
 	.short	0x206e	/* 40887af4 206e */
 	.short	0x000a	/* 40887af6 000a */
@@ -1349,7 +1349,7 @@ sub_40887af0:
 
 	.align	16
 
-sub_40887b30:
+__v__GETPALETTEUPDATES:
 	linkw	%fp,#0			/* 40887b30 4e56 0000 */
 	.short	0x206e	/* 40887b34 206e */
 	.short	0x0008	/* 40887b36 0008 */
@@ -1372,7 +1372,7 @@ sub_40887b30:
 
 	.align	16
 
-sub_40887b60:
+__v__GETGRAY:
 	.short	0x4e56	/* 40887b60 4e56 */
 	.short	0xffe4	/* 40887b62 ffe4 */
 	.short	0x2f0a	/* 40887b64 2f0a */
@@ -1490,7 +1490,7 @@ sub_40887b60:
 
 	.align	16
 
-sub_40887c50:
+__v__CHECKCOLORS:
 	.short	0x4e56	/* 40887c50 4e56 */
 	.short	0xffee	/* 40887c52 ffee */
 	.short	0x48e7	/* 40887c54 48e7 */
@@ -1638,7 +1638,7 @@ sub_40887c50:
 	.short	0xffea	/* 40887d70 ffea */
 	.short	0xfefa	/* 40887d72 fefa */
 
-sub_40887d74:
+PMGRDISPATCH:
 	.short	0x0c00	/* 40887d74 0c00 */
 	.short	0x001a	/* 40887d76 001a */
 	.short	0x641a	/* 40887d78 641a */
@@ -1663,7 +1663,7 @@ sub_40887d74:
 
 	.align	16
 
-sub_40887da0:
+__v__QDEXTDISPATCHER:
 	.short	0x0c40	/* 40887da0 0c40 */
 	.short	0x0017	/* 40887da2 0017 */
 	.short	0x6264	/* 40887da4 6264 */
@@ -1727,7 +1727,7 @@ sub_40887da0:
 	.short	0x0d6e	/* 40887e18 0d6e */
 	.short	0x4ed0	/* 40887e1a 4ed0 */
 
-sub_40887e1c:
+QDEXTDISPATCHER:
 	.short	0x2f30	/* 40887e1c 2f30 */
 	.short	0x81e2	/* 40887e1e 81e2 */
 	.short	0x2054	/* 40887e20 2054 */
@@ -1736,7 +1736,7 @@ sub_40887e1c:
 
 	.align	16
 
-sub_40887e30:
+__v__NEWGWORLD:
 	linkw	%fp,#-62		/* 40887e30 4e56 ffc2 */
 	moveml	%d3-%d7/%a2-%a4,%sp@-	/* 40887e34 48e7 1f38 */
 	clrw	%fp@(30)		/* 40887e38 426e 001e */

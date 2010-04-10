@@ -15,22 +15,22 @@ loc_40825036:
 	moveq	#25,%d0			/* 40825036 7019 */
 	.short	0xa9c9			/* 40825038 a9c9 */
 
-sub_4082503a:
+EXTBTREEINSTALL:
 	CallVector	0x2030 52	/* 4082503a 2f30 81e2 2030 00d0 */
 	rts				/* 40825042 4e75 */
 
 	.align	16
 
-sub_40825050:
+EXTBTREEDISPATCH:
 	tstw	%d0			/* 40825050 4a40 */
 	blts	loc_4082505a		/* 40825052 6d06 */
 	cmpiw	#15,%d0			/* 40825054 0c40 000f */
 	blss	loc_40825064		/* 40825058 630a */
 
 loc_4082505a:
-	bsrw	sub_40826710		/* 4082505a 6100 16b4 */
+	bsrw	EXTBTQUEUE		/* 4082505a 6100 16b4 */
 	moveq	#-50,%d0		/* 4082505e 70ce */
-	braw	sub_408267a0		/* 40825060 6000 173e */
+	braw	EXTBTCMDDONE		/* 40825060 6000 173e */
 
 loc_40825064:
 	movew	%d0,%d2			/* 40825064 3400 */
@@ -1552,7 +1552,7 @@ loc_408257b2:
 	.short	0x0000	/* 40825c1c 0000 */
 	.short	0x0000	/* 40825c1e 0000 */
 
-sub_40825c20:
+__v__EXTISBTREE:
 	.short	0x4a40	/* 40825c20 4a40 */
 	.short	0x6706	/* 40825c22 6706 */
 	.short	0x6100	/* 40825c24 6100 */
@@ -1642,13 +1642,13 @@ sub_40825c20:
 	moveq	#0,%d0			/* 40825ccc 7000 */
 	rts				/* 40825cce 4e75 */
 
-sub_40825cd0:
+EXTISBTREE:
 	CallVector	0x2030 54	/* 40825cd0 2f30 81e2 2030 00d8 */
 	rts				/* 40825cd8 4e75 */
 
 	.align	16
 
-sub_40825ce0:
+__v__EXTCOPYPARAM:
 	.short	0x2278	/* 40825ce0 2278 */
 	.short	0x0bb8	/* 40825ce2 0bb8 */
 	.short	0x2269	/* 40825ce4 2269 */
@@ -1682,7 +1682,7 @@ sub_40825ce0:
 	rts				/* 40825d1c 4e75 */
 	.short	0x0000	/* 40825d1e 0000 */
 
-sub_40825d20:
+__v__EXTCKCLUMPSIZE:
 	.short	0x48e7	/* 40825d20 48e7 */
 	.short	0x1800	/* 40825d22 1800 */
 	.short	0x282a	/* 40825d24 282a */
@@ -1705,7 +1705,7 @@ sub_40825d20:
 
 	.align	16
 
-sub_40825d50:
+__v__EXTBTOPEN:
 	.short	0x2d1f	/* 40825d50 2d1f */
 	.short	0x48e6	/* 40825d52 48e6 */
 	.short	0x7cf8	/* 40825d54 7cf8 */
@@ -1899,7 +1899,7 @@ sub_40825d50:
 	.short	0x0000	/* 40825ecc 0000 */
 	.short	0x0000	/* 40825ece 0000 */
 
-sub_40825ed0:
+__v__EXTROTATELT:
 	.short	0x48e7	/* 40825ed0 48e7 */
 	.short	0x3f3c	/* 40825ed2 3f3c */
 	.short	0x2a48	/* 40825ed4 2a48 */
@@ -2021,17 +2021,17 @@ sub_40825ed0:
 	.short	0x4a40	/* 40825fbc 4a40 */
 	rts				/* 40825fbe 4e75 */
 
-sub_40825fc0:
+__v__EXTSPLITLT:
 	movel	%sp@+,%fp@-		/* 40825fc0 2d1f */
 	moveml	%d3-%d7/%a3,%fp@-	/* 40825fc2 48e6 1f10 */
 	movel	%a0,%d7			/* 40825fc6 2e08 */
 	movew	%d0,%d6			/* 40825fc8 3c00 */
 	movew	%d1,%d5			/* 40825fca 3a01 */
 	movew	%a4@(16),%d0		/* 40825fcc 302c 0010 */
-	jsr	%pc@(sub_40826552)	/* 40825fd0 4eba 0580 */
+	jsr	%pc@(EXTLOCTPR)	/* 40825fd0 4eba 0580 */
 	movel	%a0@,%d4		/* 40825fd4 2810 */
 	movew	%a4@(2),%d0		/* 40825fd6 302c 0002 */
-	jsr	%pc@(sub_40824fc6)	/* 40825fda 4eba efea */
+	jsr	%pc@(EXTALLOCNODE)	/* 40825fda 4eba efea */
 	bnes	loc_40826040		/* 40825fde 6660 */
 	movel	%d1,%d3			/* 40825fe0 2601 */
 	movel	%a2,%d0			/* 40825fe2 200a */
@@ -2039,12 +2039,12 @@ sub_40825fc0:
 	movel	%d3,%a2@		/* 40825fe6 2483 */
 	moveq	#4,%d1			/* 40825fe8 7204 */
 	moveal	%a2,%a0			/* 40825fea 204a */
-	jsr	%pc@(sub_40826520)	/* 40825fec 4eba 0532 */
+	jsr	%pc@(EXTRELNODE)	/* 40825fec 4eba 0532 */
 	bnes	loc_40826040		/* 40825ff0 664e */
 
 loc_40825ff2:
 	movel	%d3,%d1			/* 40825ff2 2203 */
-	jsr	%pc@(sub_4082657a)	/* 40825ff4 4eba 0584 */
+	jsr	%pc@(EXTINITNODE)	/* 40825ff4 4eba 0584 */
 	bnes	loc_40826040		/* 40825ff8 6646 */
 	moveal	%a0,%a2			/* 40825ffa 2448 */
 	moveb	%a3@(8),%a2@(8)		/* 40825ffc 156b 0008 0008 */

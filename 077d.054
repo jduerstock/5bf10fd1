@@ -6,7 +6,7 @@
 	moveq	#72,%d0			/* 40836012 7048 */
 	_BlockMove			/* 40836014 a02e */
 	pea	%a4@(3906)		/* 40836016 486c 0f42 */
-	pea	%pc@(sub_4083635c)	/* 4083601a 487a 0340 */
+	pea	%pc@(ListSendCompletion)	/* 4083601a 487a 0340 */
 	moveq	#1,%d0			/* 4083601e 7001 */
 	movel	%d0,%sp@-		/* 40836020 2f00 */
 	movel	%d0,%sp@-		/* 40836022 2f00 */
@@ -22,14 +22,14 @@ loc_40836036:
 	unlk	%fp			/* 4083603c 4e5e */
 	rts				/* 4083603e 4e75 */
 
-sub_40836040:
+OpenCompletion:
 	moveal	0x2050,%a1		/* 40836040 2278 2050 */
 	moveal	%a1@(468),%a1		/* 40836044 2269 01d4 */
 	jmp	%a1@			/* 40836048 4ed1 */
 
 	.align	16
 
-sub_40836050:
+__v__StartSendCompletion:
 	linkw	%fp,#-4			/* 40836050 4e56 fffc */
 	moveml	%a3-%a4,%sp@-		/* 40836054 48e7 0018 */
 	movel	%a0,%d0			/* 40836058 2008 */
@@ -46,14 +46,14 @@ sub_40836050:
 	extl	%d0			/* 4083607a 48c0 */
 	movel	%d0,%sp@-		/* 4083607c 2f00 */
 	movel	%fp@(-4),%sp@-		/* 4083607e 2f2e fffc */
-	jsr	%pc@(sub_40834154)	/* 40836082 4eba e0d0 */
+	jsr	%pc@(CompleteWithResult)	/* 40836082 4eba e0d0 */
 	addqw	#8,%sp			/* 40836086 504f */
 
 loc_40836088:
 	moveq	#0,%d0			/* 40836088 7000 */
 	movel	%d0,%sp@-		/* 4083608a 2f00 */
 	movel	%a4,%sp@-		/* 4083608c 2f0c */
-	jsr	%pc@(sub_40835920)	/* 4083608e 4eba f890 */
+	jsr	%pc@(RemoveNetworkConnection)	/* 4083608e 4eba f890 */
 	addqw	#8,%sp			/* 40836092 504f */
 	bras	loc_408360cc		/* 40836094 6036 */
 
@@ -71,12 +71,12 @@ loc_408360aa:
 
 loc_408360b0:
 	pea	%a4@(3536)		/* 408360b0 486c 0dd0 */
-	pea	%pc@(sub_408362d4)	/* 408360b4 487a 021e */
+	pea	%pc@(StartCommandCompletion)	/* 408360b4 487a 021e */
 	moveq	#1,%d0			/* 408360b8 7001 */
 	movel	%d0,%sp@-		/* 408360ba 2f00 */
 	pea	%a4@(3604)		/* 408360bc 486c 0e14 */
 	pea	0x122			/* 408360c0 4878 0122 */
-	jsr	%pc@(sub_40838428)	/* 408360c4 4eba 2362 */
+	jsr	%pc@(ReadFromConnection)	/* 408360c4 4eba 2362 */
 	lea	%sp@(20),%sp		/* 408360c8 4fef 0014 */
 
 loc_408360cc:
@@ -84,12 +84,12 @@ loc_408360cc:
 	unlk	%fp			/* 408360d2 4e5e */
 	rts				/* 408360d4 4e75 */
 
-sub_408360d6:
+StartSendCompletion:
 	moveal	0x2050,%a1		/* 408360d6 2278 2050 */
 	moveal	%a1@(472),%a1		/* 408360da 2269 01d8 */
 	jmp	%a1@			/* 408360de 4ed1 */
 
-sub_408360e0:
+__v__StartCommandCompletion:
 	linkw	%fp,#-20		/* 408360e0 4e56 ffec */
 	moveml	%a3-%a4,%sp@-		/* 408360e4 48e7 0018 */
 	movel	%a0,%d0			/* 408360e8 2008 */
@@ -154,7 +154,7 @@ loc_4083618c:
 	moveq	#0,%d0			/* 408361a4 7000 */
 	movel	%d0,%sp@-		/* 408361a6 2f00 */
 	movel	%a4,%sp@-		/* 408361a8 2f0c */
-	jsr	%pc@(sub_40834154)	/* 408361aa 4eba dfa8 */
+	jsr	%pc@(CompleteWithResult)	/* 408361aa 4eba dfa8 */
 	addqw	#8,%sp			/* 408361ae 504f */
 	braw	loc_408362ca		/* 408361b0 6000 0118 */
 
@@ -163,7 +163,7 @@ loc_408361b4:
 	movel	%a4@(62),%sp@-		/* 408361ba 2f2c 003e */
 	moveal	%fp@(-8),%a0		/* 408361be 206e fff8 */
 	pea	%a0@(4)			/* 408361c2 4868 0004 */
-	jsr	%pc@(sub_4083794c)	/* 408361c6 4eba 1784 */
+	jsr	%pc@(GetAuthInfo)	/* 408361c6 4eba 1784 */
 	tstb	%d0			/* 408361ca 4a00 */
 	addqw	#8,%sp			/* 408361cc 504f */
 	bnes	loc_408361da		/* 408361ce 660a */
@@ -182,7 +182,7 @@ loc_408361da:
 	moveal	%fp@(-4),%a1		/* 40836200 226e fffc */
 	movel	%a0@(8),%a1@(8)		/* 40836204 2368 0008 0008 */
 	pea	%a3@(3906)		/* 4083620a 486b 0f42 */
-	pea	%pc@(sub_408360d6)	/* 4083620e 487a fec6 */
+	pea	%pc@(StartSendCompletion)	/* 4083620e 487a fec6 */
 	moveq	#1,%d0			/* 40836212 7001 */
 	movel	%d0,%sp@-		/* 40836214 2f00 */
 	movel	%d0,%sp@-		/* 40836216 2f00 */
@@ -256,13 +256,13 @@ loc_408362a8:
 	extl	%d0			/* 408362ac 48c0 */
 	movel	%d0,%sp@-		/* 408362ae 2f00 */
 	movel	%a4,%sp@-		/* 408362b0 2f0c */
-	jsr	%pc@(sub_40834154)	/* 408362b2 4eba dea0 */
+	jsr	%pc@(CompleteWithResult)	/* 408362b2 4eba dea0 */
 	moveq	#0,%d0			/* 408362b6 7000 */
 	movel	%d0,%a3@(58)		/* 408362b8 2740 003a */
 	moveq	#0,%d0			/* 408362bc 7000 */
 	movel	%d0,%sp@-		/* 408362be 2f00 */
 	movel	%a3,%sp@-		/* 408362c0 2f0b */
-	jsr	%pc@(sub_40835920)	/* 408362c2 4eba f65c */
+	jsr	%pc@(RemoveNetworkConnection)	/* 408362c2 4eba f65c */
 	lea	%sp@(16),%sp		/* 408362c6 4fef 0010 */
 
 loc_408362ca:
@@ -270,14 +270,14 @@ loc_408362ca:
 	unlk	%fp			/* 408362d0 4e5e */
 	rts				/* 408362d2 4e75 */
 
-sub_408362d4:
+StartCommandCompletion:
 	moveal	0x2050,%a1		/* 408362d4 2278 2050 */
 	moveal	%a1@(476),%a1		/* 408362d8 2269 01dc */
 	jmp	%a1@			/* 408362dc 4ed1 */
 
 	.align	16
 
-sub_408362e0:
+__v__ListSendCompletion:
 	linkw	%fp,#-4			/* 408362e0 4e56 fffc */
 	moveml	%a3-%a4,%sp@-		/* 408362e4 48e7 0018 */
 	movel	%a0,%d0			/* 408362e8 2008 */
@@ -292,20 +292,20 @@ sub_408362e0:
 	extl	%d0			/* 40836306 48c0 */
 	movel	%d0,%sp@-		/* 40836308 2f00 */
 	movel	%a3,%sp@-		/* 4083630a 2f0b */
-	jsr	%pc@(sub_40834154)	/* 4083630c 4eba de46 */
+	jsr	%pc@(CompleteWithResult)	/* 4083630c 4eba de46 */
 	moveq	#0,%d0			/* 40836310 7000 */
 	movel	%d0,%a4@(58)		/* 40836312 2940 003a */
 	moveq	#0,%d0			/* 40836316 7000 */
 	movel	%d0,%sp@-		/* 40836318 2f00 */
 	movel	%a4,%sp@-		/* 4083631a 2f0c */
-	jsr	%pc@(sub_40835920)	/* 4083631c 4eba f602 */
+	jsr	%pc@(RemoveNetworkConnection)	/* 4083631c 4eba f602 */
 	lea	%sp@(16),%sp		/* 40836320 4fef 0010 */
 	bras	loc_40836352		/* 40836324 602c */
 
 loc_40836326:
 	movew	#18,%a4@(4)		/* 40836326 397c 0012 0004 */
 	pea	%a4@(3536)		/* 4083632c 486c 0dd0 */
-	pea	%pc@(sub_408363e0)	/* 40836330 487a 00ae */
+	pea	%pc@(ListReadCompletion)	/* 40836330 487a 00ae */
 	moveq	#1,%d0			/* 40836334 7001 */
 	movel	%d0,%sp@-		/* 40836336 2f00 */
 	movel	%a3@(54),%sp@-		/* 40836338 2f2b 0036 */
@@ -314,7 +314,7 @@ loc_40836326:
 	moveq	#74,%d2			/* 40836342 744a */
 	mulsl	%d2,%d1			/* 40836344 4c02 1800 */
 	movel	%d1,%sp@-		/* 40836348 2f01 */
-	jsr	%pc@(sub_40838428)	/* 4083634a 4eba 20dc */
+	jsr	%pc@(ReadFromConnection)	/* 4083634a 4eba 20dc */
 	lea	%sp@(20),%sp		/* 4083634e 4fef 0014 */
 
 loc_40836352:
@@ -322,14 +322,14 @@ loc_40836352:
 	unlk	%fp			/* 40836358 4e5e */
 	rts				/* 4083635a 4e75 */
 
-sub_4083635c:
+ListSendCompletion:
 	moveal	0x2050,%a1		/* 4083635c 2278 2050 */
 	moveal	%a1@(480),%a1		/* 40836360 2269 01e0 */
 	jmp	%a1@			/* 40836364 4ed1 */
 
 	.align	16
 
-sub_40836370:
+__v__ListReadCompletion:
 	linkw	%fp,#-4			/* 40836370 4e56 fffc */
 	moveml	%a3-%a4,%sp@-		/* 40836374 48e7 0018 */
 	movel	%a0,%d0			/* 40836378 2008 */
@@ -343,26 +343,26 @@ sub_40836370:
 	extl	%d0			/* 40836392 48c0 */
 	movel	%d0,%sp@-		/* 40836394 2f00 */
 	movel	%fp@(-4),%sp@-		/* 40836396 2f2e fffc */
-	jsr	%pc@(sub_40834154)	/* 4083639a 4eba ddb8 */
+	jsr	%pc@(CompleteWithResult)	/* 4083639a 4eba ddb8 */
 	moveq	#0,%d0			/* 4083639e 7000 */
 	movel	%d0,%a4@(58)		/* 408363a0 2940 003a */
 	moveq	#0,%d0			/* 408363a4 7000 */
 	movel	%d0,%sp@-		/* 408363a6 2f00 */
 	movel	%a4,%sp@-		/* 408363a8 2f0c */
-	jsr	%pc@(sub_40835920)	/* 408363aa 4eba f574 */
+	jsr	%pc@(RemoveNetworkConnection)	/* 408363aa 4eba f574 */
 	lea	%sp@(16),%sp		/* 408363ae 4fef 0010 */
 	bras	loc_408363d6		/* 408363b2 6022 */
 
 loc_408363b4:
 	movew	#19,%a4@(4)		/* 408363b4 397c 0013 0004 */
 	pea	%a4@(3536)		/* 408363ba 486c 0dd0 */
-	pea	%pc@(sub_40836478)	/* 408363be 487a 00b8 */
+	pea	%pc@(ListCommandCompletion)	/* 408363be 487a 00b8 */
 	moveq	#1,%d0			/* 408363c2 7001 */
 	movel	%d0,%sp@-		/* 408363c4 2f00 */
 	pea	%a4@(3604)		/* 408363c6 486c 0e14 */
 	moveq	#6,%d1			/* 408363ca 7206 */
 	movel	%d1,%sp@-		/* 408363cc 2f01 */
-	jsr	%pc@(sub_40838428)	/* 408363ce 4eba 2058 */
+	jsr	%pc@(ReadFromConnection)	/* 408363ce 4eba 2058 */
 	lea	%sp@(20),%sp		/* 408363d2 4fef 0014 */
 
 loc_408363d6:
@@ -370,14 +370,14 @@ loc_408363d6:
 	unlk	%fp			/* 408363dc 4e5e */
 	rts				/* 408363de 4e75 */
 
-sub_408363e0:
+ListReadCompletion:
 	moveal	0x2050,%a1		/* 408363e0 2278 2050 */
 	moveal	%a1@(484),%a1		/* 408363e4 2269 01e4 */
 	jmp	%a1@			/* 408363e8 4ed1 */
 
 	.align	16
 
-sub_408363f0:
+__v__ListCommandCompletion:
 	linkw	%fp,#-12		/* 408363f0 4e56 fff4 */
 	moveml	%a3-%a4,%sp@-		/* 408363f4 48e7 0018 */
 	movel	%a0,%d0			/* 408363f8 2008 */
@@ -413,25 +413,25 @@ loc_40836450:
 	extl	%d0			/* 40836454 48c0 */
 	movel	%d0,%sp@-		/* 40836456 2f00 */
 	movel	%a4,%sp@-		/* 40836458 2f0c */
-	jsr	%pc@(sub_40834154)	/* 4083645a 4eba dcf8 */
+	jsr	%pc@(CompleteWithResult)	/* 4083645a 4eba dcf8 */
 	moveq	#0,%d0			/* 4083645e 7000 */
 	movel	%d0,%a3@(58)		/* 40836460 2740 003a */
 	moveq	#0,%d0			/* 40836464 7000 */
 	movel	%d0,%sp@-		/* 40836466 2f00 */
 	movel	%a3,%sp@-		/* 40836468 2f0b */
-	jsr	%pc@(sub_40835920)	/* 4083646a 4eba f4b4 */
+	jsr	%pc@(RemoveNetworkConnection)	/* 4083646a 4eba f4b4 */
 	moveml	%fp@(-20),%a3-%a4	/* 4083646e 4cee 1800 ffec */
 	unlk	%fp			/* 40836474 4e5e */
 	rts				/* 40836476 4e75 */
 
-sub_40836478:
+ListCommandCompletion:
 	moveal	0x2050,%a1		/* 40836478 2278 2050 */
 	moveal	%a1@(488),%a1		/* 4083647c 2269 01e8 */
 	jmp	%a1@			/* 40836480 4ed1 */
 
 	.align	16
 
-sub_40836490:
+__v__ConnectionRequestCompletion:
 	linkw	%fp,#-16		/* 40836490 4e56 fff0 */
 	moveml	%a3-%a4,%sp@-		/* 40836494 48e7 0018 */
 	movel	%a0,%d0			/* 40836498 2008 */
@@ -445,18 +445,18 @@ sub_40836490:
 	tstb	%a0@(7)			/* 408364b8 4a28 0007 */
 	beqs	loc_408364cc		/* 408364bc 670e */
 	movel	%a0,%sp@-		/* 408364be 2f08 */
-	jsr	%pc@(sub_408357fa)	/* 408364c0 4eba f338 */
+	jsr	%pc@(GetRemSess)	/* 408364c0 4eba f338 */
 	moveal	%d0,%a4			/* 408364c4 2840 */
 	movel	%a4,%d0			/* 408364c6 200c */
 	addqw	#4,%sp			/* 408364c8 584f */
 	bnes	loc_408364e4		/* 408364ca 6618 */
 
 loc_408364cc:
-	pea	%pc@(sub_40836e30)	/* 408364cc 487a 0962 */
+	pea	%pc@(ARepostConnectionListener)	/* 408364cc 487a 0962 */
 	moveq	#1,%d0			/* 408364d0 7001 */
 	movel	%d0,%sp@-		/* 408364d2 2f00 */
 	movel	%fp@(-16),%sp@-		/* 408364d4 2f2e fff0 */
-	jsr	%pc@(sub_40838196)	/* 408364d8 4eba 1cbc */
+	jsr	%pc@(RejectConnectionRequest)	/* 408364d8 4eba 1cbc */
 	lea	%sp@(12),%sp		/* 408364dc 4fef 000c */
 	braw	loc_408365a2		/* 408364e0 6000 00c0 */
 
@@ -487,7 +487,7 @@ loc_408364e4:
 	movel	%a0@(22),%a3@(22)	/* 4083654a 2768 0016 0016 */
 	movew	#14,%a4@(4)		/* 40836550 397c 000e 0004 */
 	pea	%a4@(3536)		/* 40836556 486c 0dd0 */
-	pea	%pc@(sub_40836640)	/* 4083655a 487a 00e4 */
+	pea	%pc@(RespConnectionEndCompletion)	/* 4083655a 487a 00e4 */
 	moveq	#1,%d0			/* 4083655e 7001 */
 	movel	%d0,%sp@-		/* 40836560 2f00 */
 	moveal	%fp@(-4),%a0		/* 40836562 206e fffc */
@@ -505,9 +505,9 @@ loc_408364e4:
 	moveq	#0,%d1			/* 4083658a 7200 */
 	movel	%d1,%sp@-		/* 4083658c 2f01 */
 	pea	%a4@(418)		/* 4083658e 486c 01a2 */
-	jsr	%pc@(sub_40838262)	/* 40836592 4eba 1cce */
+	jsr	%pc@(CreateConnectionEnd)	/* 40836592 4eba 1cce */
 	movel	%fp@(-16),%sp@-		/* 40836596 2f2e fff0 */
-	jsr	%pc@(sub_40836e70)	/* 4083659a 4eba 08d4 */
+	jsr	%pc@(RepostConnectionListener)	/* 4083659a 4eba 08d4 */
 	lea	%sp@(52),%sp		/* 4083659e 4fef 0034 */
 
 loc_408365a2:
@@ -515,14 +515,14 @@ loc_408365a2:
 	unlk	%fp			/* 408365a8 4e5e */
 	rts				/* 408365aa 4e75 */
 
-sub_408365ac:
+ConnectionRequestCompletion:
 	moveal	0x2050,%a1		/* 408365ac 2278 2050 */
 	moveal	%a1@(492),%a1		/* 408365b0 2269 01ec */
 	jmp	%a1@			/* 408365b4 4ed1 */
 
 	.align	16
 
-sub_408365c0:
+__v__RespConnectionEndCompletion:
 	.short	0x4e56	/* 408365c0 4e56 */
 	.short	0xfff8	/* 408365c2 fff8 */
 	.short	0x48e7	/* 408365c4 48e7 */
@@ -588,7 +588,7 @@ sub_408365c0:
 	.short	0x4e5e	/* 4083663c 4e5e */
 	rts				/* 4083663e 4e75 */
 
-sub_40836640:
+RespConnectionEndCompletion:
 	.short	0x2278	/* 40836640 2278 */
 	.short	0x2050	/* 40836642 2050 */
 	.short	0x2269	/* 40836644 2269 */
@@ -597,7 +597,7 @@ sub_40836640:
 
 	.align	16
 
-sub_40836650:
+__v__RespOpenCompletion:
 	linkw	%fp,#0			/* 40836650 4e56 0000 */
 	.short	0x48e7	/* 40836654 48e7 */
 	.short	0x0018	/* 40836656 0018 */
@@ -646,7 +646,7 @@ sub_40836650:
 	.short	0x0000	/* 408366ac 0000 */
 	.short	0x0000	/* 408366ae 0000 */
 
-sub_408366b0:
+__v__RecvSessReqCompletion:
 	.short	0x4e56	/* 408366b0 4e56 */
 	.short	0xffe8	/* 408366b2 ffe8 */
 	.short	0x48e7	/* 408366b4 48e7 */
@@ -944,7 +944,7 @@ sub_408366b0:
 	.short	0x0000	/* 408368fc 0000 */
 	.short	0x0000	/* 408368fe 0000 */
 
-sub_40836900:
+__v__GuestRecCompletion:
 	.short	0x4e56	/* 40836900 4e56 */
 	.short	0xfffc	/* 40836902 fffc */
 	.short	0x48e7	/* 40836904 48e7 */
@@ -997,7 +997,7 @@ sub_40836900:
 
 	.align	16
 
-sub_40836970:
+__v__UserRecCompletion:
 	.short	0x4e56	/* 40836970 4e56 */
 	.short	0xfff8	/* 40836972 fff8 */
 	.short	0x48e7	/* 40836974 48e7 */
@@ -1152,7 +1152,7 @@ sub_40836970:
 
 	.align	16
 
-sub_40836aa0:
+__v__AuthSendCompletion:
 	linkw	%fp,#0			/* 40836aa0 4e56 0000 */
 	.short	0x48e7	/* 40836aa4 48e7 */
 	.short	0x0018	/* 40836aa6 0018 */
@@ -1209,7 +1209,7 @@ sub_40836aa0:
 	.short	0x0000	/* 40836b0c 0000 */
 	.short	0x0000	/* 40836b0e 0000 */
 
-sub_40836b10:
+__v__AuthRespCompletion:
 	.short	0x4e56	/* 40836b10 4e56 */
 	.short	0xfffc	/* 40836b12 fffc */
 	.short	0x48e7	/* 40836b14 48e7 */
@@ -1299,7 +1299,7 @@ sub_40836b10:
 	.short	0x0000	/* 40836bbc 0000 */
 	.short	0x0000	/* 40836bbe 0000 */
 
-sub_40836bc0:
+__v__ProcessInform:
 	.short	0x4e56	/* 40836bc0 4e56 */
 	.short	0xfff0	/* 40836bc2 fff0 */
 	.short	0x48e7	/* 40836bc4 48e7 */
@@ -1501,7 +1501,7 @@ sub_40836bc0:
 	.short	0x0000	/* 40836d4c 0000 */
 	.short	0x0000	/* 40836d4e 0000 */
 
-sub_40836d50:
+__v__RespSendCompletion:
 	.short	0x4e56	/* 40836d50 4e56 */
 	.short	0xfff8	/* 40836d52 fff8 */
 	.short	0x48e7	/* 40836d54 48e7 */
@@ -1595,7 +1595,7 @@ sub_40836d50:
 	.short	0x4e5e	/* 40836e04 4e5e */
 	rts				/* 40836e06 4e75 */
 
-sub_40836e08:
+RespSendCompletion:
 	.short	0x2278	/* 40836e08 2278 */
 	.short	0x2050	/* 40836e0a 2050 */
 	.short	0x2269	/* 40836e0c 2269 */
@@ -1604,7 +1604,7 @@ sub_40836e08:
 
 	.align	16
 
-sub_40836e20:
+__v__ARepostConnectionListener:
 	linkw	%fp,#0			/* 40836e20 4e56 0000 */
 	.short	0x2008	/* 40836e24 2008 */
 	.short	0x2f00	/* 40836e26 2f00 */
@@ -1613,7 +1613,7 @@ sub_40836e20:
 	.short	0x4e5e	/* 40836e2c 4e5e */
 	rts				/* 40836e2e 4e75 */
 
-sub_40836e30:
+ARepostConnectionListener:
 	.short	0x2278	/* 40836e30 2278 */
 	.short	0x2050	/* 40836e32 2050 */
 	.short	0x2269	/* 40836e34 2269 */
@@ -1622,7 +1622,7 @@ sub_40836e30:
 
 	.align	16
 
-sub_40836e40:
+__v__RepostConnectionListener:
 	linkw	%fp,#0			/* 40836e40 4e56 0000 */
 	.short	0x2f0c	/* 40836e44 2f0c */
 	.short	0x4eba	/* 40836e46 4eba */
@@ -1647,7 +1647,7 @@ sub_40836e40:
 	.short	0x4e5e	/* 40836e6c 4e5e */
 	rts				/* 40836e6e 4e75 */
 
-sub_40836e70:
+RepostConnectionListener:
 	.short	0x2278	/* 40836e70 2278 */
 	.short	0x2050	/* 40836e72 2050 */
 	.short	0x2269	/* 40836e74 2269 */
@@ -1656,7 +1656,7 @@ sub_40836e70:
 
 	.align	16
 
-sub_40836e80:
+__v__ListWrite:
 	.short	0x4e56	/* 40836e80 4e56 */
 	.short	0xfffa	/* 40836e82 fffa */
 	.short	0x48e7	/* 40836e84 48e7 */
@@ -1778,7 +1778,7 @@ sub_40836e80:
 	jmp	%a1@			/* 40836f6c 4ed1 */
 	.short	0x0000	/* 40836f6e 0000 */
 
-sub_40836f70:
+__v__ListWriteCompletion:
 	.short	0x4e56	/* 40836f70 4e56 */
 	.short	0xffec	/* 40836f72 ffec */
 	.short	0x48e7	/* 40836f74 48e7 */

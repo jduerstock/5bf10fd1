@@ -29,7 +29,7 @@ loc_4081a04c:
 	moveb	%a3@(80),%d0		/* 4081a050 102b 0050 */
 	rts				/* 4081a054 4e75 */
 
-sub_4081a056:
+__v__INTHND_SCSI96:
 	moveml	%d0-%a5,%sp@-		/* 4081a056 48e7 fffc */
 	moveal	0xc0c,%a4		/* 4081a05a 2878 0c0c */
 	moveq	#0,%d5			/* 4081a05e 7a00 */
@@ -54,7 +54,7 @@ loc_4081a092:
 	moveml	%sp@+,%d0-%a5		/* 4081a092 4cdf 3fff */
 	rts				/* 4081a096 4e75 */
 
-sub_4081a098:
+__v__TRANSFER_96:
 	linkw	%fp,#-8			/* 4081a098 4e56 fff8 */
 	moveq	#5,%d0			/* 4081a09c 7005 */
 	cmpib	#4,0x12f		/* 4081a09e 0c38 0004 012f */
@@ -69,7 +69,7 @@ loc_4081a0a8:
 	moveml	%d2-%d6/%a1-%a5,%sp@-	/* 4081a0b4 48e7 3e7c */
 	moveal	%a3,%a1			/* 4081a0b8 224b */
 	addal	#262144,%a1		/* 4081a0ba d3fc 0004 0000 */
-	bsrw	sub_4081a5f8		/* 4081a0c0 6100 0536 */
+	bsrw	__v__HANDLESELINPROG		/* 4081a0c0 6100 0536 */
 	bnew	loc_4081a104		/* 4081a0c4 6600 003e */
 	moveb	#1,%a3@(48)		/* 4081a0c8 177c 0001 0030 */
 	movel	0x8,%a4@(448)		/* 4081a0ce 2978 0008 01c0 */
@@ -97,7 +97,7 @@ loc_4081a104:
 
 loc_4081a10a:
 	moveb	#16,%a3@(48)		/* 4081a10a 177c 0010 0030 */
-	jsr	%pc@(sub_4081a5d2)	/* 4081a110 4eba 04c0 */
+	jsr	%pc@(__v__WAITFORINTNOTIME)	/* 4081a110 4eba 04c0 */
 	bnes	loc_4081a13c		/* 4081a114 6626 */
 	moveb	%a3@(32),%a2@+		/* 4081a116 14eb 0020 */
 	moveb	%a3@(80),%d3		/* 4081a11a 162b 0050 */
@@ -109,7 +109,7 @@ loc_4081a10a:
 loc_4081a128:
 	moveb	%a2@+,%a3@(32)		/* 4081a128 175a 0020 */
 	moveb	#16,%a3@(48)		/* 4081a12c 177c 0010 0030 */
-	jsr	%pc@(sub_4081a5d2)	/* 4081a132 4eba 049e */
+	jsr	%pc@(__v__WAITFORINTNOTIME)	/* 4081a132 4eba 049e */
 	bnes	loc_4081a13c		/* 4081a136 6604 */
 	moveq	#0,%d0			/* 4081a138 7000 */
 	rts				/* 4081a13a 4e75 */
@@ -124,18 +124,18 @@ loc_4081a146:
 	moveq	#5,%d0			/* 4081a14c 7005 */
 
 loc_4081a14e:
-	jsr	%pc@(sub_40818d22)	/* 4081a14e 4eba ebd2 */
+	jsr	%pc@(ERROR)	/* 4081a14e 4eba ebd2 */
 	moveq	#0,%d1			/* 4081a152 7200 */
 	moveb	#1,%a3@(48)		/* 4081a154 177c 0001 0030 */
 	rts				/* 4081a15a 4e75 */
 
-sub_4081a15c:
+__v__XFER1BYTE:
 	moveb	#16,%a3@(48)		/* 4081a15c 177c 0010 0030 */
-	jsr	%pc@(sub_4081a5d2)	/* 4081a162 4eba 046e */
+	jsr	%pc@(__v__WAITFORINTNOTIME)	/* 4081a162 4eba 046e */
 	rts				/* 4081a166 4e75 */
 
-sub_4081a168:
-	bsrw	sub_4081a5f8		/* 4081a168 6100 048e */
+__v__SLOWREAD_96:
+	bsrw	__v__HANDLESELINPROG		/* 4081a168 6100 048e */
 	bnew	loc_4081a2b6		/* 4081a16c 6600 0148 */
 	moveq	#7,%d0			/* 4081a170 7007 */
 	andb	%a3@(64),%d0		/* 4081a172 c02b 0040 */
@@ -148,10 +148,10 @@ sub_4081a168:
 	subql	#1,%d4			/* 4081a186 5384 */
 	movel	%d4,%d6			/* 4081a188 2c04 */
 	swap	%d6			/* 4081a18a 4846 */
-	jsr	%pc@(sub_40818d2c)	/* 4081a18c 4eba eb9e */
+	jsr	%pc@(SCSIPCTO32BIT)	/* 4081a18c 4eba eb9e */
 	moveb	0xcb2,%sp@-		/* 4081a190 1f38 0cb2 */
 	moveq	#1,%d0			/* 4081a194 7001 */
-	jsr	%pc@(sub_40818d36)	/* 4081a196 4eba eb9e */
+	jsr	%pc@(SWAPMMU)	/* 4081a196 4eba eb9e */
 	movel	%a2,%d0			/* 4081a19a 200a */
 	.short	0xa055			/* 4081a19c a055 */
 	moveal	%d0,%a2			/* 4081a19e 2440 */
@@ -208,7 +208,7 @@ loc_4081a228:
 	dbf	%d4,loc_4081a1b8	/* 4081a23a 51cc ff7c */
 	dbf	%d6,loc_4081a1b8	/* 4081a23e 51ce ff78 */
 	moveb	%sp@+,%d0		/* 4081a242 101f */
-	jsr	%pc@(sub_40818d36)	/* 4081a244 4eba eaf0 */
+	jsr	%pc@(SWAPMMU)	/* 4081a244 4eba eaf0 */
 	bras	loc_4081a272		/* 4081a248 6028 */
 
 loc_4081a24a:
@@ -281,7 +281,7 @@ loc_4081a2ba:
 	.short	0x0030	/* 4081a2ca 0030 */
 	rts				/* 4081a2cc 4e75 */
 
-sub_4081a2ce:
+__v__SLOWWRITE_96:
 	.short	0x6100	/* 4081a2ce 6100 */
 	.short	0x0328	/* 4081a2d0 0328 */
 	.short	0x6600	/* 4081a2d2 6600 */
@@ -404,7 +404,7 @@ sub_4081a2ce:
 	.short	0x0030	/* 4081a3bc 0030 */
 	rts				/* 4081a3be 4e75 */
 
-sub_4081a3c0:
+__v__FASTWRITE_96:
 	.short	0x6100	/* 4081a3c0 6100 */
 	.short	0x0236	/* 4081a3c2 0236 */
 	.short	0x6600	/* 4081a3c4 6600 */
@@ -529,7 +529,7 @@ sub_4081a3c0:
 	.short	0x0030	/* 4081a4b2 0030 */
 	rts				/* 4081a4b4 4e75 */
 
-sub_4081a4b6:
+__v__FASTREAD_96:
 	.short	0x6100	/* 4081a4b6 6100 */
 	.short	0x0140	/* 4081a4b8 0140 */
 	.short	0x6600	/* 4081a4ba 6600 */
@@ -669,13 +669,13 @@ sub_4081a4b6:
 	.short	0x0006	/* 4081a5c6 0006 */
 	rts				/* 4081a5c8 4e75 */
 
-sub_4081a5ca:
+__v__RESETBUS_96:
 	.short	0x177c	/* 4081a5ca 177c */
 	.short	0x0003	/* 4081a5cc 0003 */
 	.short	0x0030	/* 4081a5ce 0030 */
 	rts				/* 4081a5d0 4e75 */
 
-sub_4081a5d2:
+__v__WAITFORINTNOTIME:
 	.short	0x7a00	/* 4081a5d2 7a00 */
 	.short	0x1a2b	/* 4081a5d4 1a2b */
 	.short	0x0040	/* 4081a5d6 0040 */
@@ -696,7 +696,7 @@ sub_4081a5d2:
 	.short	0x0010	/* 4081a5f4 0010 */
 	rts				/* 4081a5f6 4e75 */
 
-sub_4081a5f8:
+__v__HANDLESELINPROG:
 	.short	0x082c	/* 4081a5f8 082c */
 	.short	0x0003	/* 4081a5fa 0003 */
 	.short	0x0158	/* 4081a5fc 0158 */
@@ -738,7 +738,7 @@ sub_4081a5f8:
 	moveq	#0,%d0			/* 4081a644 7000 */
 	.short	0x60d8	/* 4081a646 60d8 */
 
-sub_4081a648:
+__v__WT4DREQORINT:
 	.short	0x4eba	/* 4081a648 4eba */
 	.short	0xe6e2	/* 4081a64a e6e2 */
 	.short	0x7a00	/* 4081a64c 7a00 */
@@ -779,7 +779,7 @@ sub_4081a648:
 	.short	0x2003	/* 4081a692 2003 */
 	rts				/* 4081a694 4e75 */
 
-sub_4081a696:
+__v__WAITFORSCSIINTRP:
 	.short	0x7a00	/* 4081a696 7a00 */
 	.short	0x7600	/* 4081a698 7600 */
 	.short	0x3638	/* 4081a69a 3638 */
@@ -813,7 +813,7 @@ sub_4081a696:
 	.short	0x4205	/* 4081a6d2 4205 */
 	.short	0x60ec	/* 4081a6d4 60ec */
 
-sub_4081a6d6:
+__v__FASTCOMP_96:
 	.short	0x6100	/* 4081a6d6 6100 */
 	.short	0xff20	/* 4081a6d8 ff20 */
 	.short	0x6600	/* 4081a6da 6600 */
@@ -894,7 +894,7 @@ sub_4081a6d6:
 	.short	0x0030	/* 4081a770 0030 */
 	rts				/* 4081a772 4e75 */
 
-sub_4081a774:
+__v__SLOWCOMP_96:
 	.short	0x6100	/* 4081a774 6100 */
 	.short	0xfe82	/* 4081a776 fe82 */
 	.short	0x6600	/* 4081a778 6600 */
@@ -1031,7 +1031,7 @@ sub_4081a774:
 	.short	0x0030	/* 4081a87e 0030 */
 	rts				/* 4081a880 4e75 */
 
-sub_4081a882:
+__v__BUSERRHANDLER_96:
 	.short	0x598f	/* 4081a882 598f */
 	.short	0x48e7	/* 4081a884 48e7 */
 	.short	0xf0c0	/* 4081a886 f0c0 */
@@ -1236,7 +1236,7 @@ sub_4081a882:
 	CallVector	0x205c 55	/* 4081aa2c 2f30 81e2 205c 00dc */
 	rts				/* 4081aa34 4e75 */
 
-sub_4081aa36:
+INTHND_SCSI96:
 	CallVector	0x205c 51	/* 4081aa36 2f30 81e2 205c 00cc */
 	rts				/* 4081aa3e 4e75 */
 
@@ -1261,7 +1261,7 @@ sub_4081aa36:
 
 	.align	16
 
-sub_4081aaa0:
+INITHW_SCSI_PSC:
 	moveb	#2,%a3@(48)		/* 4081aaa0 177c 0001 0030 */
 	clrb	%a3@(48)		/* 4081aaa6 422b 0030 */
 	moveb	#1,%a3@(48)		/* 4081aaaa 177c 0001 0030 */
@@ -1355,7 +1355,7 @@ loc_4081aba0:
 	addal	#262144,%a1		/* 4081abb2 d3fc 0004 0000 */
 	btst	#5,%a4@(344)		/* 4081abb8 082c 0005 0158 */
 	beqs	loc_4081ac04		/* 4081abbe 6744 */
-	bsrw	sub_4081af58		/* 4081abc0 6100 0396 */
+	bsrw	HANDLESELINPROGPSC		/* 4081abc0 6100 0396 */
 	bnew	loc_4081ac04		/* 4081abc4 6600 003e */
 	moveb	#1,%a3@(48)		/* 4081abc8 177c 0001 0030 */
 	movel	0x8,%a4@(448)		/* 4081abce 2978 0008 01c0 */
@@ -1425,7 +1425,7 @@ loc_4081ac46:
 	.short	0x0030	/* 4081ac58 0030 */
 	rts				/* 4081ac5a 4e75 */
 
-sub_4081ac5c:
+XFER1BYTE_PSC:
 	.short	0x177c	/* 4081ac5c 177c */
 	.short	0x0010	/* 4081ac5e 0010 */
 	.short	0x0030	/* 4081ac60 0030 */
@@ -1792,7 +1792,7 @@ sub_4081af08:
 	.short	0x0030	/* 4081af2e 0030 */
 	rts				/* 4081af30 4e75 */
 
-sub_4081af32:
+WAITFORINTNOTIME_PSC:
 	.short	0x7a00	/* 4081af32 7a00 */
 	.short	0x1a2b	/* 4081af34 1a2b */
 	.short	0x0040	/* 4081af36 0040 */
@@ -1813,7 +1813,7 @@ sub_4081af32:
 	.short	0x0010	/* 4081af54 0010 */
 	rts				/* 4081af56 4e75 */
 
-sub_4081af58:
+HANDLESELINPROGPSC:
 	.short	0x082c	/* 4081af58 082c */
 	.short	0x0003	/* 4081af5a 0003 */
 	.short	0x0158	/* 4081af5c 0158 */
@@ -1852,7 +1852,7 @@ sub_4081af58:
 	moveq	#0,%d0			/* 4081af9e 7000 */
 	.short	0x60de	/* 4081afa0 60de */
 
-sub_4081afa2:
+WT4DREQORINTPSC:
 	.short	0x4eba	/* 4081afa2 4eba */
 	.short	0xe538	/* 4081afa4 e538 */
 	.short	0x7a00	/* 4081afa6 7a00 */
@@ -1882,7 +1882,7 @@ sub_4081afa2:
 	.short	0x2003	/* 4081afd6 2003 */
 	rts				/* 4081afd8 4e75 */
 
-sub_4081afda:
+WAITFORSCSIINTRP_PSC:
 	moveq	#0,%d5			/* 4081afda 7a00 */
 	moveq	#0,%d3			/* 4081afdc 7600 */
 	movew	0xb24,%d3		/* 4081afde 3638 0b24 */
