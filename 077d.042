@@ -392,45 +392,40 @@ loc_4082a378:
 	rts				/* 4082a378 4e75 */
 
 GETVOLTRAP:
-	.short	0x0801	/* 4082a37a 0801 */
-	.short	0x0009	/* 4082a37c 0009 */
-	.short	0x6600	/* 4082a37e 6600 */
-	.short	0x00b8	/* 4082a380 00b8 */
-	.short	0x6100	/* 4082a382 6100 */
-	.short	0xe9c4	/* 4082a384 e9c4 */
-	.short	0x2038	/* 4082a386 2038 */
-	.short	0x0352	/* 4082a388 0352 */
-	.short	0x670e	/* 4082a38a 670e */
-	.short	0x2440	/* 4082a38c 2440 */
-	.short	0x3178	/* 4082a38e 3178 */
-	.short	0x0384	/* 4082a390 0384 */
-	.short	0x0016	/* 4082a392 0016 */
-	.short	0x6108	/* 4082a394 6108 */
-	.short	0x6000	/* 4082a396 6000 */
-	.short	0xea64	/* 4082a398 ea64 */
+	btst	#9,%d1			/* 4082a37a 0801 0009 */
+	bnew	__v__GETDIR		/* 4082a37e 6600 00b8 */
+	bsrw	__v__FSQUEUE		/* 4082a382 6100 e9c4 */
+	movel	0x352,%d0		/* 4082a386 2038 0352 */
+	beqs	loc_4082a39a		/* 4082a38a 670e */
+	moveal	%d0,%a2			/* 4082a38c 2440 */
+	movew	0x384,%a0@(22)		/* 4082a38e 3178 0384 0016 */
+	bsrs	sub_4082a39e		/* 4082a394 6108 */
+
+loc_4082a396:
+	braw	__v__CMDDONE		/* 4082a396 6000 ea64 */
 
 loc_4082a39a:
-	.short	0x70dd	/* 4082a39a 70dd */
-	.short	0x60f8	/* 4082a39c 60f8 */
+	moveq	#-35,%d0		/* 4082a39a 70dd */
+	bras	loc_4082a396		/* 4082a39c 60f8 */
 
 sub_4082a39e:
-	.short	0x48e7	/* 4082a39e 48e7 */
-	.short	0x0060	/* 4082a3a0 0060 */
-	.short	0x45ea	/* 4082a3a2 45ea */
-	.short	0x002c	/* 4082a3a4 002c */
-	.short	0x2028	/* 4082a3a6 2028 */
-	.short	0x0012	/* 4082a3a8 0012 */
-	.short	0x670e	/* 4082a3aa 670e */
-	.short	0xa055	/* 4082a3ac a055 */
-	.short	0x2240	/* 4082a3ae 2240 */
+	moveml	%a1-%a2,%sp@-		/* 4082a39e 48e7 0060 */
+	lea	%a2@(44),%a2		/* 4082a3a2 45ea 002c */
+	movel	%a0@(18),%d0		/* 4082a3a6 2028 0012 */
+	beqs	loc_4082a3ba		/* 4082a3aa 670e */
+	.short	0xa055			/* 4082a3ac a055 */
+	moveal	%d0,%a1			/* 4082a3ae 2240 */
 	moveq	#0,%d0			/* 4082a3b0 7000 */
-	.short	0x1012	/* 4082a3b2 1012 */
-	.short	0x12da	/* 4082a3b4 12da */
-	.short	0x51c8	/* 4082a3b6 51c8 */
-	.short	0xfffc	/* 4082a3b8 fffc */
-	.short	0x4cdf	/* 4082a3ba 4cdf */
-	.short	0x0600	/* 4082a3bc 0600 */
+	moveb	%a2@,%d0		/* 4082a3b2 1012 */
+
+loc_4082a3b4:
+	moveb	%a2@+,%a1@+		/* 4082a3b4 12da */
+	dbf	%d0,loc_4082a3b4	/* 4082a3b6 51c8 fffc */
+
+loc_4082a3ba:
+	moveml	%sp@+,%a1-%a2		/* 4082a3ba 4cdf 0600 */
 	moveq	#0,%d0			/* 4082a3be 7000 */
+
 	rts				/* 4082a3c0 4e75 */
 
 SETVOLTRAP:
