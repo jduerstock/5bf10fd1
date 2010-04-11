@@ -1481,53 +1481,42 @@ loc_40829e02:
 	rts				/* 40829e1c 4e75 */
 
 UNMOUNTVOLTRAP:
-	.short	0x6100	/* 40829e1e 6100 */
-	.short	0x604e	/* 40829e20 604e */
-	.short	0x6100	/* 40829e22 6100 */
-	.short	0xef20	/* 40829e24 ef20 */
-	.short	0x4238	/* 40829e26 4238 */
-	.short	0x0346	/* 40829e28 0346 */
-	.short	0x6100	/* 40829e2a 6100 */
-	.short	0x00fe	/* 40829e2c 00fe */
-	.short	0x6600	/* 40829e2e 6600 */
-	.short	0x00e6	/* 40829e30 00e6 */
+	bsrw	DESKTOPCLOSEDOWNPROC	/* 40829e1e 6100 604e */
+	bsrw	__v__FSQUEUESYNC	/* 40829e22 6100 ef20 */
+	clrb	0x346			/* 40829e26 4238 0346 */
+	bsrw	DTRMV3			/* 40829e2a 6100 00fe */
+	bnew	loc_40829f16		/* 40829e2e 6600 00e6 */
 	moveq	#0,%d0			/* 40829e32 7000 */
-	.short	0x0828	/* 40829e34 0828 */
-	.short	0x0009	/* 40829e36 0009 */
-	.short	0x0006	/* 40829e38 0006 */
-	.short	0x6600	/* 40829e3a 6600 */
-	.short	0x008a	/* 40829e3c 008a */
-	.short	0x48e7	/* 40829e3e 48e7 */
-	.short	0x6040	/* 40829e40 6040 */
-	.short	0x2278	/* 40829e42 2278 */
-	.short	0x034e	/* 40829e44 034e */
-	.short	0x7202	/* 40829e46 7202 */
-	.short	0x2431	/* 40829e48 2431 */
-	.short	0x1000	/* 40829e4a 1000 */
-	.short	0x671a	/* 40829e4c 671a */
-	.short	0xb5f1	/* 40829e4e b5f1 */
-	.short	0x1014	/* 40829e50 1014 */
-	.short	0x6614	/* 40829e52 6614 */
-	.short	0x0c6a	/* 40829e54 0c6a */
-	.short	0xd2d7	/* 40829e56 d2d7 */
-	.short	0x0008	/* 40829e58 0008 */
-	.short	0x6708	/* 40829e5a 6708 */
-	.short	0x0c82	/* 40829e5c 0c82 */
-	.short	0x0000	/* 40829e5e 0000 */
-	.short	0x0010	/* 40829e60 0010 */
-	.short	0x6504	/* 40829e62 6504 */
-	.short	0x70d1	/* 40829e64 70d1 */
-	.short	0x6008	/* 40829e66 6008 */
-	.short	0xd278	/* 40829e68 d278 */
-	.short	0x03f6	/* 40829e6a 03f6 */
-	.short	0xb251	/* 40829e6c b251 */
-	.short	0x65d8	/* 40829e6e 65d8 */
-	.short	0x4cdf	/* 40829e70 4cdf */
-	.short	0x0206	/* 40829e72 0206 */
-	.short	0x4a40	/* 40829e74 4a40 */
-	.short	0x6600	/* 40829e76 6600 */
-	.short	0x009e	/* 40829e78 009e */
-	.short	0x604a	/* 40829e7a 604a */
+	btst	#9,%a0@(6)		/* 40829e34 0828 0009 0006 */
+	bnew	loc_40829ec6		/* 40829e3a 6600 008a */
+	moveml	%d1-%d2/%a1,%sp@-	/* 40829e3e 48e7 6040 */
+	moveal	0x34e,%a1		/* 40829e42 2278 034e */
+	moveq	#2,%d1			/* 40829e46 7202 */
+
+loc_40829e48:
+	movel	%a1@(0x0000,%d1:w),%d2	/* 40829e48 2431 1000 */
+	beqs	loc_40829e68		/* 40829e4c 671a */
+	cmpal	%a1@(0x0014,%d1:w),%a2	/* 40829e4e b5f1 1014 */
+	bnes	loc_40829e68		/* 40829e52 6614 */
+	cmpiw	#-11561,%a2@(8)		/* 40829e54 0c6a d2d7 0008 */
+	beqs	loc_40829e64		/* 40829e5a 6708 */
+	cmpil	#16,%d2			/* 40829e5c 0c82 0000 0010 */
+	bcss	loc_40829e68		/* 40829e62 6504 */
+
+loc_40829e64:
+	moveq	#-47,%d0		/* 40829e64 70d1 */
+	bras	loc_40829e70		/* 40829e66 6008 */
+
+loc_40829e68:
+	addw	0x3f6,%d1		/* 40829e68 d278 03f6 */
+	cmpw	%a1@,%d1		/* 40829e6c b251 */
+	bcss	loc_40829e48		/* 40829e6e 65d8 */
+
+loc_40829e70:
+	moveml	%sp@+,%d1-%d2/%a1	/* 40829e70 4cdf 0206 */
+	tstw	%d0			/* 40829e74 4a40 */
+	bnew	loc_40829f16		/* 40829e76 6600 009e */
+	bras	loc_40829ec6		/* 40829e7a 604a */
 
 __v__FLUSHVFILES:
 	movel	%sp@+,%fp@-		/* 40829e7c 2d1f */
@@ -1545,7 +1534,7 @@ loc_40829e86:
 	bcss	loc_40829ea8		/* 40829ea0 6506 */
 
 loc_40829ea2:
-	bsrw	FCLOSE		/* 40829ea2 6100 1dbe */
+	bsrw	FCLOSE			/* 40829ea2 6100 1dbe */
 	bnes	loc_40829eb0		/* 40829ea6 6608 */
 
 loc_40829ea8:
@@ -1566,6 +1555,8 @@ FLUSHVOLTRAP:
 	.short	0x0346	/* 40829ec0 0346 */
 	.short	0x6166	/* 40829ec2 6166 */
 	.short	0x6650	/* 40829ec4 6650 */
+
+loc_40829ec6:
 	.short	0x6152	/* 40829ec6 6152 */
 	.short	0x664c	/* 40829ec8 664c */
 	.short	0x61b0	/* 40829eca 61b0 */
@@ -1606,6 +1597,8 @@ FLUSHVOLTRAP:
 	.short	0x6100	/* 40829f10 6100 */
 	.short	0xfca2	/* 40829f12 fca2 */
 	moveq	#0,%d0			/* 40829f14 7000 */
+
+loc_40829f16:
 	.short	0x6000	/* 40829f16 6000 */
 	.short	0xeee4	/* 40829f18 eee4 */
 
