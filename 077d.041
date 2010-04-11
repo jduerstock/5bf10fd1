@@ -1189,23 +1189,20 @@ loc_40829b62:
 	braw	loc_40829940		/* 40829b6e 6000 fdd0 */
 
 sub_40829b72:
-	.short	0x2f38	/* 40829b72 2f38 */
-	.short	0x07c0	/* 40829b74 07c0 */
+	movel	0x7c0,%sp@-		/* 40829b72 2f38 07c0 */
 	rts				/* 40829b76 4e75 */
 
 VBMCHK:
-	.short	0x2d1f	/* 40829b78 2d1f */
-	.short	0x6100	/* 40829b7a 6100 */
-	.short	0x07ea	/* 40829b7c 07ea */
-	.short	0x660e	/* 40829b7e 660e */
-	.short	0x4eba	/* 40829b80 4eba */
-	.short	0x6256	/* 40829b82 6256 */
-	.short	0x6708	/* 40829b84 6708 */
-	.short	0x76ff	/* 40829b86 76ff */
-	.short	0x08ea	/* 40829b88 08ea */
-	.short	0x0002	/* 40829b8a 0002 */
-	.short	0x0013	/* 40829b8c 0013 */
-	.short	0x2f1e	/* 40829b8e 2f1e */
+	movel	%sp@+,%fp@-		/* 40829b78 2d1f */
+	bsrw	__v__CVFLGS		/* 40829b7a 6100 07ea */
+	bnes	loc_40829b8e		/* 40829b7e 660e */
+	jsr	%pc@(sub_4082fdd8)	/* 40829b80 4eba 6256 */
+	beqs	loc_40829b8e		/* 40829b84 6708 */
+	moveq	#-1,%d3			/* 40829b86 76ff */
+	bset	#2,%a2@(19)		/* 40829b88 08ea 0002 0013 */
+
+loc_40829b8e:
+	movel	%fp@+,%sp@-		/* 40829b8e 2f1e */
 	rts				/* 40829b90 4e75 */
 
 sub_40829b92:
