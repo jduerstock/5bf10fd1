@@ -1258,21 +1258,23 @@ sub_40829be8:
 	rts				/* 40829c04 4e75 */
 
 sub_40829c06:
-	.short	0x6100	/* 40829c06 6100 */
-	.short	0x0da4	/* 40829c08 0da4 */
-	.short	0x6010	/* 40829c0a 6010 */
-	.short	0x4ab1	/* 40829c0c 4ab1 */
-	.short	0x1000	/* 40829c0e 1000 */
-	.short	0x660a	/* 40829c10 660a */
+	bsrw	__v__GT1STFCB		/* 40829c06 6100 0da4 */
+	bras	loc_40829c1c		/* 40829c0a 6010 */
+
+loc_40829c0c:
+	tstl	%a1@(0x0000,%d1:w)	/* 40829c0c 4ab1 1000 */
+	bnes	loc_40829c1c		/* 40829c10 660a */
 	moveq	#-1,%d0			/* 40829c12 70ff */
-	.short	0x2380	/* 40829c14 2380 */
-	.short	0x1000	/* 40829c16 1000 */
+	movel	%d0,%a1@(0x0000,%d1:w)	/* 40829c14 2380 1000 */
 	moveq	#0,%d0			/* 40829c18 7000 */
-	.short	0x6008	/* 40829c1a 6008 */
-	.short	0x6100	/* 40829c1c 6100 */
-	.short	0x0d96	/* 40829c1e 0d96 */
-	.short	0x65ea	/* 40829c20 65ea */
-	.short	0x70d6	/* 40829c22 70d6 */
+	bras	loc_40829c24		/* 40829c1a 6008 */
+
+loc_40829c1c:
+	bsrw	__v__GTNXTFCB		/* 40829c1c 6100 0d96 */
+	bcss	loc_40829c0c		/* 40829c20 65ea */
+	moveq	#-42,%d0		/* 40829c22 70d6 */
+
+loc_40829c24:
 	rts				/* 40829c24 4e75 */
 
 sub_40829c26:
