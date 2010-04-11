@@ -626,51 +626,47 @@ loc_4082a572:
 	rts				/* 4082a574 4e75 */
 
 __v__CLOSEWDTRAP:
-	.short	0x6100	/* 4082a576 6100 */
-	.short	0xe7d0	/* 4082a578 e7d0 */
-	.short	0x7200	/* 4082a57a 7200 */
-	.short	0x3228	/* 4082a57c 3228 */
-	.short	0x0016	/* 4082a57e 0016 */
-	.short	0x6100	/* 4082a580 6100 */
-	.short	0x0114	/* 4082a582 0114 */
-	.short	0x6708	/* 4082a584 6708 */
-	.short	0x0c41	/* 4082a586 0c41 */
-	.short	0xf000	/* 4082a588 f000 */
-	.short	0x621e	/* 4082a58a 621e */
-	.short	0x601e	/* 4082a58c 601e */
-	.short	0x0441	/* 4082a58e 0441 */
-	.short	0x8001	/* 4082a590 8001 */
-	.short	0x2471	/* 4082a592 2471 */
-	.short	0x1000	/* 4082a594 1000 */
-	.short	0x4a6a	/* 4082a596 4a6a */
-	.short	0x004c	/* 4082a598 004c */
-	.short	0x670a	/* 4082a59a 670a */
-	.short	0x21ca	/* 4082a59c 21ca */
-	.short	0x03ee	/* 4082a59e 03ee */
-	.short	0xd289	/* 4082a5a0 d289 */
-	.short	0x70c6	/* 4082a5a2 70c6 */
-	.short	0x6006	/* 4082a5a4 6006 */
-	.short	0x42b1	/* 4082a5a6 42b1 */
-	.short	0x1000	/* 4082a5a8 1000 */
+	bsrw	__v__FSQUEUE		/* 4082a576 6100 e7d0 */
+	moveq	#0,%d1			/* 4082a57a 7200 */
+	movew	%a0@(22),%d1		/* 4082a57c 3228 0016 */
+	bsrw	sub_4082a696		/* 4082a580 6100 0114 */
+	beqs	loc_4082a58e		/* 4082a584 6708 */
+	cmpiw	#-4096,%d1		/* 4082a586 0c41 f000 */
+	bhis	loc_4082a5aa		/* 4082a58a 621e */
+	bras	loc_4082a5ac		/* 4082a58c 601e */
+
+loc_4082a58e:
+	subiw	#-32767,%d1		/* 4082a58e 0441 8001 */
+	moveal	%a1@(0x0000,%d1:w),%a2	/* 4082a592 2471 1000 */
+	tstw	%a2@(76)		/* 4082a596 4a6a 004c */
+	beqs	loc_4082a5a6		/* 4082a59a 670a */
+	movel	%a2,0x3ee		/* 4082a59c 21ca 03ee */
+	addl	%a1,%d1			/* 4082a5a0 d289 */
+	moveq	#-58,%d0		/* 4082a5a2 70c6 */
+	bras	loc_4082a5ac		/* 4082a5a4 6006 */
+
+loc_4082a5a6:
+	clrl	%a1@(0x0000,%d1:w)	/* 4082a5a6 42b1 1000 */
+
+loc_4082a5aa:
 	moveq	#0,%d0			/* 4082a5aa 7000 */
-	.short	0x6000	/* 4082a5ac 6000 */
-	.short	0xe84e	/* 4082a5ae e84e */
+
+loc_4082a5ac:
+	braw	__v__CMDDONE		/* 4082a5ac 6000 e84e */
 
 __v__GETWDINFOTRAP:
-	.short	0x6100	/* 4082a5b0 6100 */
-	.short	0xe796	/* 4082a5b2 e796 */
-	.short	0x6116	/* 4082a5b4 6116 */
-	.short	0x6610	/* 4082a5b6 6610 */
-	.short	0x48c1	/* 4082a5b8 48c1 */
-	.short	0xd289	/* 4082a5ba d289 */
-	.short	0x21ca	/* 4082a5bc 21ca */
-	.short	0x03ee	/* 4082a5be 03ee */
-	.short	0x6100	/* 4082a5c0 6100 */
-	.short	0xf958	/* 4082a5c2 f958 */
-	.short	0x6602	/* 4082a5c4 6602 */
+	bsrw	__v__FSQUEUE		/* 4082a5b0 6100 e796 */
+	bsrs	sub_4082a5cc		/* 4082a5b4 6116 */
+	bnes	loc_4082a5c8		/* 4082a5b6 6610 */
+	extl	%d1			/* 4082a5b8 48c1 */
+	addl	%a1,%d1			/* 4082a5ba d289 */
+	movel	%a2,0x3ee		/* 4082a5bc 21ca 03ee */
+	bsrw	sub_40829f1a		/* 4082a5c0 6100 f958 */
+	bnes	loc_4082a5c8		/* 4082a5c4 6602 */
 	moveq	#0,%d0			/* 4082a5c6 7000 */
-	.short	0x6000	/* 4082a5c8 6000 */
-	.short	0xe832	/* 4082a5ca e832 */
+
+loc_4082a5c8:
+	braw	__v__CMDDONE		/* 4082a5c8 6000 e832 */
 
 sub_4082a5cc:
 	tstw	%a0@(26)		/* 4082a5cc 4a68 001a */
@@ -701,7 +697,7 @@ loc_4082a60c:
 	moveq	#0,%d2			/* 4082a60e 7400 */
 	tstw	%a0@(22)		/* 4082a610 4a68 0016 */
 	beqs	loc_4082a61e		/* 4082a614 6708 */
-	bsrw	DTRMV3		/* 4082a616 6100 f912 */
+	bsrw	DTRMV3			/* 4082a616 6100 f912 */
 	bnes	loc_4082a65a		/* 4082a61a 663e */
 	movel	%a2,%d2			/* 4082a61c 240a */
 
