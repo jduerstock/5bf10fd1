@@ -670,7 +670,7 @@ loc_4082d630:
 	movel	%d1,%fp@-		/* 4082d644 2d01 */
 	movew	#12,%d1			/* 4082d646 323c 000c */
 	movew	%a2@(164),%d0		/* 4082d64a 302a 00a4 */
-	jsr	%pc@(BTINSERT)	/* 4082d64e 4eba a8c4 */
+	jsr	%pc@(BTINSERT)		/* 4082d64e 4eba a8c4 */
 	movel	%fp@+,%d1		/* 4082d652 221e */
 	tstw	%d0			/* 4082d654 4a40 */
 	bnes	loc_4082d67a		/* 4082d656 6622 */
@@ -700,41 +700,36 @@ loc_4082d67a:
 	rts				/* 4082d68e 4e75 */
 
 __v__FXMKEYCMP:
-	.short	0x48e7	/* 4082d690 48e7 */
-	.short	0x00c0	/* 4082d692 00c0 */
-	.short	0x2028	/* 4082d694 2028 */
-	.short	0x0002	/* 4082d696 0002 */
-	.short	0xb0a9	/* 4082d698 b0a9 */
-	.short	0x0002	/* 4082d69a 0002 */
-	.short	0x6224	/* 4082d69c 6224 */
-	.short	0x651c	/* 4082d69e 651c */
-	.short	0x1028	/* 4082d6a0 1028 */
-	.short	0x0001	/* 4082d6a2 0001 */
-	.short	0xb029	/* 4082d6a4 b029 */
-	.short	0x0001	/* 4082d6a6 0001 */
-	.short	0x6218	/* 4082d6a8 6218 */
-	.short	0x6510	/* 4082d6aa 6510 */
-	.short	0x3028	/* 4082d6ac 3028 */
-	.short	0x0006	/* 4082d6ae 0006 */
-	.short	0xb069	/* 4082d6b0 b069 */
-	.short	0x0006	/* 4082d6b2 0006 */
-	.short	0x620c	/* 4082d6b4 620c */
-	.short	0x6504	/* 4082d6b6 6504 */
-	.short	0x4240	/* 4082d6b8 4240 */
-	.short	0x600a	/* 4082d6ba 600a */
-	.short	0x303c	/* 4082d6bc 303c */
-	.short	0xffff	/* 4082d6be ffff */
-	.short	0x6004	/* 4082d6c0 6004 */
-	.short	0x303c	/* 4082d6c2 303c */
-	.short	0x0001	/* 4082d6c4 0001 */
-	.short	0x4cdf	/* 4082d6c6 4cdf */
-	.short	0x0300	/* 4082d6c8 0300 */
-	.short	0x4a40	/* 4082d6ca 4a40 */
+	moveml	%a0-%a1,%sp@-		/* 4082d690 48e7 00c0 */
+	movel	%a0@(2),%d0		/* 4082d694 2028 0002 */
+	cmpl	%a1@(2),%d0		/* 4082d698 b0a9 0002 */
+	bhis	loc_4082d6c2		/* 4082d69c 6224 */
+	bcss	loc_4082d6bc		/* 4082d69e 651c */
+	moveb	%a0@(1),%d0		/* 4082d6a0 1028 0001 */
+	cmpb	%a1@(1),%d0		/* 4082d6a4 b029 0001 */
+	bhis	loc_4082d6c2		/* 4082d6a8 6218 */
+	bcss	loc_4082d6bc		/* 4082d6aa 6510 */
+	movew	%a0@(6),%d0		/* 4082d6ac 3028 0006 */
+	cmpw	%a1@(6),%d0		/* 4082d6b0 b069 0006 */
+	bhis	loc_4082d6c2		/* 4082d6b4 620c */
+	bcss	loc_4082d6bc		/* 4082d6b6 6504 */
+	clrw	%d0			/* 4082d6b8 4240 */
+	bras	loc_4082d6c6		/* 4082d6ba 600a */
+
+loc_4082d6bc:
+	movew	#-1,%d0			/* 4082d6bc 303c ffff */
+	bras	loc_4082d6c6		/* 4082d6c0 6004 */
+
+loc_4082d6c2:
+	movew	#1,%d0			/* 4082d6c2 303c 0001 */
+
+loc_4082d6c6:
+	moveml	%sp@+,%a0-%a1		/* 4082d6c6 4cdf 0300 */
+	tstw	%d0			/* 4082d6ca 4a40 */
 	rts				/* 4082d6cc 4e75 */
 
 MAPFBLOCK:
-	.short	0x2f38	/* 4082d6ce 2f38 */
-	.short	0x07d0	/* 4082d6d0 07d0 */
+	movel	0x7d0,%sp@-		/* 4082d6ce 2f38 07d0 */
 	rts				/* 4082d6d2 4e75 */
 
 VMAPFBLOCK:
