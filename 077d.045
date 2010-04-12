@@ -366,30 +366,26 @@ loc_4082d374:
 	rts				/* 4082d380 4e75 */
 
 __v__CMUPDATECN:
-	.short	0x2d1f	/* 4082d382 2d1f */
-	.short	0x48e6	/* 4082d384 48e6 */
-	.short	0x60c0	/* 4082d386 60c0 */
-	.short	0x612a	/* 4082d388 612a */
-	.short	0x302a	/* 4082d38a 302a */
-	.short	0x00a6	/* 4082d38c 00a6 */
-	.short	0x4eba	/* 4082d38e 4eba */
-	.short	0xaf72	/* 4082d390 af72 */
-	.short	0x670a	/* 4082d392 670a */
-	.short	0x0c40	/* 4082d394 0c40 */
-	.short	0x0020	/* 4082d396 0020 */
-	.short	0x660c	/* 4082d398 660c */
-	.short	0x7030	/* 4082d39a 7030 */
-	.short	0x6008	/* 4082d39c 6008 */
-	.short	0x4eba	/* 4082d39e 4eba */
-	.short	0xf040	/* 4082d3a0 f040 */
-	.short	0x4eba	/* 4082d3a2 4eba */
-	.short	0xfa66	/* 4082d3a4 fa66 */
-	.short	0x4dee	/* 4082d3a6 4dee */
-	.short	0x008c	/* 4082d3a8 008c */
-	.short	0x4cde	/* 4082d3aa 4cde */
-	.short	0x0306	/* 4082d3ac 0306 */
-	.short	0x2f1e	/* 4082d3ae 2f1e */
-	.short	0x4a40	/* 4082d3b0 4a40 */
+	movel	%sp@+,%fp@-		/* 4082d382 2d1f */
+	moveml	%d1-%d2/%a0-%a1,%fp@-	/* 4082d384 48e6 60c0 */
+	bsrs	CMSETUP		/* 4082d388 612a */
+	movew	%a2@(166),%d0		/* 4082d38a 302a 00a6 */
+	jsr	%pc@(BTUPDATE)	/* 4082d38e 4eba af72 */
+	beqs	loc_4082d39e		/* 4082d392 670a */
+	cmpiw	#32,%d0			/* 4082d394 0c40 0020 */
+	bnes	loc_4082d3a6		/* 4082d398 660c */
+	moveq	#48,%d0			/* 4082d39a 7030 */
+	bras	loc_4082d3a6		/* 4082d39c 6008 */
+
+loc_4082d39e:
+	jsr	%pc@(MARKVCB)	/* 4082d39e 4eba f040 */
+	jsr	%pc@(CMFLUSH)	/* 4082d3a2 4eba fa66 */
+
+loc_4082d3a6:
+	lea	%fp@(140),%fp		/* 4082d3a6 4dee 008c */
+	moveml	%fp@+,%d1-%d2/%a0-%a1	/* 4082d3aa 4cde 0306 */
+	movel	%fp@+,%sp@-		/* 4082d3ae 2f1e */
+	tstw	%d0			/* 4082d3b0 4a40 */
 	rts				/* 4082d3b2 4e75 */
 
 CMSETUP:
