@@ -1108,6 +1108,7 @@ FXMKEYCMP:
 
 	.align	16
 
+MYBOTTLENECKIO:
 	moveml	%d1-%d7/%a1-%a5,%fp@-	/* 4082da20 48e6 7f7c */
 	subqw	#2,%fp			/* 4082da24 554e */
 	bclr	#0,%fp@			/* 4082da26 0896 0000 */
@@ -1151,22 +1152,23 @@ sub_4082da86:
 	moveml	%sp@+,%d3-%d7/%a2-%fp	/* 4082da86 4cdf 7cf8 */
 	rts				/* 4082da8a 4e75 */
 
+MYCONTAPPTHREAD:
 	CallVector	0x2030 129	/* 4082da8c 2f30 81e2 2030 0204 */
 	rts				/* 4082da94 4e75 */
 
+MYCONTCOMPATTHREAD:
 	CallVector	0x2030 128	/* 4082da96 2f30 81e2 2030 0200 */
 	rts				/* 4082da9e 4e75 */
 
-	.short	0x2d1f	/* 4082daa0 2d1f */
-	.short	0x6100	/* 4082daa2 6100 */
-	.short	0xff7c	/* 4082daa4 ff7c */
-	.short	0x6606	/* 4082daa6 6606 */
-	.short	0xa260	/* 4082daa8 a260 */
-	.short	0x4efa	/* 4082daaa 4efa */
-	.short	0xffea	/* 4082daac ffea */
-	.short	0xa660	/* 4082daae a660 */
-	.short	0x4efa	/* 4082dab0 4efa */
-	.short	0xffda	/* 4082dab2 ffda */
+	movel	%sp@+,%fp@-		/* 4082daa0 2d1f */
+	bsrw	MYBOTTLENECKIO		/* 4082daa2 6100 ff7c */
+	bnes	loc_4082daae		/* 4082daa6 6606 */
+	.short	0xa260			/* 4082daa8 a260 */
+	jmp	%pc@(MYCONTCOMPATTHREAD)	/* 4082daaa 4efa ffea */
+
+loc_4082daae:
+	.short	0xa660			/* 4082daae a660 */
+	jmp	%pc@(MYCONTAPPTHREAD)	/* 4082dab0 4efa ffda */
 
 	.align	16
 
