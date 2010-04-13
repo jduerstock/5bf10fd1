@@ -1616,6 +1616,7 @@ loc_4082df06:
 
 	.align	16
 
+VALIDATENODE:
 	movel	%sp@+,%fp@-		/* 4082df10 2d1f */
 	moveml	%d1-%d2/%a0-%a2,%fp@-	/* 4082df12 48e6 60e0 */
 
@@ -1696,19 +1697,15 @@ loc_4082dfc8:
 
 	.align	16
 
-	.short	0x2d1f	/* 4082dfe0 2d1f */
-	.short	0x2d08	/* 4082dfe2 2d08 */
-	.short	0x206c	/* 4082dfe4 206c */
-	.short	0x0008	/* 4082dfe6 0008 */
-	.short	0x3028	/* 4082dfe8 3028 */
-	.short	0x000a	/* 4082dfea 000a */
-	.short	0xb06c	/* 4082dfec b06c */
-	.short	0x0028	/* 4082dfee 0028 */
-	.short	0x6214	/* 4082dff0 6214 */
-	.short	0x6100	/* 4082dff2 6100 */
-	.short	0xfefc	/* 4082dff4 fefc */
-	.short	0x52ac	/* 4082dff6 52ac */
-	.short	0x0024	/* 4082dff8 0024 */
-	.short	0x426c	/* 4082dffa 426c */
-	.short	0x0028	/* 4082dffc 0028 */
-	.short	0x6100	/* 4082dffe 6100 */
+	movel	%sp@+,%fp@-		/* 4082dfe0 2d1f */
+	movel	%a0,%fp@-		/* 4082dfe2 2d08 */
+
+loc_4082dfe4:
+	moveal	%a4@(8),%a0		/* 4082dfe4 206c 0008 */
+	movew	%a0@(10),%d0		/* 4082dfe8 3028 000a */
+	cmpw	%a4@(40),%d0		/* 4082dfec b06c 0028 */
+	bhis	loc_4082e006		/* 4082dff0 6214 */
+	bsrw	TALLYANDCHECKNODECOUNT		/* 4082dff2 6100 fefc */
+	addql	#1,%a4@(36)		/* 4082dff6 52ac 0024 */
+	clrw	%a4@(40)		/* 4082dffa 426c 0028 */
+	bsrw	VALIDATENODE		/* 4082dffe 6100 ff10 */
