@@ -1601,18 +1601,15 @@ loc_4082ded6:
 
 	.align	16
 
-	.short	0x2f01	/* 4082def0 2f01 */
-	.short	0x52ac	/* 4082def2 52ac */
-	.short	0x0014	/* 4082def4 0014 */
-	.short	0x222c	/* 4082def6 222c */
-	.short	0x0014	/* 4082def8 0014 */
-	.short	0xb2ac	/* 4082defa b2ac */
-	.short	0x0018	/* 4082defc 0018 */
-	.short	0x6506	/* 4082defe 6506 */
-	.short	0x08ec	/* 4082df00 08ec */
-	.short	0x0005	/* 4082df02 0005 */
-	.short	0x002a	/* 4082df04 002a */
-	.short	0x221f	/* 4082df06 221f */
+	movel	%d1,%sp@-		/* 4082def0 2f01 */
+	addql	#1,%a4@(20)		/* 4082def2 52ac 0014 */
+	movel	%a4@(20),%d1		/* 4082def6 222c 0014 */
+	cmpl	%a4@(24),%d1		/* 4082defa b2ac 0018 */
+	bcss	loc_4082df06		/* 4082defe 6506 */
+	bset	#5,%a4@(42)		/* 4082df00 08ec 0005 002a */
+
+loc_4082df06:
+	movel	%sp@+,%d1		/* 4082df06 221f */
 	rts				/* 4082df08 4e75 */
 
 	.align	16
