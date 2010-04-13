@@ -1120,35 +1120,26 @@ FXMKEYCMP:
 	rts				/* 4082da44 4e75 */
 
 MYCOMPLETIONROUTINE:
-	.short	0x343c	/* 4082da46 343c */
-	.short	0x0017	/* 4082da48 0017 */
-	.short	0x6100	/* 4082da4a 6100 */
-	.short	0xa97a	/* 4082da4c a97a */
-	.short	0x2f0e	/* 4082da4e 2f0e */
-	.short	0x2c69	/* 4082da50 2c69 */
-	.short	0x001a	/* 4082da52 001a */
-	.short	0x08d6	/* 4082da54 08d6 */
-	.short	0x0000	/* 4082da56 0000 */
-	.short	0x2c5f	/* 4082da58 2c5f */
-	.short	0x6720	/* 4082da5a 6720 */
-	.short	0x48e7	/* 4082da5c 48e7 */
-	.short	0x1f3e	/* 4082da5e 1f3e */
-	.short	0x487a	/* 4082da60 487a */
-	.short	0x0024	/* 4082da62 0024 */
+	movew	#23,%d2			/* 4082da46 343c 0017 */
+	bsrw	GETQMRECPTR		/* 4082da4a 6100 a97a */
+	movel	%fp,%sp@-		/* 4082da4e 2f0e */
+	moveal	%a1@(26),%fp		/* 4082da50 2c69 001a */
+	bset	#0,%fp@			/* 4082da54 08d6 0000 */
+	moveal	%sp@+,%fp		/* 4082da58 2c5f */
+	beqs	loc_4082da7c		/* 4082da5a 6720 */
+	moveml	%d3-%d7/%a2-%fp,%sp@-	/* 4082da5c 48e7 1f3e */
+	pea	%pc@(sub_4082da86)	/* 4082da60 487a 0024 */
 
 __v__MYCONTCOMPATTHREAD:
-	.short	0x343c	/* 4082da64 343c */
-	.short	0x0017	/* 4082da66 0017 */
-	.short	0x6100	/* 4082da68 6100 */
-	.short	0xa95c	/* 4082da6a a95c */
-	.short	0x2c69	/* 4082da6c 2c69 */
-	.short	0x001a	/* 4082da6e 001a */
-	.short	0x544e	/* 4082da70 544e */
-	.short	0x4cde	/* 4082da72 4cde */
-	.short	0x3efe	/* 4082da74 3efe */
-	.short	0x2f1e	/* 4082da76 2f1e */
-	.short	0x3028	/* 4082da78 3028 */
-	.short	0x0010	/* 4082da7a 0010 */
+	movew	#23,%d2			/* 4082da64 343c 0017 */
+	bsrw	GETQMRECPTR		/* 4082da68 6100 a95c */
+	moveal	%a1@(26),%fp		/* 4082da6c 2c69 001a */
+	addqw	#2,%fp			/* 4082da70 544e */
+	moveml	%fp@+,%d1-%d7/%a1-%a5	/* 4082da72 4cde 3efe */
+	movel	%fp@+,%sp@-		/* 4082da76 2f1e */
+	movew	%a0@(16),%d0		/* 4082da78 3028 0010 */
+
+loc_4082da7c:
 	rts				/* 4082da7c 4e75 */
 
 __v__MYCONTAPPTHREAD:
@@ -1156,6 +1147,8 @@ __v__MYCONTAPPTHREAD:
 	.short	0x0000	/* 4082da80 0000 */
 	.short	0x66e0	/* 4082da82 66e0 */
 	rts				/* 4082da84 4e75 */
+
+sub_4082da86:
 	.short	0x4cdf	/* 4082da86 4cdf */
 	.short	0x7cf8	/* 4082da88 7cf8 */
 	rts				/* 4082da8a 4e75 */
