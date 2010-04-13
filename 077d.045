@@ -1069,41 +1069,37 @@ loc_4082d9be:
 	rts				/* 4082d9c2 4e75 */
 
 sub_4082d9c4:
-	.short	0x2d1f	/* 4082d9c4 2d1f */
-	.short	0x48e6	/* 4082d9c6 48e6 */
-	.short	0x40c0	/* 4082d9c8 40c0 */
-	.short	0x2008	/* 4082d9ca 2008 */
-	.short	0x6608	/* 4082d9cc 6608 */
-	.short	0x08eb	/* 4082d9ce 08eb */
-	.short	0x0007	/* 4082d9d0 0007 */
-	.short	0x0004	/* 4082d9d2 0004 */
-	.short	0x6020	/* 4082d9d4 6020 */
-	.short	0x302a	/* 4082d9d6 302a */
-	.short	0x00a4	/* 4082d9d8 00a4 */
-	.short	0x4eba	/* 4082d9da 4eba */
-	.short	0xa89c	/* 4082d9dc a89c */
-	.short	0x6618	/* 4082d9de 6618 */
-	.short	0x41ec	/* 4082d9e0 41ec */
-	.short	0x000a	/* 4082d9e2 000a */
-	.short	0x7002	/* 4082d9e4 7002 */
-	.short	0x22d8	/* 4082d9e6 22d8 */
-	.short	0x51c8	/* 4082d9e8 51c8 */
-	.short	0xfffc	/* 4082d9ea fffc */
-	.short	0x302a	/* 4082d9ec 302a */
-	.short	0x00a4	/* 4082d9ee 00a4 */
-	.short	0x4eba	/* 4082d9f0 4eba */
-	.short	0xa910	/* 4082d9f2 a910 */
-	.short	0x6602	/* 4082d9f4 6602 */
-	.short	0x4240	/* 4082d9f6 4240 */
-	.short	0x4cde	/* 4082d9f8 4cde */
-	.short	0x0302	/* 4082d9fa 0302 */
-	.short	0x2f1e	/* 4082d9fc 2f1e */
-	.short	0x4a40	/* 4082d9fe 4a40 */
+	movel	%sp@+,%fp@-		/* 4082d9c4 2d1f */
+	moveml	%d1/%a0-%a1,%fp@-	/* 4082d9c6 48e6 40c0 */
+	movel	%a0,%d0			/* 4082d9ca 2008 */
+	bnes	loc_4082d9d6		/* 4082d9cc 6608 */
+	bset	#7,%a3@(4)		/* 4082d9ce 08eb 0007 0004 */
+	bras	loc_4082d9f6		/* 4082d9d4 6020 */
+
+loc_4082d9d6:
+	movew	%a2@(164),%d0		/* 4082d9d6 302a 00a4 */
+	jsr	%pc@(BTSEARCH)		/* 4082d9da 4eba a89c */
+	bnes	loc_4082d9f8		/* 4082d9de 6618 */
+	lea	%a4@(10),%a0		/* 4082d9e0 41ec 000a */
+	moveq	#2,%d0			/* 4082d9e4 7002 */
+
+loc_4082d9e6:
+	movel	%a0@+,%a1@+		/* 4082d9e6 22d8 */
+	dbf	%d0,loc_4082d9e6	/* 4082d9e8 51c8 fffc */
+	movew	%a2@(164),%d0		/* 4082d9ec 302a 00a4 */
+	jsr	%pc@(BTUPDATE)		/* 4082d9f0 4eba a910 */
+	bnes	loc_4082d9f8		/* 4082d9f4 6602 */
+
+loc_4082d9f6:
+	clrw	%d0			/* 4082d9f6 4240 */
+
+loc_4082d9f8:
+	moveml	%fp@+,%d1/%a0-%a1	/* 4082d9f8 4cde 0302 */
+	movel	%fp@+,%sp@-		/* 4082d9fc 2f1e */
+	tstw	%d0			/* 4082d9fe 4a40 */
 	rts				/* 4082da00 4e75 */
-	.short	0x2f30	/* 4082da02 2f30 */
-	.short	0x81e2	/* 4082da04 81e2 */
-	.short	0x2030	/* 4082da06 2030 */
-	.short	0x029c	/* 4082da08 029c */
+
+	CallVector	0x2030 167	/* 4082da02 2f30 81e2 2030 029c */
 	rts				/* 4082da0a 4e75 */
 
 FXMKEYCMP:
