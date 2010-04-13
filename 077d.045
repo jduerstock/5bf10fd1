@@ -1562,70 +1562,45 @@ __v__BTENDPSCAN:
 
 	.align	16
 
-	.short	0x2d1f	/* 4082de70 2d1f */
-	.short	0x48e6	/* 4082de72 48e6 */
-	.short	0x7ef0	/* 4082de74 7ef0 */
-	.short	0x9cfc	/* 4082de76 9cfc */
-	.short	0x0032	/* 4082de78 0032 */
-	.short	0x204e	/* 4082de7a 204e */
-	.short	0x316a	/* 4082de7c 316a */
-	.short	0x0002	/* 4082de7e 0002 */
-	.short	0x0018	/* 4082de80 0018 */
-	.short	0xc2ea	/* 4082de82 c2ea */
-	.short	0x002a	/* 4082de84 002a */
-	.short	0x2141	/* 4082de86 2141 */
-	.short	0x0024	/* 4082de88 0024 */
-	.short	0x2149	/* 4082de8a 2149 */
-	.short	0x0020	/* 4082de8c 0020 */
-	.short	0xc4ea	/* 4082de8e c4ea */
-	.short	0x002a	/* 4082de90 002a */
-	.short	0x2a02	/* 4082de92 2a02 */
-	.short	0x2278	/* 4082de94 2278 */
-	.short	0x034e	/* 4082de96 034e */
-	.short	0x322a	/* 4082de98 322a */
-	.short	0x0002	/* 4082de9a 0002 */
-	.short	0x2828	/* 4082de9c 2828 */
-	.short	0x0024	/* 4082de9e 0024 */
-	.short	0x47f1	/* 4082dea0 47f1 */
-	.short	0x1000	/* 4082dea2 1000 */
-	.short	0x246b	/* 4082dea4 246b */
-	.short	0x0014	/* 4082dea6 0014 */
-	.short	0x317c	/* 4082dea8 317c */
-	.short	0x0001	/* 4082deaa 0001 */
-	.short	0x002c	/* 4082deac 002c */
-	.short	0x0028	/* 4082deae 0028 */
-	.short	0x0004	/* 4082deb0 0004 */
-	.short	0x002d	/* 4082deb2 002d */
-	.short	0x117c	/* 4082deb4 117c */
-	.short	0x0001	/* 4082deb6 0001 */
-	.short	0x001b	/* 4082deb8 001b */
-	.short	0x42a8	/* 4082deba 42a8 */
-	.short	0x002e	/* 4082debc 002e */
-	.short	0x42a8	/* 4082debe 42a8 */
-	.short	0x0028	/* 4082dec0 0028 */
-	.short	0x2742	/* 4082dec2 2742 */
-	.short	0x0010	/* 4082dec4 0010 */
-	.short	0x4eba	/* 4082dec6 4eba */
-	.short	0xaaf4	/* 4082dec8 aaf4 */
-	.short	0x660a	/* 4082deca 660a */
-	.short	0xda86	/* 4082decc da86 */
-	.short	0xdda8	/* 4082dece dda8 */
-	.short	0x0028	/* 4082ded0 0028 */
-	.short	0x9886	/* 4082ded2 9886 */
-	.short	0x66f0	/* 4082ded4 66f0 */
-	.short	0x4dee	/* 4082ded6 4dee */
-	.short	0x0032	/* 4082ded8 0032 */
-	.short	0x4cde	/* 4082deda 4cde */
-	.short	0x0f7e	/* 4082dedc 0f7e */
-	.short	0x2f1e	/* 4082dede 2f1e */
-	.short	0x4a40	/* 4082dee0 4a40 */
+	movel	%sp@+,%fp@-		/* 4082de70 2d1f */
+	moveml	%d1-%d6/%a0-%a3,%fp@-	/* 4082de72 48e6 7ef0 */
+	subaw	#50,%fp			/* 4082de76 9cfc 0032 */
+	moveal	%fp,%a0			/* 4082de7a 204e */
+	movew	%a2@(2),%a0@(24)	/* 4082de7c 316a 0002 0018 */
+	muluw	%a2@(42),%d1		/* 4082de82 c2ea 002a */
+	movel	%d1,%a0@(36)		/* 4082de86 2141 0024 */
+	movel	%a1,%a0@(32)		/* 4082de8a 2149 0020 */
+	muluw	%a2@(42),%d2		/* 4082de8e c4ea 002a */
+	movel	%d2,%d5			/* 4082de92 2a02 */
+	moveal	0x34e,%a1		/* 4082de94 2278 034e */
+	movew	%a2@(2),%d1		/* 4082de98 322a 0002 */
+	movel	%a0@(36),%d4		/* 4082de9c 2828 0024 */
+	lea	%a1@(0x0000,%d1:w),%a3	/* 4082dea0 47f1 1000 */
+	moveal	%a3@(20),%a2		/* 4082dea4 246b 0014 */
+	movew	#1,%a0@(44)		/* 4082dea8 317c 0001 002c */
+	orib	#4,%a0@(45)		/* 4082deae 0028 0004 002d */
+	moveb	#1,%a0@(27)		/* 4082deb4 117c 0001 001b */
+	clrl	%a0@(46)		/* 4082deba 42a8 002e */
+	clrl	%a0@(40)		/* 4082debe 42a8 0028 */
+	movel	%d2,%a3@(16)		/* 4082dec2 2742 0010 */
+
+loc_4082dec6:
+	jsr	%pc@(CACHERDIP)		/* 4082dec6 4eba aaf4 */
+	bnes	loc_4082ded6		/* 4082deca 660a */
+	addl	%d6,%d5			/* 4082decc da86 */
+	addl	%d6,%a0@(40)		/* 4082dece dda8 0028 */
+	subl	%d6,%d4			/* 4082ded2 9886 */
+	bnes	loc_4082dec6		/* 4082ded4 66f0 */
+
+loc_4082ded6:
+	lea	%fp@(50),%fp		/* 4082ded6 4dee 0032 */
+	moveml	%fp@+,%d1-%d6/%a0-%a3	/* 4082deda 4cde 0f7e */
+	movel	%fp@+,%sp@-		/* 4082dede 2f1e */
+	tstw	%d0			/* 4082dee0 4a40 */
 	rts				/* 4082dee2 4e75 */
-	.short	0x0000	/* 4082dee4 0000 */
-	.short	0x0000	/* 4082dee6 0000 */
-	.short	0x0000	/* 4082dee8 0000 */
-	.short	0x0000	/* 4082deea 0000 */
-	.short	0x0000	/* 4082deec 0000 */
-	.short	0x0000	/* 4082deee 0000 */
+
+	.align	16
+
 	.short	0x2f01	/* 4082def0 2f01 */
 	.short	0x52ac	/* 4082def2 52ac */
 	.short	0x0014	/* 4082def4 0014 */
@@ -1639,9 +1614,9 @@ __v__BTENDPSCAN:
 	.short	0x002a	/* 4082df04 002a */
 	.short	0x221f	/* 4082df06 221f */
 	rts				/* 4082df08 4e75 */
-	.short	0x0000	/* 4082df0a 0000 */
-	.short	0x0000	/* 4082df0c 0000 */
-	.short	0x0000	/* 4082df0e 0000 */
+
+	.align	16
+
 	.short	0x2d1f	/* 4082df10 2d1f */
 	.short	0x48e6	/* 4082df12 48e6 */
 	.short	0x60e0	/* 4082df14 60e0 */
