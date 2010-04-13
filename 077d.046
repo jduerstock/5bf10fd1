@@ -12,31 +12,28 @@ loc_4082e008:
 	rts				/* 4082e00e 4e75 */
 
 __v__BTGETPHYS:
-	.short	0x2d1f	/* 4082e010 2d1f */
-	.short	0x082c	/* 4082e012 082c */
-	.short	0x0007	/* 4082e014 0007 */
-	.short	0x002a	/* 4082e016 002a */
-	.short	0x6706	/* 4082e018 6706 */
-	.short	0x6100	/* 4082e01a 6100 */
-	.short	0xfef4	/* 4082e01c fef4 */
-	.short	0x661e	/* 4082e01e 661e */
-	.short	0x2d0c	/* 4082e020 2d0c */
-	.short	0x6100	/* 4082e022 6100 */
-	.short	0xffbc	/* 4082e024 ffbc */
-	.short	0x6614	/* 4082e026 6614 */
-	.short	0x226c	/* 4082e028 226c */
-	.short	0x0008	/* 4082e02a 0008 */
-	.short	0x322c	/* 4082e02c 322c */
-	.short	0x0028	/* 4082e02e 0028 */
-	.short	0x526c	/* 4082e030 526c */
-	.short	0x0028	/* 4082e032 0028 */
-	.short	0x286c	/* 4082e034 286c */
-	.short	0x0004	/* 4082e036 0004 */
-	.short	0x4eba	/* 4082e038 4eba */
-	.short	0x9b34	/* 4082e03a 9b34 */
-	.short	0x285e	/* 4082e03c 285e */
-	.short	0x2f1e	/* 4082e03e 2f1e */
-	.short	0x4a40	/* 4082e040 4a40 */
+	movel	%sp@+,%fp@-		/* 4082e010 2d1f */
+	btst	#7,%a4@(42)		/* 4082e012 082c 0007 002a */
+	beqs	loc_4082e020		/* 4082e018 6706 */
+	bsrw	VALIDATENODE		/* 4082e01a 6100 fef4 */
+	bnes	loc_4082e03e		/* 4082e01e 661e */
+
+loc_4082e020:
+	movel	%a4,%fp@-		/* 4082e020 2d0c */
+	bsrw	VALIDATEREC		/* 4082e022 6100 ffbc */
+	bnes	loc_4082e03c		/* 4082e026 6614 */
+	moveal	%a4@(8),%a1		/* 4082e028 226c 0008 */
+	movew	%a4@(40),%d1		/* 4082e02c 322c 0028 */
+	addqw	#1,%a4@(40)		/* 4082e030 526c 0028 */
+	moveal	%a4@(4),%a4		/* 4082e034 286c 0004 */
+	jsr	%pc@(LOCREC)	/* 4082e038 4eba 9b34 */
+
+loc_4082e03c:
+	moveal	%fp@+,%a4		/* 4082e03c 285e */
+
+loc_4082e03e:
+	movel	%fp@+,%sp@-		/* 4082e03e 2f1e */
+	tstw	%d0			/* 4082e040 4a40 */
 	rts				/* 4082e042 4e75 */
 
 BTGETPHYS:
