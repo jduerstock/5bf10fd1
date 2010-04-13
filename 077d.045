@@ -1108,25 +1108,18 @@ FXMKEYCMP:
 
 	.align	16
 
-	.short	0x48e6	/* 4082da20 48e6 */
-	.short	0x7f7c	/* 4082da22 7f7c */
-	.short	0x554e	/* 4082da24 554e */
-	.short	0x0896	/* 4082da26 0896 */
-	.short	0x0000	/* 4082da28 0000 */
-	.short	0x43fa	/* 4082da2a 43fa */
-	.short	0x001a	/* 4082da2c 001a */
-	.short	0x2149	/* 4082da2e 2149 */
-	.short	0x000c	/* 4082da30 000c */
-	.short	0x343c	/* 4082da32 343c */
-	.short	0x0017	/* 4082da34 0017 */
-	.short	0x6100	/* 4082da36 6100 */
-	.short	0xa98e	/* 4082da38 a98e */
-	.short	0x234e	/* 4082da3a 234e */
-	.short	0x001a	/* 4082da3c 001a */
-	.short	0x0829	/* 4082da3e 0829 */
-	.short	0x0001	/* 4082da40 0001 */
-	.short	0x000c	/* 4082da42 000c */
+	moveml	%d1-%d7/%a1-%a5,%fp@-	/* 4082da20 48e6 7f7c */
+	subqw	#2,%fp			/* 4082da24 554e */
+	bclr	#0,%fp@			/* 4082da26 0896 0000 */
+	lea	%pc@(MYCOMPLETIONROUTINE),%a1	/* 4082da2a 43fa 001a */
+	movel	%a1,%a0@(12)		/* 4082da2e 2149 000c */
+	movew	#23,%d2			/* 4082da32 343c 0017 */
+	bsrw	GETQMRECPTR		/* 4082da36 6100 a98e */
+	movel	%fp,%a1@(26)		/* 4082da3a 234e 001a */
+	btst	#1,%a1@(12)		/* 4082da3e 0829 0001 000c */
 	rts				/* 4082da44 4e75 */
+
+MYCOMPLETIONROUTINE:
 	.short	0x343c	/* 4082da46 343c */
 	.short	0x0017	/* 4082da48 0017 */
 	.short	0x6100	/* 4082da4a 6100 */
