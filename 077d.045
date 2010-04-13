@@ -1195,16 +1195,15 @@ loc_4082daee:
 
 	.align	16
 
-	.short	0x2d1f	/* 4082db00 2d1f */
-	.short	0x6100	/* 4082db02 6100 */
-	.short	0xff1c	/* 4082db04 ff1c */
-	.short	0x6606	/* 4082db06 6606 */
-	.short	0xa214	/* 4082db08 a214 */
-	.short	0x4efa	/* 4082db0a 4efa */
-	.short	0xff8a	/* 4082db0c ff8a */
-	.short	0xa614	/* 4082db0e a614 */
-	.short	0x4efa	/* 4082db10 4efa */
-	.short	0xff7a	/* 4082db12 ff7a */
+	movel	%sp@+,%fp@-		/* 4082db00 2d1f */
+	bsrw	MYBOTTLENECKIO		/* 4082db02 6100 ff1c */
+	bnes	loc_4082db0e		/* 4082db06 6606 */
+	.short	0xa214			/* 4082db08 a214 */
+	jmp	%pc@(MYCONTCOMPATTHREAD)	/* 4082db0a 4efa ff8a */
+
+loc_4082db0e:
+	.short	0xa614			/* 4082db0e a614 */
+	jmp	%pc@(MYCONTAPPTHREAD)	/* 4082db10 4efa ff7a */
 
 	.align	16
 
