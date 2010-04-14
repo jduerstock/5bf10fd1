@@ -1565,23 +1565,17 @@ __v__BOTTLENECKIO:
 	rts				/* 4082ffa0 4e75 */
 
 sub_4082ffa2:
-	.short	0x7416	/* 4082ffa2 7416 */
-	.short	0x2f0c	/* 4082ffa4 2f0c */
-	.short	0x61ff	/* 4082ffa6 61ff */
-	.short	0xffff	/* 4082ffa8 ffff */
-	.short	0x841e	/* 4082ffaa 841e */
-	.short	0x285f	/* 4082ffac 285f */
-	.short	0x2f0e	/* 4082ffae 2f0e */
-	.short	0x2c69	/* 4082ffb0 2c69 */
-	.short	0x001a	/* 4082ffb2 001a */
-	.short	0x08d6	/* 4082ffb4 08d6 */
-	.short	0x0000	/* 4082ffb6 0000 */
-	.short	0x2c5f	/* 4082ffb8 2c5f */
-	.short	0x6724	/* 4082ffba 6724 */
-	.short	0x48e7	/* 4082ffbc 48e7 */
-	.short	0x1f3e	/* 4082ffbe 1f3e */
-	.short	0x487a	/* 4082ffc0 487a */
-	.short	0x0028	/* 4082ffc2 0028 */
+	moveq	#22,%d2			/* 4082ffa2 7416 */
+	movel	%a4,%sp@-		/* 4082ffa4 2f0c */
+	bsrl	GETQMRECPTR		/* 4082ffa6 61ff ffff 841e */
+	moveal	%sp@+,%a4		/* 4082ffac 285f */
+	movel	%fp,%sp@-		/* 4082ffae 2f0e */
+	moveal	%a1@(26),%fp		/* 4082ffb0 2c69 001a */
+	bset	#0,%fp@			/* 4082ffb4 08d6 0000 */
+	moveal	%sp@+,%fp		/* 4082ffb8 2c5f */
+	beqs	loc_4082ffe0		/* 4082ffba 6724 */
+	moveml	%d3-%d7/%a2-%fp,%sp@-	/* 4082ffbc 48e7 1f3e */
+	pea	%pc@(sub_4082ffea)	/* 4082ffc0 487a 0028 */
 
 loc_4082ffc4:
 	moveq	#22,%d2			/* 4082ffc4 7416 */
@@ -1602,6 +1596,7 @@ loc_4082ffe2:
 	bnes	loc_4082ffc4		/* 4082ffe6 66dc */
 	rts				/* 4082ffe8 4e75 */
 
+sub_4082ffea:
 	moveml	%sp@+,%d3-%d7/%a2-%fp	/* 4082ffea 4cdf 7cf8 */
 	rts				/* 4082ffee 4e75 */
 
