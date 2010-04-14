@@ -21,28 +21,24 @@
 
 __v__ConvertScriptCodeToDiskForm:
 	linkw	%fp,#0			/* 4082f030 4e56 0000 */
-	.short	0x48e7	/* 4082f034 48e7 */
-	.short	0x0300	/* 4082f036 0300 */
-	.short	0x3c2e	/* 4082f038 3c2e */
-	.short	0x000a	/* 4082f03a 000a */
-	.short	0x6d08	/* 4082f03c 6d08 */
-	.short	0x3e3c	/* 4082f03e 3e3c */
-	.short	0x0080	/* 4082f040 0080 */
-	.short	0x8e46	/* 4082f042 8e46 */
-	.short	0x6002	/* 4082f044 6002 */
-	.short	0x4207	/* 4082f046 4207 */
-	.short	0x1007	/* 4082f048 1007 */
-	.short	0x4cee	/* 4082f04a 4cee */
-	.short	0x00c0	/* 4082f04c 00c0 */
-	.short	0xfff8	/* 4082f04e fff8 */
-	.short	0x4e5e	/* 4082f050 4e5e */
+	moveml	%d6-%d7,%sp@-		/* 4082f034 48e7 0300 */
+	movew	%fp@(10),%d6		/* 4082f038 3c2e 000a */
+	blts	loc_4082f046		/* 4082f03c 6d08 */
+	movew	#128,%d7		/* 4082f03e 3e3c 0080 */
+	orw	%d6,%d7			/* 4082f042 8e46 */
+	bras	loc_4082f048		/* 4082f044 6002 */
+
+loc_4082f046:
+	clrb	%d7			/* 4082f046 4207 */
+
+loc_4082f048:
+	moveb	%d7,%d0			/* 4082f048 1007 */
+	moveml	%fp@(-8),%d6-%d7	/* 4082f04a 4cee 00c0 fff8 */
+	unlk	%fp			/* 4082f050 4e5e */
 	rts				/* 4082f052 4e75 */
 
 ConvertScriptCodeToDiskForm:
-	.short	0x2f30	/* 4082f054 2f30 */
-	.short	0x81e2	/* 4082f056 81e2 */
-	.short	0x2030	/* 4082f058 2030 */
-	.short	0x020c	/* 4082f05a 020c */
+	CallVector	0x2030 131	/* 4082f054 2f30 81e2 2030 020c */
 	rts				/* 4082f05c 4e75 */
 
 	.align	16
