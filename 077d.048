@@ -44,17 +44,18 @@ loc_4083003c:
 	.short	0xa403			/* 4083003c a403 */
 	bras	loc_4082ffe2		/* 4083003e 60a2 */
 
-	.short	0x2d1f	/* 40830040 2d1f */
-	.short	0x6100	/* 40830042 6100 */
-	.short	0xff2c	/* 40830044 ff2c */
-	.short	0x6608	/* 40830046 6608 */
-	.short	0x7009	/* 40830048 7009 */
-	.short	0xa260	/* 4083004a a260 */
-	.short	0x6000	/* 4083004c 6000 */
-	.short	0xff76	/* 4083004e ff76 */
-	.short	0x7009	/* 40830050 7009 */
-	.short	0xa660	/* 40830052 a660 */
-	.short	0x608c	/* 40830054 608c */
+DOGETCATINFO_:
+	movel	%sp@+,%fp@-		/* 40830040 2d1f */
+	bsrw	__v__BOTTLENECKIO		/* 40830042 6100 ff2c */
+	bnes	loc_40830050		/* 40830046 6608 */
+	moveq	#9,%d0			/* 40830048 7009 */
+	.short	0xa260			/* 4083004a a260 */
+	braw	loc_4082ffc4		/* 4083004c 6000 ff76 */
+
+loc_40830050:
+	moveq	#9,%d0			/* 40830050 7009 */
+	.short	0xa660			/* 40830052 a660 */
+	bras	loc_4082ffe2		/* 40830054 608c */
 
 DOHGETVINFO:
 	.short	0x2d1f	/* 40830056 2d1f */
