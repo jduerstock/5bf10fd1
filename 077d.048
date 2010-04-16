@@ -267,17 +267,14 @@ DOBTGETREC:
 	.align	16
 
 MYBEGINSYSTEMMODE:
-	.short	0x40e7	/* 408301e0 40e7 */
-	.short	0x48e7	/* 408301e2 48e7 */
-	.short	0xe0c0	/* 408301e4 e0c0 */
-	.short	0x554f	/* 408301e6 554f */
-	.short	0x3f3c	/* 408301e8 3f3c */
-	.short	0x0040	/* 408301ea 0040 */
-	.short	0xa88f	/* 408301ec a88f */
-	.short	0x544f	/* 408301ee 544f */
-	.short	0x4cdf	/* 408301f0 4cdf */
-	.short	0x0307	/* 408301f2 0307 */
-	.short	0x4e77	/* 408301f4 4e77 */
+	movew	%sr,%sp@-		/* 408301e0 40e7 */
+	moveml	%d0-%d2/%a0-%a1,%sp@-	/* 408301e2 48e7 e0c0 */
+	subqw	#2,%sp			/* 408301e6 554f */
+	movew	#64,%sp@-		/* 408301e8 3f3c 0040 */
+	.short	0xa88f			/* 408301ec a88f */
+	addqw	#2,%sp			/* 408301ee 544f */
+	moveml	%sp@+,%d0-%d2/%a0-%a1	/* 408301f0 4cdf 0307 */
+	rtr				/* 408301f4 4e77 */
 
 	.align	16
 
