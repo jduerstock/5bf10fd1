@@ -744,42 +744,35 @@ str_408305c4:
 DESKTOPNOTIFYPROC:
 	linkw	%fp,#0			/* 408305d0 4e56 0000 */
 	moveml	%d0/%a1/%a3,%sp@-	/* 408305d4 48e7 8050 */
-	.short	0x226e	/* 408305d8 226e */
-	.short	0x0008	/* 408305da 0008 */
-	.short	0x3029	/* 408305dc 3029 */
-	.short	0x0004	/* 408305de 0004 */
-	.short	0x0c40	/* 408305e0 0c40 */
-	.short	0x0001	/* 408305e2 0001 */
-	.short	0x6706	/* 408305e4 6706 */
-	.short	0x0c40	/* 408305e6 0c40 */
-	.short	0x0003	/* 408305e8 0003 */
-	.short	0x6624	/* 408305ea 6624 */
-	.short	0x3029	/* 408305ec 3029 */
-	.short	0x0006	/* 408305ee 0006 */
-	.short	0x6100	/* 408305f0 6100 */
-	.short	0xfda8	/* 408305f2 fda8 */
-	.short	0x661a	/* 408305f4 661a */
-	.short	0x9efc	/* 408305f6 9efc */
-	.short	0x006c	/* 408305f8 006c */
-	.short	0x204f	/* 408305fa 204f */
-	.short	0x316b	/* 408305fc 316b */
-	.short	0x0006	/* 408305fe 0006 */
-	.short	0x0018	/* 40830600 0018 */
-	.short	0x702b	/* 40830602 702b */
-	.short	0xa260	/* 40830604 a260 */
-	.short	0x3d40	/* 40830606 3d40 */
-	.short	0x000c	/* 40830608 000c */
-	.short	0x4fef	/* 4083060a 4fef */
-	.short	0x006c	/* 4083060c 006c */
-	.short	0x6004	/* 4083060e 6004 */
-	.short	0x426e	/* 40830610 426e */
-	.short	0x000c	/* 40830612 000c */
-	.short	0x4cdf	/* 40830614 4cdf */
-	.short	0x0a01	/* 40830616 0a01 */
-	.short	0x4e5e	/* 40830618 4e5e */
-	.short	0x205f	/* 4083061a 205f */
-	.short	0x584f	/* 4083061c 584f */
-	.short	0x4ed0	/* 4083061e 4ed0 */
+	moveal	%fp@(8),%a1		/* 408305d8 226e 0008 */
+	movew	%a1@(4),%d0		/* 408305dc 3029 0004 */
+	cmpiw	#1,%d0			/* 408305e0 0c40 0001 */
+	beqs	loc_408305ec		/* 408305e4 6706 */
+	cmpiw	#3,%d0			/* 408305e6 0c40 0003 */
+	bnes	loc_40830610		/* 408305ea 6624 */
+
+loc_408305ec:
+	movew	%a1@(6),%d0		/* 408305ec 3029 0006 */
+	bsrw	FINDDTVOL		/* 408305f0 6100 fda8 */
+	bnes	loc_40830610		/* 408305f4 661a */
+	subaw	#108,%sp		/* 408305f6 9efc 006c */
+	moveal	%sp,%a0			/* 408305fa 204f */
+	movew	%a3@(6),%a0@(24)	/* 408305fc 316b 0006 0018 */
+	moveq	#43,%d0			/* 40830602 702b */
+	.short	0xa260			/* 40830604 a260 */
+	movew	%d0,%fp@(12)		/* 40830606 3d40 000c */
+	lea	%sp@(108),%sp		/* 4083060a 4fef 006c */
+	bras	loc_40830614		/* 4083060e 6004 */
+
+loc_40830610:
+	clrw	%fp@(12)		/* 40830610 426e 000c */
+
+loc_40830614:
+	moveml	%sp@+,%d0/%a1/%a3	/* 40830614 4cdf 0a01 */
+	unlk	%fp			/* 40830618 4e5e */
+	moveal	%sp@+,%a0		/* 4083061a 205f */
+	addqw	#4,%sp			/* 4083061c 584f */
+	jmp	%a0@			/* 4083061e 4ed0 */
 
 __v__REALOPENDT:
 	movel	%sp@+,%fp@-		/* 40830620 2d1f */
@@ -854,9 +847,9 @@ loc_40830702:
 	movew	%d1,%a0@(22)		/* 40830712 3141 0016 */
 	moveb	#3,%a0@(27)		/* 40830716 117c 0003 001b */
 	movel	%d2,%a0@(48)		/* 4083071c 2142 0030 */
-	pea	%pc@(DTKEYCMP)	/* 40830720 487a 0cce */
+	pea	%pc@(DTKEYCMP)		/* 40830720 487a 0cce */
 	movel	%sp@+,%a0@(82)		/* 40830724 215f 0052 */
-	bsrw	MYBEGINSYSTEMMODE		/* 40830728 6100 fab6 */
+	bsrw	MYBEGINSYSTEMMODE	/* 40830728 6100 fab6 */
 	moveq	#1,%d0			/* 4083072c 7001 */
 	.short	0xa08e			/* 4083072e a08e */
 	bsrw	MYENDSYSTEMMODE		/* 40830730 6100 face */
@@ -864,11 +857,11 @@ loc_40830702:
 	movew	%a0@(24),%a3@(8)	/* 40830738 3768 0018 0008 */
 	moveq	#0,%d0			/* 4083073e 7000 */
 	moveb	%a1@,%d0		/* 40830740 1011 */
-	moveb	#70,%a1@(0x0000,%d0:w)	/* 40830742 13bc 0046 0000 */
+	moveb	#70,%a1@(%d0:w)		/* 40830742 13bc 0046 0000 */
 	moveb	#3,%a0@(27)		/* 40830748 117c 0003 001b */
 	clrl	%a0@(28)		/* 4083074e 42a8 001c */
-	bsrw	MYBEGINSYSTEMMODE		/* 40830752 6100 fa8c */
-	bsrw	DOHOPEN		/* 40830756 6100 f898 */
+	bsrw	MYBEGINSYSTEMMODE	/* 40830752 6100 fa8c */
+	bsrw	DOHOPEN			/* 40830756 6100 f898 */
 	bsrw	MYENDSYSTEMMODE		/* 4083075a 6100 faa4 */
 	bnew	loc_40830826		/* 4083075e 6600 00c6 */
 	movew	%a0@(24),%a3@(10)	/* 40830762 3768 0018 000a */
@@ -905,7 +898,7 @@ loc_408307be:
 	lea	%sp@(-2),%sp		/* 408307ce 4fef fffe */
 	pea	%pc@(DESKTOPNOTIFYPROC)	/* 408307d2 487a fdfc */
 	movel	#1264009547,%sp@-	/* 408307d6 2f3c 4b57 414b */
-	bsrw	MYBEGINSYSTEMMODE		/* 408307dc 6100 fa02 */
+	bsrw	MYBEGINSYSTEMMODE	/* 408307dc 6100 fa02 */
 	movew	#66,%sp@-		/* 408307e0 3f3c 0042 */
 	.short	0xa88f			/* 408307e4 a88f */
 	bsrw	MYENDSYSTEMMODE		/* 408307e6 6100 fa18 */
@@ -929,7 +922,7 @@ loc_4083080a:
 	movew	%d0,%a4@(16)		/* 4083080a 3940 0010 */
 	moveq	#0,%d0			/* 4083080e 7000 */
 	moveb	%a1@,%d0		/* 40830810 1011 */
-	moveb	#70,%a1@(0x0000,%d0:w)	/* 40830812 13bc 0046 0000 */
+	moveb	#70,%a1@(%d0:w)		/* 40830812 13bc 0046 0000 */
 	movel	%a1,%a0@(18)		/* 40830818 2149 0012 */
 	bsrw	DOHDELETE		/* 4083081c 6100 f7e2 */
 	movew	%a4@(16),%d0		/* 40830820 302c 0010 */
@@ -939,7 +932,7 @@ loc_40830826:
 	movew	%d0,%a4@(16)		/* 40830826 3940 0010 */
 	lea	%fp@,%a0		/* 4083082a 41d6 */
 	movew	%a3@(8),%a0@(24)	/* 4083082c 316b 0008 0018 */
-	bsrw	MYBEGINSYSTEMMODE		/* 40830832 6100 f9ac */
+	bsrw	MYBEGINSYSTEMMODE	/* 40830832 6100 f9ac */
 	moveq	#2,%d0			/* 40830836 7002 */
 	.short	0xa08e			/* 40830838 a08e */
 	bsrw	MYENDSYSTEMMODE		/* 4083083a 6100 f9c4 */
