@@ -186,19 +186,18 @@ byte_409b619c:
 	.short	0x6c7f	/* 409b61a2 6c7f */
 
 loc_409b61a4:
-	.short	0x3028	/* 409b61a4 3028 */
-	.short	0x001a	/* 409b61a6 001a */
-	.short	0x6710	/* 409b61a8 6710 */
-	.short	0x5540	/* 409b61aa 5540 */
-	.short	0x6710	/* 409b61ac 6710 */
-	.short	0x6d00	/* 409b61ae 6d00 */
-	.short	0xff4c	/* 409b61b0 ff4c */
-	.short	0x3028	/* 409b61b2 3028 */
-	.short	0x001c	/* 409b61b4 001c */
-	.short	0x6100	/* 409b61b6 6100 */
-	.short	0xff66	/* 409b61b8 ff66 */
-	.short	0x6000	/* 409b61ba 6000 */
-	.short	0x0186	/* 409b61bc 0186 */
+	movew	%a0@(26),%d0		/* 409b61a4 3028 001a */
+	beqs	loc_409b61ba		/* 409b61a8 6710 */
+	subqw	#2,%d0			/* 409b61aa 5540 */
+	beqs	loc_409b61be		/* 409b61ac 6710 */
+	bltw	loc_409b60fc		/* 409b61ae 6d00 ff4c */
+	movew	%a0@(28),%d0		/* 409b61b2 3028 001c */
+	bsrw	sub_409b611e		/* 409b61b6 6100 ff66 */
+
+loc_409b61ba:
+	braw	loc_409b6342		/* 409b61ba 6000 0186 */
+
+loc_409b61be:
 	.short	0x3028	/* 409b61be 3028 */
 	.short	0x001c	/* 409b61c0 001c */
 	.short	0x619c	/* 409b61c2 619c */
@@ -395,6 +394,8 @@ loc_409b61c6:
 	.short	0x0004	/* 409b633c 0004 */
 	.short	0x6100	/* 409b633e 6100 */
 	.short	0xfdcc	/* 409b6340 fdcc */
+
+loc_409b6342:
 	moveq	#0,%d0			/* 409b6342 7000 */
 	.short	0x2278	/* 409b6344 2278 */
 	.short	0x027a	/* 409b6346 027a */
