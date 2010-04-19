@@ -17,63 +17,42 @@ DTGETAPPL:
 	.align	16
 
 __v__DTSETCOMMENT:
-	.short	0x4eba	/* 40831020 4eba */
-	.short	0xb3f0	/* 40831022 b3f0 */
-	.short	0x6100	/* 40831024 6100 */
-	.short	0xf29a	/* 40831026 f29a */
-	.short	0x6100	/* 40831028 6100 */
-	.short	0xf1f6	/* 4083102a f1f6 */
-	.short	0x48e6	/* 4083102c 48e6 */
-	.short	0x60f8	/* 4083102e 60f8 */
-	.short	0x9cfc	/* 40831030 9cfc */
-	.short	0x01b6	/* 40831032 01b6 */
-	.short	0x2848	/* 40831034 2848 */
-	.short	0x6100	/* 40831036 6100 */
-	.short	0xf378	/* 40831038 f378 */
-	.short	0x664a	/* 4083103a 664a */
-	.short	0x6100	/* 4083103c 6100 */
-	.short	0xf3a2	/* 4083103e f3a2 */
-	.short	0x6644	/* 40831040 6644 */
+	jsr	%pc@(FSQUEUE)		/* 40831020 4eba b3f0 */
+	bsrw	DTRFNEXTFSCHECK		/* 40831024 6100 f29a */
+	bsrw	DESKMGRQUEUE		/* 40831028 6100 f1f6 */
+	moveml	%d1-%d2/%a0-%a4,%fp@-	/* 4083102c 48e6 60f8 */
+	subaw	#438,%fp		/* 40831030 9cfc 01b6 */
+	moveal	%a0,%a4			/* 40831034 2848 */
+	bsrw	DTSETUP			/* 40831036 6100 f378 */
+	bnes	loc_40831086		/* 4083103a 664a */
+	bsrw	CHECKCSPEC		/* 4083103c 6100 f3a2 */
+	bnes	loc_40831086		/* 40831040 6644 */
 	moveq	#0,%d0			/* 40831042 7000 */
-	.short	0x202c	/* 40831044 202c */
-	.short	0x0024	/* 40831046 0024 */
-	.short	0x0c80	/* 40831048 0c80 */
-	.short	0x0000	/* 4083104a 0000 */
-	.short	0x00c7	/* 4083104c 00c7 */
-	.short	0x6306	/* 4083104e 6306 */
-	.short	0x203c	/* 40831050 203c */
-	.short	0x0000	/* 40831052 0000 */
-	.short	0x00c7	/* 40831054 00c7 */
-	.short	0x1d40	/* 40831056 1d40 */
-	.short	0x00ee	/* 40831058 00ee */
-	.short	0x206c	/* 4083105a 206c */
-	.short	0x0020	/* 4083105c 0020 */
-	.short	0x43ee	/* 4083105e 43ee */
-	.short	0x00ef	/* 40831060 00ef */
-	.short	0xa02e	/* 40831062 a02e */
-	.short	0x6100	/* 40831064 6100 */
-	.short	0xf2ca	/* 40831066 f2ca */
+	movel	%a4@(36),%d0		/* 40831044 202c 0024 */
+	cmpil	#199,%d0		/* 40831048 0c80 0000 00c7 */
+	blss	loc_40831056		/* 4083104e 6306 */
+	movel	#199,%d0		/* 40831050 203c 0000 00c7 */
+
+loc_40831056:
+	moveb	%d0,%fp@(238)		/* 40831056 1d40 00ee */
+	moveal	%a4@(32),%a0		/* 4083105a 206c 0020 */
+	lea	%fp@(239),%a1		/* 4083105e 43ee 00ef */
+	.short	0xa02e			/* 40831062 a02e */
+	bsrw	SETUPBTPB		/* 40831064 6100 f2ca */
 	moveq	#0,%d0			/* 40831068 7000 */
-	.short	0x102e	/* 4083106a 102e */
-	.short	0x00ee	/* 4083106c 00ee */
-	.short	0x5200	/* 4083106e 5200 */
-	.short	0x2140	/* 40831070 2140 */
-	.short	0x0024	/* 40831072 0024 */
-	.short	0x14fc	/* 40831074 14fc */
-	.short	0x0005	/* 40831076 0005 */
-	.short	0x14fc	/* 40831078 14fc */
-	.short	0x0003	/* 4083107a 0003 */
-	.short	0x24c1	/* 4083107c 24c1 */
-	.short	0x6100	/* 4083107e 6100 */
-	.short	0xf0ee	/* 40831080 f0ee */
-	.short	0x6100	/* 40831082 6100 */
-	.short	0xf2cc	/* 40831084 f2cc */
-	.short	0x4dee	/* 40831086 4dee */
-	.short	0x01b6	/* 40831088 01b6 */
-	.short	0x4cde	/* 4083108a 4cde */
-	.short	0x1f06	/* 4083108c 1f06 */
-	.short	0x6000	/* 4083108e 6000 */
-	.short	0xf1a0	/* 40831090 f1a0 */
+	moveb	%fp@(238),%d0		/* 4083106a 102e 00ee */
+	addqb	#1,%d0			/* 4083106e 5200 */
+	movel	%d0,%a0@(36)		/* 40831070 2140 0024 */
+	moveb	#5,%a2@+		/* 40831074 14fc 0005 */
+	moveb	#3,%a2@+		/* 40831078 14fc 0003 */
+	movel	%d1,%a2@+		/* 4083107c 24c1 */
+	bsrw	DOBTSETREC		/* 4083107e 6100 f0ee */
+	bsrw	DONEBTPB		/* 40831082 6100 f2cc */
+
+loc_40831086:
+	lea	%fp@(438),%fp		/* 40831086 4dee 01b6 */
+	moveml	%fp@+,%d1-%d2/%a0-%a4	/* 4083108a 4cde 1f06 */
+	braw	DTDONE			/* 4083108e 6000 f1a0 */
 
 DTSETCOMMENT:
 	CallVector	0x2030 121	/* 40831092 2f30 81e2 2030 01e4 */
