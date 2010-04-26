@@ -24,6 +24,7 @@ word_409b2018:
 	.short	0x004e	/* 409b202c 004e */
 	.short	0x005a	/* 409b202e 005a */
 	.short	0x0066	/* 409b2030 0066 */
+
 	movel	%pc@(word_409b2018),%d0	/* 409b2032 203a ffe4 */
 	rts				/* 409b2036 4e75 */
 
@@ -165,15 +166,13 @@ sub_409b2548:
 	rts				/* 409b2576 4e75 */
 
 sub_409b2578:
-	.short	0x42a7	/* 409b2578 42a7 */
-	.short	0x4267	/* 409b257a 4267 */
-	.short	0x2f00	/* 409b257c 2f00 */
-	.short	0x486f	/* 409b257e 486f */
-	.short	0x0006	/* 409b2580 0006 */
-	.short	0x4eba	/* 409b2582 4eba */
-	.short	0xd69a	/* 409b2584 d69a */
-	.short	0x301f	/* 409b2586 301f */
-	.short	0x205f	/* 409b2588 205f */
+	clrl	%sp@-			/* 409b2578 42a7 */
+	clrw	%sp@-			/* 409b257a 4267 */
+	movel	%d0,%sp@-		/* 409b257c 2f00 */
+	pea	%sp@(6)			/* 409b257e 486f 0006 */
+	jsr	%pc@(sub_409afc1e)	/* 409b2582 4eba d69a */
+	movew	%sp@+,%d0		/* 409b2586 301f */
+	moveal	%sp@+,%a0		/* 409b2588 205f */
 	rts				/* 409b258a 4e75 */
 
 byte_409b258c:
