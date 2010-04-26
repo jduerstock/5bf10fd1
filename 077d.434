@@ -178,31 +178,28 @@ sub_409b2578:
 byte_409b258c:
 	.short	0x0000	/* 409b258c 0000 */
 	.short	0x0000	/* 409b258e 0000 */
-	.short	0xa11a	/* 409b2590 a11a */
-	.short	0xb1f8	/* 409b2592 b1f8 */
-	.short	0x02a6	/* 409b2594 02a6 */
-	.short	0x661a	/* 409b2596 661a */
-	.short	0x0cb8	/* 409b2598 0cb8 */
-	.short	0xffff	/* 409b259a ffff */
-	.short	0xffff	/* 409b259c ffff */
-	.short	0x0b7c	/* 409b259e 0b7c */
-	.short	0x6710	/* 409b25a0 6710 */
-	.short	0x43fa	/* 409b25a2 43fa */
-	.short	0x0064	/* 409b25a4 0064 */
-	.short	0x22a8	/* 409b25a6 22a8 */
-	.short	0x0010	/* 409b25a8 0010 */
-	.short	0x43fa	/* 409b25aa 43fa */
-	.short	0x0032	/* 409b25ac 0032 */
-	.short	0x2149	/* 409b25ae 2149 */
-	.short	0x0010	/* 409b25b0 0010 */
-	.short	0x4efb	/* 409b25b2 4efb */
-	.short	0x8161	/* 409b25b4 8161 */
-	.short	0x0004	/* 409b25b6 0004 */
+
+	.short	0xa11a			/* 409b2590 a11a */
+	cmpal	0x2a6,%a0		/* 409b2592 b1f8 02a6 */
+	bnes	loc_409b25b2		/* 409b2596 661a */
+	cmpil	#-1,0xb7c		/* 409b2598 0cb8 ffff ffff 0b7c */
+	beqs	loc_409b25b2		/* 409b25a0 6710 */
+	lea	%pc@(byte_409b2608),%a1	/* 409b25a2 43fa 0064 */
+	movel	%a0@(16),%a1@		/* 409b25a6 22a8 0010 */
+	lea	%pc@(byte_409b25de),%a1	/* 409b25aa 43fa 0032 */
+	movel	%a1,%a0@(16)		/* 409b25ae 2149 0010 */
+
+loc_409b25b2:
+	.short	0x4efb,0x8161,0x0004	/* jmp %pc@(0x409b25b8)@(0x0000) /* 409b25b2 4efb 8161 0004 */
+
+byte_409b25b8:
 	.short	0x0000	/* 409b25b8 0000 */
 	.short	0x0000	/* 409b25ba 0000 */
-	.short	0x207a	/* 409b25bc 207a */
-	.short	0xfffa	/* 409b25be fffa */
+
+loc_409b25bc:
+	moveal	%pc@(byte_409b25b8),%a0	/* 409b25bc 207a fffa */
 	rts				/* 409b25c0 4e75 */
+
 	.short	0x43fa	/* 409b25c2 43fa */
 	.short	0xfff4	/* 409b25c4 fff4 */
 	.short	0x2288	/* 409b25c6 2288 */
@@ -215,8 +212,11 @@ byte_409b258c:
 	.short	0x4eba	/* 409b25d4 4eba */
 	.short	0xd6d6	/* 409b25d6 d6d6 */
 	rts				/* 409b25d8 4e75 */
+
 	.short	0x0000	/* 409b25da 0000 */
 	.short	0x0000	/* 409b25dc 0000 */
+
+byte_409b25de:
 	.short	0x4eba	/* 409b25de 4eba */
 	.short	0xda76	/* 409b25e0 da76 */
 	.short	0xb0af	/* 409b25e2 b0af */
@@ -238,6 +238,8 @@ byte_409b258c:
 	.short	0x42af	/* 409b2602 42af */
 	.short	0x0008	/* 409b2604 0008 */
 	.short	0x60f6	/* 409b2606 60f6 */
+
+byte_409b2608:
 	.short	0x0000	/* 409b2608 0000 */
 	.short	0x0000	/* 409b260a 0000 */
 	.short	0x48e7	/* 409b260c 48e7 */
