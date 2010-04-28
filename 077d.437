@@ -1,42 +1,34 @@
 /* SPLIT HERE */
-	.short	0x286e	/* 409b5000 286e */
-	.short	0x0008	/* 409b5002 0008 */
-	.short	0x4eba	/* 409b5004 4eba */
-	.short	0xdebe	/* 409b5006 debe */
-	.short	0x2640	/* 409b5008 2640 */
-	.short	0x288b	/* 409b500a 288b */
-	.short	0x422c	/* 409b500c 422c */
-	.short	0x0004	/* 409b500e 0004 */
-	.short	0x426c	/* 409b5010 426c */
-	.short	0x000a	/* 409b5012 000a */
-	.short	0x204b	/* 409b5014 204b */
-	.short	0x5888	/* 409b5016 5888 */
-	.short	0x2948	/* 409b5018 2948 */
-	.short	0x0006	/* 409b501a 0006 */
+	moveal	%fp@(8),%a4		/* 409b5000 286e 0008 */
+	jsr	%pc@(sub_409b2ec4)	/* 409b5004 4eba debe */
+	moveal	%d0,%a3			/* 409b5008 2640 */
+	movel	%a3,%a4@		/* 409b500a 288b */
+	clrb	%a4@(4)			/* 409b500c 422c 0004 */
+	clrw	%a4@(10)		/* 409b5010 426c 000a */
+	moveal	%a3,%a0			/* 409b5014 204b */
+	addql	#4,%a0			/* 409b5016 5888 */
+	movel	%a0,%a4@(6)		/* 409b5018 2948 0006 */
 	moveq	#0,%d0			/* 409b501c 7000 */
-	.short	0x2940	/* 409b501e 2940 */
-	.short	0x000c	/* 409b5020 000c */
-	.short	0x6014	/* 409b5022 6014 */
-	.short	0x526c	/* 409b5024 526c */
-	.short	0x000a	/* 409b5026 000a */
-	.short	0x2054	/* 409b5028 2054 */
+	movel	%d0,%a4@(12)		/* 409b501e 2940 000c */
+	bras	loc_409b5038		/* 409b5022 6014 */
+
+loc_409b5024:
+	addqw	#1,%a4@(10)		/* 409b5024 526c 000a */
+	moveal	%a4@,%a0		/* 409b5028 2054 */
 	moveq	#0,%d0			/* 409b502a 7000 */
-	.short	0x3028	/* 409b502c 3028 */
-	.short	0x0002	/* 409b502e 0002 */
-	.short	0xd0ac	/* 409b5030 d0ac */
-	.short	0x0006	/* 409b5032 0006 */
-	.short	0x2940	/* 409b5034 2940 */
-	.short	0x0006	/* 409b5036 0006 */
-	.short	0x206c	/* 409b5038 206c */
-	.short	0x0006	/* 409b503a 0006 */
-	.short	0x7006	/* 409b503c 7006 */
-	.short	0xb050	/* 409b503e b050 */
-	.short	0x66e2	/* 409b5040 66e2 */
-	.short	0x4cee	/* 409b5042 4cee */
-	.short	0x1800	/* 409b5044 1800 */
-	.short	0xfff8	/* 409b5046 fff8 */
-	.short	0x4e5e	/* 409b5048 4e5e */
+	movew	%a0@(2),%d0		/* 409b502c 3028 0002 */
+	addl	%a4@(6),%d0		/* 409b5030 d0ac 0006 */
+	movel	%d0,%a4@(6)		/* 409b5034 2940 0006 */
+
+loc_409b5038:
+	moveal	%a4@(6),%a0		/* 409b5038 206c 0006 */
+	moveq	#6,%d0			/* 409b503c 7006 */
+	cmpw	%a0@,%d0		/* 409b503e b050 */
+	bnes	loc_409b5024		/* 409b5040 66e2 */
+	moveml	%fp@(-8),%a3-%a4	/* 409b5042 4cee 1800 fff8 */
+	unlk	%fp			/* 409b5048 4e5e */
 	rts				/* 409b504a 4e75 */
+
 	.short	0x4e56	/* 409b504c 4e56 */
 	.short	0x0000	/* 409b504e 0000 */
 	.short	0x48e7	/* 409b5050 48e7 */
