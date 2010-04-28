@@ -44,9 +44,7 @@ loc_40895046:
 	unlk	%fp			/* 4089504c 4e5e */
 	rts				/* 4089504e 4e75 */
 
-	.short	0x60ff	/* 40895050 60ff */
-	.short	0x0000	/* 40895052 0000 */
-	.short	0xa6fa	/* 40895054 a6fa */
+	bral	sub_4089f74c		/* 40895050 60ff 0000 a6fa */
 
 	.align	16
 
@@ -1841,35 +1839,24 @@ Mul26Dot6:
 	.align	16
 
 __v__Div26Dot6:
-	.short	0x4e56	/* 40895fc0 4e56 */
-	.short	0xfff4	/* 40895fc2 fff4 */
-	.short	0x48e7	/* 40895fc4 48e7 */
-	.short	0x0f00	/* 40895fc6 0f00 */
-	.short	0x2e2e	/* 40895fc8 2e2e */
-	.short	0x000c	/* 40895fca 000c */
-	.short	0x2c2e	/* 40895fcc 2c2e */
-	.short	0x0008	/* 40895fce 0008 */
+	linkw	%fp,#-12		/* 40895fc0 4e56 fff4 */
+	moveml	%d4-%d7,%sp@-		/* 40895fc4 48e7 0f00 */
+	movel	%fp@(12),%d7		/* 40895fc8 2e2e 000c */
+	movel	%fp@(8),%d6		/* 40895fcc 2c2e 0008 */
 	moveq	#0,%d0			/* 40895fd0 7000 */
-	.short	0x2d40	/* 40895fd2 2d40 */
-	.short	0xfff4	/* 40895fd4 fff4 */
-	.short	0x4a87	/* 40895fd6 4a87 */
-	.short	0x6618	/* 40895fd8 6618 */
-	.short	0x4a86	/* 40895fda 4a86 */
-	.short	0x6c0a	/* 40895fdc 6c0a */
-	.short	0x203c	/* 40895fde 203c */
-	.short	0x8000	/* 40895fe0 8000 */
-	.short	0x0000	/* 40895fe2 0000 */
-	.short	0x6000	/* 40895fe4 6000 */
-	.short	0x00da	/* 40895fe6 00da */
-	.short	0x203c	/* 40895fe8 203c */
-	.short	0x7fff	/* 40895fea 7fff */
-	.short	0xffff	/* 40895fec ffff */
-	.short	0x6000	/* 40895fee 6000 */
-	.short	0x00d0	/* 40895ff0 00d0 */
-	.short	0x0c86	/* 40895ff2 0c86 */
-	.short	0x0200	/* 40895ff4 0200 */
-	.short	0x0000	/* 40895ff6 0000 */
-	.short	0x6e14	/* 40895ff8 6e14 */
-	.short	0x0c86	/* 40895ffa 0c86 */
-	.short	0xfe00	/* 40895ffc fe00 */
-	.short	0x0000	/* 40895ffe 0000 */
+	movel	%d0,%fp@(-12)		/* 40895fd2 2d40 fff4 */
+	tstl	%d7			/* 40895fd6 4a87 */
+	bnes	loc_40895ff2		/* 40895fd8 6618 */
+	tstl	%d6			/* 40895fda 4a86 */
+	bges	loc_40895fe8		/* 40895fdc 6c0a */
+	movel	#-2147483648,%d0	/* 40895fde 203c 8000 0000 */
+	braw	loc_408960c0		/* 40895fe4 6000 00da */
+
+loc_40895fe8:
+	movel	#2147483647,%d0		/* 40895fe8 203c 7fff ffff */
+	braw	loc_408960c0		/* 40895fee 6000 00d0 */
+
+loc_40895ff2:
+	cmpil	#33554432,%d6		/* 40895ff2 0c86 0200 0000 */
+	bgts	loc_4089600e		/* 40895ff8 6e14 */
+	cmpil	#-33554432,%d6		/* 40895ffa 0c86 fe00 0000 */
