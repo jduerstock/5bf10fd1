@@ -132,31 +132,26 @@
 	.short	0x0101	/* 4089b104 0101 */
 	.short	0x0100	/* 4089b106 0100 */
 	.short	0xa100	/* 4089b108 a100 */
+
+sub_4089b10a:
 	CallVector	0x202c 76	/* 4089b10a 2f30 81e2 202c 0130 */
 	rts				/* 4089b112 4e75 */
 
 	.align	16
 
 __v__GETENCODINGTABLE:
-	.short	0x4e56	/* 4089b120 4e56 */
-	.short	0x0000	/* 4089b122 0000 */
-	.short	0x302e	/* 4089b124 302e */
-	.short	0x000c	/* 4089b126 000c */
-	.short	0x6100	/* 4089b128 6100 */
-	.short	0xffe0	/* 4089b12a ffe0 */
-	.short	0x2d48	/* 4089b12c 2d48 */
-	.short	0x000e	/* 4089b12e 000e */
-	.short	0x206e	/* 4089b130 206e */
-	.short	0x0008	/* 4089b132 0008 */
-	.short	0x3080	/* 4089b134 3080 */
-	.short	0x4e5e	/* 4089b136 4e5e */
-	.short	0x205f	/* 4089b138 205f */
-	.short	0x5c8f	/* 4089b13a 5c8f */
-	.short	0x4ed0	/* 4089b13c 4ed0 */
-	.short	0x2f30	/* 4089b13e 2f30 */
-	.short	0x81e2	/* 4089b140 81e2 */
-	.short	0x202c	/* 4089b142 202c */
-	.short	0x0134	/* 4089b144 0134 */
+	linkw	%fp,#0			/* 4089b120 4e56 0000 */
+	movew	%fp@(12),%d0		/* 4089b124 302e 000c */
+	bsrw	sub_4089b10a		/* 4089b128 6100 ffe0 */
+	movel	%a0,%fp@(14)		/* 4089b12c 2d48 000e */
+	moveal	%fp@(8),%a0		/* 4089b130 206e 0008 */
+	movew	%d0,%a0@		/* 4089b134 3080 */
+	unlk	%fp			/* 4089b136 4e5e */
+	moveal	%sp@+,%a0		/* 4089b138 205f */
+	addql	#6,%sp			/* 4089b13a 5c8f */
+	jmp	%a0@			/* 4089b13c 4ed0 */
+
+	CallVector	0x202c 77	/* 4089b13e 2f30 81e2 202c 0134 */
 	rts				/* 4089b146 4e75 */
 
 	.align	16
