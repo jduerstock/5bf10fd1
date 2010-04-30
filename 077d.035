@@ -396,43 +396,32 @@ loc_40823360:
 	rts				/* 4082336a 4e75 */
 
 FindIO:
-	.short	0x2278	/* 4082336c 2278 */
-	.short	0x205c	/* 4082336e 205c */
-	.short	0x2269	/* 40823370 2269 */
-	.short	0x032c	/* 40823372 032c */
+	moveal	0x205c,%a1		/* 4082336c 2278 205c */
+	moveal	%a1@(812),%a1		/* 40823370 2269 032c */
 	jmp	%a1@			/* 40823374 4ed1 */
 
 	.align	16
 
 __v__SwitchQ:
 	linkw	%fp,#0			/* 40823380 4e56 0000 */
-	.short	0x48e7	/* 40823384 48e7 */
-	.short	0x0018	/* 40823386 0018 */
-	.short	0x266e	/* 40823388 266e */
-	.short	0x000c	/* 4082338a 000c */
-	.short	0x286e	/* 4082338c 286e */
-	.short	0x0008	/* 4082338e 0008 */
-	.short	0x204c	/* 40823390 204c */
-	.short	0x226c	/* 40823392 226c */
-	.short	0x00d8	/* 40823394 00d8 */
-	.short	0xa96e	/* 40823396 a96e */
-	.short	0x4a40	/* 40823398 4a40 */
-	.short	0x204c	/* 4082339a 204c */
-	.short	0x224b	/* 4082339c 224b */
-	.short	0xa96f	/* 4082339e a96f */
-	.short	0x294b	/* 408233a0 294b */
-	.short	0x00d8	/* 408233a2 00d8 */
-	.short	0x4cee	/* 408233a4 4cee */
-	.short	0x1800	/* 408233a6 1800 */
-	.short	0xfff8	/* 408233a8 fff8 */
-	.short	0x4e5e	/* 408233aa 4e5e */
+	moveml	%a3-%a4,%sp@-		/* 40823384 48e7 0018 */
+	moveal	%fp@(12),%a3		/* 40823388 266e 000c */
+	moveal	%fp@(8),%a4		/* 4082338c 286e 0008 */
+	moveal	%a4,%a0			/* 40823390 204c */
+	moveal	%a4@(216),%a1		/* 40823392 226c 00d8 */
+	.short	0xa96e			/* 40823396 a96e */
+	tstw	%d0			/* 40823398 4a40 */
+	moveal	%a4,%a0			/* 4082339a 204c */
+	moveal	%a3,%a1			/* 4082339c 224b */
+	.short	0xa96f			/* 4082339e a96f */
+	movel	%a3,%a4@(216)		/* 408233a0 294b 00d8 */
+	moveml	%fp@(-8),%a3-%a4	/* 408233a4 4cee 1800 fff8 */
+	unlk	%fp			/* 408233aa 4e5e */
 	rts				/* 408233ac 4e75 */
 
 SwitchQ:
-	.short	0x2278	/* 408233ae 2278 */
-	.short	0x205c	/* 408233b0 205c */
-	.short	0x2269	/* 408233b2 2269 */
-	.short	0x0330	/* 408233b4 0330 */
+	moveal	0x205c,%a1		/* 408233ae 2278 205c */
+	moveal	%a1@(816),%a1		/* 408233b2 2269 0330 */
 	jmp	%a1@			/* 408233b6 4ed1 */
 
 	.align	16
@@ -615,7 +604,7 @@ loc_4082350e:
 	movel	%d7,%d0			/* 4082354a 2007 */
 	aslw	#2,%d0			/* 4082354c e540 */
 	movel	%fp@(-40,%d0:w),%sp@-	/* 4082354e 2f36 00d8 */
-	jsr	%pc@(SwitchQ)	/* 40823552 4eba fe5a */
+	jsr	%pc@(SwitchQ)		/* 40823552 4eba fe5a */
 	addqw	#8,%sp			/* 40823556 504f */
 	movel	%d7,%d0			/* 40823558 2007 */
 	addql	#1,%d7			/* 4082355a 5287 */
