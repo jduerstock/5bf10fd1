@@ -918,70 +918,62 @@ loc_4083a746:
 	rts				/* 4083a76a 4e75 */
 
 GETAPPPARMS:
-	.short	0x205f	/* 4083a76c 205f */
-	.short	0x225f	/* 4083a76e 225f */
-	.short	0x22ad	/* 4083a770 22ad */
-	.short	0x0010	/* 4083a772 0010 */
-	.short	0x225f	/* 4083a774 225f */
-	.short	0x32b8	/* 4083a776 32b8 */
-	.short	0x0900	/* 4083a778 0900 */
-	.short	0x225f	/* 4083a77a 225f */
-	.short	0x2f08	/* 4083a77c 2f08 */
-	.short	0x41f8	/* 4083a77e 41f8 */
-	.short	0x0910	/* 4083a780 0910 */
-	.short	0x7020	/* 4083a782 7020 */
-	.short	0xa02e	/* 4083a784 a02e */
+	moveal	%sp@+,%a0		/* 4083a76c 205f */
+	moveal	%sp@+,%a1		/* 4083a76e 225f */
+	movel	%a5@(16),%a1@		/* 4083a770 22ad 0010 */
+	moveal	%sp@+,%a1		/* 4083a774 225f */
+	movew	0x900,%a1@		/* 4083a776 32b8 0900 */
+	moveal	%sp@+,%a1		/* 4083a77a 225f */
+	movel	%a0,%sp@-		/* 4083a77c 2f08 */
+	lea	0x910,%a0		/* 4083a77e 41f8 0910 */
+	moveq	#32,%d0			/* 4083a782 7020 */
+	.short	0xa02e			/* 4083a784 a02e */
 	rts				/* 4083a786 4e75 */
 
 INSTALLRDRIVERS:
-	.short	0x48e7	/* 4083a788 48e7 */
-	.short	0xf8f0	/* 4083a78a f8f0 */
-	.short	0x2678	/* 4083a78c 2678 */
-	.short	0x011c	/* 4083a78e 011c */
-	.short	0x3638	/* 4083a790 3638 */
-	.short	0x01d2	/* 4083a792 01d2 */
-	.short	0x78ff	/* 4083a794 78ff */
-	.short	0x201b	/* 4083a796 201b */
-	.short	0x6744	/* 4083a798 6744 */
-	.short	0x2240	/* 4083a79a 2240 */
-	.short	0x2011	/* 4083a79c 2011 */
-	.short	0x673e	/* 4083a79e 673e */
-	.short	0x2240	/* 4083a7a0 2240 */
-	.short	0x0829	/* 4083a7a2 0829 */
-	.short	0x0006	/* 4083a7a4 0006 */
-	.short	0x0005	/* 4083a7a6 0005 */
-	.short	0x6734	/* 4083a7a8 6734 */
-	.short	0x2011	/* 4083a7aa 2011 */
-	.short	0x6730	/* 4083a7ac 6730 */
-	.short	0x2229	/* 4083a7ae 2229 */
-	.short	0x0014	/* 4083a7b0 0014 */
-	.short	0x6100	/* 4083a7b2 6100 */
-	.short	0xfdb2	/* 4083a7b4 fdb2 */
-	.short	0x6614	/* 4083a7b6 6614 */
-	.short	0x7033	/* 4083a7b8 7033 */
-	.short	0x2049	/* 4083a7ba 2049 */
-	.short	0x4218	/* 4083a7bc 4218 */
-	.short	0x51c8	/* 4083a7be 51c8 */
-	.short	0xfffc	/* 4083a7c0 fffc */
-	.short	0x08e9	/* 4083a7c2 08e9 */
-	.short	0x0006	/* 4083a7c4 0006 */
-	.short	0x0005	/* 4083a7c6 0005 */
-	.short	0x3344	/* 4083a7c8 3344 */
-	.short	0x0018	/* 4083a7ca 0018 */
-	.short	0x42a9	/* 4083a7cc 42a9 */
-	.short	0x001e	/* 4083a7ce 001e */
-	.short	0x2001	/* 4083a7d0 2001 */
-	.short	0x6100	/* 4083a7d2 6100 */
-	.short	0xfd92	/* 4083a7d4 fd92 */
-	.short	0x6602	/* 4083a7d6 6602 */
-	.short	0x7200	/* 4083a7d8 7200 */
-	.short	0x2341	/* 4083a7da 2341 */
-	.short	0x0014	/* 4083a7dc 0014 */
-	.short	0x5344	/* 4083a7de 5344 */
-	.short	0x5343	/* 4083a7e0 5343 */
-	.short	0x66b2	/* 4083a7e2 66b2 */
-	.short	0x4cdf	/* 4083a7e4 4cdf */
-	.short	0x0f1f	/* 4083a7e6 0f1f */
+	moveml	%d0-%d4/%a0-%a3,%sp@-	/* 4083a788 48e7 f8f0 */
+	moveal	0x11c,%a3		/* 4083a78c 2678 011c */
+	movew	0x1d2,%d3		/* 4083a790 3638 01d2 */
+	moveq	#-1,%d4			/* 4083a794 78ff */
+
+loc_4083a796:
+	movel	%a3@+,%d0		/* 4083a796 201b */
+	beqs	loc_4083a7de		/* 4083a798 6744 */
+	moveal	%d0,%a1			/* 4083a79a 2240 */
+	movel	%a1@,%d0		/* 4083a79c 2011 */
+	beqs	loc_4083a7de		/* 4083a79e 673e */
+	moveal	%d0,%a1			/* 4083a7a0 2240 */
+	btst	#6,%a1@(5)		/* 4083a7a2 0829 0006 0005 */
+	beqs	loc_4083a7de		/* 4083a7a8 6734 */
+	movel	%a1@,%d0		/* 4083a7aa 2011 */
+	beqs	loc_4083a7de		/* 4083a7ac 6730 */
+	movel	%a1@(20),%d1		/* 4083a7ae 2229 0014 */
+	bsrw	__v__APPZONEADDR	/* 4083a7b2 6100 fdb2 */
+	bnes	loc_4083a7cc		/* 4083a7b6 6614 */
+	moveq	#51,%d0			/* 4083a7b8 7033 */
+	moveal	%a1,%a0			/* 4083a7ba 2049 */
+
+loc_4083a7bc:
+	clrb	%a0@+			/* 4083a7bc 4218 */
+	dbf	%d0,loc_4083a7bc	/* 4083a7be 51c8 fffc */
+	bset	#6,%a1@(5)		/* 4083a7c2 08e9 0006 0005 */
+	movew	%d4,%a1@(24)		/* 4083a7c8 3344 0018 */
+
+loc_4083a7cc:
+	clrl	%a1@(30)		/* 4083a7cc 42a9 001e */
+	movel	%d1,%d0			/* 4083a7d0 2001 */
+	bsrw	__v__APPZONEADDR	/* 4083a7d2 6100 fd92 */
+	bnes	loc_4083a7da		/* 4083a7d6 6602 */
+	moveq	#0,%d1			/* 4083a7d8 7200 */
+
+loc_4083a7da:
+	movel	%d1,%a1@(20)		/* 4083a7da 2341 0014 */
+
+loc_4083a7de:
+	subqw	#1,%d4			/* 4083a7de 5344 */
+	subqw	#1,%d3			/* 4083a7e0 5343 */
+	bnes	loc_4083a796		/* 4083a7e2 66b2 */
+	moveml	%sp@+,%d0-%d4/%a0-%a3	/* 4083a7e4 4cdf 0f1f */
 	rts				/* 4083a7e8 4e75 */
 
 SGLDREND:
@@ -1003,7 +995,7 @@ SHUTDOWNDISP:
 	beqw	loc_4083a9ec		/* 4083a80c 6700 01de */
 	subqw	#2,%d0			/* 4083a810 5540 */
 	bcsw	loc_4083a874		/* 4083a812 6500 0060 */
-	beqs	__v__SHUTINSTALL		/* 4083a816 670a */
+	beqs	__v__SHUTINSTALL	/* 4083a816 670a */
 	subqw	#2,%d0			/* 4083a818 5540 */
 	bmis	loc_4083a83e		/* 4083a81a 6b22 */
 	beqw	loc_4083aad0		/* 4083a81c 6700 02b2 */
@@ -1138,8 +1130,8 @@ loc_4083a952:
 	jmp	%a2@			/* 4083a952 4ed2 */
 
 byte_4083a954:
-	.short	0x0000	/* 4083a954 0000 */
-	.short	0x0000	/* 4083a956 0000 */
+	.short	0x0000			/* 4083a954 0000 */
+	.short	0x0000			/* 4083a956 0000 */
 
 sub_4083a958:
 	moveml	%d0-%d2/%a0-%a2,%sp@-	/* 4083a958 48e7 e0e0 */
