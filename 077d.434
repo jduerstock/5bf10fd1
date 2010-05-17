@@ -285,18 +285,16 @@ byte_409b2662:
 	.short	0x0000	/* 409b2664 0000 */
 
 sub_409b2666:
-	.short	0x206f	/* 409b2666 206f */
-	.short	0x0004	/* 409b2668 0004 */
-	.short	0x323c	/* 409b266a 323c */
-	.short	0xa003	/* 409b266c a003 */
-	.short	0x4efb	/* 409b266e 4efb */
-	.short	0x8161	/* 409b2670 8161 */
-	.short	0xfff2	/* 409b2672 fff2 */
-	.short	0x2f3a	/* 409b2674 2f3a */
-	.short	0x0004	/* 409b2676 0004 */
-	.short	0x6016	/* 409b2678 6016 */
+	moveal	%sp@(4),%a0		/* 409b2666 206f 0004 */
+	movew	#-24573,%d1		/* 409b266a 323c a003 */
+	.short	0x4efb,0x8161,0xfff2	/* jmp %pc@([off_409b2662,%pc])	/* 409b266e 4efb 8161 fff2 */
+	movel	%pc@(byte_409b267a),%sp@-	/* 409b2674 2f3a 0004 */
+	bras	loc_409b2690		/* 409b2678 6016 */
+
+byte_409b267a:
 	.short	0x0000	/* 409b267a 0000 */
 	.short	0x0000	/* 409b267c 0000 */
+
 	.short	0x2f3a	/* 409b267e 2f3a */
 	.short	0x0004	/* 409b2680 0004 */
 	.short	0x600c	/* 409b2682 600c */
@@ -308,6 +306,8 @@ loc_409b2688:
 	.short	0x0018	/* 409b268a 0018 */
 	.short	0x6d02	/* 409b268c 6d02 */
 	rts				/* 409b268e 4e75 */
+
+loc_409b2690:
 	.short	0x48e7	/* 409b2690 48e7 */
 	.short	0xe0c0	/* 409b2692 e0c0 */
 	.short	0x3028	/* 409b2694 3028 */
