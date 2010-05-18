@@ -1033,57 +1033,43 @@ loc_4091ba16:
 	rts				/* 4091ba16 4e75 */
 
 sub_4091ba18:
-	.short	0x04b8	/* 4091ba18 04b8 */
-	.short	0x0000	/* 4091ba1a 0000 */
-	.short	0x0400	/* 4091ba1c 0400 */
-	.short	0x010c	/* 4091ba1e 010c */
-	.short	0x0838	/* 4091ba20 0838 */
-	.short	0x0009	/* 4091ba22 0009 */
-	.short	0x0b22	/* 4091ba24 0b22 */
-	.short	0x6708	/* 4091ba26 6708 */
-	.short	0x04b8	/* 4091ba28 04b8 */
-	.short	0x0000	/* 4091ba2a 0000 */
-	.short	0x1800	/* 4091ba2c 1800 */
-	.short	0x010c	/* 4091ba2e 010c */
-	.short	0x43ed	/* 4091ba30 43ed */
-	.short	0x029a	/* 4091ba32 029a */
-	.short	0x6176	/* 4091ba34 6176 */
-	.short	0x670a	/* 4091ba36 670a */
-	.short	0x06b8	/* 4091ba38 06b8 */
-	.short	0x0000	/* 4091ba3a 0000 */
-	.short	0x0400	/* 4091ba3c 0400 */
-	.short	0x010c	/* 4091ba3e 010c */
-	.short	0x6028	/* 4091ba40 6028 */
-	.short	0x41fa	/* 4091ba42 41fa */
-	.short	0x0048	/* 4091ba44 0048 */
-	.short	0x21c8	/* 4091ba46 21c8 */
-	.short	0x0914	/* 4091ba48 0914 */
-	.short	0x4e92	/* 4091ba4a 4e92 */
-	.short	0x70f6	/* 4091ba4c 70f6 */
-	.short	0x6100	/* 4091ba4e 6100 */
-	.short	0x0024	/* 4091ba50 0024 */
-	.short	0x43ed	/* 4091ba52 43ed */
-	.short	0x02aa	/* 4091ba54 02aa */
-	.short	0x6154	/* 4091ba56 6154 */
-	.short	0x6610	/* 4091ba58 6610 */
-	.short	0x41fa	/* 4091ba5a 41fa */
-	.short	0x003a	/* 4091ba5c 003a */
-	.short	0x21c8	/* 4091ba5e 21c8 */
-	.short	0x0914	/* 4091ba60 0914 */
-	.short	0x4e92	/* 4091ba62 4e92 */
-	.short	0x70f5	/* 4091ba64 70f5 */
-	.short	0x6100	/* 4091ba66 6100 */
-	.short	0x000c	/* 4091ba68 000c */
-	.short	0x21fc	/* 4091ba6a 21fc */
-	.short	0xffff	/* 4091ba6c ffff */
-	.short	0xffff	/* 4091ba6e ffff */
-	.short	0x0914	/* 4091ba70 0914 */
+	subil	#1024,0x10c		/* 4091ba18 04b8 0000 0400 010c */
+	btst	#9,0xb22		/* 4091ba20 0838 0009 0b22 */
+	beqs	loc_4091ba30		/* 4091ba26 6708 */
+	subil	#6144,0x10c		/* 4091ba28 04b8 0000 1800 010c */
+
+loc_4091ba30:
+	lea	%a5@(666),%a1		/* 4091ba30 43ed 029a */
+	bsrs	sub_4091baac		/* 4091ba34 6176 */
+	beqs	loc_4091ba42		/* 4091ba36 670a */
+	addil	#1024,0x10c		/* 4091ba38 06b8 0000 0400 010c */
+	bras	loc_4091ba6a		/* 4091ba40 6028 */
+
+loc_4091ba42:
+	lea	%pc@(str_4091ba8c),%a0	/* 4091ba42 41fa 0048 */
+	movel	%a0,0x914		/* 4091ba46 21c8 0914 */
+	jsr	%a2@			/* 4091ba4a 4e92 */
+	moveq	#-10,%d0		/* 4091ba4c 70f6 */
+	bsrw	sub_4091ba74		/* 4091ba4e 6100 0024 */
+	lea	%a5@(682),%a1		/* 4091ba52 43ed 02aa */
+	bsrs	sub_4091baac		/* 4091ba56 6154 */
+	bnes	loc_4091ba6a		/* 4091ba58 6610 */
+	lea	%pc@(str_4091ba96),%a0	/* 4091ba5a 41fa 003a */
+	movel	%a0,0x914		/* 4091ba5e 21c8 0914 */
+	jsr	%a2@			/* 4091ba62 4e92 */
+	moveq	#-11,%d0		/* 4091ba64 70f5 */
+	bsrw	sub_4091ba74		/* 4091ba66 6100 000c */
+
+loc_4091ba6a:
+	movel	#-1,0x914		/* 4091ba6a 21fc ffff ffff 0914 */
 	rts				/* 4091ba72 4e75 */
 
 sub_4091ba74:
-	.short	0x4a07	/* 4091ba74 4a07 */
-	.short	0x6702	/* 4091ba76 6702 */
-	.short	0xa9c9	/* 4091ba78 a9c9 */
+	tstb	%d7			/* 4091ba74 4a07 */
+	beqs	loc_4091ba7a		/* 4091ba76 6702 */
+	.short	0xa9c9			/* 4091ba78 a9c9 */
+
+loc_4091ba7a:
 	rts				/* 4091ba7a 4e75 */
 
 str_4091ba7c:
@@ -1091,28 +1077,30 @@ str_4091ba7c:
 	.ascii	"Virtual Memory"
 	.byte	0x00
 
-	.short	0x0844	/* 4091ba8c 0844 */
-	.short	0x6562	/* 4091ba8e 6562 */
-	.short	0x7567	/* 4091ba90 7567 */
-	.short	0x6765	/* 4091ba92 6765 */
-	.short	0x7200	/* 4091ba94 7200 */
-	.short	0x0c44	/* 4091ba96 0c44 */
-	.short	0x6973	/* 4091ba98 6973 */
-	.short	0x6173	/* 4091ba9a 6173 */
-	.short	0x7365	/* 4091ba9c 7365 */
-	.short	0x6d62	/* 4091ba9e 6d62 */
-	.short	0x6c65	/* 4091baa0 6c65 */
-	.short	0x7200	/* 4091baa2 7200 */
-	.short	0x0653	/* 4091baa4 0653 */
-	.short	0x7973	/* 4091baa6 7973 */
-	.short	0x7465	/* 4091baa8 7465 */
-	.short	0x6d00	/* 4091baaa 6d00 */
-	.short	0x7240	/* 4091baac 7240 */
-	.short	0xe749	/* 4091baae e749 */
-	.short	0x6002	/* 4091bab0 6002 */
+str_4091ba8c:
+	.byte	0x08			/* 4091ba8c 08 */
+	.ascii	"Debugger"
+	.byte	0x00
+
+str_4091ba96:
+	.byte	0x0c			/* 4091ba96 0c */
+	.ascii	"Disassembler"
+	.byte	0x00
+
+str_4091baa4:
+	.byte	0x06			/* 4091baa4 06 */
+	.ascii	"System"
+	.byte	0x00
+
+sub_4091baac:
+	moveq	#64,%d1			/* 4091baac 7240 */
+	lslw	#3,%d1			/* 4091baae e749 */
+	bras	loc_4091bab4		/* 4091bab0 6002 */
 
 sub_4091bab2:
 	.short	0x7200	/* 4091bab2 7200 */
+
+loc_4091bab4:
 	.short	0x41ed	/* 4091bab4 41ed */
 	.short	0xfe70	/* 4091bab6 fe70 */
 	.short	0x76ff	/* 4091bab8 76ff */
