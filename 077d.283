@@ -614,27 +614,27 @@ sub_4091b656:
 	bsrw	sub_4091b858		/* 4091b664 6100 01f2 */
 
 loc_4091b668:
-	.short	0x31fc	/* 4091b668 31fc */
-	.short	0xffff	/* 4091b66a ffff */
-	.short	0x0b9e	/* 4091b66c 0b9e */
-	.short	0x594f	/* 4091b66e 594f */
-	.short	0x2f05	/* 4091b670 2f05 */
-	.short	0x3f06	/* 4091b672 3f06 */
-	.short	0xa9a0	/* 4091b674 a9a0 */
-	.short	0x221f	/* 4091b676 221f */
-	.short	0x6714	/* 4091b678 6714 */
-	.short	0x2f01	/* 4091b67a 2f01 */
-	.short	0x6100	/* 4091b67c 6100 */
-	.short	0x02f6	/* 4091b67e 02f6 */
-	.short	0x4a43	/* 4091b680 4a43 */
-	.short	0x6708	/* 4091b682 6708 */
-	.short	0x4a40	/* 4091b684 4a40 */
-	.short	0x6704	/* 4091b686 6704 */
-	.short	0x584f	/* 4091b688 584f */
+	movew	#-1,0xb9e		/* 4091b668 31fc ffff 0b9e */
+	subqw	#4,%sp			/* 4091b66e 594f */
+	movel	%d5,%sp@-		/* 4091b670 2f05 */
+	movew	%d6,%sp@-		/* 4091b672 3f06 */
+	.short	0xa9a0			/* 4091b674 a9a0 */
+	movel	%sp@+,%d1		/* 4091b676 221f */
+	beqs	loc_4091b68e		/* 4091b678 6714 */
+	movel	%d1,%sp@-		/* 4091b67a 2f01 */
+	bsrw	sub_4091b974		/* 4091b67c 6100 02f6 */
+	tstw	%d3			/* 4091b680 4a43 */
+	beqs	loc_4091b68c		/* 4091b682 6708 */
+	tstw	%d0			/* 4091b684 4a40 */
+	beqs	loc_4091b68c		/* 4091b686 6704 */
+	addqw	#4,%sp			/* 4091b688 584f */
 	rts				/* 4091b68a 4e75 */
-	.short	0xa9a3	/* 4091b68c a9a3 */
-	.short	0x6100	/* 4091b68e 6100 */
-	.short	0x01f4	/* 4091b690 01f4 */
+
+loc_4091b68c:
+	.short	0xa9a3			/* 4091b68c a9a3 */
+
+loc_4091b68e:
+	bsrw	sub_4091b884		/* 4091b68e 6100 01f4 */
 	rts				/* 4091b692 4e75 */
 
 sub_4091b694:
@@ -892,6 +892,8 @@ sub_4091b858:
 	.short	0x3038	/* 4091b87e 3038 */
 	.short	0x0a60	/* 4091b880 0a60 */
 	rts				/* 4091b882 4e75 */
+
+sub_4091b884:
 	.short	0x0c44	/* 4091b884 0c44 */
 	.short	0xffff	/* 4091b886 ffff */
 	.short	0x670e	/* 4091b888 670e */
@@ -1018,6 +1020,8 @@ sub_4091b920:
 	.short	0x3238	/* 4091b96e 3238 */
 	.short	0x0a60	/* 4091b970 0a60 */
 	rts				/* 4091b972 4e75 */
+
+sub_4091b974:
 	.short	0x2041	/* 4091b974 2041 */
 	.short	0xa029	/* 4091b976 a029 */
 	.short	0x2010	/* 4091b978 2010 */
