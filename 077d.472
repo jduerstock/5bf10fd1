@@ -35,6 +35,7 @@ str_409d8052:
 	.byte	0x0a			/* 409d8052 0a */
 	.string	".Backlight"
 
+byte_409d805e:
 	.short	0xaaaa	/* 409d805e aaaa */
 	.short	0xaaaa	/* 409d8060 aaaa */
 	.short	0x0013	/* 409d8062 0013 */
@@ -506,35 +507,29 @@ byte_409d83f2:
 	rts				/* 409d843c 4e75 */
 
 sub_409d843e:
-	.short	0x48e7	/* 409d843e 48e7 */
-	.short	0xb0c0	/* 409d8440 b0c0 */
+	moveml	%d0/%d2-%d3/%a0-%a1,%sp@-	/* 409d843e 48e7 b0c0 */
 	moveq	#1,%d0			/* 409d8442 7001 */
-	.short	0xa05d	/* 409d8444 a05d */
-	.short	0x1f00	/* 409d8446 1f00 */
-	.short	0x7200	/* 409d8448 7200 */
-	.short	0x322b	/* 409d844a 322b */
-	.short	0x0012	/* 409d844c 0012 */
-	.short	0x0441	/* 409d844e 0441 */
-	.short	0x0080	/* 409d8450 0080 */
-	.short	0x41fa	/* 409d8452 41fa */
-	.short	0xfc0a	/* 409d8454 fc0a */
-	.short	0x41f0	/* 409d8456 41f0 */
-	.short	0x1600	/* 409d8458 1600 */
-	.short	0x2253	/* 409d845a 2253 */
-	.short	0x3028	/* 409d845c 3028 */
-	.short	0x0006	/* 409d845e 0006 */
-	.short	0x76ff	/* 409d8460 76ff */
-	.short	0x3428	/* 409d8462 3428 */
-	.short	0x0004	/* 409d8464 0004 */
-	.short	0x22c3	/* 409d8466 22c3 */
-	.short	0x51ca	/* 409d8468 51ca */
-	.short	0xfffc	/* 409d846a fffc */
-	.short	0x51c8	/* 409d846c 51c8 */
-	.short	0xfff4	/* 409d846e fff4 */
-	.short	0x101f	/* 409d8470 101f */
-	.short	0xa05d	/* 409d8472 a05d */
-	.short	0x4cdf	/* 409d8474 4cdf */
-	.short	0x030d	/* 409d8476 030d */
+	.short	0xa05d			/* 409d8444 a05d */
+	moveb	%d0,%sp@-		/* 409d8446 1f00 */
+	moveq	#0,%d1			/* 409d8448 7200 */
+	movew	%a3@(18),%d1		/* 409d844a 322b 0012 */
+	subiw	#128,%d1		/* 409d844e 0441 0080 */
+	lea	%pc@(byte_409d805e),%a0	/* 409d8452 41fa fc0a */
+	lea	%a0@(%d1:w:8),%a0	/* 409d8456 41f0 1600 */
+	moveal	%a3@,%a1		/* 409d845a 2253 */
+	movew	%a0@(6),%d0		/* 409d845c 3028 0006 */
+	moveq	#-1,%d3			/* 409d8460 76ff */
+
+loc_409d8462:
+	movew	%a0@(4),%d2		/* 409d8462 3428 0004 */
+
+loc_409d8466:
+	movel	%d3,%a1@+		/* 409d8466 22c3 */
+	dbf	%d2,loc_409d8466	/* 409d8468 51ca fffc */
+	dbf	%d0,loc_409d8462	/* 409d846c 51c8 fff4 */
+	moveb	%sp@+,%d0		/* 409d8470 101f */
+	.short	0xa05d			/* 409d8472 a05d */
+	moveml	%sp@+,%d0/%d2-%d3/%a0-%a1	/* 409d8474 4cdf 030d */
 	rts				/* 409d8478 4e75 */
 
 sub_409d847a:
