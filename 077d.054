@@ -1236,104 +1236,93 @@ ProcessInform:
 	.align	16
 
 __v__RespSendCompletion:
-	.short	0x4e56	/* 40836d50 4e56 */
-	.short	0xfff8	/* 40836d52 fff8 */
-	.short	0x48e7	/* 40836d54 48e7 */
-	.short	0x0118	/* 40836d56 0118 */
-	.short	0x2008	/* 40836d58 2008 */
-	.short	0x2d40	/* 40836d5a 2d40 */
-	.short	0xfff8	/* 40836d5c fff8 */
-	.short	0x2640	/* 40836d5e 2640 */
-	.short	0x47eb	/* 40836d60 47eb */
-	.short	0xf0be	/* 40836d62 f0be */
-	.short	0x286b	/* 40836d64 286b */
-	.short	0x003a	/* 40836d66 003a */
-	.short	0x41ec	/* 40836d68 41ec */
-	.short	0x0012	/* 40836d6a 0012 */
-	.short	0x2d48	/* 40836d6c 2d48 */
-	.short	0xfffc	/* 40836d6e fffc */
-	.short	0x200c	/* 40836d70 200c */
-	.short	0x6712	/* 40836d72 6712 */
+	linkw	%fp,#-8			/* 40836d50 4e56 fff8 */
+	moveml	%d7/%a3-%a4,%sp@-	/* 40836d54 48e7 0118 */
+	movel	%a0,%d0			/* 40836d58 2008 */
+	movel	%d0,%fp@(-8)		/* 40836d5a 2d40 fff8 */
+	moveal	%d0,%a3			/* 40836d5e 2640 */
+	lea	%a3@(-3906),%a3		/* 40836d60 47eb f0be */
+	moveal	%a3@(58),%a4		/* 40836d64 286b 003a */
+	lea	%a4@(18),%a0		/* 40836d68 41ec 0012 */
+	movel	%a0,%fp@(-4)		/* 40836d6c 2d48 fffc */
+	movel	%a4,%d0			/* 40836d70 200c */
+	beqs	loc_40836d86		/* 40836d72 6712 */
 	moveq	#0,%d0			/* 40836d74 7000 */
-	.short	0x302c	/* 40836d76 302c */
-	.short	0x0004	/* 40836d78 0004 */
-	.short	0x7205	/* 40836d7a 7205 */
-	.short	0xb280	/* 40836d7c b280 */
-	.short	0x6606	/* 40836d7e 6606 */
+	movew	%a4@(4),%d0		/* 40836d76 302c 0004 */
+	moveq	#5,%d1			/* 40836d7a 7205 */
+	cmpl	%d0,%d1			/* 40836d7c b280 */
+	bnes	loc_40836d86		/* 40836d7e 6606 */
 	moveq	#0,%d0			/* 40836d80 7000 */
-	.short	0x2740	/* 40836d82 2740 */
-	.short	0x003a	/* 40836d84 003a */
-	.short	0x206e	/* 40836d86 206e */
-	.short	0xfff8	/* 40836d88 fff8 */
-	.short	0x3e28	/* 40836d8a 3e28 */
-	.short	0x0010	/* 40836d8c 0010 */
-	.short	0x6610	/* 40836d8e 6610 */
-	.short	0x200c	/* 40836d90 200c */
-	.short	0x670c	/* 40836d92 670c */
+	movel	%d0,%a3@(58)		/* 40836d82 2740 003a */
+
+loc_40836d86:
+	moveal	%fp@(-8),%a0		/* 40836d86 206e fff8 */
+	movew	%a0@(16),%d7		/* 40836d8a 3e28 0010 */
+	bnes	loc_40836da0		/* 40836d8e 6610 */
+	movel	%a4,%d0			/* 40836d90 200c */
+	beqs	loc_40836da0		/* 40836d92 670c */
 	moveq	#0,%d0			/* 40836d94 7000 */
-	.short	0x302c	/* 40836d96 302c */
-	.short	0x0004	/* 40836d98 0004 */
-	.short	0x7205	/* 40836d9a 7205 */
-	.short	0xb280	/* 40836d9c b280 */
-	.short	0x6614	/* 40836d9e 6614 */
+	movew	%a4@(4),%d0		/* 40836d96 302c 0004 */
+	moveq	#5,%d1			/* 40836d9a 7205 */
+	cmpl	%d0,%d1			/* 40836d9c b280 */
+	bnes	loc_40836db4		/* 40836d9e 6614 */
+
+loc_40836da0:
 	moveq	#0,%d0			/* 40836da0 7000 */
-	.short	0x2740	/* 40836da2 2740 */
-	.short	0x003a	/* 40836da4 003a */
+	movel	%d0,%a3@(58)		/* 40836da2 2740 003a */
 	moveq	#0,%d0			/* 40836da6 7000 */
-	.short	0x2f00	/* 40836da8 2f00 */
-	.short	0x2f0b	/* 40836daa 2f0b */
-	.short	0x4eba	/* 40836dac 4eba */
-	.short	0xeb72	/* 40836dae eb72 */
-	.short	0x504f	/* 40836db0 504f */
-	.short	0x600c	/* 40836db2 600c */
-	.short	0x377c	/* 40836db4 377c */
-	.short	0x0008	/* 40836db6 0008 */
-	.short	0x0004	/* 40836db8 0004 */
+	movel	%d0,%sp@-		/* 40836da8 2f00 */
+	movel	%a3,%sp@-		/* 40836daa 2f0b */
+	jsr	%pc@(RemoveNetworkConnection)	/* 40836dac 4eba eb72 */
+	addqw	#8,%sp			/* 40836db0 504f */
+	bras	loc_40836dc0		/* 40836db2 600c */
+
+loc_40836db4:
+	movew	#8,%a3@(4)		/* 40836db4 377c 0008 0004 */
 	moveq	#0,%d0			/* 40836dba 7000 */
-	.short	0x2740	/* 40836dbc 2740 */
-	.short	0x003a	/* 40836dbe 003a */
-	.short	0x4a47	/* 40836dc0 4a47 */
-	.short	0x671e	/* 40836dc2 671e */
-	.short	0x200c	/* 40836dc4 200c */
-	.short	0x671a	/* 40836dc6 671a */
+	movel	%d0,%a3@(58)		/* 40836dbc 2740 003a */
+
+loc_40836dc0:
+	tstw	%d7			/* 40836dc0 4a47 */
+	beqs	loc_40836de2		/* 40836dc2 671e */
+	movel	%a4,%d0			/* 40836dc4 200c */
+	beqs	loc_40836de2		/* 40836dc6 671a */
 	moveq	#0,%d0			/* 40836dc8 7000 */
-	.short	0x302c	/* 40836dca 302c */
-	.short	0x0004	/* 40836dcc 0004 */
-	.short	0x7203	/* 40836dce 7203 */
-	.short	0xb280	/* 40836dd0 b280 */
-	.short	0x660e	/* 40836dd2 660e */
-	.short	0x2f2b	/* 40836dd4 2f2b */
-	.short	0x0012	/* 40836dd6 0012 */
-	.short	0x2f0c	/* 40836dd8 2f0c */
-	.short	0x4eba	/* 40836dda 4eba */
-	.short	0xdd2c	/* 40836ddc dd2c */
-	.short	0x504f	/* 40836dde 504f */
-	.short	0x601c	/* 40836de0 601c */
-	.short	0x200c	/* 40836de2 200c */
-	.short	0x6718	/* 40836de4 6718 */
-	.short	0x4a47	/* 40836de6 4a47 */
-	.short	0x6708	/* 40836de8 6708 */
-	.short	0x203c	/* 40836dea 203c */
-	.short	0xffff	/* 40836dec ffff */
-	.short	0xfc74	/* 40836dee fc74 */
-	.short	0x6002	/* 40836df0 6002 */
+	movew	%a4@(4),%d0		/* 40836dca 302c 0004 */
+	moveq	#3,%d1			/* 40836dce 7203 */
+	cmpl	%d0,%d1			/* 40836dd0 b280 */
+	bnes	loc_40836de2		/* 40836dd2 660e */
+	movel	%a3@(18),%sp@-		/* 40836dd4 2f2b 0012 */
+	movel	%a4,%sp@-		/* 40836dd8 2f0c */
+	jsr	%pc@(SetPortInformQue)	/* 40836dda 4eba dd2c */
+	addqw	#8,%sp			/* 40836dde 504f */
+	bras	loc_40836dfe		/* 40836de0 601c */
+
+loc_40836de2:
+	movel	%a4,%d0			/* 40836de2 200c */
+	beqs	loc_40836dfe		/* 40836de4 6718 */
+	tstw	%d7			/* 40836de6 4a47 */
+	beqs	loc_40836df2		/* 40836de8 6708 */
+	movel	#-908,%d0		/* 40836dea 203c ffff fc74 */
+	bras	loc_40836df4		/* 40836df0 6002 */
+
+loc_40836df2:
 	moveq	#0,%d0			/* 40836df2 7000 */
-	.short	0x2f00	/* 40836df4 2f00 */
-	.short	0x2f0c	/* 40836df6 2f0c */
-	.short	0x4eba	/* 40836df8 4eba */
-	.short	0xd35a	/* 40836dfa d35a */
-	.short	0x504f	/* 40836dfc 504f */
-	.short	0x4cee	/* 40836dfe 4cee */
-	.short	0x1880	/* 40836e00 1880 */
-	.short	0xffec	/* 40836e02 ffec */
-	.short	0x4e5e	/* 40836e04 4e5e */
+
+loc_40836df4:
+	movel	%d0,%sp@-		/* 40836df4 2f00 */
+	movel	%a4,%sp@-		/* 40836df6 2f0c */
+	jsr	%pc@(CompleteWithResult)	/* 40836df8 4eba d35a */
+	addqw	#8,%sp			/* 40836dfc 504f */
+
+loc_40836dfe:
+	moveml	%fp@(-20),%d7/%a3-%a4	/* 40836dfe 4cee 1880 ffec */
+	unlk	%fp			/* 40836e04 4e5e */
 	rts				/* 40836e06 4e75 */
 
 RespSendCompletion:
-	.short	0x2278	/* 40836e08 2278 */
-	.short	0x2050	/* 40836e0a 2050 */
-	.short	0x2269	/* 40836e0c 2269 */
-	.short	0x0210	/* 40836e0e 0210 */
+	moveal	0x2050,%a1		/* 40836e08 2278 2050 */
+	moveal	%a1@(528),%a1		/* 40836e0c 2269 0210 */
 	jmp	%a1@			/* 40836e10 4ed1 */
 
 	.align	16
