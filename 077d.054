@@ -1344,34 +1344,27 @@ ARepostConnectionListener:
 
 __v__RepostConnectionListener:
 	linkw	%fp,#0			/* 40836e40 4e56 0000 */
-	.short	0x2f0c	/* 40836e44 2f0c */
-	.short	0x4eba	/* 40836e46 4eba */
-	.short	0xc718	/* 40836e48 c718 */
-	.short	0x2840	/* 40836e4a 2840 */
-	.short	0x4a2c	/* 40836e4c 4a2c */
-	.short	0x0007	/* 40836e4e 0007 */
-	.short	0x6716	/* 40836e50 6716 */
-	.short	0x487a	/* 40836e52 487a */
-	.short	0xf758	/* 40836e54 f758 */
+	movel	%a4,%sp@-		/* 40836e44 2f0c */
+	jsr	%pc@(getGlobal)	/* 40836e46 4eba c718 */
+	moveal	%d0,%a4			/* 40836e4a 2840 */
+	tstb	%a4@(7)			/* 40836e4c 4a2c 0007 */
+	beqs	loc_40836e68		/* 40836e50 6716 */
+	pea	%pc@(ConnectionRequestCompletion)	/* 40836e52 487a f758 */
 	moveq	#1,%d0			/* 40836e56 7001 */
-	.short	0x2f00	/* 40836e58 2f00 */
-	.short	0x2f2e	/* 40836e5a 2f2e */
-	.short	0x0008	/* 40836e5c 0008 */
-	.short	0x4eba	/* 40836e5e 4eba */
-	.short	0x12ea	/* 40836e60 12ea */
-	.short	0x4a40	/* 40836e62 4a40 */
-	.short	0x4fef	/* 40836e64 4fef */
-	.short	0x000c	/* 40836e66 000c */
-	.short	0x286e	/* 40836e68 286e */
-	.short	0xfffc	/* 40836e6a fffc */
-	.short	0x4e5e	/* 40836e6c 4e5e */
+	movel	%d0,%sp@-		/* 40836e58 2f00 */
+	movel	%fp@(8),%sp@-		/* 40836e5a 2f2e 0008 */
+	jsr	%pc@(ListenConnectionRequest)	/* 40836e5e 4eba 12ea */
+	tstw	%d0			/* 40836e62 4a40 */
+	lea	%sp@(12),%sp		/* 40836e64 4fef 000c */
+
+loc_40836e68:
+	moveal	%fp@(-4),%a4		/* 40836e68 286e fffc */
+	unlk	%fp			/* 40836e6c 4e5e */
 	rts				/* 40836e6e 4e75 */
 
 RepostConnectionListener:
-	.short	0x2278	/* 40836e70 2278 */
-	.short	0x2050	/* 40836e72 2050 */
-	.short	0x2269	/* 40836e74 2269 */
-	.short	0x0218	/* 40836e76 0218 */
+	moveal	0x2050,%a1		/* 40836e70 2278 2050 */
+	moveal	%a1@(536),%a1		/* 40836e74 2269 0218 */
 	jmp	%a1@			/* 40836e78 4ed1 */
 
 	.align	16
