@@ -618,7 +618,7 @@ __v__RecvSessReqCompletion:
 	moveml	%d7/%a3-%a4,%sp@-	/* 408366b4 48e7 0118 */
 	movel	%a0,%d0			/* 408366b8 2008 */
 	movel	%d0,%fp@(-24)		/* 408366ba 2d40 ffe8 */
-	jsr	%pc@(getGlobal)	/* 408366be 4eba cea0 */
+	jsr	%pc@(getGlobal)		/* 408366be 4eba cea0 */
 	moveal	%d0,%a3			/* 408366c2 2640 */
 	moveal	%fp@(-24),%a4		/* 408366c4 286e ffe8 */
 	movel	%a4,%fp@(-20)		/* 408366c8 2d4c ffec */
@@ -966,67 +966,55 @@ loc_40836a8a:
 	rts				/* 40836a92 4e75 */
 
 UserRecCompletion:
-	.short	0x2278	/* 40836a94 2278 */
-	.short	0x2050	/* 40836a96 2050 */
-	.short	0x2269	/* 40836a98 2269 */
-	.short	0x0200	/* 40836a9a 0200 */
+	moveal	0x2050,%a1		/* 40836a94 2278 2050 */
+	moveal	%a1@(512),%a1		/* 40836a98 2269 0200 */
 	jmp	%a1@			/* 40836a9c 4ed1 */
 
 	.align	16
 
 __v__AuthSendCompletion:
 	linkw	%fp,#0			/* 40836aa0 4e56 0000 */
-	.short	0x48e7	/* 40836aa4 48e7 */
-	.short	0x0018	/* 40836aa6 0018 */
-	.short	0x2008	/* 40836aa8 2008 */
-	.short	0x2640	/* 40836aaa 2640 */
-	.short	0x284b	/* 40836aac 284b */
-	.short	0x49ec	/* 40836aae 49ec */
-	.short	0xf0be	/* 40836ab0 f0be */
-	.short	0x4a6b	/* 40836ab2 4a6b */
-	.short	0x0010	/* 40836ab4 0010 */
-	.short	0x660c	/* 40836ab6 660c */
+	moveml	%a3-%a4,%sp@-		/* 40836aa4 48e7 0018 */
+	movel	%a0,%d0			/* 40836aa8 2008 */
+	moveal	%d0,%a3			/* 40836aaa 2640 */
+	moveal	%a3,%a4			/* 40836aac 284b */
+	lea	%a4@(-3906),%a4		/* 40836aae 49ec f0be */
+	tstw	%a3@(16)		/* 40836ab2 4a6b 0010 */
+	bnes	loc_40836ac4		/* 40836ab6 660c */
 	moveq	#0,%d0			/* 40836ab8 7000 */
-	.short	0x302c	/* 40836aba 302c */
-	.short	0x0004	/* 40836abc 0004 */
-	.short	0x7217	/* 40836abe 7217 */
-	.short	0xb280	/* 40836ac0 b280 */
-	.short	0x670e	/* 40836ac2 670e */
+	movew	%a4@(4),%d0		/* 40836aba 302c 0004 */
+	moveq	#23,%d1			/* 40836abe 7217 */
+	cmpl	%d0,%d1			/* 40836ac0 b280 */
+	beqs	loc_40836ad2		/* 40836ac2 670e */
+
+loc_40836ac4:
 	moveq	#0,%d0			/* 40836ac4 7000 */
-	.short	0x2f00	/* 40836ac6 2f00 */
-	.short	0x2f0c	/* 40836ac8 2f0c */
-	.short	0x4eba	/* 40836aca 4eba */
-	.short	0xee54	/* 40836acc ee54 */
-	.short	0x504f	/* 40836ace 504f */
-	.short	0x6022	/* 40836ad0 6022 */
-	.short	0x397c	/* 40836ad2 397c */
-	.short	0x0018	/* 40836ad4 0018 */
-	.short	0x0004	/* 40836ad6 0004 */
-	.short	0x486c	/* 40836ad8 486c */
-	.short	0x0dd0	/* 40836ada 0dd0 */
-	.short	0x487a	/* 40836adc 487a */
-	.short	0x00d4	/* 40836ade 00d4 */
+	movel	%d0,%sp@-		/* 40836ac6 2f00 */
+	movel	%a4,%sp@-		/* 40836ac8 2f0c */
+	jsr	%pc@(RemoveNetworkConnection)	/* 40836aca 4eba ee54 */
+	addqw	#8,%sp			/* 40836ace 504f */
+	bras	loc_40836af4		/* 40836ad0 6022 */
+
+loc_40836ad2:
+	movew	#24,%a4@(4)		/* 40836ad2 397c 0018 0004 */
+	pea	%a4@(3536)		/* 40836ad8 486c 0dd0 */
+	pea	%pc@(AuthRespCompletion)	/* 40836adc 487a 00d4 */
 	moveq	#1,%d0			/* 40836ae0 7001 */
-	.short	0x2f00	/* 40836ae2 2f00 */
-	.short	0x486c	/* 40836ae4 486c */
-	.short	0x0f36	/* 40836ae6 0f36 */
-	.short	0x720c	/* 40836ae8 720c */
-	.short	0x2f01	/* 40836aea 2f01 */
-	.short	0x4eba	/* 40836aec 4eba */
-	.short	0x193a	/* 40836aee 193a */
-	.short	0x4fef	/* 40836af0 4fef */
-	.short	0x0014	/* 40836af2 0014 */
-	.short	0x4cee	/* 40836af4 4cee */
-	.short	0x1800	/* 40836af6 1800 */
-	.short	0xfff8	/* 40836af8 fff8 */
-	.short	0x4e5e	/* 40836afa 4e5e */
+	movel	%d0,%sp@-		/* 40836ae2 2f00 */
+	pea	%a4@(3894)		/* 40836ae4 486c 0f36 */
+	moveq	#12,%d1			/* 40836ae8 720c */
+	movel	%d1,%sp@-		/* 40836aea 2f01 */
+	jsr	%pc@(ReadFromConnection)	/* 40836aec 4eba 193a */
+	lea	%sp@(20),%sp		/* 40836af0 4fef 0014 */
+
+loc_40836af4:
+	moveml	%fp@(-8),%a3-%a4	/* 40836af4 4cee 1800 fff8 */
+	unlk	%fp			/* 40836afa 4e5e */
 	rts				/* 40836afc 4e75 */
 
 AuthSendCompletion:
-	.short	0x2278	/* 40836afe 2278 */
-	.short	0x2050	/* 40836b00 2050 */
-	.short	0x2269	/* 40836b02 2269 */
-	.short	0x0204	/* 40836b04 0204 */
+	moveal	0x2050,%a1		/* 40836afe 2278 2050 */
+	moveal	%a1@(516),%a1		/* 40836b02 2269 0204 */
 	jmp	%a1@			/* 40836b06 4ed1 */
 
 	.align	16
@@ -1113,13 +1101,15 @@ __v__AuthRespCompletion:
 	.short	0xfff4	/* 40836bac fff4 */
 	.short	0x4e5e	/* 40836bae 4e5e */
 	rts				/* 40836bb0 4e75 */
+
+AuthRespCompletion:
 	.short	0x2278	/* 40836bb2 2278 */
 	.short	0x2050	/* 40836bb4 2050 */
 	.short	0x2269	/* 40836bb6 2269 */
 	.short	0x0208	/* 40836bb8 0208 */
 	jmp	%a1@			/* 40836bba 4ed1 */
-	.short	0x0000	/* 40836bbc 0000 */
-	.short	0x0000	/* 40836bbe 0000 */
+
+	.align	16
 
 __v__ProcessInform:
 	.short	0x4e56	/* 40836bc0 4e56 */
