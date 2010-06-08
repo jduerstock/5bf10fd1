@@ -1020,93 +1020,72 @@ AuthSendCompletion:
 	.align	16
 
 __v__AuthRespCompletion:
-	.short	0x4e56	/* 40836b10 4e56 */
-	.short	0xfffc	/* 40836b12 fffc */
-	.short	0x48e7	/* 40836b14 48e7 */
-	.short	0x0018	/* 40836b16 0018 */
-	.short	0x2008	/* 40836b18 2008 */
-	.short	0x2640	/* 40836b1a 2640 */
-	.short	0x284b	/* 40836b1c 284b */
-	.short	0x49ec	/* 40836b1e 49ec */
-	.short	0xf230	/* 40836b20 f230 */
-	.short	0x41ec	/* 40836b22 41ec */
-	.short	0x0f36	/* 40836b24 0f36 */
-	.short	0x2d48	/* 40836b26 2d48 */
-	.short	0xfffc	/* 40836b28 fffc */
-	.short	0x4a6b	/* 40836b2a 4a6b */
-	.short	0x0010	/* 40836b2c 0010 */
-	.short	0x661e	/* 40836b2e 661e */
+	linkw	%fp,#-4			/* 40836b10 4e56 fffc */
+	moveml	%a3-%a4,%sp@-		/* 40836b14 48e7 0018 */
+	movel	%a0,%d0			/* 40836b18 2008 */
+	moveal	%d0,%a3			/* 40836b1a 2640 */
+	moveal	%a3,%a4			/* 40836b1c 284b */
+	lea	%a4@(-3536),%a4		/* 40836b1e 49ec f230 */
+	lea	%a4@(3894),%a0		/* 40836b22 41ec 0f36 */
+	movel	%a0,%fp@(-4)		/* 40836b26 2d48 fffc */
+	tstw	%a3@(16)		/* 40836b2a 4a6b 0010 */
+	bnes	loc_40836b4e		/* 40836b2e 661e */
 	moveq	#0,%d0			/* 40836b30 7000 */
-	.short	0x302c	/* 40836b32 302c */
-	.short	0x0004	/* 40836b34 0004 */
-	.short	0x7218	/* 40836b36 7218 */
-	.short	0xb280	/* 40836b38 b280 */
-	.short	0x6612	/* 40836b3a 6612 */
+	movew	%a4@(4),%d0		/* 40836b32 302c 0004 */
+	moveq	#24,%d1			/* 40836b36 7218 */
+	cmpl	%d0,%d1			/* 40836b38 b280 */
+	bnes	loc_40836b4e		/* 40836b3a 6612 */
 	moveq	#0,%d0			/* 40836b3c 7000 */
-	.short	0x302b	/* 40836b3e 302b */
-	.short	0x0024	/* 40836b40 0024 */
-	.short	0x4a80	/* 40836b42 4a80 */
-	.short	0x6708	/* 40836b44 6708 */
-	.short	0x0c90	/* 40836b46 0c90 */
-	.short	0x4152	/* 40836b48 4152 */
-	.short	0x5350	/* 40836b4a 5350 */
-	.short	0x670e	/* 40836b4c 670e */
+	movew	%a3@(36),%d0		/* 40836b3e 302b 0024 */
+	tstl	%d0			/* 40836b42 4a80 */
+	beqs	loc_40836b4e		/* 40836b44 6708 */
+	cmpil	#1095914320,%a0@	/* 40836b46 0c90 4152 5350 */
+	beqs	loc_40836b5c		/* 40836b4c 670e */
+
+loc_40836b4e:
 	moveq	#0,%d0			/* 40836b4e 7000 */
-	.short	0x2f00	/* 40836b50 2f00 */
-	.short	0x2f0c	/* 40836b52 2f0c */
-	.short	0x4eba	/* 40836b54 4eba */
-	.short	0xedca	/* 40836b56 edca */
-	.short	0x504f	/* 40836b58 504f */
-	.short	0x604c	/* 40836b5a 604c */
-	.short	0x47ec	/* 40836b5c 47ec */
-	.short	0x0040	/* 40836b5e 0040 */
-	.short	0x206e	/* 40836b60 206e */
-	.short	0xfffc	/* 40836b62 fffc */
-	.short	0x2028	/* 40836b64 2028 */
-	.short	0x0004	/* 40836b66 0004 */
-	.short	0xb0ab	/* 40836b68 b0ab */
-	.short	0x012e	/* 40836b6a 012e */
-	.short	0x661c	/* 40836b6c 661c */
-	.short	0x2028	/* 40836b6e 2028 */
-	.short	0x0008	/* 40836b70 0008 */
-	.short	0xb0ab	/* 40836b72 b0ab */
-	.short	0x0132	/* 40836b74 0132 */
-	.short	0x6612	/* 40836b76 6612 */
-	.short	0x302b	/* 40836b78 302b */
-	.short	0x0066	/* 40836b7a 0066 */
-	.short	0x48c0	/* 40836b7c 48c0 */
-	.short	0x2f00	/* 40836b7e 2f00 */
-	.short	0x2f0c	/* 40836b80 2f0c */
-	.short	0x4eba	/* 40836b82 4eba */
-	.short	0x01b8	/* 40836b84 01b8 */
-	.short	0x504f	/* 40836b86 504f */
-	.short	0x601e	/* 40836b88 601e */
-	.short	0x47ec	/* 40836b8a 47ec */
-	.short	0x0f86	/* 40836b8c 0f86 */
-	.short	0x7004	/* 40836b8e 7004 */
-	.short	0x2740	/* 40836b90 2740 */
-	.short	0x0004	/* 40836b92 0004 */
-	.short	0x26bc	/* 40836b94 26bc */
-	.short	0x5352	/* 40836b96 5352 */
-	.short	0x454a	/* 40836b98 454a */
-	.short	0x7200	/* 40836b9a 7200 */
-	.short	0x2941	/* 40836b9c 2941 */
-	.short	0x003a	/* 40836b9e 003a */
-	.short	0x2f0c	/* 40836ba0 2f0c */
-	.short	0x4eba	/* 40836ba2 4eba */
-	.short	0xf180	/* 40836ba4 f180 */
-	.short	0x584f	/* 40836ba6 584f */
-	.short	0x4cee	/* 40836ba8 4cee */
-	.short	0x1800	/* 40836baa 1800 */
-	.short	0xfff4	/* 40836bac fff4 */
-	.short	0x4e5e	/* 40836bae 4e5e */
+	movel	%d0,%sp@-		/* 40836b50 2f00 */
+	movel	%a4,%sp@-		/* 40836b52 2f0c */
+	jsr	%pc@(RemoveNetworkConnection)	/* 40836b54 4eba edca */
+	addqw	#8,%sp			/* 40836b58 504f */
+	bras	loc_40836ba8		/* 40836b5a 604c */
+
+loc_40836b5c:
+	lea	%a4@(64),%a3		/* 40836b5c 47ec 0040 */
+	moveal	%fp@(-4),%a0		/* 40836b60 206e fffc */
+	movel	%a0@(4),%d0		/* 40836b64 2028 0004 */
+	cmpl	%a3@(302),%d0		/* 40836b68 b0ab 012e */
+	bnes	loc_40836b8a		/* 40836b6c 661c */
+	movel	%a0@(8),%d0		/* 40836b6e 2028 0008 */
+	cmpl	%a3@(306),%d0		/* 40836b72 b0ab 0132 */
+	bnes	loc_40836b8a		/* 40836b76 6612 */
+	movew	%a3@(102),%d0		/* 40836b78 302b 0066 */
+	extl	%d0			/* 40836b7c 48c0 */
+	movel	%d0,%sp@-		/* 40836b7e 2f00 */
+	movel	%a4,%sp@-		/* 40836b80 2f0c */
+	jsr	%pc@(ProcessInform)	/* 40836b82 4eba 01b8 */
+	addqw	#8,%sp			/* 40836b86 504f */
+	bras	loc_40836ba8		/* 40836b88 601e */
+
+loc_40836b8a:
+	lea	%a4@(3974),%a3		/* 40836b8a 47ec 0f86 */
+	moveq	#4,%d0			/* 40836b8e 7004 */
+	movel	%d0,%a3@(4)		/* 40836b90 2740 0004 */
+	movel	#1397900618,%a3@	/* 40836b94 26bc 5352 454a */
+	moveq	#0,%d1			/* 40836b9a 7200 */
+	movel	%d1,%a4@(58)		/* 40836b9c 2941 003a */
+	movel	%a4,%sp@-		/* 40836ba0 2f0c */
+	jsr	%pc@(AcceptNetworkConnection)	/* 40836ba2 4eba f180 */
+	addqw	#4,%sp			/* 40836ba6 584f */
+
+loc_40836ba8:
+	moveml	%fp@(-12),%a3-%a4	/* 40836ba8 4cee 1800 fff4 */
+	unlk	%fp			/* 40836bae 4e5e */
 	rts				/* 40836bb0 4e75 */
 
 AuthRespCompletion:
-	.short	0x2278	/* 40836bb2 2278 */
-	.short	0x2050	/* 40836bb4 2050 */
-	.short	0x2269	/* 40836bb6 2269 */
-	.short	0x0208	/* 40836bb8 0208 */
+	moveal	0x2050,%a1		/* 40836bb2 2278 2050 */
+	moveal	%a1@(520),%a1		/* 40836bb6 2269 0208 */
 	jmp	%a1@			/* 40836bba 4ed1 */
 
 	.align	16
