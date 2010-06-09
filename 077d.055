@@ -275,79 +275,60 @@ WriteBlockData:
 	.align	16
 
 __v__WriteBlockDataCompletion:
-	.short	0x4e56	/* 408372f0 4e56 */
-	.short	0xfff8	/* 408372f2 fff8 */
-	.short	0x48e7	/* 408372f4 48e7 */
-	.short	0x0018	/* 408372f6 0018 */
-	.short	0x2008	/* 408372f8 2008 */
-	.short	0x2840	/* 408372fa 2840 */
-	.short	0x264c	/* 408372fc 264c */
-	.short	0x47eb	/* 408372fe 47eb */
-	.short	0xf0be	/* 40837300 f0be */
-	.short	0x206b	/* 40837302 206b */
-	.short	0x0036	/* 40837304 0036 */
-	.short	0x2d48	/* 40837306 2d48 */
-	.short	0xfff8	/* 40837308 fff8 */
-	.short	0x41e8	/* 4083730a 41e8 */
-	.short	0x0012	/* 4083730c 0012 */
-	.short	0x2d48	/* 4083730e 2d48 */
-	.short	0xfffc	/* 40837310 fffc */
+	linkw	%fp,#-8			/* 408372f0 4e56 fff8 */
+	moveml	%a3-%a4,%sp@-		/* 408372f4 48e7 0018 */
+	movel	%a0,%d0			/* 408372f8 2008 */
+	moveal	%d0,%a4			/* 408372fa 2840 */
+	moveal	%a4,%a3			/* 408372fc 264c */
+	lea	%a3@(-3906),%a3		/* 408372fe 47eb f0be */
+	moveal	%a3@(54),%a0		/* 40837302 206b 0036 */
+	movel	%a0,%fp@(-8)		/* 40837306 2d48 fff8 */
+	lea	%a0@(18),%a0		/* 4083730a 41e8 0012 */
+	movel	%a0,%fp@(-4)		/* 4083730e 2d48 fffc */
 	moveq	#0,%d0			/* 40837312 7000 */
-	.short	0x302c	/* 40837314 302c */
-	.short	0x0024	/* 40837316 0024 */
-	.short	0x91a8	/* 40837318 91a8 */
-	.short	0x000c	/* 4083731a 000c */
-	.short	0x206e	/* 4083731c 206e */
-	.short	0xfffc	/* 4083731e fffc */
+	movew	%a4@(36),%d0		/* 40837314 302c 0024 */
+	subl	%d0,%a0@(12)		/* 40837318 91a8 000c */
+	moveal	%fp@(-4),%a0		/* 4083731c 206e fffc */
 	moveq	#0,%d0			/* 40837320 7000 */
-	.short	0x302c	/* 40837322 302c */
-	.short	0x0024	/* 40837324 0024 */
-	.short	0xd1a8	/* 40837326 d1a8 */
-	.short	0x0008	/* 40837328 0008 */
-	.short	0x206e	/* 4083732a 206e */
-	.short	0xfff8	/* 4083732c fff8 */
+	movew	%a4@(36),%d0		/* 40837322 302c 0024 */
+	addl	%d0,%a0@(8)		/* 40837326 d1a8 0008 */
+	moveal	%fp@(-8),%a0		/* 4083732a 206e fff8 */
 	moveq	#0,%d0			/* 4083732e 7000 */
-	.short	0x302c	/* 40837330 302c */
-	.short	0x0024	/* 40837332 0024 */
-	.short	0xd1a8	/* 40837334 d1a8 */
-	.short	0x0030	/* 40837336 0030 */
-	.short	0x4a6c	/* 40837338 4a6c */
-	.short	0x0010	/* 4083733a 0010 */
-	.short	0x670e	/* 4083733c 670e */
+	movew	%a4@(36),%d0		/* 40837330 302c 0024 */
+	addl	%d0,%a0@(48)		/* 40837334 d1a8 0030 */
+	tstw	%a4@(16)		/* 40837338 4a6c 0010 */
+	beqs	loc_4083734c		/* 4083733c 670e */
 	moveq	#0,%d0			/* 4083733e 7000 */
-	.short	0x2f00	/* 40837340 2f00 */
-	.short	0x2f0b	/* 40837342 2f0b */
-	.short	0x4eba	/* 40837344 4eba */
-	.short	0xe5da	/* 40837346 e5da */
-	.short	0x504f	/* 40837348 504f */
-	.short	0x6020	/* 4083734a 6020 */
-	.short	0x206e	/* 4083734c 206e */
-	.short	0xfffc	/* 4083734e fffc */
-	.short	0x4aa8	/* 40837350 4aa8 */
-	.short	0x000c	/* 40837352 000c */
-	.short	0x670a	/* 40837354 670a */
-	.short	0x2f0b	/* 40837356 2f0b */
-	.short	0x4eba	/* 40837358 4eba */
-	.short	0xff7e	/* 4083735a ff7e */
-	.short	0x584f	/* 4083735c 584f */
-	.short	0x600c	/* 4083735e 600c */
+	movel	%d0,%sp@-		/* 40837340 2f00 */
+	movel	%a3,%sp@-		/* 40837342 2f0b */
+	jsr	%pc@(RemoveNetworkConnection)	/* 40837344 4eba e5da */
+	addqw	#8,%sp			/* 40837348 504f */
+	bras	loc_4083736c		/* 4083734a 6020 */
+
+loc_4083734c:
+	moveal	%fp@(-4),%a0		/* 4083734c 206e fffc */
+	tstl	%a0@(12)		/* 40837350 4aa8 000c */
+	beqs	loc_40837360		/* 40837354 670a */
+	movel	%a3,%sp@-		/* 40837356 2f0b */
+	jsr	%pc@(WriteBlockData)	/* 40837358 4eba ff7e */
+	addqw	#4,%sp			/* 4083735c 584f */
+	bras	loc_4083736c		/* 4083735e 600c */
+
+loc_40837360:
 	moveq	#0,%d0			/* 40837360 7000 */
-	.short	0x2f00	/* 40837362 2f00 */
-	.short	0x2f0b	/* 40837364 2f0b */
-	.short	0x4eba	/* 40837366 4eba */
-	.short	0x007c	/* 40837368 007c */
-	.short	0x504f	/* 4083736a 504f */
-	.short	0x4cee	/* 4083736c 4cee */
-	.short	0x1800	/* 4083736e 1800 */
-	.short	0xfff0	/* 40837370 fff0 */
-	.short	0x4e5e	/* 40837372 4e5e */
+	movel	%d0,%sp@-		/* 40837362 2f00 */
+	movel	%a3,%sp@-		/* 40837364 2f0b */
+	jsr	%pc@(CompleteWriteRequest)	/* 40837366 4eba 007c */
+	addqw	#8,%sp			/* 4083736a 504f */
+
+loc_4083736c:
+	moveml	%fp@(-16),%a3-%a4	/* 4083736c 4cee 1800 fff0 */
+	unlk	%fp			/* 40837372 4e5e */
 	rts				/* 40837374 4e75 */
 
 WriteBlockDataCompletion:
-	.short	0x2278	/* 40837376 2278 */
-	.short	0x2050	/* 40837378 2050 */
-	.short	0x2269	/* 4083737a 2269 */
-	.short	0x0234	/* 4083737c 0234 */
+	moveal	0x2050,%a1		/* 40837376 2278 2050 */
+	moveal	%a1@(564),%a1		/* 4083737a 2269 0234 */
 	jmp	%a1@			/* 4083737e 4ed1 */
 
 __v__CompleteWriteRequest:
