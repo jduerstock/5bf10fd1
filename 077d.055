@@ -224,70 +224,52 @@ WriteHdrCompletion:
 
 __v__WriteBlockData:
 	linkw	%fp,#0			/* 40837260 4e56 0000 */
-	.short	0x48e7	/* 40837264 48e7 */
-	.short	0x1318	/* 40837266 1318 */
-	.short	0x206e	/* 40837268 206e */
-	.short	0x0008	/* 4083726a 0008 */
-	.short	0x2868	/* 4083726c 2868 */
-	.short	0x0036	/* 4083726e 0036 */
-	.short	0x47ec	/* 40837270 47ec */
-	.short	0x0012	/* 40837272 0012 */
-	.short	0x0cab	/* 40837274 0cab */
-	.short	0x0000	/* 40837276 0000 */
-	.short	0x7fff	/* 40837278 7fff */
-	.short	0x000c	/* 4083727a 000c */
-	.short	0x6308	/* 4083727c 6308 */
-	.short	0x3c3c	/* 4083727e 3c3c */
-	.short	0x7fff	/* 40837280 7fff */
-	.short	0x4207	/* 40837282 4207 */
-	.short	0x600e	/* 40837284 600e */
-	.short	0x3c2b	/* 40837286 3c2b */
-	.short	0x000e	/* 40837288 000e */
-	.short	0x4a2c	/* 4083728a 4a2c */
-	.short	0x0038	/* 4083728c 0038 */
-	.short	0x57c3	/* 4083728e 57c3 */
-	.short	0x4403	/* 40837290 4403 */
-	.short	0x1e03	/* 40837292 1e03 */
-	.short	0x4a2c	/* 40837294 4a2c */
-	.short	0x0038	/* 40837296 0038 */
-	.short	0x57c3	/* 40837298 57c3 */
-	.short	0x4403	/* 4083729a 4403 */
-	.short	0x206e	/* 4083729c 206e */
-	.short	0x0008	/* 4083729e 0008 */
-	.short	0x1143	/* 408372a0 1143 */
-	.short	0x0008	/* 408372a2 0008 */
-	.short	0x206e	/* 408372a4 206e */
-	.short	0x0008	/* 408372a6 0008 */
-	.short	0x4868	/* 408372a8 4868 */
-	.short	0x0f42	/* 408372aa 0f42 */
-	.short	0x487a	/* 408372ac 487a */
-	.short	0x00c8	/* 408372ae 00c8 */
+	moveml	%d3/%d6-%d7/%a3-%a4,%sp@-	/* 40837264 48e7 1318 */
+	moveal	%fp@(8),%a0		/* 40837268 206e 0008 */
+	moveal	%a0@(54),%a4		/* 4083726c 2868 0036 */
+	lea	%a4@(18),%a3		/* 40837270 47ec 0012 */
+	cmpil	#32767,%a3@(12)		/* 40837274 0cab 0000 7fff 000c */
+	blss	loc_40837286		/* 4083727c 6308 */
+	movew	#32767,%d6		/* 4083727e 3c3c 7fff */
+	clrb	%d7			/* 40837282 4207 */
+	bras	loc_40837294		/* 40837284 600e */
+
+loc_40837286:
+	movew	%a3@(14),%d6		/* 40837286 3c2b 000e */
+	tstb	%a4@(56)		/* 4083728a 4a2c 0038 */
+	seq	%d3			/* 4083728e 57c3 */
+	negb	%d3			/* 40837290 4403 */
+	moveb	%d3,%d7			/* 40837292 1e03 */
+
+loc_40837294:
+	tstb	%a4@(56)		/* 40837294 4a2c 0038 */
+	seq	%d3			/* 40837298 57c3 */
+	negb	%d3			/* 4083729a 4403 */
+	moveal	%fp@(8),%a0		/* 4083729c 206e 0008 */
+	moveb	%d3,%a0@(8)		/* 408372a0 1143 0008 */
+	moveal	%fp@(8),%a0		/* 408372a4 206e 0008 */
+	pea	%a0@(3906)		/* 408372a8 4868 0f42 */
+	pea	%pc@(WriteBlockDataCompletion)	/* 408372ac 487a 00c8 */
 	moveq	#1,%d0			/* 408372b0 7001 */
-	.short	0x2f00	/* 408372b2 2f00 */
-	.short	0x7200	/* 408372b4 7200 */
-	.short	0x1207	/* 408372b6 1207 */
-	.short	0x2f01	/* 408372b8 2f01 */
-	.short	0x7200	/* 408372ba 7200 */
-	.short	0x1207	/* 408372bc 1207 */
-	.short	0x2f01	/* 408372be 2f01 */
-	.short	0x2f2b	/* 408372c0 2f2b */
-	.short	0x0008	/* 408372c2 0008 */
-	.short	0x7200	/* 408372c4 7200 */
-	.short	0x3206	/* 408372c6 3206 */
-	.short	0x2f01	/* 408372c8 2f01 */
-	.short	0x4eba	/* 408372ca 4eba */
-	.short	0x1108	/* 408372cc 1108 */
-	.short	0x4cee	/* 408372ce 4cee */
-	.short	0x18c8	/* 408372d0 18c8 */
-	.short	0xffec	/* 408372d2 ffec */
-	.short	0x4e5e	/* 408372d4 4e5e */
+	movel	%d0,%sp@-		/* 408372b2 2f00 */
+	moveq	#0,%d1			/* 408372b4 7200 */
+	moveb	%d7,%d1			/* 408372b6 1207 */
+	movel	%d1,%sp@-		/* 408372b8 2f01 */
+	moveq	#0,%d1			/* 408372ba 7200 */
+	moveb	%d7,%d1			/* 408372bc 1207 */
+	movel	%d1,%sp@-		/* 408372be 2f01 */
+	movel	%a3@(8),%sp@-		/* 408372c0 2f2b 0008 */
+	moveq	#0,%d1			/* 408372c4 7200 */
+	movew	%d6,%d1			/* 408372c6 3206 */
+	movel	%d1,%sp@-		/* 408372c8 2f01 */
+	jsr	%pc@(WriteToConnection)	/* 408372ca 4eba 1108 */
+	moveml	%fp@(-20),%d3/%d6-%d7/%a3-%a4	/* 408372ce 4cee 18c8 ffec */
+	unlk	%fp			/* 408372d4 4e5e */
 	rts				/* 408372d6 4e75 */
 
 WriteBlockData:
-	.short	0x2278	/* 408372d8 2278 */
-	.short	0x2050	/* 408372da 2050 */
-	.short	0x2269	/* 408372dc 2269 */
-	.short	0x0230	/* 408372de 0230 */
+	moveal	0x2050,%a1		/* 408372d8 2278 2050 */
+	moveal	%a1@(560),%a1		/* 408372dc 2269 0230 */
 	jmp	%a1@			/* 408372e0 4ed1 */
 
 	.align	16
@@ -360,6 +342,8 @@ __v__WriteBlockDataCompletion:
 	.short	0xfff0	/* 40837370 fff0 */
 	.short	0x4e5e	/* 40837372 4e5e */
 	rts				/* 40837374 4e75 */
+
+WriteBlockDataCompletion:
 	.short	0x2278	/* 40837376 2278 */
 	.short	0x2050	/* 40837378 2050 */
 	.short	0x2269	/* 4083737a 2269 */
