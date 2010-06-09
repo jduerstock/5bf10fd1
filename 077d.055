@@ -180,50 +180,44 @@ BeginWriteBlock:
 
 __v__WriteHdrCompletion:
 	linkw	%fp,#0			/* 40837200 4e56 0000 */
-	.short	0x48e7	/* 40837204 48e7 */
-	.short	0x0018	/* 40837206 0018 */
-	.short	0x2008	/* 40837208 2008 */
-	.short	0x2640	/* 4083720a 2640 */
-	.short	0x284b	/* 4083720c 284b */
-	.short	0x49ec	/* 4083720e 49ec */
-	.short	0xf0be	/* 40837210 f0be */
-	.short	0x4a6b	/* 40837212 4a6b */
-	.short	0x0010	/* 40837214 0010 */
-	.short	0x670e	/* 40837216 670e */
+	moveml	%a3-%a4,%sp@-		/* 40837204 48e7 0018 */
+	movel	%a0,%d0			/* 40837208 2008 */
+	moveal	%d0,%a3			/* 4083720a 2640 */
+	moveal	%a3,%a4			/* 4083720c 284b */
+	lea	%a4@(-3906),%a4		/* 4083720e 49ec f0be */
+	tstw	%a3@(16)		/* 40837212 4a6b 0010 */
+	beqs	loc_40837226		/* 40837216 670e */
 	moveq	#0,%d0			/* 40837218 7000 */
-	.short	0x2f00	/* 4083721a 2f00 */
-	.short	0x2f0c	/* 4083721c 2f0c */
-	.short	0x4eba	/* 4083721e 4eba */
-	.short	0xe700	/* 40837220 e700 */
-	.short	0x504f	/* 40837222 504f */
-	.short	0x6020	/* 40837224 6020 */
-	.short	0x266c	/* 40837226 266c */
-	.short	0x0036	/* 40837228 0036 */
-	.short	0x4aab	/* 4083722a 4aab */
-	.short	0x002c	/* 4083722c 002c */
-	.short	0x670a	/* 4083722e 670a */
-	.short	0x2f0c	/* 40837230 2f0c */
-	.short	0x4eba	/* 40837232 4eba */
-	.short	0x00a4	/* 40837234 00a4 */
-	.short	0x584f	/* 40837236 584f */
-	.short	0x600c	/* 40837238 600c */
+	movel	%d0,%sp@-		/* 4083721a 2f00 */
+	movel	%a4,%sp@-		/* 4083721c 2f0c */
+	jsr	%pc@(RemoveNetworkConnection)	/* 4083721e 4eba e700 */
+	addqw	#8,%sp			/* 40837222 504f */
+	bras	loc_40837246		/* 40837224 6020 */
+
+loc_40837226:
+	moveal	%a4@(54),%a3		/* 40837226 266c 0036 */
+	tstl	%a3@(44)		/* 4083722a 4aab 002c */
+	beqs	loc_4083723a		/* 4083722e 670a */
+	movel	%a4,%sp@-		/* 40837230 2f0c */
+	jsr	%pc@(WriteBlockData)	/* 40837232 4eba 00a4 */
+	addqw	#4,%sp			/* 40837236 584f */
+	bras	loc_40837246		/* 40837238 600c */
+
+loc_4083723a:
 	moveq	#0,%d0			/* 4083723a 7000 */
-	.short	0x2f00	/* 4083723c 2f00 */
-	.short	0x2f0c	/* 4083723e 2f0c */
-	.short	0x4eba	/* 40837240 4eba */
-	.short	0x01a2	/* 40837242 01a2 */
-	.short	0x504f	/* 40837244 504f */
-	.short	0x4cee	/* 40837246 4cee */
-	.short	0x1800	/* 40837248 1800 */
-	.short	0xfff8	/* 4083724a fff8 */
-	.short	0x4e5e	/* 4083724c 4e5e */
+	movel	%d0,%sp@-		/* 4083723c 2f00 */
+	movel	%a4,%sp@-		/* 4083723e 2f0c */
+	jsr	%pc@(CompleteWriteRequest)	/* 40837240 4eba 01a2 */
+	addqw	#8,%sp			/* 40837244 504f */
+
+loc_40837246:
+	moveml	%fp@(-8),%a3-%a4	/* 40837246 4cee 1800 fff8 */
+	unlk	%fp			/* 4083724c 4e5e */
 	rts				/* 4083724e 4e75 */
 
 WriteHdrCompletion:
-	.short	0x2278	/* 40837250 2278 */
-	.short	0x2050	/* 40837252 2050 */
-	.short	0x2269	/* 40837254 2269 */
-	.short	0x022c	/* 40837256 022c */
+	moveal	0x2050,%a1		/* 40837250 2278 2050 */
+	moveal	%a1@(556),%a1		/* 40837254 2269 022c */
 	jmp	%a1@			/* 40837258 4ed1 */
 
 	.align	16
@@ -422,12 +416,15 @@ __v__CompleteWriteRequest:
 	.short	0xfff8	/* 408373de fff8 */
 	.short	0x4e5e	/* 408373e0 4e5e */
 	rts				/* 408373e2 4e75 */
+
+CompleteWriteRequest:
 	.short	0x2278	/* 408373e4 2278 */
 	.short	0x2050	/* 408373e6 2050 */
 	.short	0x2269	/* 408373e8 2269 */
 	.short	0x0238	/* 408373ea 0238 */
 	jmp	%a1@			/* 408373ec 4ed1 */
-	.short	0x0000	/* 408373ee 0000 */
+
+	.align	16
 
 __v__BeginReadBlock:
 	.short	0x4e56	/* 408373f0 4e56 */
