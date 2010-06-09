@@ -506,60 +506,48 @@ ReadHdrCompletion:
 
 __v__ReadBlockData:
 	linkw	%fp,#0			/* 40837550 4e56 0000 */
-	.short	0x48e7	/* 40837554 48e7 */
-	.short	0x0118	/* 40837556 0118 */
-	.short	0x266e	/* 40837558 266e */
-	.short	0x0008	/* 4083755a 0008 */
-	.short	0x206b	/* 4083755c 206b */
-	.short	0x0032	/* 4083755e 0032 */
-	.short	0x49e8	/* 40837560 49e8 */
-	.short	0x0012	/* 40837562 0012 */
-	.short	0x0cac	/* 40837564 0cac */
-	.short	0x0000	/* 40837566 0000 */
-	.short	0x7fff	/* 40837568 7fff */
-	.short	0x000c	/* 4083756a 000c */
-	.short	0x6406	/* 4083756c 6406 */
-	.short	0x202c	/* 4083756e 202c */
-	.short	0x000c	/* 40837570 000c */
-	.short	0x6006	/* 40837572 6006 */
-	.short	0x203c	/* 40837574 203c */
-	.short	0x0000	/* 40837576 0000 */
-	.short	0x7fff	/* 40837578 7fff */
-	.short	0x3e00	/* 4083757a 3e00 */
-	.short	0x6720	/* 4083757c 6720 */
-	.short	0x486b	/* 4083757e 486b */
-	.short	0x0dd0	/* 40837580 0dd0 */
-	.short	0x487a	/* 40837582 487a */
-	.short	0x0108	/* 40837584 0108 */
+	moveml	%d7/%a3-%a4,%sp@-	/* 40837554 48e7 0118 */
+	moveal	%fp@(8),%a3		/* 40837558 266e 0008 */
+	moveal	%a3@(50),%a0		/* 4083755c 206b 0032 */
+	lea	%a0@(18),%a4		/* 40837560 49e8 0012 */
+	cmpil	#32767,%a4@(12)		/* 40837564 0cac 0000 7fff 000c */
+	bccs	loc_40837574		/* 4083756c 6406 */
+	movel	%a4@(12),%d0		/* 4083756e 202c 000c */
+	bras	loc_4083757a		/* 40837572 6006 */
+
+loc_40837574:
+	movel	#32767,%d0		/* 40837574 203c 0000 7fff */
+
+loc_4083757a:
+	movew	%d0,%d7			/* 4083757a 3e00 */
+	beqs	loc_4083759e		/* 4083757c 6720 */
+	pea	%a3@(3536)		/* 4083757e 486b 0dd0 */
+	pea	%pc@(ReadDataCompletion)	/* 40837582 487a 0108 */
 	moveq	#1,%d0			/* 40837586 7001 */
-	.short	0x2f00	/* 40837588 2f00 */
-	.short	0x2f2c	/* 4083758a 2f2c */
-	.short	0x0008	/* 4083758c 0008 */
-	.short	0x7200	/* 4083758e 7200 */
-	.short	0x3207	/* 40837590 3207 */
-	.short	0x2f01	/* 40837592 2f01 */
-	.short	0x4eba	/* 40837594 4eba */
-	.short	0x0e92	/* 40837596 0e92 */
-	.short	0x4fef	/* 40837598 4fef */
-	.short	0x0014	/* 4083759a 0014 */
-	.short	0x600c	/* 4083759c 600c */
+	movel	%d0,%sp@-		/* 40837588 2f00 */
+	movel	%a4@(8),%sp@-		/* 4083758a 2f2c 0008 */
+	moveq	#0,%d1			/* 4083758e 7200 */
+	movew	%d7,%d1			/* 40837590 3207 */
+	movel	%d1,%sp@-		/* 40837592 2f01 */
+	jsr	%pc@(ReadFromConnection)	/* 40837594 4eba 0e92 */
+	lea	%sp@(20),%sp		/* 40837598 4fef 0014 */
+	bras	loc_408375aa		/* 4083759c 600c */
+
+loc_4083759e:
 	moveq	#0,%d0			/* 4083759e 7000 */
-	.short	0x2f00	/* 408375a0 2f00 */
-	.short	0x2f0b	/* 408375a2 2f0b */
-	.short	0x4eba	/* 408375a4 4eba */
-	.short	0x015e	/* 408375a6 015e */
-	.short	0x504f	/* 408375a8 504f */
-	.short	0x4cee	/* 408375aa 4cee */
-	.short	0x1880	/* 408375ac 1880 */
-	.short	0xfff4	/* 408375ae fff4 */
-	.short	0x4e5e	/* 408375b0 4e5e */
+	movel	%d0,%sp@-		/* 408375a0 2f00 */
+	movel	%a3,%sp@-		/* 408375a2 2f0b */
+	jsr	%pc@(CompleteReadRequest)	/* 408375a4 4eba 015e */
+	addqw	#8,%sp			/* 408375a8 504f */
+
+loc_408375aa:
+	moveml	%fp@(-12),%d7/%a3-%a4	/* 408375aa 4cee 1880 fff4 */
+	unlk	%fp			/* 408375b0 4e5e */
 	rts				/* 408375b2 4e75 */
 
 ReadBlockData:
-	.short	0x2278	/* 408375b4 2278 */
-	.short	0x2050	/* 408375b6 2050 */
-	.short	0x2269	/* 408375b8 2269 */
-	.short	0x0244	/* 408375ba 0244 */
+	moveal	0x2050,%a1		/* 408375b4 2278 2050 */
+	moveal	%a1@(580),%a1		/* 408375b8 2269 0244 */
 	jmp	%a1@			/* 408375bc 4ed1 */
 
 	.align	16
@@ -667,6 +655,8 @@ __v__ReadDataCompletion:
 	.short	0xffec	/* 40837686 ffec */
 	.short	0x4e5e	/* 40837688 4e5e */
 	rts				/* 4083768a 4e75 */
+
+ReadDataCompletion:
 	.short	0x2278	/* 4083768c 2278 */
 	.short	0x2050	/* 4083768e 2050 */
 	.short	0x2269	/* 40837690 2269 */
