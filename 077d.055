@@ -378,75 +378,48 @@ CompleteWriteRequest:
 	.align	16
 
 __v__BeginReadBlock:
-	.short	0x4e56	/* 408373f0 4e56 */
-	.short	0xfff8	/* 408373f2 fff8 */
-	.short	0x48e7	/* 408373f4 48e7 */
-	.short	0x0018	/* 408373f6 0018 */
-	.short	0x266e	/* 408373f8 266e */
-	.short	0x0008	/* 408373fa 0008 */
-	.short	0x286b	/* 408373fc 286b */
-	.short	0x0032	/* 408373fe 0032 */
-	.short	0x41ec	/* 40837400 41ec */
-	.short	0x0012	/* 40837402 0012 */
-	.short	0x2d48	/* 40837404 2d48 */
-	.short	0xfff8	/* 40837406 fff8 */
-	.short	0x216c	/* 40837408 216c */
-	.short	0x002c	/* 4083740a 002c */
-	.short	0x000c	/* 4083740c 000c */
-	.short	0x206e	/* 4083740e 206e */
-	.short	0xfff8	/* 40837410 fff8 */
-	.short	0x216c	/* 40837412 216c */
-	.short	0x0034	/* 40837414 0034 */
-	.short	0x0008	/* 40837416 0008 */
-	.short	0x4a2b	/* 40837418 4a2b */
-	.short	0x0007	/* 4083741a 0007 */
-	.short	0x661e	/* 4083741c 661e */
-	.short	0x486b	/* 4083741e 486b */
-	.short	0x0dd0	/* 40837420 0dd0 */
-	.short	0x487a	/* 40837422 487a */
-	.short	0x011a	/* 40837424 011a */
+	linkw	%fp,#-8			/* 408373f0 4e56 fff8 */
+	moveml	%a3-%a4,%sp@-		/* 408373f4 48e7 0018 */
+	moveal	%fp@(8),%a3		/* 408373f8 266e 0008 */
+	moveal	%a3@(50),%a4		/* 408373fc 286b 0032 */
+	lea	%a4@(18),%a0		/* 40837400 41ec 0012 */
+	movel	%a0,%fp@(-8)		/* 40837404 2d48 fff8 */
+	movel	%a4@(44),%a0@(12)	/* 40837408 216c 002c 000c */
+	moveal	%fp@(-8),%a0		/* 4083740e 206e fff8 */
+	movel	%a4@(52),%a0@(8)	/* 40837412 216c 0034 0008 */
+	tstb	%a3@(7)			/* 40837418 4a2b 0007 */
+	bnes	loc_4083743c		/* 4083741c 661e */
+	pea	%a3@(3536)		/* 4083741e 486b 0dd0 */
+	pea	%pc@(ReadHdrCompletion)	/* 40837422 487a 011a */
 	moveq	#1,%d0			/* 40837426 7001 */
-	.short	0x2f00	/* 40837428 2f00 */
-	.short	0x486b	/* 4083742a 486b */
-	.short	0x0e14	/* 4083742c 0e14 */
-	.short	0x720c	/* 4083742e 720c */
-	.short	0x2f01	/* 40837430 2f01 */
-	.short	0x4eba	/* 40837432 4eba */
-	.short	0x0ff4	/* 40837434 0ff4 */
-	.short	0x4fef	/* 40837436 4fef */
-	.short	0x0014	/* 40837438 0014 */
-	.short	0x6028	/* 4083743a 6028 */
-	.short	0x41eb	/* 4083743c 41eb */
-	.short	0x0e14	/* 4083743e 0e14 */
-	.short	0x2d48	/* 40837440 2d48 */
-	.short	0xfffc	/* 40837442 fffc */
-	.short	0x2950	/* 40837444 2950 */
-	.short	0x003e	/* 40837446 003e */
-	.short	0x206e	/* 40837448 206e */
-	.short	0xfffc	/* 4083744a fffc */
-	.short	0x2968	/* 4083744c 2968 */
-	.short	0x0004	/* 4083744e 0004 */
-	.short	0x0042	/* 40837450 0042 */
-	.short	0x206e	/* 40837452 206e */
-	.short	0xfffc	/* 40837454 fffc */
-	.short	0x2968	/* 40837456 2968 */
-	.short	0x0008	/* 40837458 0008 */
-	.short	0x003a	/* 4083745a 003a */
-	.short	0x2f0b	/* 4083745c 2f0b */
-	.short	0x4eba	/* 4083745e 4eba */
-	.short	0x0154	/* 40837460 0154 */
-	.short	0x584f	/* 40837462 584f */
-	.short	0x4cee	/* 40837464 4cee */
-	.short	0x1800	/* 40837466 1800 */
-	.short	0xfff0	/* 40837468 fff0 */
-	.short	0x4e5e	/* 4083746a 4e5e */
+	movel	%d0,%sp@-		/* 40837428 2f00 */
+	pea	%a3@(3604)		/* 4083742a 486b 0e14 */
+	moveq	#12,%d1			/* 4083742e 720c */
+	movel	%d1,%sp@-		/* 40837430 2f01 */
+	jsr	%pc@(ReadFromConnection)	/* 40837432 4eba 0ff4 */
+	lea	%sp@(20),%sp		/* 40837436 4fef 0014 */
+	bras	loc_40837464		/* 4083743a 6028 */
+
+loc_4083743c:
+	lea	%a3@(3604),%a0		/* 4083743c 41eb 0e14 */
+	movel	%a0,%fp@(-4)		/* 40837440 2d48 fffc */
+	movel	%a0@,%a4@(62)		/* 40837444 2950 003e */
+	moveal	%fp@(-4),%a0		/* 40837448 206e fffc */
+	movel	%a0@(4),%a4@(66)	/* 4083744c 2968 0004 0042 */
+	moveal	%fp@(-4),%a0		/* 40837452 206e fffc */
+	movel	%a0@(8),%a4@(58)	/* 40837456 2968 0008 003a */
+	movel	%a3,%sp@-		/* 4083745c 2f0b */
+	jsr	%pc@(ReadBlockData)	/* 4083745e 4eba 0154 */
+	addqw	#4,%sp			/* 40837462 584f */
+
+loc_40837464:
+	moveml	%fp@(-16),%a3-%a4	/* 40837464 4cee 1800 fff0 */
+	unlk	%fp			/* 4083746a 4e5e */
 	rts				/* 4083746c 4e75 */
 
 BeginReadBlock:
-	.short	0x2278	/* 4083746e 2278 */
-	.short	0x2050	/* 40837470 2050 */
-	.short	0x2269	/* 40837472 2269 */
-	.short	0x023c	/* 40837474 023c */
+	moveal	0x2050,%a1		/* 4083746e 2278 2050 */
+	moveal	%a1@(572),%a1		/* 40837472 2269 023c */
 	jmp	%a1@			/* 40837476 4ed1 */
 
 	.align	16
@@ -547,6 +520,8 @@ __v__ReadHdrCompletion:
 	.short	0xffe8	/* 40837538 ffe8 */
 	.short	0x4e5e	/* 4083753a 4e5e */
 	rts				/* 4083753c 4e75 */
+
+ReadHdrCompletion:
 	.short	0x2278	/* 4083753e 2278 */
 	.short	0x2050	/* 40837540 2050 */
 	.short	0x2269	/* 40837542 2269 */
@@ -605,12 +580,15 @@ __v__ReadBlockData:
 	.short	0xfff4	/* 408375ae fff4 */
 	.short	0x4e5e	/* 408375b0 4e5e */
 	rts				/* 408375b2 4e75 */
+
+ReadBlockData:
 	.short	0x2278	/* 408375b4 2278 */
 	.short	0x2050	/* 408375b6 2050 */
 	.short	0x2269	/* 408375b8 2269 */
 	.short	0x0244	/* 408375ba 0244 */
 	jmp	%a1@			/* 408375bc 4ed1 */
-	.short	0x0000	/* 408375be 0000 */
+
+	.align	16
 
 __v__ReadDataCompletion:
 	.short	0x4e56	/* 408375c0 4e56 */
