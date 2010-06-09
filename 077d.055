@@ -333,60 +333,46 @@ WriteBlockDataCompletion:
 
 __v__CompleteWriteRequest:
 	linkw	%fp,#0			/* 40837380 4e56 0000 */
-	.short	0x48e7	/* 40837384 48e7 */
-	.short	0x0108	/* 40837386 0108 */
-	.short	0x286e	/* 40837388 286e */
-	.short	0x0008	/* 4083738a 0008 */
-	.short	0x302e	/* 4083738c 302e */
-	.short	0x000e	/* 4083738e 000e */
-	.short	0x48c0	/* 40837390 48c0 */
-	.short	0x2f00	/* 40837392 2f00 */
-	.short	0x2f2c	/* 40837394 2f2c */
-	.short	0x0036	/* 40837396 0036 */
-	.short	0x4eba	/* 40837398 4eba */
-	.short	0xcdba	/* 4083739a cdba */
-	.short	0x4878	/* 4083739c 4878 */
-	.short	0x2500	/* 4083739e 2500 */
-	.short	0x40c0	/* 408373a0 40c0 */
-	.short	0x46ef	/* 408373a2 46ef */
-	.short	0x0002	/* 408373a4 0002 */
-	.short	0x3e00	/* 408373a6 3e00 */
-	.short	0x486c	/* 408373a8 486c */
-	.short	0x0026	/* 408373aa 0026 */
-	.short	0x4eba	/* 408373ac 4eba */
-	.short	0xb064	/* 408373ae b064 */
-	.short	0x2940	/* 408373b0 2940 */
-	.short	0x0036	/* 408373b2 0036 */
-	.short	0x4fef	/* 408373b4 4fef */
-	.short	0x0010	/* 408373b6 0010 */
-	.short	0x6714	/* 408373b8 6714 */
-	.short	0x48c7	/* 408373ba 48c7 */
-	.short	0x2f07	/* 408373bc 2f07 */
-	.short	0x40c0	/* 408373be 40c0 */
-	.short	0x46ef	/* 408373c0 46ef */
-	.short	0x0002	/* 408373c2 0002 */
-	.short	0x2f0c	/* 408373c4 2f0c */
-	.short	0x4eba	/* 408373c6 4eba */
-	.short	0xfe20	/* 408373c8 fe20 */
-	.short	0x504f	/* 408373ca 504f */
-	.short	0x600c	/* 408373cc 600c */
-	.short	0x48c7	/* 408373ce 48c7 */
-	.short	0x2f07	/* 408373d0 2f07 */
-	.short	0x40c0	/* 408373d2 40c0 */
-	.short	0x46ef	/* 408373d4 46ef */
-	.short	0x0002	/* 408373d6 0002 */
-	.short	0x584f	/* 408373d8 584f */
-	.short	0x4cee	/* 408373da 4cee */
-	.short	0x1080	/* 408373dc 1080 */
-	.short	0xfff8	/* 408373de fff8 */
-	.short	0x4e5e	/* 408373e0 4e5e */
+	moveml	%d7/%a4,%sp@-		/* 40837384 48e7 0108 */
+	moveal	%fp@(8),%a4		/* 40837388 286e 0008 */
+	movew	%fp@(14),%d0		/* 4083738c 302e 000e */
+	extl	%d0			/* 40837390 48c0 */
+	movel	%d0,%sp@-		/* 40837392 2f00 */
+	movel	%a4@(54),%sp@-		/* 40837394 2f2c 0036 */
+	jsr	%pc@(CompleteWithResult)	/* 40837398 4eba cdba */
+	pea	0x2500			/* 4083739c 4878 2500 */
+	movew	%sr,%d0			/* 408373a0 40c0 */
+	movew	%sp@(2),%sr		/* 408373a2 46ef 0002 */
+	movew	%d0,%d7			/* 408373a6 3e00 */
+	pea	%a4@(38)		/* 408373a8 486c 0026 */
+	jsr	%pc@(ServeQueue)	/* 408373ac 4eba b064 */
+	movel	%d0,%a4@(54)		/* 408373b0 2940 0036 */
+	lea	%sp@(16),%sp		/* 408373b4 4fef 0010 */
+	beqs	loc_408373ce		/* 408373b8 6714 */
+	extl	%d7			/* 408373ba 48c7 */
+	movel	%d7,%sp@-		/* 408373bc 2f07 */
+	movew	%sr,%d0			/* 408373be 40c0 */
+	movew	%sp@(2),%sr		/* 408373c0 46ef 0002 */
+	movel	%a4,%sp@-		/* 408373c4 2f0c */
+	jsr	%pc@(BeginWriteBlock)	/* 408373c6 4eba fe20 */
+	addqw	#8,%sp			/* 408373ca 504f */
+	bras	loc_408373da		/* 408373cc 600c */
+
+loc_408373ce:
+	extl	%d7			/* 408373ce 48c7 */
+	movel	%d7,%sp@-		/* 408373d0 2f07 */
+	movew	%sr,%d0			/* 408373d2 40c0 */
+	movew	%sp@(2),%sr		/* 408373d4 46ef 0002 */
+	addqw	#4,%sp			/* 408373d8 584f */
+
+loc_408373da:
+	moveml	%fp@(-8),%d7/%a4	/* 408373da 4cee 1080 fff8 */
+	unlk	%fp			/* 408373e0 4e5e */
 	rts				/* 408373e2 4e75 */
 
 CompleteWriteRequest:
-	.short	0x2278	/* 408373e4 2278 */
-	.short	0x2050	/* 408373e6 2050 */
-	.short	0x2269	/* 408373e8 2269 */
-	.short	0x0238	/* 408373ea 0238 */
+	moveal	0x2050,%a1		/* 408373e4 2278 2050 */
+	moveal	%a1@(568),%a1		/* 408373e8 2269 0238 */
 	jmp	%a1@			/* 408373ec 4ed1 */
 
 	.align	16
