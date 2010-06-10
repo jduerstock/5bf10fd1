@@ -1535,46 +1535,37 @@ findUserByRef:
 
 __v__GetFreeEntry:
 	linkw	%fp,#0			/* 40837f90 4e56 0000 */
-	.short	0x48e7	/* 40837f94 48e7 */
-	.short	0x0018	/* 40837f96 0018 */
-	.short	0x4eba	/* 40837f98 4eba */
-	.short	0xb5c6	/* 40837f9a b5c6 */
-	.short	0x2840	/* 40837f9c 2840 */
-	.short	0x7034	/* 40837f9e 7034 */
-	.short	0x2f00	/* 40837fa0 2f00 */
-	.short	0x4eba	/* 40837fa2 4eba */
-	.short	0xa5fc	/* 40837fa4 a5fc */
-	.short	0x2640	/* 40837fa6 2640 */
-	.short	0x200b	/* 40837fa8 200b */
-	.short	0x584f	/* 40837faa 584f */
-	.short	0x6720	/* 40837fac 6720 */
-	.short	0x276c	/* 40837fae 276c */
-	.short	0x00c8	/* 40837fb0 00c8 */
-	.short	0x0004	/* 40837fb2 0004 */
-	.short	0x52ac	/* 40837fb4 52ac */
-	.short	0x00c8	/* 40837fb6 00c8 */
-	.short	0x4aac	/* 40837fb8 4aac */
-	.short	0x00c8	/* 40837fba 00c8 */
-	.short	0x6604	/* 40837fbc 6604 */
-	.short	0x52ac	/* 40837fbe 52ac */
-	.short	0x00c8	/* 40837fc0 00c8 */
-	.short	0x486c	/* 40837fc2 486c */
-	.short	0x000c	/* 40837fc4 000c */
-	.short	0x2f0b	/* 40837fc6 2f0b */
-	.short	0x4eba	/* 40837fc8 4eba */
-	.short	0xa3f6	/* 40837fca a3f6 */
-	.short	0x504f	/* 40837fcc 504f */
-	.short	0x200b	/* 40837fce 200b */
-	.short	0x4cee	/* 40837fd0 4cee */
-	.short	0x1800	/* 40837fd2 1800 */
-	.short	0xfff8	/* 40837fd4 fff8 */
-	.short	0x4e5e	/* 40837fd6 4e5e */
+	moveml	%a3-%a4,%sp@-		/* 40837f94 48e7 0018 */
+	jsr	%pc@(getGlobal)	/* 40837f98 4eba b5c6 */
+	moveal	%d0,%a4			/* 40837f9c 2840 */
+	moveq	#52,%d0			/* 40837f9e 7034 */
+	movel	%d0,%sp@-		/* 40837fa0 2f00 */
+	jsr	%pc@(NewMem)	/* 40837fa2 4eba a5fc */
+	moveal	%d0,%a3			/* 40837fa6 2640 */
+	movel	%a3,%d0			/* 40837fa8 200b */
+	addqw	#4,%sp			/* 40837faa 584f */
+	beqs	loc_40837fce		/* 40837fac 6720 */
+	movel	%a4@(200),%a3@(4)	/* 40837fae 276c 00c8 0004 */
+	addql	#1,%a4@(200)		/* 40837fb4 52ac 00c8 */
+	tstl	%a4@(200)		/* 40837fb8 4aac 00c8 */
+	bnes	loc_40837fc2		/* 40837fbc 6604 */
+	addql	#1,%a4@(200)		/* 40837fbe 52ac 00c8 */
+
+loc_40837fc2:
+	pea	%a4@(12)		/* 40837fc2 486c 000c */
+	movel	%a3,%sp@-		/* 40837fc6 2f0b */
+	jsr	%pc@(EnQueue)	/* 40837fc8 4eba a3f6 */
+	addqw	#8,%sp			/* 40837fcc 504f */
+
+loc_40837fce:
+	movel	%a3,%d0			/* 40837fce 200b */
+	moveml	%fp@(-8),%a3-%a4	/* 40837fd0 4cee 1800 fff8 */
+	unlk	%fp			/* 40837fd6 4e5e */
 	rts				/* 40837fd8 4e75 */
 
 GetFreeEntry:
 	moveal	0x2050,%a1		/* 40837fda 2278 2050 */
-	.short	0x2269	/* 40837fde 2269 */
-	.short	0x006c	/* 40837fe0 006c */
+	moveal	%a1@(108),%a1		/* 40837fde 2269 006c */
 	jmp	%a1@			/* 40837fe2 4ed1 */
 
 	.align	16
