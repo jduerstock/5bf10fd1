@@ -112,7 +112,7 @@ __v__ListenConnectionRequest:
 	movew	%sp@+,%d0		/* 40838136 301f */
 	extl	%d0			/* 40838138 48c0 */
 	movel	%d0,%sp@-		/* 4083813a 2f00 */
-	jsr	%pc@(DMFix)	/* 4083813c 4eba c478 */
+	jsr	%pc@(DMFix)		/* 4083813c 4eba c478 */
 	moveml	%fp@(-8),%a3-%a4	/* 40838140 4cee 1800 fff8 */
 	unlk	%fp			/* 40838146 4e5e */
 	rts				/* 40838148 4e75 */
@@ -126,37 +126,26 @@ ListenConnectionRequest:
 
 __v__RejectConnectionRequest:
 	linkw	%fp,#0			/* 40838160 4e56 0000 */
-	.short	0x2f0c	/* 40838164 2f0c */
-	.short	0x286e	/* 40838166 286e */
-	.short	0x0008	/* 40838168 0008 */
-	.short	0x296e	/* 4083816a 296e */
-	.short	0x0010	/* 4083816c 0010 */
-	.short	0x000c	/* 4083816e 000c */
-	.short	0x397c	/* 40838170 397c */
-	.short	0x00f8	/* 40838172 00f8 */
-	.short	0x001a	/* 40838174 001a */
-	.short	0x2f0c	/* 40838176 2f0c */
-	.short	0x558f	/* 40838178 558f */
-	.short	0x2f0c	/* 4083817a 2f0c */
-	.short	0x1f2e	/* 4083817c 1f2e */
-	.short	0x000f	/* 4083817e 000f */
-	.short	0x4eba	/* 40838180 4eba */
-	.short	0xc3ee	/* 40838182 c3ee */
-	.short	0x301f	/* 40838184 301f */
-	.short	0x48c0	/* 40838186 48c0 */
-	.short	0x2f00	/* 40838188 2f00 */
-	.short	0x4eba	/* 4083818a 4eba */
-	.short	0xc42a	/* 4083818c c42a */
-	.short	0x286e	/* 4083818e 286e */
-	.short	0xfffc	/* 40838190 fffc */
-	.short	0x4e5e	/* 40838192 4e5e */
+	movel	%a4,%sp@-		/* 40838164 2f0c */
+	moveal	%fp@(8),%a4		/* 40838166 286e 0008 */
+	movel	%fp@(16),%a4@(12)	/* 4083816a 296e 0010 000c */
+	movew	#248,%a4@(26)		/* 40838170 397c 00f8 001a */
+	movel	%a4,%sp@-		/* 40838176 2f0c */
+	subql	#2,%sp			/* 40838178 558f */
+	movel	%a4,%sp@-		/* 4083817a 2f0c */
+	moveb	%fp@(15),%sp@-		/* 4083817c 1f2e 000f */
+	jsr	%pc@(sub_40834570)	/* 40838180 4eba c3ee */
+	movew	%sp@+,%d0		/* 40838184 301f */
+	extl	%d0			/* 40838186 48c0 */
+	movel	%d0,%sp@-		/* 40838188 2f00 */
+	jsr	%pc@(DMFix)	/* 4083818a 4eba c42a */
+	moveal	%fp@(-4),%a4		/* 4083818e 286e fffc */
+	unlk	%fp			/* 40838192 4e5e */
 	rts				/* 40838194 4e75 */
 
 RejectConnectionRequest:
-	.short	0x2278	/* 40838196 2278 */
-	.short	0x2050	/* 40838198 2050 */
-	.short	0x2269	/* 4083819a 2269 */
-	.short	0x0088	/* 4083819c 0088 */
+	moveal	0x2050,%a1		/* 40838196 2278 2050 */
+	moveal	%a1@(136),%a1		/* 4083819a 2269 0088 */
 	jmp	%a1@			/* 4083819e 4ed1 */
 
 __v__RemoveConnectionListener:
