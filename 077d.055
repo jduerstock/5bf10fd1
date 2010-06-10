@@ -1504,34 +1504,31 @@ FindUserByNameAndPassword:
 
 __v__findUserByRef:
 	linkw	%fp,#0			/* 40837f50 4e56 0000 */
-	.short	0x48e7	/* 40837f54 48e7 */
-	.short	0x0118	/* 40837f56 0118 */
-	.short	0x2e2e	/* 40837f58 2e2e */
-	.short	0x0008	/* 40837f5a 0008 */
-	.short	0x4eba	/* 40837f5c 4eba */
-	.short	0xb602	/* 40837f5e b602 */
-	.short	0x2640	/* 40837f60 2640 */
-	.short	0x286b	/* 40837f62 286b */
-	.short	0x000c	/* 40837f64 000c */
-	.short	0x6008	/* 40837f66 6008 */
-	.short	0xbeac	/* 40837f68 beac */
-	.short	0x0004	/* 40837f6a 0004 */
-	.short	0x6706	/* 40837f6c 6706 */
-	.short	0x2854	/* 40837f6e 2854 */
-	.short	0x200c	/* 40837f70 200c */
-	.short	0x66f4	/* 40837f72 66f4 */
-	.short	0x200c	/* 40837f74 200c */
-	.short	0x4cee	/* 40837f76 4cee */
-	.short	0x1880	/* 40837f78 1880 */
-	.short	0xfff4	/* 40837f7a fff4 */
-	.short	0x4e5e	/* 40837f7c 4e5e */
+	moveml	%d7/%a3-%a4,%sp@-	/* 40837f54 48e7 0118 */
+	movel	%fp@(8),%d7		/* 40837f58 2e2e 0008 */
+	jsr	%pc@(getGlobal)	/* 40837f5c 4eba b602 */
+	moveal	%d0,%a3			/* 40837f60 2640 */
+	moveal	%a3@(12),%a4		/* 40837f62 286b 000c */
+	bras	loc_40837f70		/* 40837f66 6008 */
+
+loc_40837f68:
+	cmpl	%a4@(4),%d7		/* 40837f68 beac 0004 */
+	beqs	loc_40837f74		/* 40837f6c 6706 */
+	moveal	%a4@,%a4		/* 40837f6e 2854 */
+
+loc_40837f70:
+	movel	%a4,%d0			/* 40837f70 200c */
+	bnes	loc_40837f68		/* 40837f72 66f4 */
+
+loc_40837f74:
+	movel	%a4,%d0			/* 40837f74 200c */
+	moveml	%fp@(-12),%d7/%a3-%a4	/* 40837f76 4cee 1880 fff4 */
+	unlk	%fp			/* 40837f7c 4e5e */
 	rts				/* 40837f7e 4e75 */
 
 findUserByRef:
-	.short	0x2278	/* 40837f80 2278 */
-	.short	0x2050	/* 40837f82 2050 */
-	.short	0x2269	/* 40837f84 2269 */
-	.short	0x0068	/* 40837f86 0068 */
+	moveal	0x2050,%a1		/* 40837f80 2278 2050 */
+	moveal	%a1@(104),%a1		/* 40837f84 2269 0068 */
 	jmp	%a1@			/* 40837f88 4ed1 */
 
 	.align	16
