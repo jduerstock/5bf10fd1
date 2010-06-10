@@ -1304,6 +1304,7 @@ __v__UserRefNumCompare:
 	unlk	%fp			/* 40837d34 4e5e */
 	rts				/* 40837d36 4e75 */
 
+UserRefNumCompare:
 	moveal	0x2050,%a1		/* 40837d38 2278 2050 */
 	moveal	%a1@(88),%a1		/* 40837d3c 2269 0058 */
 	jmp	%a1@			/* 40837d40 4ed1 */
@@ -1312,44 +1313,35 @@ __v__UserRefNumCompare:
 
 __v__ppcDeleteUser:
 	linkw	%fp,#0			/* 40837d50 4e56 0000 */
-	.short	0x48e7	/* 40837d54 48e7 */
-	.short	0x0018	/* 40837d56 0018 */
-	.short	0x4eba	/* 40837d58 4eba */
-	.short	0xb806	/* 40837d5a b806 */
-	.short	0x2640	/* 40837d5c 2640 */
-	.short	0x487a	/* 40837d5e 487a */
-	.short	0xffd8	/* 40837d60 ffd8 */
-	.short	0x206e	/* 40837d62 206e */
-	.short	0x0008	/* 40837d64 0008 */
-	.short	0x2f10	/* 40837d66 2f10 */
-	.short	0x486b	/* 40837d68 486b */
-	.short	0x000c	/* 40837d6a 000c */
-	.short	0x4eba	/* 40837d6c 4eba */
-	.short	0xa7ae	/* 40837d6e a7ae */
-	.short	0x2840	/* 40837d70 2840 */
-	.short	0x200c	/* 40837d72 200c */
-	.short	0x4fef	/* 40837d74 4fef */
-	.short	0x000c	/* 40837d76 000c */
-	.short	0x670c	/* 40837d78 670c */
-	.short	0x2f0c	/* 40837d7a 2f0c */
-	.short	0x4eba	/* 40837d7c 4eba */
-	.short	0xa840	/* 40837d7e a840 */
+	moveml	%a3-%a4,%sp@-		/* 40837d54 48e7 0018 */
+	jsr	%pc@(getGlobal)		/* 40837d58 4eba b806 */
+	moveal	%d0,%a3			/* 40837d5c 2640 */
+	pea	%pc@(UserRefNumCompare)	/* 40837d5e 487a ffd8 */
+	moveal	%fp@(8),%a0		/* 40837d62 206e 0008 */
+	movel	%a0@,%sp@-		/* 40837d66 2f10 */
+	pea	%a3@(12)		/* 40837d68 486b 000c */
+	jsr	%pc@(DeleteFromQueue)	/* 40837d6c 4eba a7ae */
+	moveal	%d0,%a4			/* 40837d70 2840 */
+	movel	%a4,%d0			/* 40837d72 200c */
+	lea	%sp@(12),%sp		/* 40837d74 4fef 000c */
+	beqs	loc_40837d86		/* 40837d78 670c */
+	movel	%a4,%sp@-		/* 40837d7a 2f0c */
+	jsr	%pc@(DisposeMem)	/* 40837d7c 4eba a840 */
 	moveq	#0,%d0			/* 40837d80 7000 */
-	.short	0x584f	/* 40837d82 584f */
-	.short	0x6004	/* 40837d84 6004 */
-	.short	0x303c	/* 40837d86 303c */
-	.short	0xfc60	/* 40837d88 fc60 */
-	.short	0x4cee	/* 40837d8a 4cee */
-	.short	0x1800	/* 40837d8c 1800 */
-	.short	0xfff8	/* 40837d8e fff8 */
-	.short	0x4e5e	/* 40837d90 4e5e */
+	addqw	#4,%sp			/* 40837d82 584f */
+	bras	loc_40837d8a		/* 40837d84 6004 */
+
+loc_40837d86:
+	movew	#-928,%d0		/* 40837d86 303c fc60 */
+
+loc_40837d8a:
+	moveml	%fp@(-8),%a3-%a4	/* 40837d8a 4cee 1800 fff8 */
+	unlk	%fp			/* 40837d90 4e5e */
 	rts				/* 40837d92 4e75 */
 
 ppcDeleteUser:
-	.short	0x2278	/* 40837d94 2278 */
-	.short	0x2050	/* 40837d96 2050 */
-	.short	0x2269	/* 40837d98 2269 */
-	.short	0x005c	/* 40837d9a 005c */
+	moveal	0x2050,%a1		/* 40837d94 2278 2050 */
+	moveal	%a1@(92),%a1		/* 40837d98 2269 005c */
 	jmp	%a1@			/* 40837d9c 4ed1 */
 
 	.align	16
