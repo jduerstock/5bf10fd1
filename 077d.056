@@ -352,78 +352,50 @@ ReadFromConnection:
 
 __v__RegisterName:
 	linkw	%fp,#0			/* 40838440 4e56 0000 */
-	.short	0x48e7	/* 40838444 48e7 */
-	.short	0x0018	/* 40838446 0018 */
-	.short	0x286e	/* 40838448 286e */
-	.short	0x0024	/* 4083844a 0024 */
-	.short	0x4eba	/* 4083844c 4eba */
-	.short	0xb112	/* 4083844e b112 */
-	.short	0x2640	/* 40838450 2640 */
-	.short	0x2f2e	/* 40838452 2f2e */
-	.short	0x0020	/* 40838454 0020 */
-	.short	0x2f2e	/* 40838456 2f2e */
-	.short	0x0008	/* 40838458 0008 */
-	.short	0x2f2e	/* 4083845a 2f2e */
-	.short	0x000c	/* 4083845c 000c */
-	.short	0x2f2e	/* 4083845e 2f2e */
-	.short	0x0010	/* 40838460 0010 */
+	moveml	%a3-%a4,%sp@-		/* 40838444 48e7 0018 */
+	moveal	%fp@(36),%a4		/* 40838448 286e 0024 */
+	jsr	%pc@(getGlobal)	/* 4083844c 4eba b112 */
+	moveal	%d0,%a3			/* 40838450 2640 */
+	movel	%fp@(32),%sp@-		/* 40838452 2f2e 0020 */
+	movel	%fp@(8),%sp@-		/* 40838456 2f2e 0008 */
+	movel	%fp@(12),%sp@-		/* 4083845a 2f2e 000c */
+	movel	%fp@(16),%sp@-		/* 4083845e 2f2e 0010 */
 	moveq	#0,%d0			/* 40838462 7000 */
-	.short	0x102e	/* 40838464 102e */
-	.short	0x0017	/* 40838466 0017 */
-	.short	0x3f00	/* 40838468 3f00 */
-	.short	0x4eba	/* 4083846a 4eba */
-	.short	0x0054	/* 4083846c 0054 */
-	.short	0x296e	/* 4083846e 296e */
-	.short	0x001c	/* 40838470 001c */
-	.short	0x000c	/* 40838472 000c */
-	.short	0x196b	/* 40838474 196b */
-	.short	0x00d6	/* 40838476 00d6 */
-	.short	0x001c	/* 40838478 001c */
-	.short	0x196b	/* 4083847a 196b */
-	.short	0x00d7	/* 4083847c 00d7 */
-	.short	0x001d	/* 4083847e 001d */
-	.short	0x296e	/* 40838480 296e */
-	.short	0x0020	/* 40838482 0020 */
-	.short	0x001e	/* 40838484 001e */
-	.short	0x197c	/* 40838486 197c */
-	.short	0x0001	/* 40838488 0001 */
-	.short	0x0022	/* 4083848a 0022 */
-	.short	0x2f0c	/* 4083848c 2f0c */
-	.short	0x558f	/* 4083848e 558f */
-	.short	0x2f0c	/* 40838490 2f0c */
-	.short	0x1f2e	/* 40838492 1f2e */
-	.short	0x001b	/* 40838494 001b */
-	.short	0x4eba	/* 40838496 4eba */
-	.short	0x0038	/* 40838498 0038 */
-	.short	0x301f	/* 4083849a 301f */
-	.short	0x48c0	/* 4083849c 48c0 */
-	.short	0x2f00	/* 4083849e 2f00 */
-	.short	0x4eba	/* 408384a0 4eba */
-	.short	0xc114	/* 408384a2 c114 */
-	.short	0x4cee	/* 408384a4 4cee */
-	.short	0x1800	/* 408384a6 1800 */
-	.short	0xfff8	/* 408384a8 fff8 */
-	.short	0x4e5e	/* 408384aa 4e5e */
+	moveb	%fp@(23),%d0		/* 40838464 102e 0017 */
+	movew	%d0,%sp@-		/* 40838468 3f00 */
+	jsr	%pc@(sub_408384c0)	/* 4083846a 4eba 0054 */
+	movel	%fp@(28),%a4@(12)	/* 4083846e 296e 001c 000c */
+	moveb	%a3@(214),%a4@(28)	/* 40838474 196b 00d6 001c */
+	moveb	%a3@(215),%a4@(29)	/* 4083847a 196b 00d7 001d */
+	movel	%fp@(32),%a4@(30)	/* 40838480 296e 0020 001e */
+	moveb	#1,%a4@(34)		/* 40838486 197c 0001 0022 */
+	movel	%a4,%sp@-		/* 4083848c 2f0c */
+	subql	#2,%sp			/* 4083848e 558f */
+	movel	%a4,%sp@-		/* 40838490 2f0c */
+	moveb	%fp@(27),%sp@-		/* 40838492 1f2e 001b */
+	jsr	%pc@(sub_408384d0)	/* 40838496 4eba 0038 */
+	movew	%sp@+,%d0		/* 4083849a 301f */
+	extl	%d0			/* 4083849c 48c0 */
+	movel	%d0,%sp@-		/* 4083849e 2f00 */
+	jsr	%pc@(DMFix)		/* 408384a0 4eba c114 */
+	moveml	%fp@(-8),%a3-%a4	/* 408384a4 4cee 1800 fff8 */
+	unlk	%fp			/* 408384aa 4e5e */
 	rts				/* 408384ac 4e75 */
 
 RegisterName:
-	.short	0x2278	/* 408384ae 2278 */
-	.short	0x2050	/* 408384b0 2050 */
-	.short	0x2269	/* 408384b2 2269 */
-	.short	0x018c	/* 408384b4 018c */
+	moveal	0x2050,%a1		/* 408384ae 2278 2050 */
+	moveal	%a1@(396),%a1		/* 408384b2 2269 018c */
 	jmp	%a1@			/* 408384b6 4ed1 */
 
 	.align	16
 
-	.short	0x60ff	/* 408384c0 60ff */
-	.short	0x0006	/* 408384c2 0006 */
-	.short	0xb97e	/* 408384c4 b97e */
+sub_408384c0:
+	bral	NBPSETNTE		/* 408384c0 60ff 0006 b97e */
 
 	.align	16
 
-	.short	0x60ff	/* 408384d0 60ff */
-	.short	0x0006	/* 408384d2 0006 */
-	.short	0xb7ec	/* 408384d4 b7ec */
+sub_408384d0:
+	bral	PREGISTERNAME		/* 408384d0 60ff 0006 b7ec */
 
 	.align	16
 
