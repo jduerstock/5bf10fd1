@@ -216,7 +216,7 @@ __v__OpenConnectionEnd:
 	linkw	%fp,#-4			/* 40838270 4e56 fffc */
 	moveml	%a3-%a4,%sp@-		/* 40838274 48e7 0018 */
 	moveal	%fp@(44),%a3		/* 40838278 266e 002c */
-	jsr	%pc@(getGlobal)	/* 4083827c 4eba b2e2 */
+	jsr	%pc@(getGlobal)		/* 4083827c 4eba b2e2 */
 	moveal	%d0,%a4			/* 40838280 2840 */
 	lea	%a4@(204),%a0		/* 40838282 41ec 00cc */
 	movel	%a0,%fp@(-4)		/* 40838286 2d48 fffc */
@@ -626,29 +626,24 @@ OPENUGBT:
 
 __v__BLDFSKEY:
 	linkw	%fp,#0			/* 40838700 4e56 0000 */
-	.short	0x226e	/* 40838704 226e */
-	.short	0x0008	/* 40838706 0008 */
-	.short	0x206e	/* 40838708 206e */
-	.short	0x000c	/* 4083870a 000c */
+	moveal	%fp@(8),%a1		/* 40838704 226e 0008 */
+	moveal	%fp@(12),%a0		/* 40838708 206e 000c */
 	moveq	#0,%d0			/* 4083870c 7000 */
-	.short	0x1010	/* 4083870e 1010 */
-	.short	0x5c80	/* 40838710 5c80 */
-	.short	0x12c0	/* 40838712 12c0 */
-	.short	0x4219	/* 40838714 4219 */
-	.short	0x22ee	/* 40838716 22ee */
-	.short	0x0010	/* 40838718 0010 */
-	.short	0x5b80	/* 4083871a 5b80 */
-	.short	0xa02e	/* 4083871c a02e */
-	.short	0x4e5e	/* 4083871e 4e5e */
-	.short	0x205f	/* 40838720 205f */
-	.short	0x4fef	/* 40838722 4fef */
-	.short	0x000c	/* 40838724 000c */
-	.short	0x4ed0	/* 40838726 4ed0 */
-	.short	0xc24c	/* 40838728 c24c */
-	.short	0x4446	/* 4083872a 4446 */
-	.short	0x534b	/* 4083872c 534b */
-	.short	0x4559	/* 4083872e 4559 */
-	.short	0x0000	/* 40838730 0000 */
+	moveb	%a0@,%d0		/* 4083870e 1010 */
+	addql	#6,%d0			/* 40838710 5c80 */
+	moveb	%d0,%a1@+		/* 40838712 12c0 */
+	clrb	%a1@+			/* 40838714 4219 */
+	movel	%fp@(16),%a1@+		/* 40838716 22ee 0010 */
+	subql	#5,%d0			/* 4083871a 5b80 */
+	.short	0xa02e			/* 4083871c a02e */
+	unlk	%fp			/* 4083871e 4e5e */
+	moveal	%sp@+,%a0		/* 40838720 205f */
+	lea	%sp@(12),%sp		/* 40838722 4fef 000c */
+	jmp	%a0@			/* 40838726 4ed0 */
+
+	.byte	0xc2			/* 40838728 c2 */
+	.ascii	"LDFSKEY"
+	.short	0x0000			/* 40838730 0000 */
 
 BLDFSKEY:
 	CallVector	0x2050 2	/* 40838732 2f30 81e2 2050 0008 */
