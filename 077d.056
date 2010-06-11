@@ -1207,38 +1207,37 @@ loc_40838d52:
 	rts				/* 40838d58 4e75 */
 
 	moveq	#-1,%d0			/* 40838d5a 70ff */
-	.short	0x0c01	/* 40838d5c 0c01 */
-	.short	0x001c	/* 40838d5e 001c */
-	.short	0x6d08	/* 40838d60 6d08 */
-	.short	0x0c01	/* 40838d62 0c01 */
-	.short	0x001f	/* 40838d64 001f */
-	.short	0x6e02	/* 40838d66 6e02 */
+	cmpib	#28,%d1			/* 40838d5c 0c01 001c */
+	blts	loc_40838d6a		/* 40838d60 6d08 */
+	cmpib	#31,%d1			/* 40838d62 0c01 001f */
+	bgts	loc_40838d6a		/* 40838d66 6e02 */
 	moveq	#0,%d0			/* 40838d68 7000 */
+
+loc_40838d6a:
 	rts				/* 40838d6a 4e75 */
 
 sub_40838d6c:
-	.short	0x48e7	/* 40838d6c 48e7 */
-	.short	0xe0f8	/* 40838d6e e0f8 */
-	.short	0x206b	/* 40838d70 206b */
-	.short	0x00a0	/* 40838d72 00a0 */
-	.short	0x2050	/* 40838d74 2050 */
-	.short	0x3428	/* 40838d76 3428 */
-	.short	0x003c	/* 40838d78 003c */
-	.short	0xb440	/* 40838d7a b440 */
-	.short	0x6d0a	/* 40838d7c 6d0a */
-	.short	0x3228	/* 40838d7e 3228 */
-	.short	0x0022	/* 40838d80 0022 */
-	.short	0x9268	/* 40838d82 9268 */
-	.short	0x0020	/* 40838d84 0020 */
-	.short	0x6f04	/* 40838d86 6f04 */
-	.short	0x4242	/* 40838d88 4242 */
-	.short	0x6008	/* 40838d8a 6008 */
-	.short	0x3f3c	/* 40838d8c 3f3c */
-	.short	0x0005	/* 40838d8e 0005 */
-	.short	0xa9c8	/* 40838d90 a9c8 */
-	.short	0x74ff	/* 40838d92 74ff */
-	.short	0x4cdf	/* 40838d94 4cdf */
-	.short	0x1f07	/* 40838d96 1f07 */
+	moveml	%d0-%d2/%a0-%a4,%sp@-	/* 40838d6c 48e7 e0f8 */
+	moveal	%a3@(160),%a0		/* 40838d70 206b 00a0 */
+	moveal	%a0@,%a0		/* 40838d74 2050 */
+	movew	%a0@(60),%d2		/* 40838d76 3428 003c */
+	cmpw	%d0,%d2			/* 40838d7a b440 */
+	blts	loc_40838d88		/* 40838d7c 6d0a */
+	movew	%a0@(34),%d1		/* 40838d7e 3228 0022 */
+	subw	%a0@(32),%d1		/* 40838d82 9268 0020 */
+	bles	loc_40838d8c		/* 40838d86 6f04 */
+
+loc_40838d88:
+	clrw	%d2			/* 40838d88 4242 */
+	bras	loc_40838d94		/* 40838d8a 6008 */
+
+loc_40838d8c:
+	movew	#5,%sp@-		/* 40838d8c 3f3c 0005 */
+	.short	0xa9c8			/* 40838d90 a9c8 */
+	moveq	#-1,%d2			/* 40838d92 74ff */
+
+loc_40838d94:
+	moveml	%sp@+,%d0-%d2/%a0-%a4	/* 40838d94 4cdf 1f07 */
 	rts				/* 40838d98 4e75 */
 
 sub_40838d9a:
