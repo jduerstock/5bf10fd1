@@ -80,42 +80,30 @@ byte_4083908a:
 	rts				/* 40839096 4e75 */
 
 PROMPTFORUSER:
-	.short	0x2f30	/* 40839098 2f30 */
-	.short	0x81e2	/* 4083909a 81e2 */
-	.short	0x2050	/* 4083909c 2050 */
-	.short	0x02f4	/* 4083909e 02f4 */
+	CallVector	0x2050 189	/* 40839098 2f30 81e2 2050 02f4 */
 	rts				/* 408390a0 4e75 */
 
 	.align	16
 
 __v__GETPASSWORDBULLET:
 	linkw	%fp,#0			/* 408390b0 4e56 0000 */
-	.short	0x48e7	/* 408390b4 48e7 */
-	.short	0x0300	/* 408390b6 0300 */
-	.short	0x3e38	/* 408390b8 3e38 */
-	.short	0x0ba6	/* 408390ba 0ba6 */
-	.short	0x4878	/* 408390bc 4878 */
-	.short	0x00a5	/* 408390be 00a5 */
-	.short	0x558f	/* 408390c0 558f */
-	.short	0x3f07	/* 408390c2 3f07 */
-	.short	0x2f3c	/* 408390c4 2f3c */
-	.short	0x8202	/* 408390c6 8202 */
-	.short	0x0006	/* 408390c8 0006 */
-	.short	0xa8b5	/* 408390ca a8b5 */
-	.short	0x301f	/* 408390cc 301f */
-	.short	0x48c0	/* 408390ce 48c0 */
-	.short	0x2f00	/* 408390d0 2f00 */
-	.short	0x704e	/* 408390d2 704e */
-	.short	0x2f00	/* 408390d4 2f00 */
-	.short	0x4eba	/* 408390d6 4eba */
-	.short	0x0094	/* 408390d8 0094 */
-	.short	0x1c00	/* 408390da 1c00 */
-	.short	0x1d46	/* 408390dc 1d46 */
-	.short	0x0008	/* 408390de 0008 */
-	.short	0x4cee	/* 408390e0 4cee */
-	.short	0x00c0	/* 408390e2 00c0 */
-	.short	0xfff8	/* 408390e4 fff8 */
-	.short	0x4e5e	/* 408390e6 4e5e */
+	moveml	%d6-%d7,%sp@-		/* 408390b4 48e7 0300 */
+	movew	0xba6,%d7		/* 408390b8 3e38 0ba6 */
+	pea	0xa5			/* 408390bc 4878 00a5 */
+	subql	#2,%sp			/* 408390c0 558f */
+	movew	%d7,%sp@-		/* 408390c2 3f07 */
+	movel	#-2113798138,%sp@-	/* 408390c4 2f3c 8202 0006 */
+	.short	0xa8b5			/* 408390ca a8b5 */
+	movew	%sp@+,%d0		/* 408390cc 301f */
+	extl	%d0			/* 408390ce 48c0 */
+	movel	%d0,%sp@-		/* 408390d0 2f00 */
+	moveq	#78,%d0			/* 408390d2 704e */
+	movel	%d0,%sp@-		/* 408390d4 2f00 */
+	jsr	%pc@(sub_4083916c)	/* 408390d6 4eba 0094 */
+	moveb	%d0,%d6			/* 408390da 1c00 */
+	moveb	%d6,%fp@(8)		/* 408390dc 1d46 0008 */
+	moveml	%fp@(-8),%d6-%d7	/* 408390e0 4cee 00c0 fff8 */
+	unlk	%fp			/* 408390e6 4e5e */
 	rts				/* 408390e8 4e75 */
 
 GETPASSWORDBULLET:
@@ -182,6 +170,8 @@ __v__GetIntlTokenChar:
 	.short	0xffe8	/* 40839166 ffe8 */
 	.short	0x4e5e	/* 40839168 4e5e */
 	rts				/* 4083916a 4e75 */
+
+sub_4083916c:
 	.short	0x2278	/* 4083916c 2278 */
 	.short	0x2050	/* 4083916e 2050 */
 	.short	0x2269	/* 40839170 2269 */
