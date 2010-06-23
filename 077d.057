@@ -965,24 +965,17 @@ loc_408397b4:
 	rts				/* 408397b6 4e75 */
 
 ADBREINIT:
-	.short	0x2078	/* 408397b8 2078 */
-	.short	0x06b8	/* 408397ba 06b8 */
+	moveal	0x6b8,%a0		/* 408397b8 2078 06b8 */
 	moveq	#0,%d0			/* 408397bc 7000 */
-	.short	0x4e90	/* 408397be 4e90 */
-	.short	0x48e7	/* 408397c0 48e7 */
-	.short	0xf8f0	/* 408397c2 f8f0 */
-	.short	0x2678	/* 408397c4 2678 */
-	.short	0x0cf8	/* 408397c6 0cf8 */
-	.short	0x6100	/* 408397c8 6100 */
-	.short	0x0118	/* 408397ca 0118 */
-	.short	0x6100	/* 408397cc 6100 */
-	.short	0x008c	/* 408397ce 008c */
-	.short	0x4cdf	/* 408397d0 4cdf */
-	.short	0x0f1f	/* 408397d2 0f1f */
-	.short	0x2078	/* 408397d4 2078 */
-	.short	0x06b8	/* 408397d6 06b8 */
+	jsr	%a0@			/* 408397be 4e90 */
+	moveml	%d0-%d4/%a0-%a3,%sp@-	/* 408397c0 48e7 f8f0 */
+	moveal	0xcf8,%a3		/* 408397c4 2678 0cf8 */
+	bsrw	sub_408398e2		/* 408397c8 6100 0118 */
+	bsrw	__v__INITADBDRVR		/* 408397cc 6100 008c */
+	moveml	%sp@+,%d0-%d4/%a0-%a3	/* 408397d0 4cdf 0f1f */
+	moveal	0x6b8,%a0		/* 408397d4 2078 06b8 */
 	moveq	#1,%d0			/* 408397d8 7001 */
-	.short	0x4e90	/* 408397da 4e90 */
+	jsr	%a0@			/* 408397da 4e90 */
 	rts				/* 408397dc 4e75 */
 
 ADBPROC:
@@ -1106,11 +1099,11 @@ INITADB:
 	moveal	0xdd8,%a0		/* 408398d2 2078 0dd8 */
 	addal	%a0@(72),%a0		/* 408398d6 d1e8 0048 */
 	movel	%a0@,%d0		/* 408398da 2010 */
-	beqs	loc_408398e2		/* 408398dc 6704 */
+	beqs	sub_408398e2		/* 408398dc 6704 */
 	addal	%d0,%a0			/* 408398de d1c0 */
 	jsr	%a0@			/* 408398e0 4e90 */
 
-loc_408398e2:
+sub_408398e2:
 	oriw	#1792,%sr		/* 408398e2 007c 0700 */
 	moveq	#75,%d0			/* 408398e6 704b */
 	moveal	%a3,%a0			/* 408398e8 204b */
