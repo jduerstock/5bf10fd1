@@ -429,6 +429,7 @@ INITTIMEMGR:
 	.align	16
 
 __v__PACKDISPATCHER:
+INITPACK:
 	subql	#4,%sp			/* 4083a390 598f */
 	movel	#1346454347,%sp@-	/* 4083a392 2f3c 5041 434b */
 	movew	%sp@(12),%sp@-		/* 4083a398 3f2f 000c */
@@ -442,35 +443,34 @@ __v__PACKDISPATCHER:
 	jmp	%a0@			/* 4083a3b0 4ed0 */
 
 INITALLPACKS:
-	.short	0x205f	/* 4083a3b2 205f */
-	.short	0x700f	/* 4083a3b4 700f */
-	.short	0x3f00	/* 4083a3b6 3f00 */
-	.short	0x2f08	/* 4083a3b8 2f08 */
-	.short	0x41fa	/* 4083a3ba 41fa */
-	.short	0xffd4	/* 4083a3bc ffd4 */
-	.short	0x51c8	/* 4083a3be 51c8 */
-	.short	0xfff6	/* 4083a3c0 fff6 */
-	.short	0x2f08	/* 4083a3c2 2f08 */
-	.short	0x4278	/* 4083a3c4 4278 */
-	.short	0x0a4a	/* 4083a3c6 0a4a */
-	.short	0x41fa	/* 4083a3c8 41fa */
-	.short	0x0008	/* 4083a3ca 0008 */
-	.short	0x21c8	/* 4083a3cc 21c8 */
-	.short	0x0a4c	/* 4083a3ce 0a4c */
+	moveal	%sp@+,%a0		/* 4083a3b2 205f */
+	moveq	#15,%d0			/* 4083a3b4 700f */
+
+loc_4083a3b6:
+	movew	%d0,%sp@-		/* 4083a3b6 3f00 */
+	movel	%a0,%sp@-		/* 4083a3b8 2f08 */
+	lea	%pc@(INITPACK),%a0	/* 4083a3ba 41fa ffd4 */
+	dbf	%d0,loc_4083a3b6	/* 4083a3be 51c8 fff6 */
+	movel	%a0,%sp@-		/* 4083a3c2 2f08 */
+	clrw	0xa4a			/* 4083a3c4 4278 0a4a */
+	lea	%pc@(sub_4083a3d2),%a0	/* 4083a3c8 41fa 0008 */
+	movel	%a0,0xa4c		/* 4083a3cc 21c8 0a4c */
 	rts				/* 4083a3d0 4e75 */
-	.short	0x7010	/* 4083a3d2 7010 */
-	.short	0xa9c9	/* 4083a3d4 a9c9 */
+
+sub_4083a3d2:
+	moveq	#16,%d0			/* 4083a3d2 7010 */
+	.short	0xa9c9			/* 4083a3d4 a9c9 */
 
 sub_4083a3d6:
-	.short	0x41f8	/* 4083a3d6 41f8 */
-	.short	0x0bc8	/* 4083a3d8 0bc8 */
-	.short	0x5140	/* 4083a3da 5140 */
-	.short	0x6c06	/* 4083a3dc 6c06 */
-	.short	0x41f8	/* 4083a3de 41f8 */
-	.short	0x0ab8	/* 4083a3e0 0ab8 */
-	.short	0x5040	/* 4083a3e2 5040 */
-	.short	0xe548	/* 4083a3e4 e548 */
-	.short	0xd0c0	/* 4083a3e6 d0c0 */
+	lea	0xbc8,%a0		/* 4083a3d6 41f8 0bc8 */
+	subqw	#8,%d0			/* 4083a3da 5140 */
+	bges	loc_4083a3e4		/* 4083a3dc 6c06 */
+	lea	0xab8,%a0		/* 4083a3de 41f8 0ab8 */
+	addqw	#8,%d0			/* 4083a3e2 5040 */
+
+loc_4083a3e4:
+	lslw	#2,%d0			/* 4083a3e4 e548 */
+	addaw	%d0,%a0			/* 4083a3e6 d0c0 */
 	rts				/* 4083a3e8 4e75 */
 
 sub_4083a3ea:
@@ -1273,7 +1273,7 @@ loc_4083aa8c:
 	bsrw	sub_4083adba		/* 4083aa90 6100 0328 */
 	bsrw	FINDEDISK		/* 4083aa94 6100 0450 */
 	beqs	loc_4083aa9e		/* 4083aa98 6704 */
-	bsrw	sub_4083af1c		/* 4083aa9a 6100 0480 */
+	bsrw	KILLEDISK		/* 4083aa9a 6100 0480 */
 
 loc_4083aa9e:
 	btst	#7,0xdd1		/* 4083aa9e 0838 0007 0dd1 */
@@ -1875,7 +1875,7 @@ loc_4083af16:
 	.short	0xa05d			/* 4083af18 a05d */
 	rts				/* 4083af1a 4e75 */
 
-sub_4083af1c:
+KILLEDISK:
 	CallVector	0x2068 7	/* 4083af1c 2f30 81e2 2068 001c */
 	rts				/* 4083af24 4e75 */
 
