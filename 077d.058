@@ -1445,56 +1445,47 @@ str_4083ac2e:
 	.ascii	".Display_Video_Apple_DAFB"
 
 __v__DOUNMOUNT:
-	.short	0x9efc	/* 4083ac48 9efc */
-	.short	0x0032	/* 4083ac4a 0032 */
-	.short	0x204f	/* 4083ac4c 204f */
-	.short	0x42a8	/* 4083ac4e 42a8 */
-	.short	0x0012	/* 4083ac50 0012 */
-	.short	0x4268	/* 4083ac52 4268 */
-	.short	0x0018	/* 4083ac54 0018 */
-	.short	0x2278	/* 4083ac56 2278 */
-	.short	0x0358	/* 4083ac58 0358 */
-	.short	0x2438	/* 4083ac5a 2438 */
-	.short	0x035c	/* 4083ac5c 035c */
-	.short	0x6702	/* 4083ac5e 6702 */
-	.short	0x6146	/* 4083ac60 6146 */
-	.short	0x4fef	/* 4083ac62 4fef */
-	.short	0x0032	/* 4083ac64 0032 */
+	subaw	#50,%sp			/* 4083ac48 9efc 0032 */
+	moveal	%sp,%a0			/* 4083ac4c 204f */
+	clrl	%a0@(18)		/* 4083ac4e 42a8 0012 */
+	clrw	%a0@(24)		/* 4083ac52 4268 0018 */
+	moveal	0x358,%a1		/* 4083ac56 2278 0358 */
+	movel	0x35c,%d2		/* 4083ac5a 2438 035c */
+	beqs	loc_4083ac62		/* 4083ac5e 6702 */
+	bsrs	sub_4083aca8		/* 4083ac60 6146 */
+
+loc_4083ac62:
+	lea	%sp@(50),%sp		/* 4083ac62 4fef 0032 */
 	rts				/* 4083ac66 4e75 */
 
 __v__CLEARWARMSTART:
-	.short	0x2078	/* 4083ac68 2078 */
-	.short	0x02ae	/* 4083ac6a 02ae */
-	.short	0x0c68	/* 4083ac6c 0c68 */
-	.short	0x0075	/* 4083ac6e 0075 */
-	.short	0x0008	/* 4083ac70 0008 */
-	.short	0x6732	/* 4083ac72 6732 */
-	.short	0x203c	/* 4083ac74 203c */
-	.short	0x6d69	/* 4083ac76 6d69 */
-	.short	0x7363	/* 4083ac78 7363 */
-	.short	0xa1ad	/* 4083ac7a a1ad */
-	.short	0x2008	/* 4083ac7c 2008 */
-	.short	0x0800	/* 4083ac7e 0800 */
-	.short	0x0001	/* 4083ac80 0001 */
-	.short	0x671e	/* 4083ac82 671e */
-	.short	0x0838	/* 4083ac84 0838 */
-	.short	0x0003	/* 4083ac86 0003 */
-	.short	0x0b22	/* 4083ac88 0b22 */
-	.short	0x6704	/* 4083ac8a 6704 */
+	moveal	0x2ae,%a0		/* 4083ac68 2078 02ae */
+	cmpiw	#117,%a0@(8)		/* 4083ac6c 0c68 0075 0008 */
+	beqs	loc_4083aca6		/* 4083ac72 6732 */
+	movel	#1835627363,%d0		/* 4083ac74 203c 6d69 7363 */
+	.short	0xa1ad			/* 4083ac7a a1ad */
+	movel	%a0,%d0			/* 4083ac7c 2008 */
+	btst	#1,%d0			/* 4083ac7e 0800 0001 */
+	beqs	loc_4083aca2		/* 4083ac82 671e */
+	btst	#3,0xb22		/* 4083ac84 0838 0003 0b22 */
+	beqs	loc_4083ac90		/* 4083ac8a 6704 */
 	moveq	#1,%d0			/* 4083ac8c 7001 */
-	.short	0xa05d	/* 4083ac8e a05d */
-	.short	0x2078	/* 4083ac90 2078 */
-	.short	0x0ddc	/* 4083ac92 0ddc */
-	.short	0x42a8	/* 4083ac94 42a8 */
-	.short	0xfffc	/* 4083ac96 fffc */
-	.short	0x0838	/* 4083ac98 0838 */
-	.short	0x0003	/* 4083ac9a 0003 */
-	.short	0x0b22	/* 4083ac9c 0b22 */
-	.short	0x6702	/* 4083ac9e 6702 */
-	.short	0xa05d	/* 4083aca0 a05d */
-	.short	0x42b8	/* 4083aca2 42b8 */
-	.short	0x0cfc	/* 4083aca4 0cfc */
+	.short	0xa05d			/* 4083ac8e a05d */
+
+loc_4083ac90:
+	moveal	0xddc,%a0		/* 4083ac90 2078 0ddc */
+	clrl	%a0@(-4)		/* 4083ac94 42a8 fffc */
+	btst	#3,0xb22		/* 4083ac98 0838 0003 0b22 */
+	beqs	loc_4083aca2		/* 4083ac9e 6702 */
+	.short	0xa05d			/* 4083aca0 a05d */
+
+loc_4083aca2:
+	clrl	0xcfc			/* 4083aca2 42b8 0cfc */
+
+loc_4083aca6:
 	rts				/* 4083aca6 4e75 */
+
+sub_4083aca8:
 	.short	0x3f01	/* 4083aca8 3f01 */
 	.short	0x3229	/* 4083acaa 3229 */
 	.short	0x004e	/* 4083acac 004e */
