@@ -679,33 +679,30 @@ loc_4083a584:
 	rts				/* 4083a586 4e75 */
 
 __v__FLUSHAPPLVBLS:
-	.short	0x2278	/* 4083a588 2278 */
-	.short	0x0162	/* 4083a58a 0162 */
-	.short	0x2009	/* 4083a58c 2009 */
-	.short	0x6710	/* 4083a58e 6710 */
-	.short	0x2049	/* 4083a590 2049 */
-	.short	0x2250	/* 4083a592 2250 */
-	.short	0x2028	/* 4083a594 2028 */
-	.short	0x0006	/* 4083a596 0006 */
-	.short	0x61cc	/* 4083a598 61cc */
-	.short	0x66f0	/* 4083a59a 66f0 */
-	.short	0xa034	/* 4083a59c a034 */
-	.short	0x60ec	/* 4083a59e 60ec */
+	moveal	0x162,%a1		/* 4083a588 2278 0162 */
+
+loc_4083a58c:
+	movel	%a1,%d0			/* 4083a58c 2009 */
+	beqs	loc_4083a5a0		/* 4083a58e 6710 */
+	moveal	%a1,%a0			/* 4083a590 2049 */
+	moveal	%a0@,%a1		/* 4083a592 2250 */
+	movel	%a0@(6),%d0		/* 4083a594 2028 0006 */
+	bsrs	__v__APPZONEADDR		/* 4083a598 61cc */
+	bnes	loc_4083a58c		/* 4083a59a 66f0 */
+	.short	0xa034			/* 4083a59c a034 */
+	bras	loc_4083a58c		/* 4083a59e 60ec */
+
+loc_4083a5a0:
 	rts				/* 4083a5a0 4e75 */
 
 loc_4083a5a2:
-	.short	0x2038	/* 4083a5a2 2038 */
-	.short	0x0108	/* 4083a5a4 0108 */
-	.short	0x0480	/* 4083a5a6 0480 */
-	.short	0x0000	/* 4083a5a8 0000 */
-	.short	0x5f00	/* 4083a5aa 5f00 */
-	.short	0x6000	/* 4083a5ac 6000 */
-	.short	0x00f8	/* 4083a5ae 00f8 */
+	movel	0x108,%d0		/* 4083a5a2 2038 0108 */
+	subil	#24320,%d0		/* 4083a5a6 0480 0000 5f00 */
+	braw	loc_4083a6a6		/* 4083a5ac 6000 00f8 */
 
 CHAIN:
-	.short	0x4278	/* 4083a5b0 4278 */
-	.short	0x0902	/* 4083a5b2 0902 */
-	.short	0x6040	/* 4083a5b4 6040 */
+	clrw	0x902			/* 4083a5b0 4278 0902 */
+	bras	loc_4083a5f6		/* 4083a5b4 6040 */
 
 LAUNCH:
 	st	LaunchFlag		/* 4083a5b6 50f8 0902 */
