@@ -1621,15 +1621,15 @@ loc_4083ae1c:
 	unlk	%fp			/* 4083ae20 4e5e */
 	rts				/* 4083ae22 4e75 */
 
-sub_4083ae24:
+CLEARWARMSTART:
 	CallVector	0x2068 4	/* 4083ae24 2f30 81e2 2068 0010 */
 	rts				/* 4083ae2c 4e75 */
 
-sub_4083ae2e:
+DOUNMOUNT:
 	CallVector	0x2068 3	/* 4083ae2e 2f30 81e2 2068 000c */
 	rts				/* 4083ae36 4e75 */
 
-sub_4083ae38:
+DODRIVERS:
 	CallVector	0x2068 2	/* 4083ae38 2f30 81e2 2068 0008 */
 	rts				/* 4083ae40 4e75 */
 
@@ -1643,13 +1643,13 @@ __v__SHUTINIT:
 	moveq	#10,%d0			/* 4083ae50 700a */
 	.short	0xa71e			/* 4083ae52 a71e */
 	movel	%a0,0xbbc		/* 4083ae54 21c8 0bbc */
-	pea	%pc@(sub_4083ae38)	/* 4083ae58 487a ffde */
+	pea	%pc@(DODRIVERS)	/* 4083ae58 487a ffde */
 	movew	#4,%sp@-		/* 4083ae5c 3f3c 0004 */
 	jsr	%pc@(SHUTINSTALL)	/* 4083ae60 4eba ffe0 */
-	pea	%pc@(sub_4083ae2e)	/* 4083ae64 487a ffc8 */
+	pea	%pc@(DOUNMOUNT)	/* 4083ae64 487a ffc8 */
 	movew	#3,%sp@-		/* 4083ae68 3f3c 0003 */
 	jsr	%pc@(SHUTINSTALL)	/* 4083ae6c 4eba ffd4 */
-	pea	%pc@(sub_4083ae24)	/* 4083ae70 487a ffb2 */
+	pea	%pc@(CLEARWARMSTART)	/* 4083ae70 487a ffb2 */
 	movew	#1,%sp@-		/* 4083ae74 3f3c 0001 */
 	jsr	%pc@(SHUTINSTALL)	/* 4083ae78 4eba ffc8 */
 	rts				/* 4083ae7c 4e75 */
