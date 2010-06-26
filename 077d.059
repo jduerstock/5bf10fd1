@@ -2111,29 +2111,21 @@ TEGETTEXT:
 
 TEDISPOSE:
 	linkw	%fp,#0			/* 4083bfc8 4e56 0000 */
-	.short	0x48e7	/* 4083bfcc 48e7 */
-	.short	0x3f38	/* 4083bfce 3f38 */
-	.short	0x286e	/* 4083bfd0 286e */
-	.short	0x0008	/* 4083bfd2 0008 */
-	.short	0x2654	/* 4083bfd4 2654 */
-	.short	0x206b	/* 4083bfd6 206b */
-	.short	0x0042	/* 4083bfd8 0042 */
-	.short	0x2050	/* 4083bfda 2050 */
-	.short	0x2028	/* 4083bfdc 2028 */
-	.short	0x0010	/* 4083bfde 0010 */
-	.short	0x0800	/* 4083bfe0 0800 */
-	.short	0x0001	/* 4083bfe2 0001 */
-	.short	0x6704	/* 4083bfe4 6704 */
-	.short	0x6100	/* 4083bfe6 6100 */
-	.short	0x3826	/* 4083bfe8 3826 */
-	.short	0x206b	/* 4083bfea 206b */
-	.short	0x003e	/* 4083bfec 003e */
-	.short	0xa023	/* 4083bfee a023 */
-	.short	0x206b	/* 4083bff0 206b */
-	.short	0x0042	/* 4083bff2 0042 */
-	.short	0xa023	/* 4083bff4 a023 */
-	.short	0x4a6b	/* 4083bff6 4a6b */
-	.short	0x0050	/* 4083bff8 0050 */
-	.short	0x6a1a	/* 4083bffa 6a1a */
-	.short	0x246b	/* 4083bffc 246b */
-	.short	0x004a	/* 4083bffe 004a */
+	moveml	%d2-%d7/%a2-%a4,%sp@-	/* 4083bfcc 48e7 3f38 */
+	moveal	%fp@(8),%a4		/* 4083bfd0 286e 0008 */
+	moveal	%a4@,%a3		/* 4083bfd4 2654 */
+	moveal	%a3@(66),%a0		/* 4083bfd6 206b 0042 */
+	moveal	%a0@,%a0		/* 4083bfda 2050 */
+	movel	%a0@(16),%d0		/* 4083bfdc 2028 0010 */
+	btst	#1,%d0			/* 4083bfe0 0800 0001 */
+	beqs	loc_4083bfea		/* 4083bfe4 6704 */
+	bsrw	sub_4083f80e		/* 4083bfe6 6100 3826 */
+
+loc_4083bfea:
+	moveal	%a3@(62),%a0		/* 4083bfea 206b 003e */
+	.short	0xa023			/* 4083bfee a023 */
+	moveal	%a3@(66),%a0		/* 4083bff0 206b 0042 */
+	.short	0xa023			/* 4083bff4 a023 */
+	tstw	%a3@(80)		/* 4083bff6 4a6b 0050 */
+	bpls	loc_4083c016		/* 4083bffa 6a1a */
+	moveal	%a3@(74),%a2		/* 4083bffc 246b 004a */
