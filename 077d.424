@@ -802,38 +802,28 @@ sub_409a87d0:
 	.align	16
 
 sub_409a8800:
-	.short	0x4e56	/* 409a8800 4e56 */
-	.short	0x0000	/* 409a8802 0000 */
-	.short	0x48e7	/* 409a8804 48e7 */
-	.short	0x0118	/* 409a8806 0118 */
-	.short	0x286e	/* 409a8808 286e */
-	.short	0x0008	/* 409a880a 0008 */
-	.short	0x7e00	/* 409a880c 7e00 */
-	.short	0x206e	/* 409a880e 206e */
-	.short	0x0012	/* 409a8810 0012 */
-	.short	0x2650	/* 409a8812 2650 */
-	.short	0x206e	/* 409a8814 206e */
-	.short	0x000c	/* 409a8816 000c */
-	.short	0x20bc	/* 409a8818 20bc */
-	.short	0x0000	/* 409a881a 0000 */
-	.short	0x8000	/* 409a881c 8000 */
-	.short	0x4a6e	/* 409a881e 4a6e */
-	.short	0x0010	/* 409a8820 0010 */
-	.short	0x6606	/* 409a8822 6606 */
+	linkw	%fp,#0			/* 409a8800 4e56 0000 */
+	moveml	%d7/%a3-%a4,%sp@-	/* 409a8804 48e7 0118 */
+	moveal	%fp@(8),%a4		/* 409a8808 286e 0008 */
+	moveq	#0,%d7			/* 409a880c 7e00 */
+	moveal	%fp@(18),%a0		/* 409a880e 206e 0012 */
+	moveal	%a0@,%a3		/* 409a8812 2650 */
+	moveal	%fp@(12),%a0		/* 409a8814 206e 000c */
+	movel	#32768,%a0@		/* 409a8818 20bc 0000 8000 */
+	tstw	%fp@(16)		/* 409a881e 4a6e 0010 */
+	bnes	loc_409a882a		/* 409a8822 6606 */
 	moveq	#0,%d0			/* 409a8824 7000 */
-	.short	0x2880	/* 409a8826 2880 */
-	.short	0x6006	/* 409a8828 6006 */
-	.short	0x28bc	/* 409a882a 28bc */
-	.short	0x0000	/* 409a882c 0000 */
-	.short	0x8000	/* 409a882e 8000 */
-	.short	0x2d47	/* 409a8830 2d47 */
-	.short	0x0016	/* 409a8832 0016 */
-	.short	0x4cee	/* 409a8834 4cee */
-	.short	0x1880	/* 409a8836 1880 */
-	.short	0xfff4	/* 409a8838 fff4 */
-	.short	0x4e5e	/* 409a883a 4e5e */
-	.short	0x4e74	/* 409a883c 4e74 */
-	.short	0x000e	/* 409a883e 000e */
+	movel	%d0,%a4@		/* 409a8826 2880 */
+	bras	loc_409a8830		/* 409a8828 6006 */
+
+loc_409a882a:
+	movel	#32768,%a4@		/* 409a882a 28bc 0000 8000 */
+
+loc_409a8830:
+	movel	%d7,%fp@(22)		/* 409a8830 2d47 0016 */
+	moveml	%fp@(-12),%d7/%a3-%a4	/* 409a8834 4cee 1880 fff4 */
+	unlk	%fp			/* 409a883a 4e5e */
+	rtd	#14			/* 409a883c 4e74 000e */
 
 sub_409a8840:
 	.short	0x4e56	/* 409a8840 4e56 */
