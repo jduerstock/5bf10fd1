@@ -484,76 +484,60 @@ sub_409a94e0:
 
 sub_409a9530:
 	linkw	%fp,#-2			/* 409a9530 4e56 fffe */
-	.short	0x48e7	/* 409a9534 48e7 */
-	.short	0x1318	/* 409a9536 1318 */
-	.short	0x266e	/* 409a9538 266e */
-	.short	0x000c	/* 409a953a 000c */
-	.short	0x2853	/* 409a953c 2853 */
-	.short	0x4247	/* 409a953e 4247 */
-	.short	0x4246	/* 409a9540 4246 */
-	.short	0x6050	/* 409a9542 6050 */
+	moveml	%d3/%d6-%d7/%a3-%a4,%sp@-	/* 409a9534 48e7 1318 */
+	moveal	%fp@(12),%a3		/* 409a9538 266e 000c */
+	moveal	%a3@,%a4		/* 409a953c 2853 */
+	clrw	%d7			/* 409a953e 4247 */
+	clrw	%d6			/* 409a9540 4246 */
+	bras	loc_409a9594		/* 409a9542 6050 */
+
+loc_409a9544:
 	moveq	#0,%d0			/* 409a9544 7000 */
-	.short	0x41ec	/* 409a9546 41ec */
-	.short	0x0106	/* 409a9548 0106 */
-	.short	0x1030	/* 409a954a 1030 */
-	moveq	#0,%d0			/* 409a954c 7000 */
-	.short	0x4a80	/* 409a954e 4a80 */
-	.short	0x6740	/* 409a9550 6740 */
-	.short	0xbe6c	/* 409a9552 be6c */
-	.short	0x0308	/* 409a9554 0308 */
-	.short	0x673a	/* 409a9556 673a */
-	.short	0x5246	/* 409a9558 5246 */
-	.short	0xbc6c	/* 409a955a bc6c */
-	.short	0x0306	/* 409a955c 0306 */
-	.short	0x6632	/* 409a955e 6632 */
-	.short	0x486e	/* 409a9560 486e */
-	.short	0xfffe	/* 409a9562 fffe */
-	.short	0x48c7	/* 409a9564 48c7 */
-	.short	0x2f07	/* 409a9566 2f07 */
-	.short	0x2f0b	/* 409a9568 2f0b */
-	.short	0x4eba	/* 409a956a 4eba */
-	.short	0x2654	/* 409a956c 2654 */
+	lea	%a4@(262),%a0		/* 409a9546 41ec 0106 */
+	moveb	%a0@(0x0000,%d7:w),%d0	/* 409a954a 1030 7000 */
+	tstl	%d0			/* 409a954e 4a80 */
+	beqs	loc_409a9592		/* 409a9550 6740 */
+	cmpw	%a4@(776),%d7		/* 409a9552 be6c 0308 */
+	beqs	loc_409a9592		/* 409a9556 673a */
+	addqw	#1,%d6			/* 409a9558 5246 */
+	cmpw	%a4@(774),%d6		/* 409a955a bc6c 0306 */
+	bnes	loc_409a9592		/* 409a955e 6632 */
+	pea	%fp@(-2)		/* 409a9560 486e fffe */
+	extl	%d7			/* 409a9564 48c7 */
+	movel	%d7,%sp@-		/* 409a9566 2f07 */
+	movel	%a3,%sp@-		/* 409a9568 2f0b */
+	jsr	%pc@(sub_409abbc0)	/* 409a956a 4eba 2654 */
 	moveq	#0,%d0			/* 409a956e 7000 */
-	.short	0x302e	/* 409a9570 302e */
-	.short	0xfffe	/* 409a9572 fffe */
-	.short	0x4a80	/* 409a9574 4a80 */
-	.short	0x206e	/* 409a9576 206e */
-	.short	0x0008	/* 409a9578 0008 */
-	.short	0x2080	/* 409a957a 2080 */
-	.short	0x302c	/* 409a957c 302c */
-	.short	0x0306	/* 409a957e 0306 */
-	.short	0x5240	/* 409a9580 5240 */
-	.short	0x3940	/* 409a9582 3940 */
-	.short	0x0306	/* 409a9584 0306 */
+	movew	%fp@(-2),%d0		/* 409a9570 302e fffe */
+	tstl	%d0			/* 409a9574 4a80 */
+	moveal	%fp@(8),%a0		/* 409a9576 206e 0008 */
+	movel	%d0,%a0@		/* 409a957a 2080 */
+	movew	%a4@(774),%d0		/* 409a957c 302c 0306 */
+	addqw	#1,%d0			/* 409a9580 5240 */
+	movew	%d0,%a4@(774)		/* 409a9582 3940 0306 */
 	moveq	#0,%d0			/* 409a9586 7000 */
-	.short	0x2d40	/* 409a9588 2d40 */
-	.short	0x0010	/* 409a958a 0010 */
-	.short	0x4fef	/* 409a958c 4fef */
-	.short	0x000c	/* 409a958e 000c */
-	.short	0x6016	/* 409a9590 6016 */
-	.short	0x5247	/* 409a9592 5247 */
-	.short	0x0c47	/* 409a9594 0c47 */
-	.short	0x0100	/* 409a9596 0100 */
-	.short	0x6daa	/* 409a9598 6daa */
-	.short	0x206e	/* 409a959a 206e */
-	.short	0x0008	/* 409a959c 0008 */
+	movel	%d0,%fp@(16)		/* 409a9588 2d40 0010 */
+	lea	%sp@(12),%sp		/* 409a958c 4fef 000c */
+	bras	loc_409a95a8		/* 409a9590 6016 */
+
+loc_409a9592:
+	addqw	#1,%d7			/* 409a9592 5247 */
+
+loc_409a9594:
+	cmpiw	#256,%d7		/* 409a9594 0c47 0100 */
+	blts	loc_409a9544		/* 409a9598 6daa */
+	moveal	%fp@(8),%a0		/* 409a959a 206e 0008 */
 	moveq	#-1,%d0			/* 409a959e 70ff */
-	.short	0x2080	/* 409a95a0 2080 */
-	.short	0x7200	/* 409a95a2 7200 */
-	.short	0x2d41	/* 409a95a4 2d41 */
-	.short	0x0010	/* 409a95a6 0010 */
-	.short	0x4cee	/* 409a95a8 4cee */
-	.short	0x18c8	/* 409a95aa 18c8 */
-	.short	0xffea	/* 409a95ac ffea */
-	.short	0x4e5e	/* 409a95ae 4e5e */
-	.short	0x4e74	/* 409a95b0 4e74 */
-	.short	0x0008	/* 409a95b2 0008 */
-	.short	0x0000	/* 409a95b4 0000 */
-	.short	0x0000	/* 409a95b6 0000 */
-	.short	0x0000	/* 409a95b8 0000 */
-	.short	0x0000	/* 409a95ba 0000 */
-	.short	0x0000	/* 409a95bc 0000 */
-	.short	0x0000	/* 409a95be 0000 */
+	movel	%d0,%a0@		/* 409a95a0 2080 */
+	moveq	#0,%d1			/* 409a95a2 7200 */
+	movel	%d1,%fp@(16)		/* 409a95a4 2d41 0010 */
+
+loc_409a95a8:
+	moveml	%fp@(-22),%d3/%d6-%d7/%a3-%a4	/* 409a95a8 4cee 18c8 ffea */
+	unlk	%fp			/* 409a95ae 4e5e */
+	rtd	#8			/* 409a95b0 4e74 0008 */
+
+	.align	16
 
 sub_409a95c0:
 	.short	0x4e56	/* 409a95c0 4e56 */
