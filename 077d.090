@@ -50,40 +50,34 @@ __v__DRAWWINDOWPIC:
 	unlk	%fp			/* 4085a080 4e5e */
 	rtd	#4			/* 4085a082 4e74 0004 */
 
-	.short	0x2278	/* 4085a086 2278 */
-	.short	0x2084	/* 4085a088 2084 */
-	.short	0x2269	/* 4085a08a 2269 */
-	.short	0x0080	/* 4085a08c 0080 */
+	moveal	0x2084,%a1		/* 4085a086 2278 2084 */
+	moveal	%a1@(128),%a1		/* 4085a08a 2269 0080 */
 	jmp	%a1@			/* 4085a08e 4ed1 */
 
 __v__CALCANCESTORRGNS:
 	linkw	%fp,#0			/* 4085a090 4e56 0000 */
-	.short	0x2f0c	/* 4085a094 2f0c */
-	.short	0x4eba	/* 4085a096 4eba */
-	.short	0xfbb8	/* 4085a098 fbb8 */
-	.short	0x598f	/* 4085a09a 598f */
-	.short	0x2f2e	/* 4085a09c 2f2e */
-	.short	0x0008	/* 4085a09e 0008 */
-	.short	0x4eba	/* 4085a0a0 4eba */
-	.short	0xfe6c	/* 4085a0a2 fe6c */
-	.short	0x285f	/* 4085a0a4 285f */
-	.short	0x600a	/* 4085a0a6 600a */
-	.short	0x2f0c	/* 4085a0a8 2f0c */
-	.short	0x4eba	/* 4085a0aa 4eba */
-	.short	0xea36	/* 4085a0ac ea36 */
-	.short	0x286c	/* 4085a0ae 286c */
-	.short	0x0082	/* 4085a0b0 0082 */
-	.short	0x200c	/* 4085a0b2 200c */
-	.short	0x66f2	/* 4085a0b4 66f2 */
-	.short	0x286e	/* 4085a0b6 286e */
-	.short	0xfffc	/* 4085a0b8 fffc */
-	.short	0x4e5e	/* 4085a0ba 4e5e */
-	.short	0x4e74	/* 4085a0bc 4e74 */
-	.short	0x0004	/* 4085a0be 0004 */
-	.short	0x2278	/* 4085a0c0 2278 */
-	.short	0x2084	/* 4085a0c2 2084 */
-	.short	0x2269	/* 4085a0c4 2269 */
-	.short	0x0084	/* 4085a0c6 0084 */
+	movel	%a4,%sp@-		/* 4085a094 2f0c */
+	jsr	%pc@(SYNCCURLAYER)	/* 4085a096 4eba fbb8 */
+	subql	#4,%sp			/* 4085a09a 598f */
+	movel	%fp@(8),%sp@-		/* 4085a09c 2f2e 0008 */
+	jsr	%pc@(__GETPARENT)	/* 4085a0a0 4eba fe6c */
+	moveal	%sp@+,%a4		/* 4085a0a4 285f */
+	bras	loc_4085a0b2		/* 4085a0a6 600a */
+
+loc_4085a0a8:
+	movel	%a4,%sp@-		/* 4085a0a8 2f0c */
+	jsr	%pc@(CALLWINDOWCALCGLUE)	/* 4085a0aa 4eba ea36 */
+	moveal	%a4@(130),%a4		/* 4085a0ae 286c 0082 */
+
+loc_4085a0b2:
+	movel	%a4,%d0			/* 4085a0b2 200c */
+	bnes	loc_4085a0a8		/* 4085a0b4 66f2 */
+	moveal	%fp@(-4),%a4		/* 4085a0b6 286e fffc */
+	unlk	%fp			/* 4085a0ba 4e5e */
+	rtd	#4			/* 4085a0bc 4e74 0004 */
+
+	moveal	0x2084,%a1		/* 4085a0c0 2278 2084 */
+	moveal	%a1@(132),%a1		/* 4085a0c4 2269 0084 */
 	jmp	%a1@			/* 4085a0c8 4ed1 */
 
 	.align	16
