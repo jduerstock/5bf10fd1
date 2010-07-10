@@ -1086,70 +1086,50 @@ PRESHOWHIDE:
 	.align	16
 
 __v__REDRAW:
-	.short	0x4e56	/* 4085a950 4e56 */
-	.short	0xffe4	/* 4085a952 ffe4 */
-	.short	0x48e7	/* 4085a954 48e7 */
-	.short	0x0018	/* 4085a956 0018 */
-	.short	0x266e	/* 4085a958 266e */
-	.short	0x0008	/* 4085a95a 0008 */
-	.short	0x2878	/* 4085a95c 2878 */
-	.short	0x09de	/* 4085a95e 09de */
-	.short	0x598f	/* 4085a960 598f */
-	.short	0x4eba	/* 4085a962 4eba */
-	.short	0xf5ec	/* 4085a964 f5ec */
-	.short	0x2f0b	/* 4085a966 2f0b */
-	.short	0xa90d	/* 4085a968 a90d */
-	.short	0x486e	/* 4085a96a 486e */
-	.short	0xffe4	/* 4085a96c ffe4 */
-	.short	0xa874	/* 4085a96e a874 */
-	.short	0x2f0c	/* 4085a970 2f0c */
-	.short	0xa873	/* 4085a972 a873 */
-	.short	0x486e	/* 4085a974 486e */
-	.short	0xfff8	/* 4085a976 fff8 */
-	.short	0x2f2c	/* 4085a978 2f2c */
-	.short	0x0010	/* 4085a97a 0010 */
-	.short	0x3f2c	/* 4085a97c 3f2c */
-	.short	0x0016	/* 4085a97e 0016 */
-	.short	0x3038	/* 4085a980 3038 */
-	.short	0x0baa	/* 4085a982 0baa */
-	.short	0xd06c	/* 4085a984 d06c */
-	.short	0x0010	/* 4085a986 0010 */
-	.short	0x3f00	/* 4085a988 3f00 */
-	.short	0xa8a7	/* 4085a98a a8a7 */
-	.short	0x558f	/* 4085a98c 558f */
-	.short	0x2053	/* 4085a98e 2053 */
-	.short	0x4868	/* 4085a990 4868 */
-	.short	0x0002	/* 4085a992 0002 */
-	.short	0x486e	/* 4085a994 486e */
-	.short	0xfff8	/* 4085a996 fff8 */
-	.short	0x486e	/* 4085a998 486e */
-	.short	0xfff8	/* 4085a99a fff8 */
-	.short	0xa8aa	/* 4085a99c a8aa */
-	.short	0x4a1f	/* 4085a99e 4a1f */
-	.short	0x6702	/* 4085a9a0 6702 */
-	.short	0xa81d	/* 4085a9a2 a81d */
-	.short	0x558f	/* 4085a9a4 558f */
-	.short	0x486e	/* 4085a9a6 486e */
-	.short	0xffe8	/* 4085a9a8 ffe8 */
-	.short	0x598f	/* 4085a9aa 598f */
-	.short	0x4eba	/* 4085a9ac 4eba */
-	.short	0xf5a2	/* 4085a9ae f5a2 */
-	.short	0x4eba	/* 4085a9b0 4eba */
-	.short	0xf7d6	/* 4085a9b2 f7d6 */
-	.short	0x2f2e	/* 4085a9b4 2f2e */
-	.short	0xffe4	/* 4085a9b6 ffe4 */
-	.short	0xa873	/* 4085a9b8 a873 */
-	.short	0x544f	/* 4085a9ba 544f */
-	.short	0x4cee	/* 4085a9bc 4cee */
-	.short	0x1800	/* 4085a9be 1800 */
-	.short	0xffdc	/* 4085a9c0 ffdc */
-	.short	0x4e5e	/* 4085a9c2 4e5e */
-	.short	0x4e74	/* 4085a9c4 4e74 */
-	.short	0x0004	/* 4085a9c6 0004 */
-	.short	0x2278	/* 4085a9c8 2278 */
-	.short	0x2084	/* 4085a9ca 2084 */
-	.short	0x2269	/* 4085a9cc 2269 */
-	.short	0x00c8	/* 4085a9ce 00c8 */
+	linkw	%fp,#-28		/* 4085a950 4e56 ffe4 */
+	moveml	%a3-%a4,%sp@-		/* 4085a954 48e7 0018 */
+	moveal	%fp@(8),%a3		/* 4085a958 266e 0008 */
+	moveal	0x9de,%a4		/* 4085a95c 2878 09de */
+	subql	#4,%sp			/* 4085a960 598f */
+	jsr	%pc@(__GETROOTLAYER)	/* 4085a962 4eba f5ec */
+	movel	%a3,%sp@-		/* 4085a966 2f0b */
+	.short	0xa90d			/* 4085a968 a90d */
+	pea	%fp@(-28)		/* 4085a96a 486e ffe4 */
+	.short	0xa874			/* 4085a96e a874 */
+	movel	%a4,%sp@-		/* 4085a970 2f0c */
+	.short	0xa873			/* 4085a972 a873 */
+	pea	%fp@(-8)		/* 4085a974 486e fff8 */
+	movel	%a4@(16),%sp@-		/* 4085a978 2f2c 0010 */
+	movew	%a4@(22),%sp@-		/* 4085a97c 3f2c 0016 */
+	movew	0xbaa,%d0		/* 4085a980 3038 0baa */
+	addw	%a4@(16),%d0		/* 4085a984 d06c 0010 */
+	movew	%d0,%sp@-		/* 4085a988 3f00 */
+	.short	0xa8a7			/* 4085a98a a8a7 */
+	subql	#2,%sp			/* 4085a98c 558f */
+	moveal	%a3@,%a0		/* 4085a98e 2053 */
+	pea	%a0@(2)			/* 4085a990 4868 0002 */
+	pea	%fp@(-8)		/* 4085a994 486e fff8 */
+	pea	%fp@(-8)		/* 4085a998 486e fff8 */
+	.short	0xa8aa			/* 4085a99c a8aa */
+	tstb	%sp@+			/* 4085a99e 4a1f */
+	beqs	loc_4085a9a4		/* 4085a9a0 6702 */
+	.short	0xa81d			/* 4085a9a2 a81d */
+
+loc_4085a9a4:
+	subql	#2,%sp			/* 4085a9a4 558f */
+	pea	%fp@(-24)		/* 4085a9a6 486e ffe8 */
+	subql	#4,%sp			/* 4085a9aa 598f */
+	jsr	%pc@(__GETROOTLAYER)	/* 4085a9ac 4eba f5a2 */
+	jsr	%pc@(__CHECKUPDATEIN)	/* 4085a9b0 4eba f7d6 */
+	movel	%fp@(-28),%sp@-		/* 4085a9b4 2f2e ffe4 */
+	.short	0xa873			/* 4085a9b8 a873 */
+	addqw	#2,%sp			/* 4085a9ba 544f */
+	moveml	%fp@(-36),%a3-%a4	/* 4085a9bc 4cee 1800 ffdc */
+	unlk	%fp			/* 4085a9c2 4e5e */
+	rtd	#4			/* 4085a9c4 4e74 0004 */
+
+	moveal	0x2084,%a1		/* 4085a9c8 2278 2084 */
+	moveal	%a1@(200),%a1		/* 4085a9cc 2269 00c8 */
 	jmp	%a1@			/* 4085a9d0 4ed1 */
 
 	.align	16
