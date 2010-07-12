@@ -1563,37 +1563,35 @@ sub_40817cc4:
 	rts				/* 40817d52 4e75 */
 
 TESTFORDISKMODE:
-	.short	0x0838	/* 40817d54 0838 */
-	.short	0x0005	/* 40817d56 0005 */
-	.short	0x0dd5	/* 40817d58 0dd5 */
-	.short	0x670e	/* 40817d5a 670e */
-	.short	0x2078	/* 40817d5c 2078 */
-	.short	0x01d4	/* 40817d5e 01d4 */
-	.short	0x7008	/* 40817d60 7008 */
-	.short	0xc010	/* 40817d62 c010 */
-	.short	0x0a00	/* 40817d64 0a00 */
-	.short	0x0008	/* 40817d66 0008 */
+	btst	#5,0xdd5		/* 40817d54 0838 0005 0dd5 */
+	beqs	loc_40817d6a		/* 40817d5a 670e */
+	moveal	0x1d4,%a0		/* 40817d5c 2078 01d4 */
+	moveq	#8,%d0			/* 40817d60 7008 */
+	andb	%a0@,%d0		/* 40817d62 c010 */
+	eorib	#8,%d0			/* 40817d64 0a00 0008 */
 	rts				/* 40817d68 4e75 */
-	.short	0x303c	/* 40817d6a 303c */
-	.short	0xa89f	/* 40817d6c a89f */
-	.short	0xa746	/* 40817d6e a746 */
-	.short	0x2248	/* 40817d70 2248 */
-	.short	0x303a	/* 40817d72 303a */
-	.short	0x0012	/* 40817d74 0012 */
-	.short	0xa746	/* 40817d76 a746 */
-	.short	0xb3c8	/* 40817d78 b3c8 */
-	.short	0x6712	/* 40817d7a 6712 */
-	.short	0x594f	/* 40817d7c 594f */
-	.short	0x4879	/* 40817d7e 4879 */
-	.short	0x7364	/* 40817d80 7364 */
-	.short	0x6d20	/* 40817d82 6d20 */
-	.short	0x42a7	/* 40817d84 42a7 */
-	.short	0xaa57	/* 40817d86 aa57 */
-	.short	0x7002	/* 40817d88 7002 */
-	.short	0xc09f	/* 40817d8a c09f */
+
+loc_40817d6a:
+	movew	#0xa89f,%d0		/* 40817d6a 303c a89f */
+	.short	0xa746			/* 40817d6e a746 */
+	moveal	%a0,%a1			/* 40817d70 2248 */
+	movew	%pc@(loc_40817d86),%d0	/* 40817d72 303a 0012 */
+	.short	0xa746			/* 40817d76 a746 */
+	cmpal	%a0,%a1			/* 40817d78 b3c8 */
+	beqs	loc_40817d8e		/* 40817d7a 6712 */
+	subqw	#4,%sp			/* 40817d7c 594f */
+	pea	0x73646d20		/* 40817d7e 4879 7364 6d20 */
+	clrl	%sp@-			/* 40817d84 42a7 */
+
+loc_40817d86:
+	.short	0xaa57			/* 40817d86 aa57 */
+	moveq	#2,%d0			/* 40817d88 7002 */
+	andl	%sp@+,%d0		/* 40817d8a c09f */
 	rts				/* 40817d8c 4e75 */
-	.short	0x4e71	/* 40817d8e 4e71 */
-	.short	0x4e71	/* 40817d90 4e71 */
+
+loc_40817d8e:
+	nop				/* 40817d8e 4e71 */
+	nop				/* 40817d90 4e71 */
 	moveq	#0,%d0			/* 40817d92 7000 */
 	rts				/* 40817d94 4e75 */
 
