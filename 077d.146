@@ -1999,26 +1999,14 @@ fsg_IncrementElement:
 	.short	0xfff8	/* 40892fcc fff8 */
 	.short	0x4e5e	/* 40892fce 4e5e */
 	rts				/* 40892fd0 4e75 */
-	.short	0x0000	/* 40892fd2 0000 */
-	.short	0x0000	/* 40892fd4 0000 */
-	.short	0x0000	/* 40892fd6 0000 */
-	.short	0x0000	/* 40892fd8 0000 */
-	.short	0x0000	/* 40892fda 0000 */
-	.short	0x0000	/* 40892fdc 0000 */
-	.short	0x0000	/* 40892fde 0000 */
-	.short	0x4e56	/* 40892fe0 4e56 */
-	.short	0xfff8	/* 40892fe2 fff8 */
-	.short	0x48e7	/* 40892fe4 48e7 */
-	.short	0x0018	/* 40892fe6 0018 */
-	.short	0x286e	/* 40892fe8 286e */
-	.short	0x0008	/* 40892fea 0008 */
-	.short	0x206c	/* 40892fec 206c */
-	.short	0x001c	/* 40892fee 001c */
-	.short	0x2d48	/* 40892ff0 2d48 */
-	.short	0xfff8	/* 40892ff2 fff8 */
-	.short	0x2d68	/* 40892ff4 2d68 */
-	.short	0x0010	/* 40892ff6 0010 */
-	.short	0xfffc	/* 40892ff8 fffc */
-	.short	0x206c	/* 40892ffa 206c */
-	.short	0x001c	/* 40892ffc 001c */
-	.short	0x266c	/* 40892ffe 266c */
+
+	.align	16
+
+	linkw	%fp,#-8			/* 40892fe0 4e56 fff8 */
+	moveml	%a3-%a4,%sp@-		/* 40892fe4 48e7 0018 */
+	moveal	%fp@(8),%a4		/* 40892fe8 286e 0008 */
+	moveal	%a4@(28),%a0		/* 40892fec 206c 001c */
+	movel	%a0,%fp@(-8)		/* 40892ff0 2d48 fff8 */
+	movel	%a0@(16),%fp@(-4)	/* 40892ff4 2d68 0010 fffc */
+	moveal	%a4@(28),%a0		/* 40892ffa 206c 001c */
+	moveal	%a4@(380),%a3		/* 40892ffe 266c 017c */
