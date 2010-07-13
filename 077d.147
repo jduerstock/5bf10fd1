@@ -171,73 +171,52 @@ loc_408931f6:
 	rts				/* 408931fe 4e75 */
 
 __v__fsg_RunFontProgram:
-	.short	0x4e56	/* 40893200 4e56 */
-	.short	0xfff8	/* 40893202 fff8 */
-	.short	0x48e7	/* 40893204 48e7 */
-	.short	0x0118	/* 40893206 0118 */
-	.short	0x266e	/* 40893208 266e */
-	.short	0x0008	/* 4089320a 0008 */
-	.short	0x206b	/* 4089320c 206b */
-	.short	0x001c	/* 4089320e 001c */
-	.short	0x286b	/* 40893210 286b */
-	.short	0x017c	/* 40893212 017c */
-	.short	0xd9e8	/* 40893214 d9e8 */
-	.short	0x0010	/* 40893216 0010 */
-	.short	0x426c	/* 40893218 426c */
-	.short	0x00c6	/* 4089321a 00c6 */
-	.short	0x7009	/* 4089321c 7009 */
-	.short	0x2f00	/* 4089321e 2f00 */
-	.short	0x486e	/* 40893220 486e */
-	.short	0xfffc	/* 40893222 fffc */
-	.short	0x486e	/* 40893224 486e */
-	.short	0xfff8	/* 40893226 fff8 */
-	.short	0x2f0b	/* 40893228 2f0b */
-	.short	0x4eba	/* 4089322a 4eba */
-	.short	0x12aa	/* 4089322c 12aa */
-	.short	0x4aae	/* 4089322e 4aae */
-	.short	0xfffc	/* 40893230 fffc */
-	.short	0x4fef	/* 40893232 4fef */
-	.short	0x0010	/* 40893234 0010 */
-	.short	0x6742	/* 40893236 6742 */
-	.short	0x197c	/* 40893238 197c */
-	.short	0x0001	/* 4089323a 0001 */
-	.short	0x00c5	/* 4089323c 00c5 */
-	.short	0x2f0c	/* 4089323e 2f0c */
-	.short	0x2f0b	/* 40893240 2f0b */
-	.short	0x4eba	/* 40893242 4eba */
-	.short	0xfccc	/* 40893244 fccc */
-	.short	0x2f0b	/* 40893246 2f0b */
-	.short	0x4eba	/* 40893248 4eba */
-	.short	0xfd96	/* 4089324a fd96 */
-	.short	0x2f2e	/* 4089324c 2f2e */
-	.short	0x000c	/* 4089324e 000c */
-	.short	0x2f0c	/* 40893250 2f0c */
-	.short	0x202e	/* 40893252 202e */
-	.short	0xfffc	/* 40893254 fffc */
-	.short	0xd0ac	/* 40893256 d0ac */
-	.short	0x00a0	/* 40893258 00a0 */
-	.short	0x2f00	/* 4089325a 2f00 */
-	.short	0x2f2c	/* 4089325c 2f2c */
-	.short	0x00a0	/* 4089325e 00a0 */
-	.short	0x486b	/* 40893260 486b */
-	.short	0x0080	/* 40893262 0080 */
-	.short	0x4eba	/* 40893264 4eba */
-	.short	0xab70	/* 40893266 ab70 */
-	.short	0x2e00	/* 40893268 2e00 */
-	.short	0x2f0c	/* 4089326a 2f0c */
-	.short	0x2f0b	/* 4089326c 2f0b */
-	.short	0x4eba	/* 4089326e 4eba */
-	.short	0xfd00	/* 40893270 fd00 */
-	.short	0x2007	/* 40893272 2007 */
-	.short	0x4fef	/* 40893274 4fef */
-	.short	0x0028	/* 40893276 0028 */
-	.short	0x6002	/* 40893278 6002 */
+	linkw	%fp,#-8			/* 40893200 4e56 fff8 */
+	moveml	%d7/%a3-%a4,%sp@-	/* 40893204 48e7 0118 */
+	moveal	%fp@(8),%a3		/* 40893208 266e 0008 */
+	moveal	%a3@(28),%a0		/* 4089320c 206b 001c */
+	moveal	%a3@(380),%a4		/* 40893210 286b 017c */
+	addal	%a0@(16),%a4		/* 40893214 d9e8 0010 */
+	clrw	%a4@(198)		/* 40893218 426c 00c6 */
+	moveq	#9,%d0			/* 4089321c 7009 */
+	movel	%d0,%sp@-		/* 4089321e 2f00 */
+	pea	%fp@(-4)		/* 40893220 486e fffc */
+	pea	%fp@(-8)		/* 40893224 486e fff8 */
+	movel	%a3,%sp@-		/* 40893228 2f0b */
+	jsr	%pc@(sfnt_GetOffsetAndLength)	/* 4089322a 4eba 12aa */
+	tstl	%fp@(-4)		/* 4089322e 4aae fffc */
+	lea	%sp@(16),%sp		/* 40893232 4fef 0010 */
+	beqs	loc_4089327a		/* 40893236 6742 */
+	moveb	#1,%a4@(197)		/* 40893238 197c 0001 00c5 */
+	movel	%a4,%sp@-		/* 4089323e 2f0c */
+	movel	%a3,%sp@-		/* 40893240 2f0b */
+	jsr	%pc@(fsg_SetUpProgramPtrs)	/* 40893242 4eba fccc */
+	movel	%a3,%sp@-		/* 40893246 2f0b */
+	jsr	%pc@(fsg_SetUpTablePtrs)	/* 40893248 4eba fd96 */
+	movel	%fp@(12),%sp@-		/* 4089324c 2f2e 000c */
+	movel	%a4,%sp@-		/* 40893250 2f0c */
+	movel	%fp@(-4),%d0		/* 40893252 202e fffc */
+	addl	%a4@(160),%d0		/* 40893256 d0ac 00a0 */
+	movel	%d0,%sp@-		/* 4089325a 2f00 */
+	movel	%a4@(160),%sp@-		/* 4089325c 2f2c 00a0 */
+	pea	%a3@(128)		/* 40893260 486b 0080 */
+	jsr	%pc@(fnt_Execute)	/* 40893264 4eba ab70 */
+	movel	%d0,%d7			/* 40893268 2e00 */
+	movel	%a4,%sp@-		/* 4089326a 2f0c */
+	movel	%a3,%sp@-		/* 4089326c 2f0b */
+	jsr	%pc@(fsg_ReleaseProgramPtrs)	/* 4089326e 4eba fd00 */
+	movel	%d7,%d0			/* 40893272 2007 */
+	lea	%sp@(40),%sp		/* 40893274 4fef 0028 */
+	bras	loc_4089327c		/* 40893278 6002 */
+
+loc_4089327a:
 	moveq	#0,%d0			/* 4089327a 7000 */
-	.short	0x4cee	/* 4089327c 4cee */
-	.short	0x1880	/* 4089327e 1880 */
-	.short	0xffec	/* 40893280 ffec */
-	.short	0x4e5e	/* 40893282 4e5e */
+
+loc_4089327c:
+	moveml	%fp@(-20),%d7/%a3-%a4	/* 4089327c 4cee 1880 ffec */
+	unlk	%fp			/* 40893282 4e5e */
 	rts				/* 40893284 4e75 */
+
 	.short	0x2278	/* 40893286 2278 */
 	.short	0x202c	/* 40893288 202c */
 	.short	0x2269	/* 4089328a 2269 */
