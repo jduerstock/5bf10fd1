@@ -168,68 +168,54 @@ __v__AL_FINDVOLBYVREFNUM:
 
 __v__AL_findVolume:
 	linkw	%fp,#0			/* 408471a0 4e56 0000 */
-	.short	0x48e7	/* 408471a4 48e7 */
-	.short	0x0318	/* 408471a6 0318 */
-	.short	0x266e	/* 408471a8 266e */
-	.short	0x0010	/* 408471aa 0010 */
-	.short	0x2c2e	/* 408471ac 2c2e */
-	.short	0x000c	/* 408471ae 000c */
-	.short	0x286e	/* 408471b0 286e */
-	.short	0x0008	/* 408471b2 0008 */
-	.short	0x2f2e	/* 408471b4 2f2e */
-	.short	0x0014	/* 408471b6 0014 */
-	.short	0x2f0b	/* 408471b8 2f0b */
-	.short	0x2f0c	/* 408471ba 2f0c */
-	.short	0x4eba	/* 408471bc 4eba */
-	.short	0x199c	/* 408471be 199c */
-	.short	0x3e00	/* 408471c0 3e00 */
-	.short	0x0c47	/* 408471c2 0c47 */
-	.short	0xffdd	/* 408471c4 ffdd */
-	.short	0x4fef	/* 408471c6 4fef */
-	.short	0x000c	/* 408471c8 000c */
-	.short	0x6632	/* 408471ca 6632 */
+	moveml	%d6-%d7/%a3-%a4,%sp@-	/* 408471a4 48e7 0318 */
+	moveal	%fp@(16),%a3		/* 408471a8 266e 0010 */
+	movel	%fp@(12),%d6		/* 408471ac 2c2e 000c */
+	moveal	%fp@(8),%a4		/* 408471b0 286e 0008 */
+	movel	%fp@(20),%sp@-		/* 408471b4 2f2e 0014 */
+	movel	%a3,%sp@-		/* 408471b8 2f0b */
+	movel	%a4,%sp@-		/* 408471ba 2f0c */
+	jsr	%pc@(AL_checkIfMounted)	/* 408471bc 4eba 199c */
+	movew	%d0,%d7			/* 408471c0 3e00 */
+	cmpiw	#-35,%d7		/* 408471c2 0c47 ffdd */
+	lea	%sp@(12),%sp		/* 408471c6 4fef 000c */
+	bnes	loc_408471fe		/* 408471ca 6632 */
 	moveq	#1,%d0			/* 408471cc 7001 */
-	.short	0xc086	/* 408471ce c086 */
-	.short	0x672c	/* 408471d0 672c */
+	andl	%d6,%d0			/* 408471ce c086 */
+	beqs	loc_408471fe		/* 408471d0 672c */
 	moveq	#-1,%d0			/* 408471d2 70ff */
-	.short	0xb06c	/* 408471d4 b06c */
-	.short	0x002c	/* 408471d6 002c */
-	.short	0x6724	/* 408471d8 6724 */
-	.short	0x2f2e	/* 408471da 2f2e */
-	.short	0x0018	/* 408471dc 0018 */
-	.short	0x7002	/* 408471de 7002 */
-	.short	0xc086	/* 408471e0 c086 */
-	.short	0x6704	/* 408471e2 6704 */
+	cmpw	%a4@(44),%d0		/* 408471d4 b06c 002c */
+	beqs	loc_408471fe		/* 408471d8 6724 */
+	movel	%fp@(24),%sp@-		/* 408471da 2f2e 0018 */
+	moveq	#2,%d0			/* 408471de 7002 */
+	andl	%d6,%d0			/* 408471e0 c086 */
+	beqs	loc_408471e8		/* 408471e2 6704 */
 	moveq	#0,%d0			/* 408471e4 7000 */
-	.short	0x6002	/* 408471e6 6002 */
+	bras	loc_408471ea		/* 408471e6 6002 */
+
+loc_408471e8:
 	moveq	#1,%d0			/* 408471e8 7001 */
-	.short	0x2f00	/* 408471ea 2f00 */
-	.short	0x2f2e	/* 408471ec 2f2e */
-	.short	0x0014	/* 408471ee 0014 */
-	.short	0x2f0b	/* 408471f0 2f0b */
-	.short	0x2f0c	/* 408471f2 2f0c */
-	.short	0x4eba	/* 408471f4 4eba */
-	.short	0x2632	/* 408471f6 2632 */
-	.short	0x3e00	/* 408471f8 3e00 */
-	.short	0x4fef	/* 408471fa 4fef */
-	.short	0x0014	/* 408471fc 0014 */
-	.short	0x3007	/* 408471fe 3007 */
-	.short	0x4cee	/* 40847200 4cee */
-	.short	0x18c0	/* 40847202 18c0 */
-	.short	0xfff0	/* 40847204 fff0 */
-	.short	0x4e5e	/* 40847206 4e5e */
+
+loc_408471ea:
+	movel	%d0,%sp@-		/* 408471ea 2f00 */
+	movel	%fp@(20),%sp@-		/* 408471ec 2f2e 0014 */
+	movel	%a3,%sp@-		/* 408471f0 2f0b */
+	movel	%a4,%sp@-		/* 408471f2 2f0c */
+	jsr	%pc@(AL_mountVolume)	/* 408471f4 4eba 2632 */
+	movew	%d0,%d7			/* 408471f8 3e00 */
+	lea	%sp@(20),%sp		/* 408471fa 4fef 0014 */
+
+loc_408471fe:
+	movew	%d7,%d0			/* 408471fe 3007 */
+	moveml	%fp@(-16),%d6-%d7/%a3-%a4	/* 40847200 4cee 18c0 fff0 */
+	unlk	%fp			/* 40847206 4e5e */
 	rts				/* 40847208 4e75 */
-	.short	0x2278	/* 4084720a 2278 */
-	.short	0x2018	/* 4084720c 2018 */
-	.short	0x2269	/* 4084720e 2269 */
-	.short	0x009c	/* 40847210 009c */
+
+	moveal	0x2018,%a1		/* 4084720a 2278 2018 */
+	moveal	%a1@(156),%a1		/* 4084720e 2269 009c */
 	jmp	%a1@			/* 40847212 4ed1 */
-	.short	0x0000	/* 40847214 0000 */
-	.short	0x0000	/* 40847216 0000 */
-	.short	0x0000	/* 40847218 0000 */
-	.short	0x0000	/* 4084721a 0000 */
-	.short	0x0000	/* 4084721c 0000 */
-	.short	0x0000	/* 4084721e 0000 */
+
+	.align	16
 
 __v__ALI_FINDDIRBYID:
 	.short	0x4e56	/* 40847220 4e56 */
