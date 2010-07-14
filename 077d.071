@@ -1265,54 +1265,52 @@ loc_40847b76:
 
 __v__ALI_GETFILENAME:
 	linkw	%fp,#0			/* 40847ba0 4e56 0000 */
-	.short	0x48e7	/* 40847ba4 48e7 */
-	.short	0x0318	/* 40847ba6 0318 */
-	.short	0x266e	/* 40847ba8 266e */
-	.short	0x0008	/* 40847baa 0008 */
-	.short	0x3c2e	/* 40847bac 3c2e */
-	.short	0x000c	/* 40847bae 000c */
-	.short	0x4247	/* 40847bb0 4247 */
-	.short	0x286e	/* 40847bb2 286e */
-	.short	0x000e	/* 40847bb4 000e */
-	.short	0xd8c6	/* 40847bb6 d8c6 */
-	.short	0x6014	/* 40847bb8 6014 */
+	moveml	%d6-%d7/%a3-%a4,%sp@-	/* 40847ba4 48e7 0318 */
+	moveal	%fp@(8),%a3		/* 40847ba8 266e 0008 */
+	movew	%fp@(12),%d6		/* 40847bac 3c2e 000c */
+	clrw	%d7			/* 40847bb0 4247 */
+	moveal	%fp@(14),%a4		/* 40847bb2 286e 000e */
+	addaw	%d6,%a4			/* 40847bb6 d8c6 */
+	bras	loc_40847bce		/* 40847bb8 6014 */
+
+loc_40847bba:
 	moveq	#0,%d0			/* 40847bba 7000 */
-	.short	0x1024	/* 40847bbc 1024 */
-	.short	0x0c40	/* 40847bbe 0c40 */
-	.short	0x003a	/* 40847bc0 003a */
-	.short	0x6606	/* 40847bc2 6606 */
-	.short	0x3c07	/* 40847bc4 3c07 */
-	.short	0x524c	/* 40847bc6 524c */
-	.short	0x6008	/* 40847bc8 6008 */
-	.short	0x3007	/* 40847bca 3007 */
-	.short	0x5247	/* 40847bcc 5247 */
-	.short	0xbc47	/* 40847bce bc47 */
-	.short	0x6ee8	/* 40847bd0 6ee8 */
-	.short	0x0c46	/* 40847bd2 0c46 */
-	.short	0x00ff	/* 40847bd4 00ff */
-	.short	0x6f04	/* 40847bd6 6f04 */
-	.short	0x3c3c	/* 40847bd8 3c3c */
-	.short	0x00ff	/* 40847bda 00ff */
-	.short	0x1686	/* 40847bdc 1686 */
-	.short	0x204c	/* 40847bde 204c */
-	.short	0x200b	/* 40847be0 200b */
-	.short	0x5280	/* 40847be2 5280 */
-	.short	0x2240	/* 40847be4 2240 */
-	.short	0x48c6	/* 40847be6 48c6 */
-	.short	0x2006	/* 40847be8 2006 */
-	.short	0xa02e	/* 40847bea a02e */
-	.short	0x4cee	/* 40847bec 4cee */
-	.short	0x18c0	/* 40847bee 18c0 */
-	.short	0xfff0	/* 40847bf0 fff0 */
-	.short	0x4e5e	/* 40847bf2 4e5e */
-	.short	0x4e74	/* 40847bf4 4e74 */
-	.short	0x000a	/* 40847bf6 000a */
+	moveb	%a4@-,%d0		/* 40847bbc 1024 */
+	cmpiw	#58,%d0			/* 40847bbe 0c40 003a */
+	bnes	loc_40847bca		/* 40847bc2 6606 */
+	movew	%d7,%d6			/* 40847bc4 3c07 */
+	addqw	#1,%a4			/* 40847bc6 524c */
+	bras	loc_40847bd2		/* 40847bc8 6008 */
+
+loc_40847bca:
+	movew	%d7,%d0			/* 40847bca 3007 */
+	addqw	#1,%d7			/* 40847bcc 5247 */
+
+loc_40847bce:
+	cmpw	%d7,%d6			/* 40847bce bc47 */
+	bgts	loc_40847bba		/* 40847bd0 6ee8 */
+
+loc_40847bd2:
+	cmpiw	#255,%d6		/* 40847bd2 0c46 00ff */
+	bles	loc_40847bdc		/* 40847bd6 6f04 */
+	movew	#255,%d6		/* 40847bd8 3c3c 00ff */
+
+loc_40847bdc:
+	moveb	%d6,%a3@		/* 40847bdc 1686 */
+	moveal	%a4,%a0			/* 40847bde 204c */
+	movel	%a3,%d0			/* 40847be0 200b */
+	addql	#1,%d0			/* 40847be2 5280 */
+	moveal	%d0,%a1			/* 40847be4 2240 */
+	extl	%d6			/* 40847be6 48c6 */
+	movel	%d6,%d0			/* 40847be8 2006 */
+	.short	0xa02e			/* 40847bea a02e */
+	moveml	%fp@(-16),%d6-%d7/%a3-%a4	/* 40847bec 4cee 18c0 fff0 */
+	unlk	%fp			/* 40847bf2 4e5e */
+	rtd	#10			/* 40847bf4 4e74 000a */
 
 ALI_GETFILENAME:
-	.short	0x2278	/* 40847bf8 2278 */
-	.short	0x2018	/* 40847bfa 2018 */
-	.short	0x2269	/* 40847bfc 2269 */
-	.short	0x00cc	/* 40847bfe 00cc */
+	moveal	0x2018,%a1		/* 40847bf8 2278 2018 */
+	moveal	%a1@(204),%a1		/* 40847bfc 2269 00cc */
 	jmp	%a1@			/* 40847c00 4ed1 */
 
 	.align	16
