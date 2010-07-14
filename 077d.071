@@ -1089,26 +1089,21 @@ sub_408479dc:
 
 __v__gestaltAliasMgr:
 	linkw	%fp,#0			/* 408479e0 4e56 0000 */
-	.short	0x303c	/* 408479e4 303c */
-	.short	0xea51	/* 408479e6 ea51 */
-	.short	0x7200	/* 408479e8 7200 */
-	.short	0x0cae	/* 408479ea 0cae */
-	.short	0x616c	/* 408479ec 616c */
-	.short	0x6973	/* 408479ee 6973 */
-	.short	0x000c	/* 408479f0 000c */
-	.short	0x6606	/* 408479f2 6606 */
-	.short	0x08c1	/* 408479f4 08c1 */
-	.short	0x0000	/* 408479f6 0000 */
-	.short	0x4240	/* 408479f8 4240 */
-	.short	0x206e	/* 408479fa 206e */
-	.short	0x0008	/* 408479fc 0008 */
-	.short	0x2081	/* 408479fe 2081 */
-	.short	0x3d40	/* 40847a00 3d40 */
-	.short	0x0010	/* 40847a02 0010 */
-	.short	0x4e5e	/* 40847a04 4e5e */
-	.short	0x205f	/* 40847a06 205f */
-	.short	0x508f	/* 40847a08 508f */
-	.short	0x4ed0	/* 40847a0a 4ed0 */
+	movew	#-5551,%d0		/* 408479e4 303c ea51 */
+	moveq	#0,%d1			/* 408479e8 7200 */
+	cmpil	#1634494835,%fp@(12)	/* 408479ea 0cae 616c 6973 000c */
+	bnes	loc_408479fa		/* 408479f2 6606 */
+	bset	#0,%d1			/* 408479f4 08c1 0000 */
+	clrw	%d0			/* 408479f8 4240 */
+
+loc_408479fa:
+	moveal	%fp@(8),%a0		/* 408479fa 206e 0008 */
+	movel	%d1,%a0@		/* 408479fe 2081 */
+	movew	%d0,%fp@(16)		/* 40847a00 3d40 0010 */
+	unlk	%fp			/* 40847a04 4e5e */
+	moveal	%sp@+,%a0		/* 40847a06 205f */
+	addql	#8,%sp			/* 40847a08 508f */
+	jmp	%a0@			/* 40847a0a 4ed0 */
 
 gestaltAliasMgr:
 	CallVector	0x2018 2	/* 40847a0c 2f30 81e2 2018 0008 */
