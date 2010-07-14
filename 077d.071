@@ -226,7 +226,7 @@ __v__ALI_FINDDIRBYID:
 	movel	%fp@(16),%sp@-		/* 40847232 2f2e 0010 */
 	movel	%fp@(8),%sp@-		/* 40847236 2f2e 0008 */
 	pea	%fp@(-108)		/* 4084723a 486e ff94 */
-	jsr	%pc@(sub_40847f1e)	/* 4084723e 4eba 0cde */
+	jsr	%pc@(AL_GETCATINFO)	/* 4084723e 4eba 0cde */
 	movew	%sp@+,%d7		/* 40847242 3e1f */
 	bnes	loc_4084724e		/* 40847244 6608 */
 	moveal	%fp@(12),%a0		/* 40847246 206e 000c */
@@ -256,7 +256,7 @@ __v__ALI_FINDBYNAME:
 	movel	%fp@(20),%sp@-		/* 4084728a 2f2e 0014 */
 	movel	%fp@(16),%sp@-		/* 4084728e 2f2e 0010 */
 	pea	%fp@(-108)		/* 40847292 486e ff94 */
-	jsr	%pc@(sub_40847f1e)	/* 40847296 4eba 0c86 */
+	jsr	%pc@(AL_GETCATINFO)	/* 40847296 4eba 0c86 */
 	movew	%sp@+,%d7		/* 4084729a 3e1f */
 	bnes	loc_408472b8		/* 4084729c 661a */
 	movel	%fp@(-60),%a4@		/* 4084729e 28ae ffc4 */
@@ -391,7 +391,7 @@ loc_408473de:
 	movel	%d4,%sp@-		/* 408473e6 2f04 */
 	movel	%a4,%sp@-		/* 408473e8 2f0c */
 	pea	%fp@(-172)		/* 408473ea 486e ff54 */
-	jsr	%pc@(sub_40847f1e)	/* 408473ee 4eba 0b2e */
+	jsr	%pc@(AL_GETCATINFO)	/* 408473ee 4eba 0b2e */
 	movew	%sp@+,%d7		/* 408473f2 3e1f */
 	cmpiw	#-5000,%d7		/* 408473f4 0c47 ec78 */
 	beqs	loc_408473de		/* 408473f8 67e4 */
@@ -421,6 +421,7 @@ ALI_FINDFILEBYNUM:
 
 	.align	16
 
+FindGivenPath:
 	linkw	%fp,#-330		/* 40847430 4e56 feb6 */
 	moveml	%d4-%d7/%a3-%a4,%sp@-	/* 40847434 48e7 0f18 */
 	movew	%fp@(10),%d5		/* 40847438 3a2e 000a */
@@ -555,78 +556,67 @@ loc_4084753c:
 	.align	16
 
 __v__AL_findByAbsPath:
-	.short	0x4e56	/* 40847550 4e56 */
-	.short	0xfffa	/* 40847552 fffa */
-	.short	0x48e7	/* 40847554 48e7 */
-	.short	0x0018	/* 40847556 0018 */
-	.short	0x598f	/* 40847558 598f */
-	.short	0x2f2e	/* 4084755a 2f2e */
-	.short	0x000c	/* 4084755c 000c */
-	.short	0x7002	/* 4084755e 7002 */
-	.short	0x3f00	/* 40847560 3f00 */
-	.short	0x486e	/* 40847562 486e */
-	.short	0xfffa	/* 40847564 fffa */
-	.short	0x4eba	/* 40847566 4eba */
-	.short	0x0aaa	/* 40847568 0aaa */
-	.short	0x285f	/* 4084756a 285f */
-	.short	0x4a6e	/* 4084756c 4a6e */
-	.short	0xfffa	/* 4084756e fffa */
-	.short	0x6604	/* 40847570 6604 */
-	.short	0x70d5	/* 40847572 70d5 */
-	.short	0x604a	/* 40847574 604a */
-	.short	0x264c	/* 40847576 264c */
-	.short	0xd6ee	/* 40847578 d6ee */
-	.short	0xfffa	/* 4084757a fffa */
-	.short	0x6002	/* 4084757c 6002 */
-	.short	0x524c	/* 4084757e 524c */
-	.short	0x703a	/* 40847580 703a */
-	.short	0xb014	/* 40847582 b014 */
-	.short	0x6704	/* 40847584 6704 */
-	.short	0xb7cc	/* 40847586 b7cc */
-	.short	0x62f4	/* 40847588 62f4 */
-	.short	0x2f2e	/* 4084758a 2f2e */
-	.short	0x0014	/* 4084758c 0014 */
-	.short	0x2f2e	/* 4084758e 2f2e */
-	.short	0x0010	/* 40847590 0010 */
-	.short	0x486e	/* 40847592 486e */
-	.short	0xfffc	/* 40847594 fffc */
-	.short	0x302e	/* 40847596 302e */
-	.short	0xfffa	/* 40847598 fffa */
-	.short	0x48c0	/* 4084759a 48c0 */
-	.short	0x206e	/* 4084759c 206e */
-	.short	0x000c	/* 4084759e 000c */
-	.short	0x7200	/* 408475a0 7200 */
-	.short	0x1228	/* 408475a2 1228 */
-	.short	0x000a	/* 408475a4 000a */
-	.short	0x9081	/* 408475a6 9081 */
-	.short	0x2f00	/* 408475a8 2f00 */
-	.short	0x2f0c	/* 408475aa 2f0c */
-	.short	0x7002	/* 408475ac 7002 */
-	.short	0x2f00	/* 408475ae 2f00 */
-	.short	0x322e	/* 408475b0 322e */
-	.short	0x000a	/* 408475b2 000a */
-	.short	0x48c1	/* 408475b4 48c1 */
-	.short	0x2f01	/* 408475b6 2f01 */
-	.short	0x4eba	/* 408475b8 4eba */
-	.short	0xfe76	/* 408475ba fe76 */
-	.short	0x4fef	/* 408475bc 4fef */
-	.short	0x001c	/* 408475be 001c */
-	.short	0x4cee	/* 408475c0 4cee */
-	.short	0x1800	/* 408475c2 1800 */
-	.short	0xfff2	/* 408475c4 fff2 */
-	.short	0x4e5e	/* 408475c6 4e5e */
+	linkw	%fp,#-6			/* 40847550 4e56 fffa */
+	moveml	%a3-%a4,%sp@-		/* 40847554 48e7 0018 */
+	subql	#4,%sp			/* 40847558 598f */
+	movel	%fp@(12),%sp@-		/* 4084755a 2f2e 000c */
+	moveq	#2,%d0			/* 4084755e 7002 */
+	movew	%d0,%sp@-		/* 40847560 3f00 */
+	pea	%fp@(-6)		/* 40847562 486e fffa */
+	jsr	%pc@(AL_GETVARPTR)	/* 40847566 4eba 0aaa */
+	moveal	%sp@+,%a4		/* 4084756a 285f */
+	tstw	%fp@(-6)		/* 4084756c 4a6e fffa */
+	bnes	loc_40847576		/* 40847570 6604 */
+	moveq	#-43,%d0		/* 40847572 70d5 */
+	bras	loc_408475c0		/* 40847574 604a */
+
+loc_40847576:
+	moveal	%a4,%a3			/* 40847576 264c */
+	addaw	%fp@(-6),%a3		/* 40847578 d6ee fffa */
+	bras	loc_40847580		/* 4084757c 6002 */
+
+loc_4084757e:
+	addqw	#1,%a4			/* 4084757e 524c */
+
+loc_40847580:
+	moveq	#58,%d0			/* 40847580 703a */
+	cmpb	%a4@,%d0		/* 40847582 b014 */
+	beqs	loc_4084758a		/* 40847584 6704 */
+	cmpal	%a4,%a3			/* 40847586 b7cc */
+	bhis	loc_4084757e		/* 40847588 62f4 */
+
+loc_4084758a:
+	movel	%fp@(20),%sp@-		/* 4084758a 2f2e 0014 */
+	movel	%fp@(16),%sp@-		/* 4084758e 2f2e 0010 */
+	pea	%fp@(-4)		/* 40847592 486e fffc */
+	movew	%fp@(-6),%d0		/* 40847596 302e fffa */
+	extl	%d0			/* 4084759a 48c0 */
+	moveal	%fp@(12),%a0		/* 4084759c 206e 000c */
+	moveq	#0,%d1			/* 408475a0 7200 */
+	moveb	%a0@(10),%d1		/* 408475a2 1228 000a */
+	subl	%d1,%d0			/* 408475a6 9081 */
+	movel	%d0,%sp@-		/* 408475a8 2f00 */
+	movel	%a4,%sp@-		/* 408475aa 2f0c */
+	moveq	#2,%d0			/* 408475ac 7002 */
+	movel	%d0,%sp@-		/* 408475ae 2f00 */
+	movew	%fp@(10),%d1		/* 408475b0 322e 000a */
+	extl	%d1			/* 408475b4 48c1 */
+	movel	%d1,%sp@-		/* 408475b6 2f01 */
+	jsr	%pc@(FindGivenPath)	/* 408475b8 4eba fe76 */
+	lea	%sp@(28),%sp		/* 408475bc 4fef 001c */
+
+loc_408475c0:
+	moveml	%fp@(-14),%a3-%a4	/* 408475c0 4cee 1800 fff2 */
+	unlk	%fp			/* 408475c6 4e5e */
 	rts				/* 408475c8 4e75 */
+
 	.short	0x2278	/* 408475ca 2278 */
 	.short	0x2018	/* 408475cc 2018 */
 	.short	0x2269	/* 408475ce 2269 */
 	.short	0x00b4	/* 408475d0 00b4 */
 	jmp	%a1@			/* 408475d2 4ed1 */
-	.short	0x0000	/* 408475d4 0000 */
-	.short	0x0000	/* 408475d6 0000 */
-	.short	0x0000	/* 408475d8 0000 */
-	.short	0x0000	/* 408475da 0000 */
-	.short	0x0000	/* 408475dc 0000 */
-	.short	0x0000	/* 408475de 0000 */
+
+	.align	16
 
 __v__AL_findByAbsPathOnOtherVolume:
 	.short	0x4e56	/* 408475e0 4e56 */
@@ -1777,7 +1767,7 @@ __v__AL_GETCATINFO:
 	.short	0x4e74	/* 40847f1a 4e74 */
 	.short	0x000e	/* 40847f1c 000e */
 
-sub_40847f1e:
+AL_GETCATINFO:
 	.short	0x2278	/* 40847f1e 2278 */
 	.short	0x2018	/* 40847f20 2018 */
 	.short	0x2269	/* 40847f22 2269 */
