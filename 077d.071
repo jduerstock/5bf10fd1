@@ -1316,49 +1316,37 @@ ALI_GETFILENAME:
 	.align	16
 
 __v__ALI_STRIPFILENAME:
-	.short	0x4e56	/* 40847c10 4e56 */
-	.short	0xff00	/* 40847c12 ff00 */
-	.short	0x48e7	/* 40847c14 48e7 */
-	.short	0x0118	/* 40847c16 0118 */
-	.short	0x266e	/* 40847c18 266e */
-	.short	0x000e	/* 40847c1a 000e */
-	.short	0x286e	/* 40847c1c 286e */
-	.short	0x0008	/* 40847c1e 0008 */
-	.short	0x3e2e	/* 40847c20 3e2e */
-	.short	0x000c	/* 40847c22 000c */
-	.short	0x2f0b	/* 40847c24 2f0b */
-	.short	0x3f07	/* 40847c26 3f07 */
-	.short	0x486e	/* 40847c28 486e */
-	.short	0xff00	/* 40847c2a ff00 */
-	.short	0x7016	/* 40847c2c 7016 */
-	.short	0xa823	/* 40847c2e a823 */
-	.short	0x48c7	/* 40847c30 48c7 */
+	linkw	%fp,#-256		/* 40847c10 4e56 ff00 */
+	moveml	%d7/%a3-%a4,%sp@-	/* 40847c14 48e7 0118 */
+	moveal	%fp@(14),%a3		/* 40847c18 266e 000e */
+	moveal	%fp@(8),%a4		/* 40847c1c 286e 0008 */
+	movew	%fp@(12),%d7		/* 40847c20 3e2e 000c */
+	movel	%a3,%sp@-		/* 40847c24 2f0b */
+	movew	%d7,%sp@-		/* 40847c26 3f07 */
+	pea	%fp@(-256)		/* 40847c28 486e ff00 */
+	moveq	#22,%d0			/* 40847c2c 7016 */
+	.short	0xa823			/* 40847c2e a823 */
+	extl	%d7			/* 40847c30 48c7 */
 	moveq	#0,%d0			/* 40847c32 7000 */
-	.short	0x102e	/* 40847c34 102e */
-	.short	0xff00	/* 40847c36 ff00 */
-	.short	0x2207	/* 40847c38 2207 */
-	.short	0x9280	/* 40847c3a 9280 */
-	.short	0x1881	/* 40847c3c 1881 */
-	.short	0x204b	/* 40847c3e 204b */
-	.short	0x200c	/* 40847c40 200c */
-	.short	0x5280	/* 40847c42 5280 */
-	.short	0x2240	/* 40847c44 2240 */
+	moveb	%fp@(-256),%d0		/* 40847c34 102e ff00 */
+	movel	%d7,%d1			/* 40847c38 2207 */
+	subl	%d0,%d1			/* 40847c3a 9280 */
+	moveb	%d1,%a4@		/* 40847c3c 1881 */
+	moveal	%a3,%a0			/* 40847c3e 204b */
+	movel	%a4,%d0			/* 40847c40 200c */
+	addql	#1,%d0			/* 40847c42 5280 */
+	moveal	%d0,%a1			/* 40847c44 2240 */
 	moveq	#0,%d0			/* 40847c46 7000 */
-	.short	0x1014	/* 40847c48 1014 */
-	.short	0x4a80	/* 40847c4a 4a80 */
-	.short	0xa02e	/* 40847c4c a02e */
-	.short	0x4cee	/* 40847c4e 4cee */
-	.short	0x1880	/* 40847c50 1880 */
-	.short	0xfef4	/* 40847c52 fef4 */
-	.short	0x4e5e	/* 40847c54 4e5e */
-	.short	0x4e74	/* 40847c56 4e74 */
-	.short	0x000a	/* 40847c58 000a */
+	moveb	%a4@,%d0		/* 40847c48 1014 */
+	tstl	%d0			/* 40847c4a 4a80 */
+	.short	0xa02e			/* 40847c4c a02e */
+	moveml	%fp@(-268),%d7/%a3-%a4	/* 40847c4e 4cee 1880 fef4 */
+	unlk	%fp			/* 40847c54 4e5e */
+	rtd	#10			/* 40847c56 4e74 000a */
 
 ALI_STRIPFILENAME:
-	.short	0x2278	/* 40847c5a 2278 */
-	.short	0x2018	/* 40847c5c 2018 */
-	.short	0x2269	/* 40847c5e 2269 */
-	.short	0x00d0	/* 40847c60 00d0 */
+	moveal	0x2018,%a1		/* 40847c5a 2278 2018 */
+	moveal	%a1@(208),%a1		/* 40847c5e 2269 00d0 */
 	jmp	%a1@			/* 40847c62 4ed1 */
 
 	.align	16
