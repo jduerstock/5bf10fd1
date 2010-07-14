@@ -1375,73 +1375,57 @@ ALI_COPYPSTRING:
 
 __v__ALI_APPENDPSTRING:
 	linkw	%fp,#0			/* 40847ca0 4e56 0000 */
-	.short	0x48e7	/* 40847ca4 48e7 */
-	.short	0x0018	/* 40847ca6 0018 */
-	.short	0x266e	/* 40847ca8 266e */
-	.short	0x0008	/* 40847caa 0008 */
-	.short	0x286e	/* 40847cac 286e */
-	.short	0x000c	/* 40847cae 000c */
-	.short	0x200c	/* 40847cb0 200c */
-	.short	0x5280	/* 40847cb2 5280 */
-	.short	0x2040	/* 40847cb4 2040 */
+	moveml	%a3-%a4,%sp@-		/* 40847ca4 48e7 0018 */
+	moveal	%fp@(8),%a3		/* 40847ca8 266e 0008 */
+	moveal	%fp@(12),%a4		/* 40847cac 286e 000c */
+	movel	%a4,%d0			/* 40847cb0 200c */
+	addql	#1,%d0			/* 40847cb2 5280 */
+	moveal	%d0,%a0			/* 40847cb4 2040 */
 	moveq	#0,%d0			/* 40847cb6 7000 */
-	.short	0x1013	/* 40847cb8 1013 */
-	.short	0x5240	/* 40847cba 5240 */
-	.short	0x48c0	/* 40847cbc 48c0 */
-	.short	0xd08b	/* 40847cbe d08b */
-	.short	0x2240	/* 40847cc0 2240 */
+	moveb	%a3@,%d0		/* 40847cb8 1013 */
+	addqw	#1,%d0			/* 40847cba 5240 */
+	extl	%d0			/* 40847cbc 48c0 */
+	addl	%a3,%d0			/* 40847cbe d08b */
+	moveal	%d0,%a1			/* 40847cc0 2240 */
 	moveq	#0,%d0			/* 40847cc2 7000 */
-	.short	0x1014	/* 40847cc4 1014 */
-	.short	0xa02e	/* 40847cc6 a02e */
-	.short	0x1014	/* 40847cc8 1014 */
-	.short	0xd113	/* 40847cca d113 */
-	.short	0x4cee	/* 40847ccc 4cee */
-	.short	0x1800	/* 40847cce 1800 */
-	.short	0xfff8	/* 40847cd0 fff8 */
-	.short	0x4e5e	/* 40847cd2 4e5e */
-	.short	0x4e74	/* 40847cd4 4e74 */
-	.short	0x0008	/* 40847cd6 0008 */
+	moveb	%a4@,%d0		/* 40847cc4 1014 */
+	.short	0xa02e			/* 40847cc6 a02e */
+	moveb	%a4@,%d0		/* 40847cc8 1014 */
+	addb	%d0,%a3@		/* 40847cca d113 */
+	moveml	%fp@(-8),%a3-%a4	/* 40847ccc 4cee 1800 fff8 */
+	unlk	%fp			/* 40847cd2 4e5e */
+	rtd	#8			/* 40847cd4 4e74 0008 */
 
 ALI_APPENDPSTRING:
-	.short	0x2278	/* 40847cd8 2278 */
-	.short	0x2018	/* 40847cda 2018 */
-	.short	0x2269	/* 40847cdc 2269 */
-	.short	0x00d8	/* 40847cde 00d8 */
+	moveal	0x2018,%a1		/* 40847cd8 2278 2018 */
+	moveal	%a1@(216),%a1		/* 40847cdc 2269 00d8 */
 	jmp	%a1@			/* 40847ce0 4ed1 */
 
 	.align	16
 
 __v__ALI_FSEQUALSTRING:
 	linkw	%fp,#0			/* 40847cf0 4e56 0000 */
-	.short	0x558f	/* 40847cf4 558f */
-	.short	0x2f2e	/* 40847cf6 2f2e */
-	.short	0x000c	/* 40847cf8 000c */
-	.short	0x2f2e	/* 40847cfa 2f2e */
-	.short	0x0008	/* 40847cfc 0008 */
+	subql	#2,%sp			/* 40847cf4 558f */
+	movel	%fp@(12),%sp@-		/* 40847cf6 2f2e 000c */
+	movel	%fp@(8),%sp@-		/* 40847cfa 2f2e 0008 */
 	moveq	#0,%d0			/* 40847cfe 7000 */
-	.short	0x1f00	/* 40847d00 1f00 */
-	.short	0x7201	/* 40847d02 7201 */
-	.short	0x1f01	/* 40847d04 1f01 */
-	.short	0x4eba	/* 40847d06 4eba */
-	.short	0x0018	/* 40847d08 0018 */
-	.short	0x1d5f	/* 40847d0a 1d5f */
-	.short	0x0010	/* 40847d0c 0010 */
-	.short	0x4e5e	/* 40847d0e 4e5e */
-	.short	0x4e74	/* 40847d10 4e74 */
-	.short	0x0008	/* 40847d12 0008 */
+	moveb	%d0,%sp@-		/* 40847d00 1f00 */
+	moveq	#1,%d1			/* 40847d02 7201 */
+	moveb	%d1,%sp@-		/* 40847d04 1f01 */
+	jsr	%pc@(sub_40847d20)	/* 40847d06 4eba 0018 */
+	moveb	%sp@+,%fp@(16)		/* 40847d0a 1d5f 0010 */
+	unlk	%fp			/* 40847d0e 4e5e */
+	rtd	#8			/* 40847d10 4e74 0008 */
 
 ALI_FSEQUALSTRING:
-	.short	0x2278	/* 40847d14 2278 */
-	.short	0x2018	/* 40847d16 2018 */
-	.short	0x2269	/* 40847d18 2269 */
-	.short	0x00dc	/* 40847d1a 00dc */
+	moveal	0x2018,%a1		/* 40847d14 2278 2018 */
+	moveal	%a1@(220),%a1		/* 40847d18 2269 00dc */
 	jmp	%a1@			/* 40847d1c 4ed1 */
 
 	.align	16
 
-	.short	0x60ff	/* 40847d20 60ff */
-	.short	0x0005	/* 40847d22 0005 */
-	.short	0xbaae	/* 40847d24 baae */
+sub_40847d20:
+	bral	EQUALSTRING		/* 40847d20 60ff 0005 baae */
 
 	.align	16
 
