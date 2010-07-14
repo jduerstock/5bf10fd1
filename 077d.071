@@ -277,68 +277,53 @@ loc_408472b8:
 	rtd	#18			/* 408472c4 4e74 0012 */
 
 ALI_FINDBYNAME:
-	.short	0x2278	/* 408472c8 2278 */
-	.short	0x2018	/* 408472ca 2018 */
-	.short	0x2269	/* 408472cc 2269 */
-	.short	0x00a4	/* 408472ce 00a4 */
+	moveal	0x2018,%a1		/* 408472c8 2278 2018 */
+	moveal	%a1@(164),%a1		/* 408472cc 2269 00a4 */
 	jmp	%a1@			/* 408472d0 4ed1 */
 
 	.align	16
 
 __v__ALI_FINDFILEBYID:
-	.short	0x4e56	/* 408472e0 4e56 */
-	.short	0xffc6	/* 408472e2 ffc6 */
-	.short	0x2f07	/* 408472e4 2f07 */
-	.short	0x2e2e	/* 408472e6 2e2e */
-	.short	0x0010	/* 408472e8 0010 */
+	linkw	%fp,#-58		/* 408472e0 4e56 ffc6 */
+	movel	%d7,%sp@-		/* 408472e4 2f07 */
+	movel	%fp@(16),%d7		/* 408472e6 2e2e 0010 */
 	moveq	#-1,%d0			/* 408472ea 70ff */
-	.short	0xb087	/* 408472ec b087 */
-	.short	0x6608	/* 408472ee 6608 */
-	.short	0x3d7c	/* 408472f0 3d7c */
-	.short	0xffd5	/* 408472f2 ffd5 */
-	.short	0x0016	/* 408472f4 0016 */
-	.short	0x602e	/* 408472f6 602e */
-	.short	0x3d6e	/* 408472f8 3d6e */
-	.short	0x0014	/* 408472fa 0014 */
-	.short	0xffdc	/* 408472fc ffdc */
-	.short	0x2d47	/* 408472fe 2d47 */
-	.short	0xfffc	/* 40847300 fffc */
-	.short	0x2d6e	/* 40847302 2d6e */
-	.short	0x0008	/* 40847304 0008 */
-	.short	0xffd8	/* 40847306 ffd8 */
-	.short	0x558f	/* 40847308 558f */
-	.short	0x486e	/* 4084730a 486e */
-	.short	0xffc6	/* 4084730c ffc6 */
+	cmpl	%d7,%d0			/* 408472ec b087 */
+	bnes	loc_408472f8		/* 408472ee 6608 */
+	movew	#-43,%fp@(22)		/* 408472f0 3d7c ffd5 0016 */
+	bras	loc_40847326		/* 408472f6 602e */
+
+loc_408472f8:
+	movew	%fp@(20),%fp@(-36)	/* 408472f8 3d6e 0014 ffdc */
+	movel	%d7,%fp@(-4)		/* 408472fe 2d47 fffc */
+	movel	%fp@(8),%fp@(-40)	/* 40847302 2d6e 0008 ffd8 */
+	subql	#2,%sp			/* 40847308 558f */
+	pea	%fp@(-58)		/* 4084730a 486e ffc6 */
 	moveq	#0,%d0			/* 4084730e 7000 */
-	.short	0x1f00	/* 40847310 1f00 */
-	.short	0x4eba	/* 40847312 4eba */
-	.short	0x002c	/* 40847314 002c */
-	.short	0x3e1f	/* 40847316 3e1f */
-	.short	0x6608	/* 40847318 6608 */
-	.short	0x206e	/* 4084731a 206e */
-	.short	0x000c	/* 4084731c 000c */
-	.short	0x20ae	/* 4084731e 20ae */
-	.short	0xfff6	/* 40847320 fff6 */
-	.short	0x3d47	/* 40847322 3d47 */
-	.short	0x0016	/* 40847324 0016 */
-	.short	0x2e2e	/* 40847326 2e2e */
-	.short	0xffc2	/* 40847328 ffc2 */
-	.short	0x4e5e	/* 4084732a 4e5e */
-	.short	0x4e74	/* 4084732c 4e74 */
-	.short	0x000e	/* 4084732e 000e */
+	moveb	%d0,%sp@-		/* 40847310 1f00 */
+	jsr	%pc@(sub_40847340)	/* 40847312 4eba 002c */
+	movew	%sp@+,%d7		/* 40847316 3e1f */
+	bnes	loc_40847322		/* 40847318 6608 */
+	moveal	%fp@(12),%a0		/* 4084731a 206e 000c */
+	movel	%fp@(-10),%a0@		/* 4084731e 20ae fff6 */
+
+loc_40847322:
+	movew	%d7,%fp@(22)		/* 40847322 3d47 0016 */
+
+loc_40847326:
+	movel	%fp@(-62),%d7		/* 40847326 2e2e ffc2 */
+	unlk	%fp			/* 4084732a 4e5e */
+	rtd	#14			/* 4084732c 4e74 000e */
 
 ALI_FINDFILEBYID:
-	.short	0x2278	/* 40847330 2278 */
-	.short	0x2018	/* 40847332 2018 */
-	.short	0x2269	/* 40847334 2269 */
-	.short	0x00a8	/* 40847336 00a8 */
+	moveal	0x2018,%a1		/* 40847330 2278 2018 */
+	moveal	%a1@(168),%a1		/* 40847334 2269 00a8 */
 	jmp	%a1@			/* 40847338 4ed1 */
 
 	.align	16
 
-	.short	0x60ff	/* 40847340 60ff */
-	.short	0x0005	/* 40847342 0005 */
-	.short	0xc73e	/* 40847344 c73e */
+sub_40847340:
+	bral	PBRESOLVEFILEIDREF	/* 40847340 60ff 0005 c73e */
 
 	.align	16
 
