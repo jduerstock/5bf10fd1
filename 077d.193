@@ -977,21 +977,18 @@ SYSBEEP:
 	rts				/* 408c179e 4e75 */
 
 ORIGBOOTBEEP:
-	.short	0x244e	/* 408c17a0 244e */
-	.short	0x49fa	/* 408c17a2 49fa */
-	.short	0x0116	/* 408c17a4 0116 */
-	.short	0x4dfa	/* 408c17a6 4dfa */
-	.short	0x0008	/* 408c17a8 0008 */
-	.short	0x60ff	/* 408c17aa 60ff */
-	.short	0x0000	/* 408c17ac 0000 */
-	.short	0x0024	/* 408c17ae 0024 */
-	.short	0x2c4a	/* 408c17b0 2c4a */
+	moveal	%fp,%a2			/* 408c17a0 244e */
+	lea	%pc@(byte_408c18ba),%a4	/* 408c17a2 49fa 0116 */
+	lea	%pc@(loc_408c17b0),%fp	/* 408c17a6 4dfa 0008 */
+	bral	loc_408c17d0		/* 408c17aa 60ff 0000 0024 */
+
+loc_408c17b0:
+	moveal	%a2,%fp			/* 408c17b0 2c4a */
 	rts				/* 408c17b2 4e75 */
 
 ORIGBOOTBEEP6:
-	.short	0x49fa	/* 408c17b4 49fa */
-	.short	0x0104	/* 408c17b6 0104 */
-	.short	0x6016	/* 408c17b8 6016 */
+	lea	%pc@(byte_408c18ba),%a4	/* 408c17b4 49fa 0104 */
+	bras	loc_408c17d0		/* 408c17b8 6016 */
 
 ORIGERRORBEEP1:
 	.short	0x49fa	/* 408c17ba 49fa */
@@ -1011,6 +1008,8 @@ ORIGERRORBEEP3:
 ORIGERRORBEEP4:
 	.short	0x49fa	/* 408c17cc 49fa */
 	.short	0x0158	/* 408c17ce 0158 */
+
+loc_408c17d0:
 	.short	0x422b	/* 408c17d0 422b */
 	.short	0x0801	/* 408c17d2 0801 */
 	.short	0x422b	/* 408c17d4 422b */
@@ -1128,6 +1127,8 @@ ORIGERRORBEEP4:
 	.short	0x422b	/* 408c18b4 422b */
 	.short	0x0801	/* 408c18b6 0801 */
 	.short	0x4ed6	/* 408c18b8 4ed6 */
+
+byte_408c18ba:
 	.short	0x0204	/* 408c18ba 0204 */
 	.short	0x0000	/* 408c18bc 0000 */
 	.short	0x000d	/* 408c18be 000d */
