@@ -1002,30 +1002,20 @@ loc_4080c9aa:
 	jmp	%fp@			/* 4080c9aa 4ed6 */
 
 loc_4080c9ac:
-	.short	0x08e9	/* 4080c9ac 08e9 */
-	.short	0x0004	/* 4080c9ae 0004 */
-	.short	0x1600	/* 4080c9b0 1600 */
-	.short	0x0811	/* 4080c9b2 0811 */
-	.short	0x0003	/* 4080c9b4 0003 */
-	.short	0x6700	/* 4080c9b6 6700 */
-	.short	0x0044	/* 4080c9b8 0044 */
-	.short	0x1340	/* 4080c9ba 1340 */
-	.short	0x1400	/* 4080c9bc 1400 */
-	.short	0x0891	/* 4080c9be 0891 */
-	.short	0x0005	/* 4080c9c0 0005 */
-	.short	0x0829	/* 4080c9c2 0829 */
-	.short	0x0002	/* 4080c9c4 0002 */
-	.short	0x1a00	/* 4080c9c6 1a00 */
-	.short	0x6600	/* 4080c9c8 6600 */
-	.short	0x0020	/* 4080c9ca 0020 */
-	.short	0x51cc	/* 4080c9cc 51cc */
-	.short	0xfff4	/* 4080c9ce fff4 */
-	.short	0x383c	/* 4080c9d0 383c */
-	.short	0x2000	/* 4080c9d2 2000 */
-	.short	0x4844	/* 4080c9d4 4844 */
-	.short	0x5344	/* 4080c9d6 5344 */
-	.short	0x6600	/* 4080c9d8 6600 */
-	.short	0xff20	/* 4080c9da ff20 */
+	bset	#4,%a1@(5632)		/* 4080c9ac 08e9 0004 1600 */
+	btst	#3,%a1@			/* 4080c9b2 0811 0003 */
+	beqw	loc_4080c9fc		/* 4080c9b6 6700 0044 */
+	moveb	%d0,%a1@(5120)		/* 4080c9ba 1340 1400 */
+	bclr	#5,%a1@			/* 4080c9be 0891 0005 */
+
+loc_4080c9c2:
+	btst	#2,%a1@(6656)		/* 4080c9c2 0829 0002 1a00 */
+	bnew	loc_4080c9ea		/* 4080c9c8 6600 0020 */
+	dbf	%d4,loc_4080c9c2	/* 4080c9cc 51cc fff4 */
+	movew	#8192,%d4		/* 4080c9d0 383c 2000 */
+	swap	%d4			/* 4080c9d4 4844 */
+	subqw	#1,%d4			/* 4080c9d6 5344 */
+	bnew	loc_4080c8fa		/* 4080c9d8 6600 ff20 */
 
 loc_4080c9dc:
 	orib	#48,%a1@		/* 4080c9dc 0011 0030 */
