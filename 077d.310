@@ -1612,40 +1612,37 @@ off_40936c1a:
 	.short	sub_40936c9c-off_40936c1a	/* 40936c9a 0082 */
 
 sub_40936c9c:
-	.short	0x2078	/* 40936c9c 2078 */
-	.short	0x02b6	/* 40936c9e 02b6 */
-	.short	0x2228	/* 40936ca0 2228 */
-	.short	0x0154	/* 40936ca2 0154 */
-	.short	0x670a	/* 40936ca4 670a */
-	.short	0x2241	/* 40936ca6 2241 */
-	.short	0x2251	/* 40936ca8 2251 */
-	.short	0x2229	/* 40936caa 2229 */
-	.short	0x0010	/* 40936cac 0010 */
-	.short	0x6610	/* 40936cae 6610 */
-	.short	0x2228	/* 40936cb0 2228 */
-	.short	0x017c	/* 40936cb2 017c */
-	.short	0x6712	/* 40936cb4 6712 */
-	.short	0x2241	/* 40936cb6 2241 */
-	.short	0x2251	/* 40936cb8 2251 */
-	.short	0x2229	/* 40936cba 2229 */
-	.short	0x0010	/* 40936cbc 0010 */
-	.short	0x6708	/* 40936cbe 6708 */
-	.short	0x2041	/* 40936cc0 2041 */
-	.short	0x43fa	/* 40936cc2 43fa */
-	.short	0x0004	/* 40936cc4 0004 */
-	.short	0x4ed0	/* 40936cc6 4ed0 */
-	.short	0x205f	/* 40936cc8 205f */
-	.short	0xe048	/* 40936cca e048 */
-	.short	0xd040	/* 40936ccc d040 */
-	.short	0xdec0	/* 40936cce dec0 */
-	.short	0x3ebc	/* 40936cd0 3ebc */
-	.short	0xffce	/* 40936cd2 ffce */
-	.short	0x4ed0	/* 40936cd4 4ed0 */
-	.short	0x0000	/* 40936cd6 0000 */
-	.short	0x0000	/* 40936cd8 0000 */
-	.short	0x0000	/* 40936cda 0000 */
-	.short	0x0000	/* 40936cdc 0000 */
-	.short	0x0000	/* 40936cde 0000 */
+	moveal	0x2b6,%a0		/* 40936c9c 2078 02b6 */
+	movel	%a0@(340),%d1		/* 40936ca0 2228 0154 */
+	beqs	loc_40936cb0		/* 40936ca4 670a */
+	moveal	%d1,%a1			/* 40936ca6 2241 */
+	moveal	%a1@,%a1		/* 40936ca8 2251 */
+	movel	%a1@(16),%d1		/* 40936caa 2229 0010 */
+	bnes	loc_40936cc0		/* 40936cae 6610 */
+
+loc_40936cb0:
+	movel	%a0@(380),%d1		/* 40936cb0 2228 017c */
+	beqs	loc_40936cc8		/* 40936cb4 6712 */
+	moveal	%d1,%a1			/* 40936cb6 2241 */
+	moveal	%a1@,%a1		/* 40936cb8 2251 */
+	movel	%a1@(16),%d1		/* 40936cba 2229 0010 */
+	beqs	loc_40936cc8		/* 40936cbe 6708 */
+
+loc_40936cc0:
+	moveal	%d1,%a0			/* 40936cc0 2041 */
+	lea	%pc@(loc_40936cc8),%a1	/* 40936cc2 43fa 0004 */
+	jmp	%a0@			/* 40936cc6 4ed0 */
+
+loc_40936cc8:
+	moveal	%sp@+,%a0		/* 40936cc8 205f */
+	lsrw	#8,%d0			/* 40936cca e048 */
+	addw	%d0,%d0			/* 40936ccc d040 */
+	addaw	%d0,%sp			/* 40936cce dec0 */
+	movew	#-50,%sp@		/* 40936cd0 3ebc ffce */
+	jmp	%a0@			/* 40936cd4 4ed0 */
+
+	.align	16
+
 	.short	0x2040	/* 40936ce0 2040 */
 	.short	0x0880	/* 40936ce2 0880 */
 	.short	0x0000	/* 40936ce4 0000 */
