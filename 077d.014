@@ -1101,17 +1101,14 @@ sub_4080ea1a:
 
 	.align	16
 
-	.short	0x2078	/* 4080ea30 2078 */
-	.short	0x0dd8	/* 4080ea32 0dd8 */
-	.short	0x0c28	/* 4080ea34 0c28 */
-	.short	0x0005	/* 4080ea36 0005 */
-	.short	0x0013	/* 4080ea38 0013 */
-	.short	0x660a	/* 4080ea3a 660a */
-	.short	0x2078	/* 4080ea3c 2078 */
-	.short	0x0cec	/* 4080ea3e 0cec */
-	.short	0x41d0	/* 4080ea40 41d0 */
-	.short	0x0010	/* 4080ea42 0010 */
-	.short	0x0001	/* 4080ea44 0001 */
+	moveal	0xdd8,%a0		/* 4080ea30 2078 0dd8 */
+	cmpib	#5,%a0@(19)		/* 4080ea34 0c28 0005 0013 */
+	bnes	loc_4080ea46		/* 4080ea3a 660a */
+	moveal	0xcec,%a0		/* 4080ea3c 2078 0cec */
+	lea	%a0@,%a0		/* 4080ea40 41d0 */
+	orib	#1,%a0@			/* 4080ea42 0010 0001 */
+
+loc_4080ea46:
 	moveq	#0,%d0			/* 4080ea46 7000 */
 	rts				/* 4080ea48 4e75 */
 
