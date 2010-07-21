@@ -1325,38 +1325,38 @@ GETPRESERVEGLYPH:
 	.align	16
 
 SPLINECALL:
-	.short	0x2078	/* 40893ea0 2078 */
-	.short	0x02b6	/* 40893ea2 02b6 */
-	.short	0x2228	/* 40893ea4 2228 */
-	.short	0x0068	/* 40893ea6 0068 */
-	.short	0x6720	/* 40893ea8 6720 */
-	.short	0x2041	/* 40893eaa 2041 */
-	.short	0x2050	/* 40893eac 2050 */
-	.short	0x2268	/* 40893eae 2268 */
-	.short	0x0004	/* 40893eb0 0004 */
-	.short	0x4a40	/* 40893eb2 4a40 */
-	.short	0x6a08	/* 40893eb4 6a08 */
-	.short	0x0240	/* 40893eb6 0240 */
-	.short	0x7fff	/* 40893eb8 7fff */
-	.short	0x2268	/* 40893eba 2268 */
-	.short	0x0008	/* 40893ebc 0008 */
-	.short	0x2219	/* 40893ebe 2219 */
-	.short	0xb041	/* 40893ec0 b041 */
-	.short	0x6406	/* 40893ec2 6406 */
-	.short	0x2271	/* 40893ec4 2271 */
-	.short	0x0400	/* 40893ec6 0400 */
+	moveal	0x2b6,%a0		/* 40893ea0 2078 02b6 */
+	movel	%a0@(104),%d1		/* 40893ea4 2228 0068 */
+	beqs	loc_40893eca		/* 40893ea8 6720 */
+	moveal	%d1,%a0			/* 40893eaa 2041 */
+	moveal	%a0@,%a0		/* 40893eac 2050 */
+	moveal	%a0@(4),%a1		/* 40893eae 2268 0004 */
+	tstw	%d0			/* 40893eb2 4a40 */
+	bpls	loc_40893ebe		/* 40893eb4 6a08 */
+	andiw	#32767,%d0		/* 40893eb6 0240 7fff */
+	moveal	%a0@(8),%a1		/* 40893eba 2268 0008 */
+
+loc_40893ebe:
+	movel	%a1@+,%d1		/* 40893ebe 2219 */
+	cmpw	%d1,%d0			/* 40893ec0 b041 */
+	bccs	loc_40893eca		/* 40893ec2 6406 */
+	moveal	%a1@(%d0:w:4),%a1	/* 40893ec4 2271 0400 */
 	jmp	%a1@			/* 40893ec8 4ed1 */
-	.short	0x4840	/* 40893eca 4840 */
-	.short	0x7200	/* 40893ecc 7200 */
-	.short	0x1200	/* 40893ece 1200 */
-	.short	0xe088	/* 40893ed0 e088 */
-	.short	0xdec1	/* 40893ed2 dec1 */
-	.short	0x224f	/* 40893ed4 224f */
-	.short	0x6004	/* 40893ed6 6004 */
-	.short	0x12fc	/* 40893ed8 12fc */
-	.short	0x00ff	/* 40893eda 00ff */
-	.short	0x51c8	/* 40893edc 51c8 */
-	.short	0xfffa	/* 40893ede fffa */
+
+loc_40893eca:
+	swap	%d0			/* 40893eca 4840 */
+	moveq	#0,%d1			/* 40893ecc 7200 */
+	moveb	%d0,%d1			/* 40893ece 1200 */
+	lsrl	#8,%d0			/* 40893ed0 e088 */
+	addaw	%d1,%sp			/* 40893ed2 dec1 */
+	moveal	%sp,%a1			/* 40893ed4 224f */
+	bras	loc_40893edc		/* 40893ed6 6004 */
+
+loc_40893ed8:
+	moveb	#0xff,%a1@+		/* 40893ed8 12fc 00ff */
+
+loc_40893edc:
+	dbf	%d0,loc_40893ed8	/* 40893edc 51c8 fffa */
 	jmp	%a1@			/* 40893ee0 4ed1 */
 
 	.align	16
