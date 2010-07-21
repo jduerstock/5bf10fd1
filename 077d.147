@@ -1247,65 +1247,44 @@ SETOUTLINEPREFERRED:
 	.align	16
 
 __v__GETOUTLINEPREFERRED:
-	.short	0x426f	/* 40893dd0 426f */
-	.short	0x0004	/* 40893dd2 0004 */
-	.short	0x0838	/* 40893dd4 0838 */
-	.short	0x0005	/* 40893dd6 0005 */
-	.short	0x0938	/* 40893dd8 0938 */
-	.short	0x56ef	/* 40893dda 56ef */
-	.short	0x0004	/* 40893ddc 0004 */
+	clrw	%sp@(4)			/* 40893dd0 426f 0004 */
+	btst	#5,0x938		/* 40893dd4 0838 0005 0938 */
+	sne	%sp@(4)			/* 40893dda 56ef 0004 */
 	rts				/* 40893dde 4e75 */
 
 GETOUTLINEPREFERRED:
-	.short	0x2f30	/* 40893de0 2f30 */
-	.short	0x81e2	/* 40893de2 81e2 */
-	.short	0x202c	/* 40893de4 202c */
-	.short	0x022c	/* 40893de6 022c */
+	CallVector	0x202c 139	/* 40893de0 2f30 81e2 202c 022c */
 	rts				/* 40893de8 4e75 */
 
 	.align	16
 
 __v__ISOUTLINE:
-	.short	0x4e56	/* 40893df0 4e56 */
-	.short	0xfff0	/* 40893df2 fff0 */
-	.short	0x48e7	/* 40893df4 48e7 */
-	.short	0x1e38	/* 40893df6 1e38 */
-	.short	0x2855	/* 40893df8 2855 */
-	.short	0x2054	/* 40893dfa 2054 */
-	.short	0x43ee	/* 40893dfc 43ee */
-	.short	0xfff0	/* 40893dfe fff0 */
-	.short	0x32e8	/* 40893e00 32e8 */
-	.short	0x0044	/* 40893e02 0044 */
-	.short	0x32e8	/* 40893e04 32e8 */
-	.short	0x004a	/* 40893e06 004a */
-	.short	0x12e8	/* 40893e08 12e8 */
-	.short	0x0046	/* 40893e0a 0046 */
-	.short	0x50d9	/* 40893e0c 50d9 */
-	.short	0x32d0	/* 40893e0e 32d0 */
-	.short	0x22ee	/* 40893e10 22ee */
-	.short	0x000c	/* 40893e12 000c */
-	.short	0x22ee	/* 40893e14 22ee */
-	.short	0x0008	/* 40893e16 0008 */
-	.short	0x42a7	/* 40893e18 42a7 */
-	.short	0x486e	/* 40893e1a 486e */
-	.short	0xfff0	/* 40893e1c fff0 */
-	.short	0xa901	/* 40893e1e a901 */
-	.short	0x205f	/* 40893e20 205f */
-	.short	0x426e	/* 40893e22 426e */
-	.short	0x0010	/* 40893e24 0010 */
-	.short	0x2078	/* 40893e26 2078 */
-	.short	0x0b2a	/* 40893e28 0b2a */
-	.short	0x2050	/* 40893e2a 2050 */
-	.short	0x4a28	/* 40893e2c 4a28 */
-	.short	0x0436	/* 40893e2e 0436 */
-	.short	0x56ee	/* 40893e30 56ee */
-	.short	0x0010	/* 40893e32 0010 */
-	.short	0x4cdf	/* 40893e34 4cdf */
-	.short	0x1c78	/* 40893e36 1c78 */
-	.short	0x4e5e	/* 40893e38 4e5e */
-	.short	0x205f	/* 40893e3a 205f */
-	.short	0x504f	/* 40893e3c 504f */
-	.short	0x4ed0	/* 40893e3e 4ed0 */
+	linkw	%fp,#-16		/* 40893df0 4e56 fff0 */
+	moveml	%d3-%d6/%a2-%a4,%sp@-	/* 40893df4 48e7 1e38 */
+	moveal	%a5@,%a4		/* 40893df8 2855 */
+	moveal	%a4@,%a0		/* 40893dfa 2054 */
+	lea	%fp@(-16),%a1		/* 40893dfc 43ee fff0 */
+	movew	%a0@(68),%a1@+		/* 40893e00 32e8 0044 */
+	movew	%a0@(74),%a1@+		/* 40893e04 32e8 004a */
+	moveb	%a0@(70),%a1@+		/* 40893e08 12e8 0046 */
+	st	%a1@+			/* 40893e0c 50d9 */
+	movew	%a0@,%a1@+		/* 40893e0e 32d0 */
+	movel	%fp@(12),%a1@+		/* 40893e10 22ee 000c */
+	movel	%fp@(8),%a1@+		/* 40893e14 22ee 0008 */
+	clrl	%sp@-			/* 40893e18 42a7 */
+	pea	%fp@(-16)		/* 40893e1a 486e fff0 */
+	.short	0xa901			/* 40893e1e a901 */
+	moveal	%sp@+,%a0		/* 40893e20 205f */
+	clrw	%fp@(16)		/* 40893e22 426e 0010 */
+	moveal	0xb2a,%a0		/* 40893e26 2078 0b2a */
+	moveal	%a0@,%a0		/* 40893e2a 2050 */
+	tstb	%a0@(1078)		/* 40893e2c 4a28 0436 */
+	sne	%fp@(16)		/* 40893e30 56ee 0010 */
+	moveml	%sp@+,%d3-%d6/%a2-%a4	/* 40893e34 4cdf 1c78 */
+	unlk	%fp			/* 40893e38 4e5e */
+	moveal	%sp@+,%a0		/* 40893e3a 205f */
+	addqw	#8,%sp			/* 40893e3c 504f */
+	jmp	%a0@			/* 40893e3e 4ed0 */
 
 ISOUTLINE:
 	CallVector	0x202c 140	/* 40893e40 2f30 81e2 202c 0230 */
@@ -1314,24 +1293,21 @@ ISOUTLINE:
 	.align	16
 
 __v__SETPRESERVEGLYPH:
-	.short	0x205f	/* 40893e50 205f */
-	.short	0x4a17	/* 40893e52 4a17 */
-	.short	0x544f	/* 40893e54 544f */
-	.short	0x6608	/* 40893e56 6608 */
-	.short	0x08b8	/* 40893e58 08b8 */
-	.short	0x0004	/* 40893e5a 0004 */
-	.short	0x0938	/* 40893e5c 0938 */
-	.short	0x6006	/* 40893e5e 6006 */
-	.short	0x08f8	/* 40893e60 08f8 */
-	.short	0x0004	/* 40893e62 0004 */
-	.short	0x0938	/* 40893e64 0938 */
-	.short	0x4ed0	/* 40893e66 4ed0 */
+	moveal	%sp@+,%a0		/* 40893e50 205f */
+	tstb	%sp@			/* 40893e52 4a17 */
+	addqw	#2,%sp			/* 40893e54 544f */
+	bnes	loc_40893e60		/* 40893e56 6608 */
+	bclr	#4,0x938		/* 40893e58 08b8 0004 0938 */
+	bras	loc_40893e66		/* 40893e5e 6006 */
+
+loc_40893e60:
+	bset	#4,0x938		/* 40893e60 08f8 0004 0938 */
+
+loc_40893e66:
+	jmp	%a0@			/* 40893e66 4ed0 */
 
 SETPRESERVEGLYPH:
-	.short	0x2f30	/* 40893e68 2f30 */
-	.short	0x81e2	/* 40893e6a 81e2 */
-	.short	0x202c	/* 40893e6c 202c */
-	.short	0x0234	/* 40893e6e 0234 */
+	CallVector	0x202c 141	/* 40893e68 2f30 81e2 202c 0234 */
 	rts				/* 40893e70 4e75 */
 
 	.align	16
