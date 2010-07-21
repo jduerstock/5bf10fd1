@@ -1226,21 +1226,19 @@ OUTLINEMETRICS:
 	.align	16
 
 __v__SETOUTLINEPREFERRED:
-	.short	0x205f	/* 40893da0 205f */
-	.short	0x4a17	/* 40893da2 4a17 */
-	.short	0x544f	/* 40893da4 544f */
-	.short	0x6608	/* 40893da6 6608 */
-	.short	0x08b8	/* 40893da8 08b8 */
-	.short	0x0005	/* 40893daa 0005 */
-	.short	0x0938	/* 40893dac 0938 */
-	.short	0x6006	/* 40893dae 6006 */
-	.short	0x08f8	/* 40893db0 08f8 */
-	.short	0x0005	/* 40893db2 0005 */
-	.short	0x0938	/* 40893db4 0938 */
-	.short	0x21f8	/* 40893db6 21f8 */
-	.short	0x0a06	/* 40893db8 0a06 */
-	.short	0x0b4c	/* 40893dba 0b4c */
-	.short	0x4ed0	/* 40893dbc 4ed0 */
+	moveal	%sp@+,%a0		/* 40893da0 205f */
+	tstb	%sp@			/* 40893da2 4a17 */
+	addqw	#2,%sp			/* 40893da4 544f */
+	bnes	loc_40893db0		/* 40893da6 6608 */
+	bclr	#5,0x938		/* 40893da8 08b8 0005 0938 */
+	bras	loc_40893db6		/* 40893dae 6006 */
+
+loc_40893db0:
+	bset	#5,0x938		/* 40893db0 08f8 0005 0938 */
+
+loc_40893db6:
+	movel	0xa06,0xb4c		/* 40893db6 21f8 0a06 0b4c */
+	jmp	%a0@			/* 40893dbc 4ed0 */
 
 SETOUTLINEPREFERRED:
 	CallVector	0x202c 138	/* 40893dbe 2f30 81e2 202c 0228 */
