@@ -549,6 +549,7 @@ loc_408915a4:
 	
 	.align	16
 
+fnt_DefaultJumpTable:
 	linkw	%fp,#0			/* 408915c0 4e56 0000 */
 	moveml	%d7/%a4,%sp@-		/* 408915c4 48e7 0108 */
 	moveal	%fp@(8),%a4		/* 408915c8 286e 0008 */
@@ -879,33 +880,24 @@ loc_40891964:
 	.align	16
 
 __v__fnt_Init:
-	.short	0x4e56	/* 40891980 4e56 */
-	.short	0x0000	/* 40891982 0000 */
-	.short	0x206e	/* 40891984 206e */
-	.short	0x0008	/* 40891986 0008 */
-	.short	0x2f28	/* 40891988 2f28 */
-	.short	0x008c	/* 4089198a 008c */
-	.short	0x4eba	/* 4089198c 4eba */
-	.short	0xfc32	/* 4089198e fc32 */
-	.short	0x4e5e	/* 40891990 4e5e */
+	linkw	%fp,#0			/* 40891980 4e56 0000 */
+	moveal	%fp@(8),%a0		/* 40891984 206e 0008 */
+	movel	%a0@(140),%sp@-		/* 40891988 2f28 008c */
+	jsr	%pc@(fnt_DefaultJumpTable)	/* 4089198c 4eba fc32 */
+	unlk	%fp			/* 40891990 4e5e */
 	rts				/* 40891992 4e75 */
 
 fnt_Init:
-	.short	0x2278	/* 40891994 2278 */
-	.short	0x202c	/* 40891996 202c */
-	.short	0x2269	/* 40891998 2269 */
-	.short	0x02dc	/* 4089199a 02dc */
+	moveal	0x202c,%a1		/* 40891994 2278 202c */
+	moveal	%a1@(732),%a1		/* 40891998 2269 02dc */
 	jmp	%a1@			/* 4089199c 4ed1 */
 
 	.align	16
 
 __v__fsg_KeySize:
-	.short	0x4e56	/* 408919a0 4e56 */
-	.short	0x0000	/* 408919a2 0000 */
-	.short	0x203c	/* 408919a4 203c */
-	.short	0x0000	/* 408919a6 0000 */
-	.short	0x0242	/* 408919a8 0242 */
-	.short	0x4e5e	/* 408919aa 4e5e */
+	linkw	%fp,#0			/* 408919a0 4e56 0000 */
+	movel	#578,%d0		/* 408919a4 203c 0000 0242 */
+	unlk	%fp			/* 408919aa 4e5e */
 	rts				/* 408919ac 4e75 */
 
 fsg_KeySize:
