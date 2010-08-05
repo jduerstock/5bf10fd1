@@ -276,15 +276,17 @@ loc_409bc2ba:
 loc_409bc2be:
 	rts				/* 409bc2be 4e75 */
 
-	.short	0x221b	/* 409bc2c0 221b */
-	.short	0x6708	/* 409bc2c2 6708 */
-	.short	0xb081	/* 409bc2c4 b081 */
-	.short	0x6704	/* 409bc2c6 6704 */
-	.short	0x544b	/* 409bc2c8 544b */
-	.short	0x60f4	/* 409bc2ca 60f4 */
-	.short	0x3213	/* 409bc2cc 3213 */
-	.short	0x4ef3	/* 409bc2ce 4ef3 */
-	.short	0x1000	/* 409bc2d0 1000 */
+loc_409bc2c0:
+	movel	%a3@+,%d1		/* 409bc2c0 221b */
+	beqs	loc_409bc2cc		/* 409bc2c2 6708 */
+	cmpl	%d1,%d0			/* 409bc2c4 b081 */
+	beqs	loc_409bc2cc		/* 409bc2c6 6704 */
+	addqw	#2,%a3			/* 409bc2c8 544b */
+	bras	loc_409bc2c0		/* 409bc2ca 60f4 */
+
+loc_409bc2cc:
+	movew	%a3@,%d1		/* 409bc2cc 3213 */
+	jmp	%a3@(0x0000,%d1:w)	/* 409bc2ce 4ef3 1000 */
 
 	linkw	%fp,#-20		/* 409bc2d2 4e56 ffec */
 	movel	%a0,%fp@(-4)		/* 409bc2d6 2d48 fffc */
