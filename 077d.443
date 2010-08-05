@@ -825,7 +825,7 @@ loc_409bb7ce:
 
 byte_409bb7da:
 	.ascii	"user"			/* 409bb7da 7573 6572 */
-	.short	0x011e			/* 409bb7de 011e */
+	.short	loc_409bb8fc-.		/* 409bb7de 011e */
 	.ascii	"paus"			/* 409bb7e0 7061 7573 */
 	.short	0x0296			/* 409bb7e4 0296 */
 	.ascii	"chan"			/* 409bb7e6 6368 616e */
@@ -951,11 +951,11 @@ loc_409bb852:
 	.short	0x205f	/* 409bb8f6 205f */
 	.short	0x6000	/* 409bb8f8 6000 */
 	.short	0x05da	/* 409bb8fa 05da */
-	.short	0x2568	/* 409bb8fc 2568 */
-	.short	0x0020	/* 409bb8fe 0020 */
-	.short	0x0010	/* 409bb900 0010 */
-	.short	0x6000	/* 409bb902 6000 */
-	.short	0x05d0	/* 409bb904 05d0 */
+
+loc_409bb8fc:
+	movel	%a0@(32),%a2@(16)	/* 409bb8fc 2568 0020 0010 */
+	braw	loc_409bbed4		/* 409bb902 6000 05d0 */
+
 	.short	0x2028	/* 409bb906 2028 */
 	.short	0x0020	/* 409bb908 0020 */
 	.short	0x0c80	/* 409bb90a 0c80 */
@@ -1699,19 +1699,20 @@ loc_409bb852:
 	.short	0x303c	/* 409bbece 303c */
 	.short	0xff19	/* 409bbed0 ff19 */
 	.short	0x6002	/* 409bbed2 6002 */
+
+loc_409bbed4:
 	moveq	#0,%d0			/* 409bbed4 7000 */
 
 loc_409bbed6:
-	.short	0x3228	/* 409bbed6 3228 */
-	.short	0x0006	/* 409bbed8 0006 */
-	.short	0x0801	/* 409bbeda 0801 */
-	.short	0x0009	/* 409bbedc 0009 */
-	.short	0x4cdf	/* 409bbede 4cdf */
-	.short	0x0f00	/* 409bbee0 0f00 */
-	.short	0x6604	/* 409bbee2 6604 */
-	.short	0x6000	/* 409bbee4 6000 */
-	.short	0xf7ae	/* 409bbee6 f7ae */
+	movew	%a0@(6),%d1		/* 409bbed6 3228 0006 */
+	btst	#9,%d1			/* 409bbeda 0801 0009 */
+	moveml	%sp@+,%a0-%a3		/* 409bbede 4cdf 0f00 */
+	bnes	loc_409bbee8		/* 409bbee2 6604 */
+	braw	loc_409bb694		/* 409bbee4 6000 f7ae */
+
+loc_409bbee8:
 	rts				/* 409bbee8 4e75 */
+
 	.short	0x48e7	/* 409bbeea 48e7 */
 	.short	0x00e0	/* 409bbeec 00e0 */
 	.short	0x2469	/* 409bbeee 2469 */
