@@ -829,7 +829,7 @@ byte_409bb7da:
 	.ascii	"paus"			/* 409bb7e0 7061 7573 */
 	.short	loc_409bba7a-.		/* 409bb7e4 0296 */
 	.ascii	"chan"			/* 409bb7e6 6368 616e */
-	.short	0x027a			/* 409bb7ea 027a */
+	.short	loc_409bba64-.		/* 409bb7ea 027a */
 	.ascii	"ssiz"			/* 409bb7ec 7373 697a */
 	.short	0x01d2			/* 409bb7f0 01d2 */
 	.ascii	"srat"			/* 409bb7f2 7372 6174 */
@@ -1131,17 +1131,16 @@ loc_409bb8fc:
 	.short	0xff94	/* 409bba5e ff94 */
 	.short	0x6000	/* 409bba60 6000 */
 	.short	0x0474	/* 409bba62 0474 */
-	.short	0x3028	/* 409bba64 3028 */
-	.short	0x0020	/* 409bba66 0020 */
-	.short	0x0c40	/* 409bba68 0c40 */
-	.short	0x0001	/* 409bba6a 0001 */
-	.short	0x6e04	/* 409bba6c 6e04 */
-	.short	0x6000	/* 409bba6e 6000 */
-	.short	0x0464	/* 409bba70 0464 */
-	.short	0x303c	/* 409bba72 303c */
-	.short	0xff37	/* 409bba74 ff37 */
-	.short	0x6000	/* 409bba76 6000 */
-	.short	0x045e	/* 409bba78 045e */
+
+loc_409bba64:
+	movew	%a0@(32),%d0		/* 409bba64 3028 0020 */
+	cmpiw	#1,%d0			/* 409bba68 0c40 0001 */
+	bgts	loc_409bba72		/* 409bba6c 6e04 */
+	braw	loc_409bbed4		/* 409bba6e 6000 0464 */
+
+loc_409bba72:
+	movew	#-201,%d0		/* 409bba72 303c ff37 */
+	braw	loc_409bbed6		/* 409bba76 6000 045e */
 
 loc_409bba7a:
 	movew	%a0@(32),%a2@(138)	/* 409bba7a 3568 0020 008a */
