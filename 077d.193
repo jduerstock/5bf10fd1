@@ -1266,11 +1266,9 @@ BOOTBEEP6:
 
 ERRORBEEP1:
 	moveq	#1,%d0			/* 408c19d4 7001 */
-	.short	0x4a2b	/* 408c19d6 4a2b */
-	.short	0x0800	/* 408c19d8 0800 */
-	.short	0x6628	/* 408c19da 6628 */
-	.short	0x4efa	/* 408c19dc 4efa */
-	.short	0xfddc	/* 408c19de fddc */
+	tstb	%a3@(2048)		/* 408c19d6 4a2b 0800 */
+	bnes	DOBEEP			/* 408c19da 6628 */
+	jmp	%pc@(ORIGERRORBEEP1)	/* 408c19dc 4efa fddc */
 
 ERRORBEEP2:
 	.short	0x7002	/* 408c19e0 7002 */
