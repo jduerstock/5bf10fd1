@@ -1271,12 +1271,10 @@ ERRORBEEP1:
 	jmp	%pc@(ORIGERRORBEEP1)	/* 408c19dc 4efa fddc */
 
 ERRORBEEP2:
-	.short	0x7002	/* 408c19e0 7002 */
-	.short	0x4a2b	/* 408c19e2 4a2b */
-	.short	0x0800	/* 408c19e4 0800 */
-	.short	0x661c	/* 408c19e6 661c */
-	.short	0x4efa	/* 408c19e8 4efa */
-	.short	0xfdd6	/* 408c19ea fdd6 */
+	moveq	#2,%d0			/* 408c19e0 7002 */
+	tstb	%a3@(2048)		/* 408c19e2 4a2b 0800 */
+	bnes	DOBEEP			/* 408c19e6 661c */
+	jmp	%pc@(ORIGERRORBEEP2)	/* 408c19e8 4efa fdd6 */
 
 ERRORBEEP3:
 	.short	0x7003	/* 408c19ec 7003 */
