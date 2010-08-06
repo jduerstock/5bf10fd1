@@ -1809,36 +1809,26 @@ sub_4098faa6:
 	.short	0x0000	/* 4098ffbc 0000 */
 
 sub_4098ffbe:
-	.short	0x4e56	/* 4098ffbe 4e56 */
-	.short	0xffce	/* 4098ffc0 ffce */
-	.short	0x207c	/* 4098ffc2 207c */
-	.short	0x50f2	/* 4098ffc4 50f2 */
-	.short	0xa000	/* 4098ffc6 a000 */
-	.short	0x302c	/* 4098ffc8 302c */
-	.short	0x0016	/* 4098ffca 0016 */
-	.short	0x226b	/* 4098ffcc 226b */
-	.short	0x0014	/* 4098ffce 0014 */
-	.short	0xb069	/* 4098ffd0 b069 */
-	.short	0x000a	/* 4098ffd2 000a */
-	.short	0x6712	/* 4098ffd4 6712 */
-	.short	0x2251	/* 4098ffd6 2251 */
-	.short	0x6706	/* 4098ffd8 6706 */
-	.short	0xb069	/* 4098ffda b069 */
-	.short	0x000a	/* 4098ffdc 000a */
-	.short	0x6708	/* 4098ffde 6708 */
-	.short	0x3c3c	/* 4098ffe0 3c3c */
-	.short	0xffc8	/* 4098ffe2 ffc8 */
-	.short	0x6000	/* 4098ffe4 6000 */
-	.short	0x0396	/* 4098ffe6 0396 */
-	.short	0x3c3c	/* 4098ffe8 3c3c */
-	.short	0xffce	/* 4098ffea ffce */
-	.short	0x2a6c	/* 4098ffec 2a6c */
-	.short	0x001e	/* 4098ffee 001e */
-	.short	0x162c	/* 4098fff0 162c */
-	.short	0x0026	/* 4098fff2 0026 */
-	.short	0x1e2c	/* 4098fff4 1e2c */
-	.short	0x0027	/* 4098fff6 0027 */
-	.short	0x4847	/* 4098fff8 4847 */
-	.short	0x302c	/* 4098fffa 302c */
-	.short	0x001c	/* 4098fffc 001c */
-	.short	0x0c40	/* 4098fffe 0c40 */
+	linkw	%fp,#-50		/* 4098ffbe 4e56 ffce */
+	moveal	#1358077952,%a0		/* 4098ffc2 207c 50f2 a000 */
+	movew	%a4@(22),%d0		/* 4098ffc8 302c 0016 */
+	moveal	%a3@(20),%a1		/* 4098ffcc 226b 0014 */
+	cmpw	%a1@(10),%d0		/* 4098ffd0 b069 000a */
+	beqs	loc_4098ffe8		/* 4098ffd4 6712 */
+	moveal	%a1@,%a1		/* 4098ffd6 2251 */
+	beqs	loc_4098ffe0		/* 4098ffd8 6706 */
+	cmpw	%a1@(10),%d0		/* 4098ffda b069 000a */
+	beqs	loc_4098ffe8		/* 4098ffde 6708 */
+
+loc_4098ffe0:
+	movew	#-56,%d6		/* 4098ffe0 3c3c ffc8 */
+	braw	loc_4099037c		/* 4098ffe4 6000 0396 */
+
+loc_4098ffe8:
+	movew	#-50,%d6		/* 4098ffe8 3c3c ffce */
+	moveal	%a4@(30),%a5		/* 4098ffec 2a6c 001e */
+	moveb	%a4@(38),%d3		/* 4098fff0 162c 0026 */
+	moveb	%a4@(39),%d7		/* 4098fff4 1e2c 0027 */
+	swap	%d7			/* 4098fff8 4847 */
+	movew	%a4@(28),%d0		/* 4098fffa 302c 001c */
+	cmpiw	#3,%d0			/* 4098fffe 0c40 0003 */
