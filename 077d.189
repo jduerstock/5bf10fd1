@@ -1,40 +1,27 @@
 /* SPLIT HERE */
-	.short	0x6604	/* 408bd000 6604 */
-	.short	0x6000	/* 408bd002 6000 */
-	.short	0x05a2	/* 408bd004 05a2 */
-	.short	0x302e	/* 408bd006 302e */
-	.short	0xff1c	/* 408bd008 ff1c */
-	.short	0x0280	/* 408bd00a 0280 */
-	.short	0x0000	/* 408bd00c 0000 */
-	.short	0x007f	/* 408bd00e 007f */
-	.short	0x0c80	/* 408bd010 0c80 */
-	.short	0x0000	/* 408bd012 0000 */
-	.short	0x0038	/* 408bd014 0038 */
-	.short	0x6c2a	/* 408bd016 6c2a */
-	.short	0xe9ee	/* 408bd018 e9ee */
-	.short	0x1003	/* 408bd01a 1003 */
-	.short	0xff18	/* 408bd01c ff18 */
-	.short	0xe788	/* 408bd01e e788 */
-	.short	0xd081	/* 408bd020 d081 */
-	.short	0x43fa	/* 408bd022 43fa */
-	.short	0xfc4c	/* 408bd024 fc4c */
-	.short	0xd2f1	/* 408bd026 d2f1 */
-	.short	0x0200	/* 408bd028 0200 */
-	.short	0x41ee	/* 408bd02a 41ee */
-	.short	0xff34	/* 408bd02c ff34 */
-	.short	0x222e	/* 408bd02e 222e */
-	.short	0xff80	/* 408bd030 ff80 */
-	.short	0x0281	/* 408bd032 0281 */
-	.short	0x0000	/* 408bd034 0000 */
-	.short	0x00ff	/* 408bd036 00ff */
-	.short	0xf23c	/* 408bd038 f23c */
-	.short	0x9000	/* 408bd03a 9000 */
-	.short	0x0000	/* 408bd03c 0000 */
-	.short	0x0000	/* 408bd03e 0000 */
+	bnes	loc_408bd006		/* 408bd000 6604 */
+	braw	loc_408bd5a6		/* 408bd002 6000 05a2 */
+
+loc_408bd006:
+	movew	%fp@(-228),%d0		/* 408bd006 302e ff1c */
+	andil	#127,%d0		/* 408bd00a 0280 0000 007f */
+	cmpil	#56,%d0			/* 408bd010 0c80 0000 0038 */
+	bges	loc_408bd042		/* 408bd016 6c2a */
+	bfextu	%fp@(-232),0,3,%d1	/* 408bd018 e9ee 1003 ff18 */
+	lsll	#3,%d0			/* 408bd01e e788 */
+	addl	%d1,%d0			/* 408bd020 d081 */
+	lea	%pc@(byte_408bcc70),%a1	/* 408bd022 43fa fc4c */
+	addaw	%a1@(%d0:w:2),%a1	/* 408bd026 d2f1 0200 */
+	lea	%fp@(-204),%a0		/* 408bd02a 41ee ff34 */
+	movel	%fp@(-128),%d1		/* 408bd02e 222e ff80 */
+	andil	#255,%d1		/* 408bd032 0281 0000 00ff */
+	fmovel	#0,%fpcr		/* 408bd038 f23c 9000 0000 0000 */
 	jmp	%a1@			/* 408bd040 4ed1 */
-	.short	0x50ee	/* 408bd042 50ee */
-	.short	0xffb4	/* 408bd044 ffb4 */
+
+loc_408bd042:
+	st	%fp@(-76)		/* 408bd042 50ee ffb4 */
 	rts				/* 408bd046 4e75 */
+
 	.short	0x0810	/* 408bd048 0810 */
 	.short	0x0007	/* 408bd04a 0007 */
 	.short	0x6608	/* 408bd04c 6608 */
@@ -724,6 +711,8 @@ sub_408bd4d8:
 	.short	0xf21f	/* 408bd5a0 f21f */
 	.short	0x9000	/* 408bd5a2 9000 */
 	rts				/* 408bd5a4 4e75 */
+
+loc_408bd5a6:
 	.short	0xe9ee	/* 408bd5a6 e9ee */
 	.short	0x0247	/* 408bd5a8 0247 */
 	.short	0xff1c	/* 408bd5aa ff1c */
