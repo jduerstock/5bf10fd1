@@ -1232,13 +1232,11 @@ CACHEFLUSH:
 	rts				/* 40813a32 4e75 */
 
 VCACHEFLUSH:
-	.short	0x2f01	/* 40813a34 2f01 */
-	.short	0x4e7a	/* 40813a36 4e7a */
-	.short	0x1002	/* 40813a38 1002 */
-	.short	0x5041	/* 40813a3a 5041 */
-	.short	0x4e7b	/* 40813a3c 4e7b */
-	.short	0x1002	/* 40813a3e 1002 */
-	.short	0x221f	/* 40813a40 221f */
+	movel	%d1,%sp@-		/* 40813a34 2f01 */
+	movec	%cacr,%d1		/* 40813a36 4e7a 1002 */
+	addqw	#8,%d1			/* 40813a3a 5041 */
+	movec	%d1,%cacr		/* 40813a3c 4e7b 1002 */
+	movel	%sp@+,%d1		/* 40813a40 221f */
 	rts				/* 40813a42 4e75 */
 
 sub_40813a44:
