@@ -1123,13 +1123,11 @@ SETSUPERVISORMODE:
 	.align	16
 
 NONVMDEFERUSERFN:
-	.short	0x48e7	/* 40813940 48e7 */
-	.short	0x70f0	/* 40813942 70f0 */
-	.short	0x2248	/* 40813944 2248 */
-	.short	0x2040	/* 40813946 2040 */
-	.short	0x4e91	/* 40813948 4e91 */
-	.short	0x4cdf	/* 4081394a 4cdf */
-	.short	0x0f0e	/* 4081394c 0f0e */
+	moveml	%d1-%d3/%a0-%a3,%sp@-	/* 40813940 48e7 70f0 */
+	moveal	%a0,%a1			/* 40813944 2248 */
+	moveal	%d0,%a0			/* 40813946 2040 */
+	jsr	%a1@			/* 40813948 4e91 */
+	moveml	%sp@+,%d1-%d3/%a0-%a3	/* 4081394a 4cdf 0f0e */
 	moveq	#0,%d0			/* 4081394e 7000 */
 	rts				/* 40813950 4e75 */
 
