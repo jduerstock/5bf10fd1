@@ -992,40 +992,31 @@ sub_4093c920:
 
 	.align	16
 
-	.short	0x4cd7	/* 4093c930 4cd7 */
-	.short	0x0301	/* 4093c932 0301 */
-	.short	0x2f00	/* 4093c934 2f00 */
-	.short	0x486f	/* 4093c936 486f */
-	.short	0x0010	/* 4093c938 0010 */
-	.short	0x48e7	/* 4093c93a 48e7 */
-	.short	0x00c0	/* 4093c93c 00c0 */
-	.short	0x7003	/* 4093c93e 7003 */
-	.short	0x3f00	/* 4093c940 3f00 */
-	.short	0xa9ee	/* 4093c942 a9ee */
-	.short	0x2057	/* 4093c944 2057 */
-	.short	0xdefc	/* 4093c946 defc */
-	.short	0x0014	/* 4093c948 0014 */
-	.short	0x4ed0	/* 4093c94a 4ed0 */
+	moveml	%sp@,%d0/%a0-%a1	/* 4093c930 4cd7 0301 */
+	movel	%d0,%sp@-		/* 4093c934 2f00 */
+	pea	%sp@(16)		/* 4093c936 486f 0010 */
+	moveml	%a0-%a1,%sp@-		/* 4093c93a 48e7 00c0 */
+	moveq	#3,%d0			/* 4093c93e 7003 */
+
+loc_4093c940:
+	movew	%d0,%sp@-		/* 4093c940 3f00 */
+	.short	0xa9ee			/* 4093c942 a9ee */
+	moveal	%sp@,%a0		/* 4093c944 2057 */
+	addaw	#20,%sp			/* 4093c946 defc 0014 */
+	jmp	%a0@			/* 4093c94a 4ed0 */
 
 sub_4093c94c:
-	.short	0x4cef	/* 4093c94c 4cef */
-	.short	0x0303	/* 4093c94e 0303 */
-	.short	0x0004	/* 4093c950 0004 */
-	.short	0x48e7	/* 4093c952 48e7 */
-	.short	0xc0c0	/* 4093c954 c0c0 */
-	.short	0x7002	/* 4093c956 7002 */
-	.short	0x60e6	/* 4093c958 60e6 */
-	.short	0x4cef	/* 4093c95a 4cef */
-	.short	0x0303	/* 4093c95c 0303 */
-	.short	0x0004	/* 4093c95e 0004 */
-	.short	0x48e7	/* 4093c960 48e7 */
-	.short	0xc0c0	/* 4093c962 c0c0 */
-	.short	0x7004	/* 4093c964 7004 */
-	.short	0x60d8	/* 4093c966 60d8 */
-	.short	0x0000	/* 4093c968 0000 */
-	.short	0x0000	/* 4093c96a 0000 */
-	.short	0x0000	/* 4093c96c 0000 */
-	.short	0x0000	/* 4093c96e 0000 */
+	moveml	%sp@(4),%d0-%d1/%a0-%a1 /* 4093c94c 4cef 0303 0004 */
+	moveml	%d0-%d1/%a0-%a1,%sp@-	/* 4093c952 48e7 c0c0 */
+	moveq	#2,%d0			/* 4093c956 7002 */
+	bras	loc_4093c940		/* 4093c958 60e6 */
+	moveml	%sp@(4),%d0-%d1/%a0-%a1 /* 4093c95a 4cef 0303 0004 */
+	moveml	%d0-%d1/%a0-%a1,%sp@-	/* 4093c960 48e7 c0c0 */
+	moveq	#4,%d0			/* 4093c964 7004 */
+	bras	loc_4093c940		/* 4093c966 60d8 */
+
+	.align	16
+
 	.short	0x4cdf	/* 4093c970 4cdf */
 	.short	0x0303	/* 4093c972 0303 */
 	.short	0x2f00	/* 4093c974 2f00 */
@@ -1057,23 +1048,21 @@ sub_4093c94c:
 	.short	0xff88	/* 4093c9a8 ff88 */
 	.short	0x4e5e	/* 4093c9aa 4e5e */
 	rts				/* 4093c9ac 4e75 */
-	.short	0x0000	/* 4093c9ae 0000 */
+
+	.align	16
+
 	.short	0x7800	/* 4093c9b0 7800 */
 	.short	0x0000	/* 4093c9b2 0000 */
 	.short	0x0000	/* 4093c9b4 0000 */
 	.short	0x0000	/* 4093c9b6 0000 */
-	.short	0x0013	/* 4093c9b8 0013 */
-	.short	0x6be0	/* 4093c9ba 6be0 */
-	.short	0x0013	/* 4093c9bc 0013 */
-	.short	0x6c10	/* 4093c9be 6c10 */
-	.short	0x5041	/* 4093c9c0 5041 */
-	.short	0x434b	/* 4093c9c2 434b */
-	.short	0x0008	/* 4093c9c4 0008 */
-	.short	0x5807	/* 4093c9c6 5807 */
-	.short	0x4165	/* 4093c9c8 4165 */
-	.short	0x7674	/* 4093c9ca 7674 */
-	.short	0x4d67	/* 4093c9cc 4d67 */
-	.short	0x7263	/* 4093c9ce 7263 */
+	.long	0x00136be0		/* 4093c9b8 0013 6be0 */
+	.long	0x00136c10		/* 4093c9bc 0013 6c10 */
+	.ascii	"PACK"			/* 4093c9c0 5041 434b */
+	.short	0x0008			/* 4093c9c4 0008 */
+	.byte	0x58			/* 4093c9c6 58 */
+	.byte	0x07			/* 4093c9c7 07 */
+	.ascii	"AevtMgr"		/* 4093c9c8 4165 */
+	.byte	0x63			/* 4093c9cf 63 */
 	.short	0x4b75	/* 4093c9d0 4b75 */
 	.short	0x7274	/* 4093c9d2 7274 */
 	.short	0xc0a0	/* 4093c9d4 c0a0 */
