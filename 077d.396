@@ -1867,64 +1867,53 @@ sub_4098cdc0:
 	.short	0x0000	/* 4098cf0e 0000 */
 
 sub_4098cf10:
-	.short	0x206f	/* 4098cf10 206f */
-	.short	0x0004	/* 4098cf12 0004 */
-	.short	0x42a7	/* 4098cf14 42a7 */
-	.short	0x2f3c	/* 4098cf16 2f3c */
-	.short	0x4452	/* 4098cf18 4452 */
-	.short	0x5652	/* 4098cf1a 5652 */
-	.short	0x2f28	/* 4098cf1c 2f28 */
-	.short	0x0012	/* 4098cf1e 0012 */
-	.short	0xa9a1	/* 4098cf20 a9a1 */
-	.short	0x4240	/* 4098cf22 4240 */
-	.short	0x4a9f	/* 4098cf24 4a9f */
-	.short	0x6718	/* 4098cf26 6718 */
-	.short	0x206f	/* 4098cf28 206f */
-	.short	0x0004	/* 4098cf2a 0004 */
-	.short	0x2268	/* 4098cf2c 2268 */
-	.short	0x0012	/* 4098cf2e 0012 */
-	.short	0x343c	/* 4098cf30 343c */
-	.short	0x003c	/* 4098cf32 003c */
-	.short	0x6100	/* 4098cf34 6100 */
-	.short	0x000c	/* 4098cf36 000c */
-	.short	0x4840	/* 4098cf38 4840 */
-	.short	0x0280	/* 4098cf3a 0280 */
-	.short	0x0000	/* 4098cf3c 0000 */
-	.short	0xffff	/* 4098cf3e ffff */
+	moveal	%sp@(4),%a0		/* 4098cf10 206f 0004 */
+	clrl	%sp@-			/* 4098cf14 42a7 */
+	movel	#1146246738,%sp@-	/* 4098cf16 2f3c 4452 5652 */
+	movel	%a0@(18),%sp@-		/* 4098cf1c 2f28 0012 */
+	.short	0xa9a1			/* 4098cf20 a9a1 */
+	clrw	%d0			/* 4098cf22 4240 */
+	tstl	%sp@+			/* 4098cf24 4a9f */
+	beqs	loc_4098cf40		/* 4098cf26 6718 */
+	moveal	%sp@(4),%a0		/* 4098cf28 206f 0004 */
+	moveal	%a0@(18),%a1		/* 4098cf2c 2268 0012 */
+	movew	#60,%d2			/* 4098cf30 343c 003c */
+	bsrw	sub_4098cf42		/* 4098cf34 6100 000c */
+	swap	%d0			/* 4098cf38 4840 */
+	andil	#65535,%d0		/* 4098cf3a 0280 0000 ffff */
+
+loc_4098cf40:
 	rts				/* 4098cf40 4e75 */
-	.short	0x2449	/* 4098cf42 2449 */
-	.short	0x613e	/* 4098cf44 613e */
-	.short	0x673a	/* 4098cf46 673a */
-	.short	0x615e	/* 4098cf48 615e */
-	.short	0xa03d	/* 4098cf4a a03d */
-	.short	0x4a80	/* 4098cf4c 4a80 */
-	.short	0x662e	/* 4098cf4e 662e */
-	.short	0x2078	/* 4098cf50 2078 */
-	.short	0x011c	/* 4098cf52 011c */
-	.short	0x2070	/* 4098cf54 2070 */
-	.short	0x1000	/* 4098cf56 1000 */
-	.short	0x2050	/* 4098cf58 2050 */
-	.short	0x2089	/* 4098cf5a 2089 */
-	.short	0x2251	/* 4098cf5c 2251 */
-	.short	0x3151	/* 4098cf5e 3151 */
-	.short	0x0004	/* 4098cf60 0004 */
-	.short	0x3169	/* 4098cf62 3169 */
-	.short	0x0002	/* 4098cf64 0002 */
-	.short	0x0022	/* 4098cf66 0022 */
-	.short	0x3169	/* 4098cf68 3169 */
-	.short	0x0004	/* 4098cf6a 0004 */
-	.short	0x0024	/* 4098cf6c 0024 */
-	.short	0x3169	/* 4098cf6e 3169 */
-	.short	0x0006	/* 4098cf70 0006 */
-	.short	0x0026	/* 4098cf72 0026 */
-	.short	0x08e8	/* 4098cf74 08e8 */
-	.short	0x0006	/* 4098cf76 0006 */
-	.short	0x0005	/* 4098cf78 0005 */
-	.short	0x224a	/* 4098cf7a 224a */
-	.short	0x604a	/* 4098cf7c 604a */
-	.short	0x2049	/* 4098cf7e 2049 */
-	.short	0xa023	/* 4098cf80 a023 */
+
+sub_4098cf42:
+	moveal	%a1,%a2			/* 4098cf42 2449 */
+	bsrs	sub_4098cf84		/* 4098cf44 613e */
+	beqs	loc_4098cf82		/* 4098cf46 673a */
+	bsrs	sub_4098cfa8		/* 4098cf48 615e */
+	.short	0xa03d			/* 4098cf4a a03d */
+	tstl	%d0			/* 4098cf4c 4a80 */
+	bnes	loc_4098cf7e		/* 4098cf4e 662e */
+	moveal	0x11c,%a0		/* 4098cf50 2078 011c */
+	moveal	%a0@(0x0000,%d1:w),%a0	/* 4098cf54 2070 1000 */
+	moveal	%a0@,%a0		/* 4098cf58 2050 */
+	movel	%a1,%a0@		/* 4098cf5a 2089 */
+	moveal	%a1@,%a1		/* 4098cf5c 2251 */
+	movew	%a1@,%a0@(4)		/* 4098cf5e 3151 0004 */
+	movew	%a1@(2),%a0@(34)	/* 4098cf62 3169 0002 0022 */
+	movew	%a1@(4),%a0@(36)	/* 4098cf68 3169 0004 0024 */
+	movew	%a1@(6),%a0@(38)	/* 4098cf6e 3169 0006 0026 */
+	bset	#6,%a0@(5)		/* 4098cf74 08e8 0006 0005 */
+	moveal	%a2,%a1			/* 4098cf7a 224a */
+	bras	loc_4098cfc8		/* 4098cf7c 604a */
+
+loc_4098cf7e:
+	moveal	%a1,%a0			/* 4098cf7e 2049 */
+	_DisposeHandle			/* 4098cf80 a023 */
+
+loc_4098cf82:
 	rts				/* 4098cf82 4e75 */
+
+sub_4098cf84:
 	.short	0x223c	/* 4098cf84 223c */
 	.short	0x4452	/* 4098cf86 4452 */
 	.short	0x5652	/* 4098cf88 5652 */
@@ -1943,6 +1932,8 @@ sub_4098cf10:
 	.short	0x588f	/* 4098cfa2 588f */
 	moveq	#0,%d0			/* 4098cfa4 7000 */
 	rts				/* 4098cfa6 4e75 */
+
+sub_4098cfa8:
 	.short	0x2f08	/* 4098cfa8 2f08 */
 	.short	0x2078	/* 4098cfaa 2078 */
 	.short	0x011c	/* 4098cfac 011c */
@@ -1959,6 +1950,8 @@ sub_4098cf10:
 	.short	0x4480	/* 4098cfc2 4480 */
 	.short	0x205f	/* 4098cfc4 205f */
 	rts				/* 4098cfc6 4e75 */
+
+loc_4098cfc8:
 	.short	0x4fef	/* 4098cfc8 4fef */
 	.short	0xffce	/* 4098cfca ffce */
 	.short	0x204f	/* 4098cfcc 204f */
