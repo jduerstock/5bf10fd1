@@ -1218,39 +1218,34 @@ loc_409dfa32:
 	braw	loc_409df6d2		/* 409dfa36 6000 fc9a */
 
 sub_409dfa3a:
-	.short	0x1012	/* 409dfa3a 1012 */
-	.short	0xefeb	/* 409dfa3c efeb */
-	.short	0x0841	/* 409dfa3e 0841 */
-	.short	0x001c	/* 409dfa40 001c */
+	moveb	%a2@,%d0		/* 409dfa3a 1012 */
+	bfins	%d0,%a3@(28),%d1,1	/* 409dfa3c efeb 0841 001c */
 	rts				/* 409dfa42 4e75 */
-	.short	0x7201	/* 409dfa44 7201 */
-	.short	0x61f2	/* 409dfa46 61f2 */
-	.short	0x660a	/* 409dfa48 660a */
-	.short	0x6130	/* 409dfa4a 6130 */
-	.short	0x6600	/* 409dfa4c 6600 */
-	.short	0xfc80	/* 409dfa4e fc80 */
-	.short	0x6000	/* 409dfa50 6000 */
-	.short	0xfc80	/* 409dfa52 fc80 */
-	.short	0x6104	/* 409dfa54 6104 */
-	.short	0x6000	/* 409dfa56 6000 */
-	.short	0xfc7a	/* 409dfa58 fc7a */
-	.short	0x40e7	/* 409dfa5a 40e7 */
-	.short	0x6100	/* 409dfa5c 6100 */
-	.short	0x04dc	/* 409dfa5e 04dc */
-	.short	0x206b	/* 409dfa60 206b */
-	.short	0x0018	/* 409dfa62 0018 */
-	.short	0xd1fc	/* 409dfa64 d1fc */
-	.short	0x0002	/* 409dfa66 0002 */
-	.short	0x6000	/* 409dfa68 6000 */
-	.short	0x117c	/* 409dfa6a 117c */
-	.short	0x0040	/* 409dfa6c 0040 */
-	.short	0x0012	/* 409dfa6e 0012 */
-	.short	0x46df	/* 409dfa70 46df */
-	.short	0x4240	/* 409dfa72 4240 */
-	.short	0x206b	/* 409dfa74 206b */
-	.short	0x0004	/* 409dfa76 0004 */
-	.short	0xa076	/* 409dfa78 a076 */
+
+	moveq	#1,%d1			/* 409dfa44 7201 */
+	bsrs	sub_409dfa3a		/* 409dfa46 61f2 */
+	bnes	loc_409dfa54		/* 409dfa48 660a */
+	bsrs	sub_409dfa7c		/* 409dfa4a 6130 */
+	bnew	loc_409df6ce		/* 409dfa4c 6600 fc80 */
+	braw	loc_409df6d2		/* 409dfa50 6000 fc80 */
+
+loc_409dfa54:
+	bsrs	sub_409dfa5a		/* 409dfa54 6104 */
+	braw	loc_409df6d2		/* 409dfa56 6000 fc7a */
+
+sub_409dfa5a:
+	movew	%sr,%sp@-		/* 409dfa5a 40e7 */
+	bsrw	sub_409dff3a		/* 409dfa5c 6100 04dc */
+	moveal	%a3@(24),%a0		/* 409dfa60 206b 0018 */
+	addal	#155648,%a0		/* 409dfa64 d1fc 0002 6000 */
+	moveb	#64,%a0@(18)		/* 409dfa6a 117c 0040 0012 */
+	movew	%sp@+,%sr		/* 409dfa70 46df */
+	clrw	%d0			/* 409dfa72 4240 */
+	moveal	%a3@(4),%a0		/* 409dfa74 206b 0004 */
+	.short	0xa076			/* 409dfa78 a076 */
 	rts				/* 409dfa7a 4e75 */
+
+sub_409dfa7c:
 	.short	0x206b	/* 409dfa7c 206b */
 	.short	0x0004	/* 409dfa7e 0004 */
 	.short	0x45fa	/* 409dfa80 45fa */
