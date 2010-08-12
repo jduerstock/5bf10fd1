@@ -816,6 +816,8 @@ sub_4098c6b0:
 	.short	0x0000	/* 4098c6ea 0000 */
 	.short	0x0000	/* 4098c6ec 0000 */
 	.short	0x0000	/* 4098c6ee 0000 */
+
+byte_4098c6f0:
 	.short	0x0000	/* 4098c6f0 0000 */
 	.short	0x0000	/* 4098c6f2 0000 */
 	.short	0x0000	/* 4098c6f4 0000 */
@@ -936,30 +938,32 @@ sub_4098c6b0:
 	.short	0x0000	/* 4098c7da 0000 */
 	.short	0x0000	/* 4098c7dc 0000 */
 	.short	0x0000	/* 4098c7de 0000 */
-	.short	0x48e7	/* 4098c7e0 48e7 */
-	.short	0x0060	/* 4098c7e2 0060 */
-	.short	0x43fa	/* 4098c7e4 43fa */
-	.short	0xff0a	/* 4098c7e6 ff0a */
-	.short	0x40e7	/* 4098c7e8 40e7 */
-	.short	0x46fc	/* 4098c7ea 46fc */
-	.short	0x2600	/* 4098c7ec 2600 */
-	.short	0x2051	/* 4098c7ee 2051 */
-	.short	0x2450	/* 4098c7f0 2450 */
-	.short	0x2008	/* 4098c7f2 2008 */
-	.short	0x6702	/* 4098c7f4 6702 */
-	.short	0x2292	/* 4098c7f6 2292 */
-	.short	0x46df	/* 4098c7f8 46df */
-	.short	0x4a80	/* 4098c7fa 4a80 */
-	.short	0x6704	/* 4098c7fc 6704 */
-	.short	0xa023	/* 4098c7fe a023 */
-	.short	0x60e6	/* 4098c800 60e6 */
-	.short	0x4cdf	/* 4098c802 4cdf */
-	.short	0x0600	/* 4098c804 0600 */
+
+	moveml	%a1-%a2,%sp@-		/* 4098c7e0 48e7 0060 */
+	lea	%pc@(byte_4098c6f0),%a1	/* 4098c7e4 43fa ff68 */
+
+loc_4098c7e8:
+	movew	%sr,%sp@-		/* 4098c7e8 40e7 */
+	movew	#9728,%sr		/* 4098c7ea 46fc 2600 */
+	moveal	%a1@,%a0		/* 4098c7ee 2051 */
+	moveal	%a0@,%a2		/* 4098c7f0 2450 */
+	movel	%a0,%d0			/* 4098c7f2 2008 */
+	beqs	loc_4098c7f8		/* 4098c7f4 6702 */
+	movel	%a2@,%a1@		/* 4098c7f6 2292 */
+
+loc_4098c7f8:
+	movew	%sp@+,%sr		/* 4098c7f8 46df */
+	tstl	%d0			/* 4098c7fa 4a80 */
+	beqs	loc_4098c802		/* 4098c7fc 6704 */
+	_DisposeHandle			/* 4098c7fe a023 */
+	bras	loc_4098c7e8		/* 4098c800 60e6 */
+
+loc_4098c802:
+	moveml	%sp@+,%a1-%a2		/* 4098c802 4cdf 0600 */
 	rts				/* 4098c806 4e75 */
-	.short	0x0000	/* 4098c808 0000 */
-	.short	0x0000	/* 4098c80a 0000 */
-	.short	0x0000	/* 4098c80c 0000 */
-	.short	0x0000	/* 4098c80e 0000 */
+
+	.align	16
+
 	.short	0x261f	/* 4098c810 261f */
 	.short	0x3e80	/* 4098c812 3e80 */
 	.short	0x2242	/* 4098c814 2242 */
