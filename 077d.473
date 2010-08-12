@@ -1012,6 +1012,8 @@ off_409d97b8:
 loc_409d97cc:
 	.short	0x70ef	/* 409d97cc 70ef */
 	.short	0x6002	/* 409d97ce 6002 */
+
+loc_409d97d0:
 	moveq	#0,%d0			/* 409d97d0 7000 */
 	.short	0x205f	/* 409d97d2 205f */
 	.short	0x6000	/* 409d97d4 6000 */
@@ -1393,6 +1395,8 @@ loc_409d97cc:
 	.short	0x6104	/* 409d9ac4 6104 */
 	.short	0x6000	/* 409d9ac6 6000 */
 	.short	0xfd08	/* 409d9ac8 fd08 */
+
+sub_409d9aca:
 	.short	0x6100	/* 409d9aca 6100 */
 	.short	0x0238	/* 409d9acc 0238 */
 	.short	0x2078	/* 409d9ace 2078 */
@@ -1449,29 +1453,23 @@ loc_409d97cc:
 	.short	0x214f	/* 409d9b36 214f */
 	.short	0x0004	/* 409d9b38 0004 */
 	_SPutPRAMRec			/* 409d9b3a 7012 a06e */
-	.short	0x4fef	/* 409d9b3e 4fef */
-	.short	0x0040	/* 409d9b40 0040 */
-	.short	0x6000	/* 409d9b42 6000 */
-	.short	0xfc8c	/* 409d9b44 fc8c */
-	.short	0x2669	/* 409d9b46 2669 */
-	.short	0x0014	/* 409d9b48 0014 */
-	.short	0x2653	/* 409d9b4a 2653 */
-	.short	0x6100	/* 409d9b4c 6100 */
-	.short	0xff7c	/* 409d9b4e ff7c */
-	.short	0x41eb	/* 409d9b50 41eb */
-	.short	0x0010	/* 409d9b52 0010 */
-	.short	0xa059	/* 409d9b54 a059 */
-	.short	0x206b	/* 409d9b56 206b */
-	.short	0x0004	/* 409d9b58 0004 */
-	.short	0xa01f	/* 409d9b5a a01f */
-	.short	0x206b	/* 409d9b5c 206b */
-	.short	0x0024	/* 409d9b5e 0024 */
-	.short	0xa01f	/* 409d9b60 a01f */
-	.short	0x2069	/* 409d9b62 2069 */
-	.short	0x0014	/* 409d9b64 0014 */
-	.short	0xa023	/* 409d9b66 a023 */
+	lea	%sp@(64),%sp		/* 409d9b3e 4fef 0040 */
+	braw	loc_409d97d0		/* 409d9b42 6000 fc8c */
+
+	moveal	%a1@(20),%a3		/* 409d9b46 2669 0014 */
+	moveal	%a3@,%a3		/* 409d9b4a 2653 */
+	bsrw	sub_409d9aca		/* 409d9b4c 6100 ff7c */
+	lea	%a3@(16),%a0		/* 409d9b50 41eb 0010 */
+	.short	0xa059			/* 409d9b54 a059 */
+	moveal	%a3@(4),%a0		/* 409d9b56 206b 0004 */
+	.short	0xa01f			/* 409d9b5a a01f */
+	moveal	%a3@(36),%a0		/* 409d9b5c 206b 0024 */
+	.short	0xa01f			/* 409d9b60 a01f */
+	moveal	%a1@(20),%a0		/* 409d9b62 2069 0014 */
+	_DisposeHandle			/* 409d9b66 a023 */
 	moveq	#0,%d0			/* 409d9b68 7000 */
 	rts				/* 409d9b6a 4e75 */
+
 	.short	0x2f08	/* 409d9b6c 2f08 */
 	.short	0x3028	/* 409d9b6e 3028 */
 	.short	0x001a	/* 409d9b70 001a */
