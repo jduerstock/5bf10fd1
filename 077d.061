@@ -481,25 +481,24 @@ sub_4083d488:
 	jmp	%a1@			/* 4083d490 4ed1 */
 
 __v__XGETDIRECTION:
-	.short	0x48e7	/* 4083d492 48e7 */
-	.short	0x8080	/* 4083d494 8080 */
-	.short	0x4a6b	/* 4083d496 4a6b */
-	.short	0x0050	/* 4083d498 0050 */
-	.short	0x6a10	/* 4083d49a 6a10 */
-	.short	0x3028	/* 4083d49c 3028 */
-	.short	0x0002	/* 4083d49e 0002 */
-	.short	0x6100	/* 4083d4a0 6100 */
-	.short	0x2c72	/* 4083d4a2 2c72 */
-	.short	0x4241	/* 4083d4a4 4241 */
-	.short	0x1228	/* 4083d4a6 1228 */
-	.short	0x0009	/* 4083d4a8 0009 */
-	.short	0x6004	/* 4083d4aa 6004 */
-	.short	0x122b	/* 4083d4ac 122b */
-	.short	0x004d	/* 4083d4ae 004d */
-	.short	0x6702	/* 4083d4b0 6702 */
-	.short	0x50c1	/* 4083d4b2 50c1 */
-	.short	0x4cdf	/* 4083d4b4 4cdf */
-	.short	0x0101	/* 4083d4b6 0101 */
+	moveml	%d0/%a0,%sp@-		/* 4083d492 48e7 8080 */
+	tstw	%a3@(80)		/* 4083d496 4a6b 0050 */
+	bpls	loc_4083d4ac		/* 4083d49a 6a10 */
+	movew	%a0@(2),%d0		/* 4083d49c 3028 0002 */
+	bsrw	sub_40840114		/* 4083d4a0 6100 2c72 */
+	clrw	%d1			/* 4083d4a4 4241 */
+	moveb	%a0@(9),%d1		/* 4083d4a6 1228 0009 */
+	bras	loc_4083d4b0		/* 4083d4aa 6004 */
+
+loc_4083d4ac:
+	moveb	%a3@(77),%d1		/* 4083d4ac 122b 004d */
+
+loc_4083d4b0:
+	beqs	loc_4083d4b4		/* 4083d4b0 6702 */
+	st	%d1			/* 4083d4b2 50c1 */
+
+loc_4083d4b4:
+	moveml	%sp@+,%d0/%a0		/* 4083d4b4 4cdf 0101 */
 	rts				/* 4083d4b8 4e75 */
 
 sub_4083d4ba:
