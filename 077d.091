@@ -1142,23 +1142,21 @@ GETMCINFO:
 	rts				/* 4085b91e 4e75 */
 
 SETMENUBAR:
-	.short	0x4267	/* 4085b920 4267 */
-	.short	0xa938	/* 4085b922 a938 */
-	.short	0x2078	/* 4085b924 2078 */
-	.short	0x0a1c	/* 4085b926 0a1c */
-	.short	0xa023	/* 4085b928 a023 */
-	.short	0x206f	/* 4085b92a 206f */
-	.short	0x0004	/* 4085b92c 0004 */
-	.short	0x2e9f	/* 4085b92e 2e9f */
-	.short	0xa9e1	/* 4085b930 a9e1 */
-	.short	0x21c8	/* 4085b932 21c8 */
-	.short	0x0a1c	/* 4085b934 0a1c */
-	.short	0x2008	/* 4085b936 2008 */
-	.short	0x6708	/* 4085b938 6708 */
-	.short	0x7002	/* 4085b93a 7002 */
-	.short	0x7200	/* 4085b93c 7200 */
-	.short	0x4eba	/* 4085b93e 4eba */
-	.short	0xf2be	/* 4085b940 f2be */
+	clrw	%sp@-			/* 4085b920 4267 */
+	.short	0xa938			/* 4085b922 a938 */
+	moveal	0xa1c,%a0		/* 4085b924 2078 0a1c */
+	_DisposeHandle			/* 4085b928 a023 */
+	moveal	%sp@(4),%a0		/* 4085b92a 206f 0004 */
+	movel	%sp@+,%sp@		/* 4085b92e 2e9f */
+	.short	0xa9e1			/* 4085b930 a9e1 */
+	movel	%a0,0xa1c		/* 4085b932 21c8 0a1c */
+	movel	%a0,%d0			/* 4085b936 2008 */
+	beqs	loc_4085b942		/* 4085b938 6708 */
+	moveq	#2,%d0			/* 4085b93a 7002 */
+	moveq	#0,%d1			/* 4085b93c 7200 */
+	jsr	%pc@(CALLMBARPROC)	/* 4085b93e 4eba f2be */
+
+loc_4085b942:
 	rts				/* 4085b942 4e75 */
 
 	.align	16
