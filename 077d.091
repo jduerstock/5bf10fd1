@@ -1169,7 +1169,7 @@ SETMCINFO:
 	moveal	0xd50,%a1		/* 4085b95a 2278 0d50 */
 	movel	%a0,0xd50		/* 4085b95e 21c8 0d50 */
 	moveal	%a1,%a0			/* 4085b962 2049 */
-	.short	0xa023			/* 4085b964 a023 */
+	_DisposeHandle			/* 4085b964 a023 */
 	bsrw	sub_4085bc20		/* 4085b966 6100 02b8 */
 
 loc_4085b96a:
@@ -1178,18 +1178,17 @@ loc_4085b96a:
 	.align	16
 
 DISPOSEMENU:
-	.short	0x2f2f	/* 4085b970 2f2f */
-	.short	0x0004	/* 4085b972 0004 */
-	.short	0xa9a3	/* 4085b974 a9a3 */
-	.short	0x554f	/* 4085b976 554f */
-	.short	0xa9af	/* 4085b978 a9af */
-	.short	0x0c5f	/* 4085b97a 0c5f */
-	.short	0xff40	/* 4085b97c ff40 */
-	.short	0x6606	/* 4085b97e 6606 */
-	.short	0x206f	/* 4085b980 206f */
-	.short	0x0004	/* 4085b982 0004 */
-	.short	0xa023	/* 4085b984 a023 */
-	.short	0x2e9f	/* 4085b986 2e9f */
+	movel	%sp@(4),%sp@-		/* 4085b970 2f2f 0004 */
+	.short	0xa9a3			/* 4085b974 a9a3 */
+	subqw	#2,%sp			/* 4085b976 554f */
+	.short	0xa9af			/* 4085b978 a9af */
+	cmpiw	#-192,%sp@+		/* 4085b97a 0c5f ff40 */
+	bnes	loc_4085b986		/* 4085b97e 6606 */
+	moveal	%sp@(4),%a0		/* 4085b980 206f 0004 */
+	_DisposeHandle			/* 4085b984 a023 */
+
+loc_4085b986:
+	movel	%sp@+,%sp@		/* 4085b986 2e9f */
 	rts				/* 4085b988 4e75 */
 
 	.align	16
