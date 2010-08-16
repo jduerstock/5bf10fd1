@@ -912,7 +912,7 @@ __v____ACTIVEWINDOW:
 	.short	0x4e5e	/* 4085a7e4 4e5e */
 	rts				/* 4085a7e6 4e75 */
 
-sub_4085a7e8:
+__ACTIVEWINDOW:
 	.short	0x2278	/* 4085a7e8 2278 */
 	.short	0x2084	/* 4085a7ea 2084 */
 	.short	0x2269	/* 4085a7ec 2269 */
@@ -1284,7 +1284,7 @@ INITMENUS:
 	.short	0xa937	/* 4085ab02 a937 */
 	rts				/* 4085ab04 4e75 */
 
-sub_4085ab06:
+INITMLIST:
 	.short	0x701e	/* 4085ab06 701e */
 	.short	0xa122	/* 4085ab08 a122 */
 	.short	0x2250	/* 4085ab0a 2250 */
@@ -1307,7 +1307,7 @@ sub_4085ab06:
 	.short	0x0000	/* 4085ab2c 0000 */
 	.short	0x0000	/* 4085ab2e 0000 */
 
-sub_4085ab30:
+GETMBCOLORS:
 	.short	0x1f3c	/* 4085ab30 1f3c */
 	.short	0x0001	/* 4085ab32 0001 */
 	.short	0xa99b	/* 4085ab34 a99b */
@@ -1342,15 +1342,15 @@ CLEARMENUBAR:
 	tstw	%sp@+			/* 4085ab6e 4a5f */
 
 loc_4085ab70:
-	bsrw	sub_4085affe		/* 4085ab70 6100 048c */
+	bsrw	GETA0LIST		/* 4085ab70 6100 048c */
 	moveal	0xa1c,%a0		/* 4085ab74 2078 0a1c */
 	_DisposeHandle			/* 4085ab78 a023 */
 	moveal	0xd50,%a0		/* 4085ab7a 2078 0d50 */
 	_DisposeHandle			/* 4085ab7e a023 */
-	bsrw	sub_4085ab06		/* 4085ab80 6100 ff84 */
+	bsrw	INITMLIST		/* 4085ab80 6100 ff84 */
 	movel	%a0,0xa1c		/* 4085ab84 21c8 0a1c */
 	movel	%a1,0xd50		/* 4085ab88 21c9 0d50 */
-	bsrw	sub_4085ab30		/* 4085ab8c 6100 ffa2 */
+	bsrw	GETMBCOLORS		/* 4085ab8c 6100 ffa2 */
 	clrw	0xa26			/* 4085ab90 4278 0a26 */
 	rts				/* 4085ab94 4e75 */
 
@@ -1797,9 +1797,12 @@ FLASHMENUBAR:
 
 	.align	16
 
+TURNINDEXOFF:
 	.short	0x7200	/* 4085af10 7200 */
 	.short	0x6000	/* 4085af12 6000 */
 	.short	0x0004	/* 4085af14 0004 */
+
+TURNINDEXON:
 	.short	0x7201	/* 4085af16 7201 */
 	.short	0x4841	/* 4085af18 4841 */
 	.short	0x3200	/* 4085af1a 3200 */
@@ -1906,6 +1909,8 @@ DISABLEITEM:
 	.short	0x0000	/* 4085afea 0000 */
 	.short	0x0000	/* 4085afec 0000 */
 	.short	0x0000	/* 4085afee 0000 */
+
+GETMENUPTR:
 	.short	0x610c	/* 4085aff0 610c */
 	.short	0x2270	/* 4085aff2 2270 */
 	.short	0x5000	/* 4085aff4 5000 */
@@ -1914,5 +1919,5 @@ DISABLEITEM:
 	.short	0x2051	/* 4085affa 2051 */
 	rts				/* 4085affc 4e75 */
 
-sub_4085affe:
+GETA0LIST:
 	.short	0x2078	/* 4085affe 2078 */

@@ -191,7 +191,7 @@ __v__ONEPARMEXIT:
 __v__WRTS1:
 	rts				/* 4085718a 4e75 */
 
-sub_4085718c:
+DELETEWINDOW:
 	CallVector	0x2084 58	/* 4085718c 2f30 81e2 2084 00e8 */
 	rts				/* 40857194 4e75 */
 
@@ -880,7 +880,7 @@ __v__CANCELACTIVATE:
 	.short	0x0007	/* 40857776 0007 */
 	rts				/* 40857778 4e75 */
 
-sub_4085777a:
+CANCELACTIVATE:
 	CallVector	0x2084 77	/* 4085777a 2f30 81e2 2084 0134 */
 	rts				/* 40857782 4e75 */
 
@@ -890,9 +890,9 @@ __v__CLOSEWINDOWGUTS:
 	moveml	%d3-%d4/%a2-%a3,%sp@-	/* 40857790 48e7 1830 */
 	moveal	%sp@(20),%a3		/* 40857794 266f 0014 */
 	bsrw	SETWPORT		/* 40857798 6100 fd40 */
-	bsrs	sub_4085777a		/* 4085779c 61dc */
+	bsrs	CANCELACTIVATE		/* 4085779c 61dc */
 	subqw	#4,%sp			/* 4085779e 594f */
-	jsr	%pc@(sub_4085a7e8)	/* 408577a0 4eba 3046 */
+	jsr	%pc@(__ACTIVEWINDOW)	/* 408577a0 4eba 3046 */
 	movel	%a3,%sp@-		/* 408577a4 2f0b */
 	clrw	%sp@-			/* 408577a6 4267 */
 	.short	0xa908			/* 408577a8 a908 */
@@ -959,7 +959,7 @@ loc_40857826:
 
 loc_40857828:
 	movel	%a3,%sp@-		/* 40857828 2f0b */
-	bsrw	sub_4085718c		/* 4085782a 6100 f960 */
+	bsrw	DELETEWINDOW		/* 4085782a 6100 f960 */
 	moveal	%a3@(134),%a0		/* 4085782e 206b 0086 */
 	_DisposeHandle			/* 40857832 a023 */
 	movel	%a3@(114),%sp@-		/* 40857834 2f2b 0072 */
@@ -988,8 +988,8 @@ loc_4085785e:
 	bnes	loc_40857872		/* 40857860 6610 */
 	movew	%a3@(108),0xa22		/* 40857862 31eb 006c 0a22 */
 	subqw	#4,%sp			/* 40857868 594f */
-	jsr	%pc@(sub_4085a7e8)	/* 4085786a 4eba 2f7c */
-	bsrw	sub_40857faa		/* 4085786e 6100 073a */
+	jsr	%pc@(__ACTIVEWINDOW)	/* 4085786a 4eba 2f7c */
+	bsrw	DOACTIVATE		/* 4085786e 6100 073a */
 
 loc_40857872:
 	cmpal	%d4,%a3			/* 40857872 b7c4 */
@@ -1812,7 +1812,7 @@ __v__DOACTIVATE:
 	.short	0x2e9f	/* 40857fa6 2e9f */
 	rts				/* 40857fa8 4e75 */
 
-sub_40857faa:
+DOACTIVATE:
 	.short	0x2f30	/* 40857faa 2f30 */
 	.short	0x81e2	/* 40857fac 81e2 */
 	.short	0x2084	/* 40857fae 2084 */
