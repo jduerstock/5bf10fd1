@@ -1162,19 +1162,17 @@ loc_4085b942:
 	.align	16
 
 SETMCINFO:
-	.short	0x206f	/* 4085b950 206f */
-	.short	0x0004	/* 4085b952 0004 */
-	.short	0x2e9f	/* 4085b954 2e9f */
-	.short	0xa9e1	/* 4085b956 a9e1 */
-	.short	0x6610	/* 4085b958 6610 */
-	.short	0x2278	/* 4085b95a 2278 */
-	.short	0x0d50	/* 4085b95c 0d50 */
-	.short	0x21c8	/* 4085b95e 21c8 */
-	.short	0x0d50	/* 4085b960 0d50 */
-	.short	0x2049	/* 4085b962 2049 */
-	.short	0xa023	/* 4085b964 a023 */
-	.short	0x6100	/* 4085b966 6100 */
-	.short	0x02b8	/* 4085b968 02b8 */
+	moveal	%sp@(4),%a0		/* 4085b950 206f 0004 */
+	movel	%sp@+,%sp@		/* 4085b954 2e9f */
+	.short	0xa9e1			/* 4085b956 a9e1 */
+	bnes	loc_4085b96a		/* 4085b958 6610 */
+	moveal	0xd50,%a1		/* 4085b95a 2278 0d50 */
+	movel	%a0,0xd50		/* 4085b95e 21c8 0d50 */
+	moveal	%a1,%a0			/* 4085b962 2049 */
+	.short	0xa023			/* 4085b964 a023 */
+	bsrw	sub_4085bc20		/* 4085b966 6100 02b8 */
+
+loc_4085b96a:
 	rts				/* 4085b96a 4e75 */
 
 	.align	16
@@ -1523,8 +1521,10 @@ SETMCENTRIES:
 	.short	0x001e	/* 4085bc16 001e */
 	.short	0x60ee	/* 4085bc18 60ee */
 	rts				/* 4085bc1a 4e75 */
-	.short	0x0000	/* 4085bc1c 0000 */
-	.short	0x0000	/* 4085bc1e 0000 */
+
+	.align	16
+
+sub_4085bc20:
 	.short	0x4e56	/* 4085bc20 4e56 */
 	.short	0xfff2	/* 4085bc22 fff2 */
 	.short	0x2f02	/* 4085bc24 2f02 */
