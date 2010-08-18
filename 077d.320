@@ -1742,62 +1742,65 @@ loc_40940514:
 
 	.align	16
 
-	.short	0x4e56	/* 40940e30 4e56 */
-	.short	0xfff4	/* 40940e32 fff4 */
-	.short	0x48e7	/* 40940e34 48e7 */
-	.short	0x0318	/* 40940e36 0318 */
-	.short	0x2c2e	/* 40940e38 2c2e */
-	.short	0x0008	/* 40940e3a 0008 */
-	.short	0x42a7	/* 40940e3c 42a7 */
-	.short	0x4eba	/* 40940e3e 4eba */
-	.short	0x3ac0	/* 40940e40 3ac0 */
-	.short	0x205f	/* 40940e42 205f */
-	.short	0x2650	/* 40940e44 2650 */
-	.short	0x200b	/* 40940e46 200b */
-	.short	0x6602	/* 40940e48 6602 */
-	.short	0x6046	/* 40940e4a 6046 */
-	.short	0x286b	/* 40940e4c 286b */
-	.short	0x0008	/* 40940e4e 0008 */
-	.short	0x200c	/* 40940e50 200c */
-	.short	0x6602	/* 40940e52 6602 */
-	.short	0x603c	/* 40940e54 603c */
-	.short	0xbc8c	/* 40940e56 bc8c */
-	.short	0x6612	/* 40940e58 6612 */
-	.short	0x42a7	/* 40940e5a 42a7 */
-	.short	0x4eba	/* 40940e5c 4eba */
-	.short	0x3aa2	/* 40940e5e 3aa2 */
-	.short	0x205f	/* 40940e60 205f */
-	.short	0x2050	/* 40940e62 2050 */
-	.short	0x2254	/* 40940e64 2254 */
-	.short	0x2151	/* 40940e66 2151 */
-	.short	0x0008	/* 40940e68 0008 */
-	.short	0x601a	/* 40940e6a 601a */
-	.short	0x2e0c	/* 40940e6c 2e0c */
-	.short	0x2047	/* 40940e6e 2047 */
-	.short	0x2050	/* 40940e70 2050 */
-	.short	0x2850	/* 40940e72 2850 */
-	.short	0x200c	/* 40940e74 200c */
-	.short	0x6602	/* 40940e76 6602 */
-	.short	0x6018	/* 40940e78 6018 */
-	.short	0xbc8c	/* 40940e7a bc8c */
-	.short	0x66ee	/* 40940e7c 66ee */
-	.short	0x2054	/* 40940e7e 2054 */
-	.short	0x2247	/* 40940e80 2247 */
-	.short	0x2251	/* 40940e82 2251 */
-	.short	0x2290	/* 40940e84 2290 */
-	.short	0x42a7	/* 40940e86 42a7 */
-	.short	0x4eba	/* 40940e88 4eba */
-	.short	0x3a86	/* 40940e8a 3a86 */
-	.short	0x2f06	/* 40940e8c 2f06 */
-	.short	0x205f	/* 40940e8e 205f */
-	.short	0xa023	/* 40940e90 a023 */
-	.short	0x4cdf	/* 40940e92 4cdf */
-	.short	0x18c0	/* 40940e94 18c0 */
-	.short	0x4e5e	/* 40940e96 4e5e */
-	.short	0x4e74	/* 40940e98 4e74 */
-	.short	0x0004	/* 40940e9a 0004 */
-	.short	0x0000	/* 40940e9c 0000 */
-	.short	0x0000	/* 40940e9e 0000 */
+	linkw	%fp,#-12		/* 40940e30 4e56 fff4 */
+	moveml	%d6-%d7/%a3-%a4,%sp@-	/* 40940e34 48e7 0318 */
+	movel	%fp@(8),%d6		/* 40940e38 2c2e 0008 */
+	clrl	%sp@-			/* 40940e3c 42a7 */
+	jsr	%pc@(sub_40944900)	/* 40940e3e 4eba 3ac0 */
+	moveal	%sp@+,%a0		/* 40940e42 205f */
+	moveal	%a0@,%a3		/* 40940e44 2650 */
+	movel	%a3,%d0			/* 40940e46 200b */
+	bnes	loc_40940e4c		/* 40940e48 6602 */
+	bras	loc_40940e92		/* 40940e4a 6046 */
+
+loc_40940e4c:
+	moveal	%a3@(8),%a4		/* 40940e4c 286b 0008 */
+	movel	%a4,%d0			/* 40940e50 200c */
+	bnes	loc_40940e56		/* 40940e52 6602 */
+	bras	loc_40940e92		/* 40940e54 603c */
+
+loc_40940e56:
+	cmpl	%a4,%d6			/* 40940e56 bc8c */
+	bnes	loc_40940e6c		/* 40940e58 6612 */
+	clrl	%sp@-			/* 40940e5a 42a7 */
+	jsr	%pc@(sub_40944900)	/* 40940e5c 4eba 3aa2 */
+	moveal	%sp@+,%a0		/* 40940e60 205f */
+	moveal	%a0@,%a0		/* 40940e62 2050 */
+	moveal	%a4@,%a1		/* 40940e64 2254 */
+	movel	%a1@,%a0@(8)		/* 40940e66 2151 0008 */
+	bras	loc_40940e86		/* 40940e6a 601a */
+
+loc_40940e6c:
+	movel	%a4,%d7			/* 40940e6c 2e0c */
+	moveal	%d7,%a0			/* 40940e6e 2047 */
+	moveal	%a0@,%a0		/* 40940e70 2050 */
+	moveal	%a0@,%a4		/* 40940e72 2850 */
+	movel	%a4,%d0			/* 40940e74 200c */
+	bnes	loc_40940e7a		/* 40940e76 6602 */
+	bras	loc_40940e92		/* 40940e78 6018 */
+
+loc_40940e7a:
+	cmpl	%a4,%d6			/* 40940e7a bc8c */
+	bnes	loc_40940e6c		/* 40940e7c 66ee */
+	moveal	%a4@,%a0		/* 40940e7e 2054 */
+	moveal	%d7,%a1			/* 40940e80 2247 */
+	moveal	%a1@,%a1		/* 40940e82 2251 */
+	movel	%a0@,%a1@		/* 40940e84 2290 */
+
+loc_40940e86:
+	clrl	%sp@-			/* 40940e86 42a7 */
+	jsr	%pc@(sub_40944910)	/* 40940e88 4eba 3a86 */
+	movel	%d6,%sp@-		/* 40940e8c 2f06 */
+	moveal	%sp@+,%a0		/* 40940e8e 205f */
+	_DisposeHandle			/* 40940e90 a023 */
+
+loc_40940e92:
+	moveml	%sp@+,%d6-%d7/%a3-%a4	/* 40940e92 4cdf 18c0 */
+	unlk	%fp			/* 40940e96 4e5e */
+	rtd	#4			/* 40940e98 4e74 0004 */
+
+	.align	16
+
 	.short	0x4e56	/* 40940ea0 4e56 */
 	.short	0xfffe	/* 40940ea2 fffe */
 	.short	0x2f07	/* 40940ea4 2f07 */
