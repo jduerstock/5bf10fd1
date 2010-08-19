@@ -185,13 +185,13 @@ __v__DisposeZoneHandle:
 	movel	%a4,%d0			/* 408a01ac 200c */
 	beqs	loc_408a01cc		/* 408a01ae 671c */
 	movel	%a4,%sp@-		/* 408a01b0 2f0c */
-	jsr	%pc@(SwapZone)	/* 408a01b2 4eba ff46 */
+	jsr	%pc@(SwapZone)		/* 408a01b2 4eba ff46 */
 	moveal	%d0,%a3			/* 408a01b6 2640 */
 	moveal	%fp@(8),%a0		/* 408a01b8 206e 0008 */
-	.short	0xa023			/* 408a01bc a023 */
+	_DisposeHandle			/* 408a01bc a023 */
 	movew	0x220,%d7		/* 408a01be 3e38 0220 */
 	movel	%a3,%sp@-		/* 408a01c2 2f0b */
-	jsr	%pc@(SwapZone)	/* 408a01c4 4eba ff34 */
+	jsr	%pc@(SwapZone)		/* 408a01c4 4eba ff34 */
 	addqw	#8,%sp			/* 408a01c8 504f */
 	bras	loc_408a01ce		/* 408a01ca 6002 */
 
@@ -667,23 +667,20 @@ __v__AllocateLockedBufferForCompression:
 	.align	16
 
 __v__DisposeOfCompressionBuffer:
-	.short	0x4e56	/* 408a0590 4e56 */
-	.short	0x0000	/* 408a0592 0000 */
-	.short	0x2f0c	/* 408a0594 2f0c */
-	.short	0xa11a	/* 408a0596 a11a */
-	.short	0x2848	/* 408a0598 2848 */
-	.short	0x206e	/* 408a059a 206e */
-	.short	0x000c	/* 408a059c 000c */
-	.short	0xa01b	/* 408a059e a01b */
-	.short	0x206e	/* 408a05a0 206e */
-	.short	0x0008	/* 408a05a2 0008 */
-	.short	0xa023	/* 408a05a4 a023 */
-	.short	0x204c	/* 408a05a6 204c */
-	.short	0xa01b	/* 408a05a8 a01b */
-	.short	0x286e	/* 408a05aa 286e */
-	.short	0xfffc	/* 408a05ac fffc */
-	.short	0x4e5e	/* 408a05ae 4e5e */
+	linkw	%fp,#0			/* 408a0590 4e56 0000 */
+	movel	%a4,%sp@-		/* 408a0594 2f0c */
+	.short	0xa11a			/* 408a0596 a11a */
+	moveal	%a0,%a4			/* 408a0598 2848 */
+	moveal	%fp@(12),%a0		/* 408a059a 206e 000c */
+	.short	0xa01b			/* 408a059e a01b */
+	moveal	%fp@(8),%a0		/* 408a05a0 206e 0008 */
+	.short	0xa023			/* 408a05a4 a023 */
+	moveal	%a4,%a0			/* 408a05a6 204c */
+	.short	0xa01b			/* 408a05a8 a01b */
+	moveal	%fp@(-4),%a4		/* 408a05aa 286e fffc */
+	unlk	%fp			/* 408a05ae 4e5e */
 	rts				/* 408a05b0 4e75 */
+
 	.short	0x2278	/* 408a05b2 2278 */
 	.short	0x202c	/* 408a05b4 202c */
 	.short	0x2269	/* 408a05b6 2269 */
