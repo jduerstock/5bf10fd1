@@ -352,29 +352,22 @@ __v__INITSCRIPTAPP:
 
 __v__CLEANUPSCRIPTAPP:
 	linkw	%fp,#0			/* 408682d0 4e56 0000 */
-	.short	0x2078	/* 408682d4 2078 */
-	.short	0x02b6	/* 408682d6 02b6 */
-	.short	0x2068	/* 408682d8 2068 */
-	.short	0x0178	/* 408682da 0178 */
-	.short	0x2008	/* 408682dc 2008 */
-	.short	0x670e	/* 408682de 670e */
-	.short	0x5280	/* 408682e0 5280 */
-	.short	0x670a	/* 408682e2 670a */
-	.short	0xa023	/* 408682e4 a023 */
-	.short	0x2078	/* 408682e6 2078 */
-	.short	0x02b6	/* 408682e8 02b6 */
-	.short	0x42a8	/* 408682ea 42a8 */
-	.short	0x0178	/* 408682ec 0178 */
-	.short	0x426e	/* 408682ee 426e */
-	.short	0x000c	/* 408682f0 000c */
-	.short	0x303c	/* 408682f2 303c */
-	.short	0x0004	/* 408682f4 0004 */
-	.short	0x6000	/* 408682f6 6000 */
-	.short	0x014a	/* 408682f8 014a */
-	.short	0x2f30	/* 408682fa 2f30 */
-	.short	0x81e2	/* 408682fc 81e2 */
-	.short	0x2060	/* 408682fe 2060 */
-	.short	0x00cc	/* 40868300 00cc */
+	moveal	0x2b6,%a0		/* 408682d4 2078 02b6 */
+	moveal	%a0@(376),%a0		/* 408682d8 2068 0178 */
+	movel	%a0,%d0			/* 408682dc 2008 */
+	beqs	loc_408682ee		/* 408682de 670e */
+	addql	#1,%d0			/* 408682e0 5280 */
+	beqs	loc_408682ee		/* 408682e2 670a */
+	.short	0xa023			/* 408682e4 a023 */
+	moveal	0x2b6,%a0		/* 408682e6 2078 02b6 */
+	clrl	%a0@(376)		/* 408682ea 42a8 0178 */
+
+loc_408682ee:
+	clrw	%fp@(12)		/* 408682ee 426e 000c */
+	movew	#4,%d0			/* 408682f2 303c 0004 */
+	braw	STDUNLINK		/* 408682f6 6000 014a */
+
+	CallVector	0x2060 51	/* 408682fa 2f30 81e2 2060 00cc */
 	rts				/* 40868302 4e75 */
 
 	.align	16
