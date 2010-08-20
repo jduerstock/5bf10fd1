@@ -645,39 +645,32 @@ loc_4089767a:
 	.align	16
 
 __v__sb_DisposeZoneHandle:
-	.short	0x4e56	/* 408976c0 4e56 */
-	.short	0xfffa	/* 408976c2 fffa */
-	.short	0x48e7	/* 408976c4 48e7 */
-	.short	0x0018	/* 408976c6 0018 */
-	.short	0x266e	/* 408976c8 266e */
-	.short	0x000c	/* 408976ca 000c */
-	.short	0x286e	/* 408976cc 286e */
-	.short	0x0008	/* 408976ce 0008 */
-	.short	0xa11a	/* 408976d0 a11a */
-	.short	0x2d48	/* 408976d2 2d48 */
-	.short	0xfffa	/* 408976d4 fffa */
-	.short	0x426e	/* 408976d6 426e */
-	.short	0xfffe	/* 408976d8 fffe */
-	.short	0x200b	/* 408976da 200b */
-	.short	0x6710	/* 408976dc 6710 */
-	.short	0x204b	/* 408976de 204b */
-	.short	0xa01b	/* 408976e0 a01b */
-	.short	0x204c	/* 408976e2 204c */
-	.short	0xa023	/* 408976e4 a023 */
-	.short	0x206e	/* 408976e6 206e */
-	.short	0xfffa	/* 408976e8 fffa */
-	.short	0xa01b	/* 408976ea a01b */
-	.short	0x600c	/* 408976ec 600c */
-	.short	0x2f0c	/* 408976ee 2f0c */
-	.short	0x486e	/* 408976f0 486e */
-	.short	0xfffe	/* 408976f2 fffe */
-	.short	0x3f3c	/* 408976f4 3f3c */
-	.short	0x0020	/* 408976f6 0020 */
-	.short	0xa88f	/* 408976f8 a88f */
-	.short	0x4cee	/* 408976fa 4cee */
-	.short	0x1800	/* 408976fc 1800 */
-	.short	0xfff2	/* 408976fe fff2 */
-	.short	0x4e5e	/* 40897700 4e5e */
+	linkw	%fp,#-6			/* 408976c0 4e56 fffa */
+	moveml	%a3-%a4,%sp@-		/* 408976c4 48e7 0018 */
+	moveal	%fp@(12),%a3		/* 408976c8 266e 000c */
+	moveal	%fp@(8),%a4		/* 408976cc 286e 0008 */
+	.short	0xa11a			/* 408976d0 a11a */
+	movel	%a0,%fp@(-6)		/* 408976d2 2d48 fffa */
+	clrw	%fp@(-2)		/* 408976d6 426e fffe */
+	movel	%a3,%d0			/* 408976da 200b */
+	beqs	loc_408976ee		/* 408976dc 6710 */
+	moveal	%a3,%a0			/* 408976de 204b */
+	.short	0xa01b			/* 408976e0 a01b */
+	moveal	%a4,%a0			/* 408976e2 204c */
+	.short	0xa023			/* 408976e4 a023 */
+	moveal	%fp@(-6),%a0		/* 408976e6 206e fffa */
+	.short	0xa01b			/* 408976ea a01b */
+	bras	loc_408976fa		/* 408976ec 600c */
+
+loc_408976ee:
+	movel	%a4,%sp@-		/* 408976ee 2f0c */
+	pea	%fp@(-2)		/* 408976f0 486e fffe */
+	movew	#32,%sp@-		/* 408976f4 3f3c 0020 */
+	.short	0xa88f			/* 408976f8 a88f */
+
+loc_408976fa:
+	moveml	%fp@(-14),%a3-%a4	/* 408976fa 4cee 1800 fff2 */
+	unlk	%fp			/* 40897700 4e5e */
 	rts				/* 40897702 4e75 */
 
 sb_DisposeZoneHandle:
