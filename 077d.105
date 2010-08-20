@@ -1582,7 +1582,7 @@ loc_40869da8:
 DISPOSGDEVICE:
 	moveal	%sp@+,%a1		/* 40869db0 225f */
 	movel	%sp@,%sp@-		/* 40869db2 2f17 */
-	bsrs	__v__DISPOSGDHANDLES		/* 40869db4 6112 */
+	bsrs	__v__DISPOSGDHANDLES	/* 40869db4 6112 */
 	moveal	%sp@+,%a0		/* 40869db6 205f */
 	cmpal	0xdc4,%a0		/* 40869db8 b1f8 0dc4 */
 	bnes	loc_40869dc4		/* 40869dbc 6606 */
@@ -1593,35 +1593,36 @@ loc_40869dc4:
 	jmp	%a1@			/* 40869dc6 4ed1 */
 
 __v__DISPOSGDHANDLES:
-	.short	0x2f09	/* 40869dc8 2f09 */
-	.short	0x226f	/* 40869dca 226f */
-	.short	0x0008	/* 40869dcc 0008 */
-	.short	0x2251	/* 40869dce 2251 */
-	.short	0x2f29	/* 40869dd0 2f29 */
-	.short	0x0016	/* 40869dd2 0016 */
-	.short	0x2029	/* 40869dd4 2029 */
-	.short	0x0006	/* 40869dd6 0006 */
-	.short	0x6704	/* 40869dd8 6704 */
-	.short	0x2040	/* 40869dda 2040 */
-	.short	0xa023	/* 40869ddc a023 */
-	.short	0x2029	/* 40869dde 2029 */
-	.short	0x0032	/* 40869de0 0032 */
-	.short	0x6704	/* 40869de2 6704 */
-	.short	0x2040	/* 40869de4 2040 */
-	.short	0xa023	/* 40869de6 a023 */
-	.short	0x2029	/* 40869de8 2029 */
-	.short	0x0036	/* 40869dea 0036 */
-	.short	0x6704	/* 40869dec 6704 */
-	.short	0x2040	/* 40869dee 2040 */
-	.short	0xa023	/* 40869df0 a023 */
-	.short	0x201f	/* 40869df2 201f */
-	.short	0x6708	/* 40869df4 6708 */
-	.short	0x2f00	/* 40869df6 2f00 */
-	.short	0x4eb0	/* 40869df8 4eb0 */
-	.short	0x81e1	/* 40869dfa 81e1 */
-	.short	0x1610	/* 40869dfc 1610 */
-	.short	0x225f	/* 40869dfe 225f */
-	.short	0x2e9f	/* 40869e00 2e9f */
+	movel	%a1,%sp@-		/* 40869dc8 2f09 */
+	moveal	%sp@(8),%a1		/* 40869dca 226f 0008 */
+	moveal	%a1@,%a1		/* 40869dce 2251 */
+	movel	%a1@(22),%sp@-		/* 40869dd0 2f29 0016 */
+	movel	%a1@(6),%d0		/* 40869dd4 2029 0006 */
+	beqs	loc_40869dde		/* 40869dd8 6704 */
+	moveal	%d0,%a0			/* 40869dda 2040 */
+	.short	0xa023			/* 40869ddc a023 */
+
+loc_40869dde:
+	movel	%a1@(50),%d0		/* 40869dde 2029 0032 */
+	beqs	loc_40869de8		/* 40869de2 6704 */
+	moveal	%d0,%a0			/* 40869de4 2040 */
+	.short	0xa023			/* 40869de6 a023 */
+
+loc_40869de8:
+	movel	%a1@(54),%d0		/* 40869de8 2029 0036 */
+	beqs	loc_40869df2		/* 40869dec 6704 */
+	moveal	%d0,%a0			/* 40869dee 2040 */
+	.short	0xa023			/* 40869df0 a023 */
+
+loc_40869df2:
+	movel	%sp@+,%d0		/* 40869df2 201f */
+	beqs	loc_40869dfe		/* 40869df4 6708 */
+	movel	%d0,%sp@-		/* 40869df6 2f00 */
+	tsjsr	0xaa04			/* 40869df8 4eb0 81e1 1610 */
+
+loc_40869dfe:
+	moveal	%sp@+,%a1		/* 40869dfe 225f */
+	movel	%sp@+,%sp@		/* 40869e00 2e9f */
 	rts				/* 40869e02 4e75 */
 
 DISPOSGDHANDLES:
