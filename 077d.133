@@ -1454,6 +1454,8 @@ __v__CLEARPALETTE:
 	.short	0x4e5e	/* 40885b26 4e5e */
 	.short	0x4e74	/* 40885b28 4e74 */
 	.short	0x0004	/* 40885b2a 0004 */
+
+sub_40885b2c:
 	.short	0x2f30	/* 40885b2c 2f30 */
 	.short	0x81e2	/* 40885b2e 81e2 */
 	.short	0x2054	/* 40885b30 2054 */
@@ -1559,6 +1561,7 @@ loc_40885c14:
 	unlk	%fp			/* 40885c18 4e5e */
 	rtd	#4			/* 40885c1a 4e74 0004 */
 
+sub_40885c1e:
 	.short	0x2f30	/* 40885c1e 2f30 */
 	.short	0x81e2	/* 40885c20 81e2 */
 	.short	0x2054	/* 40885c22 2054 */
@@ -1835,28 +1838,25 @@ DEVSETENTRIES:
 
 DISPOSEPALETTE:
 	linkw	%fp,#0			/* 40885e40 4e56 0000 */
-	.short	0x2f0a	/* 40885e44 2f0a */
-	.short	0x246e	/* 40885e46 246e */
-	.short	0x0008	/* 40885e48 0008 */
-	.short	0xb4fc	/* 40885e4a b4fc */
-	.short	0x0000	/* 40885e4c 0000 */
-	.short	0x6712	/* 40885e4e 6712 */
-	.short	0x2f0a	/* 40885e50 2f0a */
-	.short	0x4eba	/* 40885e52 4eba */
-	.short	0xfcd8	/* 40885e54 fcd8 */
-	.short	0x660a	/* 40885e56 660a */
-	.short	0x2f0a	/* 40885e58 2f0a */
-	.short	0x4eba	/* 40885e5a 4eba */
-	.short	0xfdc2	/* 40885e5c fdc2 */
-	.short	0x204a	/* 40885e5e 204a */
-	.short	0xa023	/* 40885e60 a023 */
-	.short	0x245f	/* 40885e62 245f */
-	.short	0x4e5e	/* 40885e64 4e5e */
-	.short	0x4e74	/* 40885e66 4e74 */
-	.short	0x0004	/* 40885e68 0004 */
-	.short	0x0000	/* 40885e6a 0000 */
-	.short	0x0000	/* 40885e6c 0000 */
-	.short	0x0000	/* 40885e6e 0000 */
+	movel	%a2,%sp@-		/* 40885e44 2f0a */
+	moveal	%fp@(8),%a2		/* 40885e46 246e 0008 */
+	cmpaw	#0,%a2			/* 40885e4a b4fc 0000 */
+	beqs	loc_40885e62		/* 40885e4e 6712 */
+	movel	%a2,%sp@-		/* 40885e50 2f0a */
+	jsr	%pc@(sub_40885b2c)	/* 40885e52 4eba fcd8 */
+	bnes	loc_40885e62		/* 40885e56 660a */
+	movel	%a2,%sp@-		/* 40885e58 2f0a */
+	jsr	%pc@(sub_40885c1e)	/* 40885e5a 4eba fdc2 */
+	moveal	%a2,%a0			/* 40885e5e 204a */
+	.short	0xa023			/* 40885e60 a023 */
+
+loc_40885e62:
+	moveal	%sp@+,%a2		/* 40885e62 245f */
+	unlk	%fp			/* 40885e64 4e5e */
+	rtd	#4			/* 40885e66 4e74 0004 */
+
+	.align	16
+
 	.short	0x0001	/* 40885e70 0001 */
 	.short	0x0203	/* 40885e72 0203 */
 	.short	0x0400	/* 40885e74 0400 */
