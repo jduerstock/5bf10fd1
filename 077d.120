@@ -1813,15 +1813,14 @@ loc_40878eb4:
 	.align	16
 
 __v__GETUBYTE:
-	.short	0x4227	/* 40878ec0 4227 */
-	.short	0x2f0f	/* 40878ec2 2f0f */
-	.short	0x3f3c	/* 40878ec4 3f3c */
-	.short	0x0001	/* 40878ec6 0001 */
-	.short	0x4eba	/* 40878ec8 4eba */
-	.short	0x0084	/* 40878eca 0084 */
-	.short	0x4240	/* 40878ecc 4240 */
-	.short	0x101f	/* 40878ece 101f */
+	clrb	%sp@-			/* 40878ec0 4227 */
+	movel	%sp,%sp@-		/* 40878ec2 2f0f */
+	movew	#1,%sp@-		/* 40878ec4 3f3c 0001 */
+	jsr	%pc@(sub_40878f4e)	/* 40878ec8 4eba 0084 */
+	clrw	%d0			/* 40878ecc 4240 */
+	moveb	%sp@+,%d0		/* 40878ece 101f */
 	rts				/* 40878ed0 4e75 */
+
 	.short	0x2f30	/* 40878ed2 2f30 */
 	.short	0x81e2	/* 40878ed4 81e2 */
 	.short	0x2054	/* 40878ed6 2054 */
@@ -1888,10 +1887,9 @@ __v__GETPICDATA:
 	.short	0xff4c	/* 40878f48 ff4c */
 	.short	0x4e74	/* 40878f4a 4e74 */
 	.short	0x0006	/* 40878f4c 0006 */
-	.short	0x2f30	/* 40878f4e 2f30 */
-	.short	0x81e2	/* 40878f50 81e2 */
-	.short	0x2054	/* 40878f52 2054 */
-	.short	0x011c	/* 40878f54 011c */
+
+sub_40878f4e:
+	CallVector	0x2054 71	/* 40878f4e 2f30 81e2 2054 011c */
 	rts				/* 40878f56 4e75 */
 
 	.align	16
