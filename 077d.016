@@ -1326,14 +1326,14 @@ loc_40810e38:
 	.short	0x2f08	/* 40810e48 2f08 */
 
 loc_40810e4a:
-	.short	0x2258	/* 40810e4a 2258 */
-	.short	0x1211	/* 40810e4c 1211 */
-	.short	0xea09	/* 40810e4e ea09 */
-	.short	0x654c	/* 40810e50 654c */
-	.short	0xe209	/* 40810e52 e209 */
-	.short	0x652c	/* 40810e54 652c */
-	.short	0xe209	/* 40810e56 e209 */
-	.short	0x6518	/* 40810e58 6518 */
+	moveal	%a0@+,%a1		/* 40810e4a 2258 */
+	moveb	%a1@,%d1		/* 40810e4c 1211 */
+	lsrb	#5,%d1			/* 40810e4e ea09 */
+	bcss	loc_40810e9e		/* 40810e50 654c */
+	lsrb	#1,%d1			/* 40810e52 e209 */
+	bcss	loc_40810e82		/* 40810e54 652c */
+	lsrb	#1,%d1			/* 40810e56 e209 */
+	bcss	loc_40810e72		/* 40810e58 6518 */
 
 loc_40810e5a:
 	movew	%d2,%sr			/* 40810e5a 46c2 */
@@ -1346,6 +1346,7 @@ loc_40810e5a:
 	beql	SCCIOPBYPASSINT		/* 40810e6a 67ff ffff f2e4 */
 	rts				/* 40810e70 4e75 */
 
+loc_40810e72:
 	movel	%a0@,%d1		/* 40810e72 2210 */
 	beqs	loc_40810e5a		/* 40810e74 67e4 */
 	movew	%d2,%sr			/* 40810e76 46c2 */
