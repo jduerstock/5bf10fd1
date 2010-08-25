@@ -1336,17 +1336,14 @@ loc_40810e4a:
 	.short	0x6518	/* 40810e58 6518 */
 
 loc_40810e5a:
-	.short	0x46c2	/* 40810e5a 46c2 */
-	.short	0x588f	/* 40810e5c 588f */
-	.short	0xe088	/* 40810e5e e088 */
-	.short	0x6600	/* 40810e60 6600 */
-	.short	0x0118	/* 40810e62 0118 */
+	movew	%d2,%sr			/* 40810e5a 46c2 */
+	addql	#4,%sp			/* 40810e5c 588f */
+	lsrl	#8,%d0			/* 40810e5e e088 */
+	bnew	loc_40810f7a		/* 40810e60 6600 0118 */
 	rts				/* 40810e64 4e75 */
-	.short	0x0c40	/* 40810e66 0c40 */
-	.short	0x0000	/* 40810e68 0000 */
-	.short	0x67ff	/* 40810e6a 67ff */
-	.short	0xffff	/* 40810e6c ffff */
-	.short	0xf2e4	/* 40810e6e f2e4 */
+
+	cmpiw	#0,%d0			/* 40810e66 0c40 0000 */
+	beql	SCCIOPBYPASSINT		/* 40810e6a 67ff ffff f2e4 */
 	rts				/* 40810e70 4e75 */
 
 	movel	%a0@,%d1		/* 40810e72 2210 */
@@ -1465,6 +1462,7 @@ loc_40810f74:
 	clrb	%a0@(11)		/* 40810f74 4228 000b */
 	rts				/* 40810f78 4e75 */
 
+loc_40810f7a:
 	movel	%d0,%d3			/* 40810f7a 2600 */
 	lsrl	#8,%d3			/* 40810f7c e08b */
 	moveal	0xc28,%a1		/* 40810f7e 2278 0c28 */
