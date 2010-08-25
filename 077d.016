@@ -1223,6 +1223,8 @@ __v__IOPMOVEDATA:
 	.short	0x4213	/* 40810d3e 4213 */
 	.short	0x46c2	/* 40810d40 46c2 */
 	rts				/* 40810d42 4e75 */
+
+sub_40810d44:
 	.short	0x0c40	/* 40810d44 0c40 */
 	.short	0x0003	/* 40810d46 0003 */
 	.short	0x6342	/* 40810d48 6342 */
@@ -1475,34 +1477,34 @@ sub_40810f18:
 	.short	0x4ef0	/* 40810f3e 4ef0 */
 	.short	0x81e1	/* 40810f40 81e1 */
 	.short	0x061c	/* 40810f42 061c */
+
+loc_40810f44:
 	rts				/* 40810f44 4e75 */
 
 sub_40810f46:
-	.short	0x2210	/* 40810f46 2210 */
-	.short	0x67fa	/* 40810f48 67fa */
-	.short	0x2041	/* 40810f4a 2041 */
-	.short	0x2268	/* 40810f4c 2268 */
-	.short	0x000c	/* 40810f4e 000c */
+	movel	%a0@,%d1		/* 40810f46 2210 */
+	beqs	loc_40810f44		/* 40810f48 67fa */
+	moveal	%d1,%a0			/* 40810f4a 2041 */
+	moveal	%a0@(12),%a1		/* 40810f4c 2268 000c */
 	moveq	#0,%d0			/* 40810f50 7000 */
-	.short	0x1028	/* 40810f52 1028 */
-	.short	0x0009	/* 40810f54 0009 */
-	.short	0x670a	/* 40810f56 670a */
-	.short	0x3203	/* 40810f58 3203 */
-	.short	0xeb09	/* 40810f5a eb09 */
-	.short	0x3481	/* 40810f5c 3481 */
-	.short	0x6100	/* 40810f5e 6100 */
-	.short	0xfde4	/* 40810f60 fde4 */
-	.short	0x2278	/* 40810f62 2278 */
-	.short	0x0c28	/* 40810f64 0c28 */
-	.short	0x43e9	/* 40810f66 43e9 */
-	.short	0xfff2	/* 40810f68 fff2 */
-	.short	0x4aa8	/* 40810f6a 4aa8 */
-	.short	0x0014	/* 40810f6c 0014 */
-	.short	0x6704	/* 40810f6e 6704 */
-	.short	0x4efa	/* 40810f70 4efa */
-	.short	0x03fe	/* 40810f72 03fe */
-	.short	0x4228	/* 40810f74 4228 */
-	.short	0x000b	/* 40810f76 000b */
+	moveb	%a0@(9),%d0		/* 40810f52 1028 0009 */
+
+sub_40810f56:
+	beqs	loc_40810f62		/* 40810f56 670a */
+	movew	%d3,%d1			/* 40810f58 3203 */
+	lslb	#5,%d1			/* 40810f5a eb09 */
+	movew	%d1,%a2@		/* 40810f5c 3481 */
+	bsrw	sub_40810d44		/* 40810f5e 6100 fde4 */
+
+loc_40810f62:
+	moveal	0xc28,%a1		/* 40810f62 2278 0c28 */
+	lea	%a1@(-14),%a1		/* 40810f66 43e9 fff2 */
+	tstl	%a0@(20)		/* 40810f6a 4aa8 0014 */
+	beqs	loc_40810f74		/* 40810f6e 6704 */
+	jmp	%pc@(ENQUEUETRAP)	/* 40810f70 4efa 03fe */
+
+loc_40810f74:
+	clrb	%a0@(11)		/* 40810f74 4228 000b */
 	rts				/* 40810f78 4e75 */
 
 	movel	%d0,%d3			/* 40810f7a 2600 */
