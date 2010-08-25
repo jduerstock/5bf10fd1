@@ -1074,30 +1074,21 @@ fnt_GetCVTScale:
 	.align	16
 
 	linkw	%fp,#0			/* 4088da20 4e56 0000 */
-	.short	0x48e7	/* 4088da24 48e7 */
-	.short	0x0108	/* 4088da26 0108 */
-	.short	0x286e	/* 4088da28 286e */
-	.short	0x0008	/* 4088da2a 0008 */
-	.short	0x2f0c	/* 4088da2c 2f0c */
-	.short	0x4eba	/* 4088da2e 4eba */
-	.short	0xff50	/* 4088da30 ff50 */
-	.short	0x2e00	/* 4088da32 2e00 */
-	.short	0x598f	/* 4088da34 598f */
-	.short	0x206c	/* 4088da36 206c */
-	.short	0x0024	/* 4088da38 0024 */
-	.short	0x2068	/* 4088da3a 2068 */
-	.short	0x0008	/* 4088da3c 0008 */
-	.short	0x202e	/* 4088da3e 202e */
-	.short	0x000c	/* 4088da40 000c */
-	.short	0x2f30	/* 4088da42 2f30 */
-	.short	0x0c00	/* 4088da44 0c00 */
-	.short	0x2f07	/* 4088da46 2f07 */
-	.short	0xa868	/* 4088da48 a868 */
-	.short	0x201f	/* 4088da4a 201f */
-	.short	0x4cee	/* 4088da4c 4cee */
-	.short	0x1080	/* 4088da4e 1080 */
-	.short	0xfff8	/* 4088da50 fff8 */
-	.short	0x4e5e	/* 4088da52 4e5e */
+	moveml	%d7/%a4,%sp@-		/* 4088da24 48e7 0108 */
+	moveal	%fp@(8),%a4		/* 4088da28 286e 0008 */
+	movel	%a4,%sp@-		/* 4088da2c 2f0c */
+	jsr	%pc@(fnt_GetCVTScale)	/* 4088da2e 4eba ff50 */
+	movel	%d0,%d7			/* 4088da32 2e00 */
+	subql	#4,%sp			/* 4088da34 598f */
+	moveal	%a4@(36),%a0		/* 4088da36 206c 0024 */
+	moveal	%a0@(8),%a0		/* 4088da3a 2068 0008 */
+	movel	%fp@(12),%d0		/* 4088da3e 202e 000c */
+	movel	%a0@(%d0:l:4),%sp@-	/* 4088da42 2f30 0c00 */
+	movel	%d7,%sp@-		/* 4088da46 2f07 */
+	.short	0xa868			/* 4088da48 a868 */
+	movel	%sp@+,%d0		/* 4088da4a 201f */
+	moveml	%fp@(-8),%d7/%a4	/* 4088da4c 4cee 1080 fff8 */
+	unlk	%fp			/* 4088da52 4e5e */
 	rts				/* 4088da54 4e75 */
 
 	.align	16
