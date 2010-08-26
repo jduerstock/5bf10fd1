@@ -27,7 +27,7 @@ __v__RemoveRefNum:
 loc_40824048:
 	lea	%a3@(12),%a0		/* 40824048 41eb 000c */
 	moveal	%a4@(112),%a1		/* 4082404c 226c 0070 */
-	lea	%a1@(0x0004,%d6:l:8),%a1	/* 40824050 43f1 6e04 */
+	lea	%a1@(4,%d6:l:8),%a1	/* 40824050 43f1 6e04 */
 	moveq	#0,%d0			/* 40824054 7000 */
 
 loc_40824056:
@@ -194,24 +194,17 @@ loc_40824142:
 	.align	16
 
 	linkw	%fp,#0			/* 40824210 4e56 0000 */
-	.short	0x2f0c	/* 40824214 2f0c */
-	.short	0x4eba	/* 40824216 4eba */
-	.short	0xba1e	/* 40824218 ba1e */
-	.short	0x2078	/* 4082421a 2078 */
-	.short	0x0c0c	/* 4082421c 0c0c */
-	.short	0x2068	/* 4082421e 2068 */
-	.short	0x01b4	/* 40824220 01b4 */
-	.short	0x2868	/* 40824222 2868 */
-	.short	0x0010	/* 40824224 0010 */
-	.short	0x2f14	/* 40824226 2f14 */
-	.short	0x206c	/* 40824228 206c */
-	.short	0x0010	/* 4082422a 0010 */
-	.short	0x4e90	/* 4082422c 4e90 */
-	.short	0x4eba	/* 4082422e 4eba */
-	.short	0xb9d4	/* 40824230 b9d4 */
-	.short	0x286e	/* 40824232 286e */
-	.short	0xfffc	/* 40824234 fffc */
-	.short	0x4e5e	/* 40824236 4e5e */
+	movel	%a4,%sp@-		/* 40824214 2f0c */
+	jsr	%pc@(VMDisableUserCode)	/* 40824216 4eba ba1e */
+	moveal	0xc0c,%a0		/* 4082421a 2078 0c0c */
+	moveal	%a0@(436),%a0		/* 4082421e 2068 01b4 */
+	moveal	%a0@(16),%a4		/* 40824222 2868 0010 */
+	movel	%a4@,%sp@-		/* 40824226 2f14 */
+	moveal	%a4@(16),%a0		/* 40824228 206c 0010 */
+	jsr	%a0@			/* 4082422c 4e90 */
+	jsr	%pc@(VMEnableUserCode)	/* 4082422e 4eba b9d4 */
+	moveal	%fp@(-4),%a4		/* 40824232 286e fffc */
+	unlk	%fp			/* 40824236 4e5e */
 	rts				/* 40824238 4e75 */
 
 	.align	16
@@ -637,10 +630,7 @@ loc_408245f4:
 	unlk	%fp			/* 408245fa 4e5e */
 	rts				/* 408245fc 4e75 */
 
-	.short	0x2f30	/* 408245fe 2f30 */
-	.short	0x81e2	/* 40824600 81e2 */
-	.short	0x205c	/* 40824602 205c */
-	.short	0x02a4	/* 40824604 02a4 */
+	CallVector	0x205c 169	/* 408245fe 2f30 81e2 205c 02a4 */
 	rts				/* 40824606 4e75 */
 
 	.align	16
@@ -1747,20 +1737,14 @@ sub_40824fa0:
 	.short	0x0007	/* 40824fa2 0007 */
 	.short	0xfff6	/* 40824fa4 fff6 */
 	rts				/* 40824fa6 4e75 */
-	.short	0x2f30	/* 40824fa8 2f30 */
-	.short	0x81e2	/* 40824faa 81e2 */
-	.short	0x2030	/* 40824fac 2030 */
-	.short	0x00c8	/* 40824fae 00c8 */
+
+	CallVector	0x2030 50	/* 40824fa8 2f30 81e2 2030 00c8 */
 	rts				/* 40824fb0 4e75 */
-	.short	0x2f30	/* 40824fb2 2f30 */
-	.short	0x81e2	/* 40824fb4 81e2 */
-	.short	0x2030	/* 40824fb6 2030 */
-	.short	0x00cc	/* 40824fb8 00cc */
+
+	CallVector	0x2030 51	/* 40824fb2 2f30 81e2 2030 00cc */
 	rts				/* 40824fba 4e75 */
-	.short	0x2f30	/* 40824fbc 2f30 */
-	.short	0x81e2	/* 40824fbe 81e2 */
-	.short	0x2030	/* 40824fc0 2030 */
-	.short	0x00c4	/* 40824fc2 00c4 */
+
+	CallVector	0x2030 49	/* 40824fbc 2f30 81e2 2030 00c4 */
 	rts				/* 40824fc4 4e75 */
 
 EXTALLOCNODE:
