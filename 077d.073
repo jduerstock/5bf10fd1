@@ -1809,49 +1809,47 @@ FindSpecialCacheEntry:
 
 __v__AddSpecialCacheEntry:
 	linkw	%fp,#0			/* 40849f70 4e56 0000 */
-	.short	0x48e7	/* 40849f74 48e7 */
-	.short	0x2040	/* 40849f76 2040 */
-	.short	0x2078	/* 40849f78 2078 */
-	.short	0x02b6	/* 40849f7a 02b6 */
-	.short	0x2028	/* 40849f7c 2028 */
-	.short	0x008c	/* 40849f7e 008c */
-	.short	0x673c	/* 40849f80 673c */
-	.short	0x2040	/* 40849f82 2040 */
-	.short	0x2028	/* 40849f84 2028 */
-	.short	0x0004	/* 40849f86 0004 */
-	.short	0x6734	/* 40849f88 6734 */
-	.short	0x2040	/* 40849f8a 2040 */
-	.short	0x2248	/* 40849f8c 2248 */
-	.short	0xa025	/* 40849f8e a025 */
-	.short	0x2200	/* 40849f90 2200 */
-	.short	0x2050	/* 40849f92 2050 */
-	.short	0x5180	/* 40849f94 5180 */
-	.short	0x6d08	/* 40849f96 6d08 */
-	.short	0x4a50	/* 40849f98 4a50 */
-	.short	0x6712	/* 40849f9a 6712 */
-	.short	0x5088	/* 40849f9c 5088 */
-	.short	0x60f4	/* 40849f9e 60f4 */
-	.short	0x2049	/* 40849fa0 2049 */
-	.short	0x2001	/* 40849fa2 2001 */
-	.short	0x5080	/* 40849fa4 5080 */
-	.short	0xa024	/* 40849fa6 a024 */
-	.short	0x6614	/* 40849fa8 6614 */
-	.short	0x2050	/* 40849faa 2050 */
-	.short	0xd1c1	/* 40849fac d1c1 */
-	.short	0x30ae	/* 40849fae 30ae */
-	.short	0x000e	/* 40849fb0 000e */
-	.short	0x316e	/* 40849fb2 316e */
-	.short	0x000c	/* 40849fb4 000c */
-	.short	0x0002	/* 40849fb6 0002 */
-	.short	0x216e	/* 40849fb8 216e */
-	.short	0x0008	/* 40849fba 0008 */
-	.short	0x0004	/* 40849fbc 0004 */
-	.short	0x4cdf	/* 40849fbe 4cdf */
-	.short	0x0204	/* 40849fc0 0204 */
-	.short	0x4e5e	/* 40849fc2 4e5e */
-	.short	0x205f	/* 40849fc4 205f */
-	.short	0x508f	/* 40849fc6 508f */
-	.short	0x4ed0	/* 40849fc8 4ed0 */
+	moveml	%d2/%a1,%sp@-		/* 40869f74 48e7 2040 */
+	moveal	0x2b6,%a0		/* 40849f78 2078 02b6 */
+	movel	%a0@(140),%d0		/* 40849f7c 2028 008c */
+	beqs	loc_40849fbe		/* 40849f80 673c */
+	moveal	%d0,%a0			/* 40849f82 2040 */
+	movel	%a0@(4),%d0		/* 40849f84 2028 0004 */
+	beqs	loc_40849fbe		/* 40849f88 6734 */
+	moveal	%d0,%a0			/* 40849f8a 2040 */
+	moveal	%a0,%a1			/* 40849f8c 2248 */
+	.short	0xa025			/* 40849f8e a025 */
+	movel	%d0,%d1			/* 40849f90 2200 */
+	moveal	%a0@,%a0		/* 40849f92 2050 */
+
+loc_40849f94:
+	subql	#8,%d0			/* 40849f94 5180 */
+	blts	loc_40849fa0		/* 40849f96 6d08 */
+	tstw	%a0@			/* 40849f98 4a50 */
+	beqs	loc_40849fae		/* 40849f9a 6712 */
+	addql	#8,%a0			/* 40849f9c 5088 */
+	bras	loc_40849f94		/* 40849f9e 60f4 */
+
+loc_40849fa0:
+	moveal	%a1,%a0			/* 40849fa0 2049 */
+	movel	%d1,%d0			/* 40849fa2 2001 */
+	addql	#8,%d0			/* 40849fa4 5080 */
+	.short	0xa024			/* 40849fa6 a024 */
+	bnes	loc_40849fbe		/* 40849fa8 6614 */
+	moveal	%a0@,%a0		/* 40849faa 2050 */
+	addal	%d1,%a0			/* 40849fac d1c1 */
+
+loc_40849fae:
+	movew	%fp@(14),%a0@		/* 40849fae 30ae 000e */
+	movew	%fp@(12),%a0@(2)	/* 40849fb2 316e 000c 0002 */
+	movel	%fp@(8),%a0@(4)		/* 40849fb8 216e 0008 0004 */
+
+loc_40849fbe:
+	moveml	%sp@+,%d2/%a1		/* 40849fbe 4cdf 0204 */
+	unlk	%fp			/* 40849fc2 4e5e */
+	moveal	%sp@+,%a0		/* 40849fc4 205f */
+	addql	#8,%sp			/* 40849fc6 508f */
+	jmp	%a0@			/* 40849fc8 4ed0 */
 
 AddSpecialCacheEntry:
 	CallVector	0x2018 16	/* 40849fca 2f30 81e2 2018 0040 */
