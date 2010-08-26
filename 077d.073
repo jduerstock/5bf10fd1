@@ -1854,28 +1854,19 @@ __v__AddSpecialCacheEntry:
 	.short	0x4ed0	/* 40849fc8 4ed0 */
 
 AddSpecialCacheEntry:
-	.short	0x2f30	/* 40849fca 2f30 */
-	.short	0x81e2	/* 40849fcc 81e2 */
-	.short	0x2018	/* 40849fce 2018 */
-	.short	0x0040	/* 40849fd0 0040 */
+	CallVector	0x2018 16	/* 40849fca 2f30 81e2 2018 0040 */
 	rts				/* 40849fd2 4e75 */
 
 	.align	16
 
 __v__ReleaseFolder:
-	.short	0x4e56	/* 40849fe0 4e56 */
-	.short	0xff94	/* 40849fe2 ff94 */
-	.short	0x2f09	/* 40849fe4 2f09 */
+	linkw	%fp,#-108		/* 40849fe0 4e56 ff94 */
+	movel	%a1,%sp@-		/* 40849fe4 2f09 */
 	moveq	#0,%d0			/* 40849fe6 7000 */
-	.short	0x0cae	/* 40849fe8 0cae */
-	.short	0x7472	/* 40849fea 7472 */
-	.short	0x7368	/* 40849fec 7368 */
-	.short	0x0008	/* 40849fee 0008 */
-	.short	0x662a	/* 40849ff0 662a */
-	.short	0x598f	/* 40849ff2 598f */
-	.short	0x3f2e	/* 40849ff4 3f2e */
-	.short	0x000c	/* 40849ff6 000c */
-	.short	0x4eba	/* 40849ff8 4eba */
-	.short	0xff6a	/* 40849ffa ff6a */
-	.short	0x201f	/* 40849ffc 201f */
-	.short	0x671c	/* 40849ffe 671c */
+	cmpil	#1953657704,%fp@(8)	/* 40849fe8 0cae 7472 7368 0008 */
+	bnes	loc_4084a01c		/* 40849ff0 662a */
+	subql	#4,%sp			/* 40849ff2 598f */
+	movew	%fp@(12),%sp@-		/* 40849ff4 3f2e 000c */
+	jsr	%pc@(FindSpecialCacheEntry)	/* 40849ff8 4eba ff6a */
+	movel	%sp@+,%d0		/* 40849ffc 201f */
+	beqs	loc_4084a01c		/* 40849ffe 671c */
