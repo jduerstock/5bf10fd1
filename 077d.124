@@ -763,39 +763,28 @@ loc_4087c688:
 
 STDRGN:
 	linkw	%fp,#0			/* 4087c6b0 4e56 0000 */
-	.short	0x48e7	/* 4087c6b4 48e7 */
-	.short	0x0338	/* 4087c6b6 0338 */
-	.short	0x7e00	/* 4087c6b8 7e00 */
-	.short	0x1e2e	/* 4087c6ba 1e2e */
-	.short	0x000c	/* 4087c6bc 000c */
-	.short	0x4eb0	/* 4087c6be 4eb0 */
-	.short	0x81e1	/* 4087c6c0 81e1 */
-	.short	0x1a3c	/* 4087c6c2 1a3c */
-	.short	0x6f18	/* 4087c6c4 6f18 */
-	.short	0x1f07	/* 4087c6c6 1f07 */
-	.short	0x4eba	/* 4087c6c8 4eba */
-	.short	0xcb36	/* 4087c6ca cb36 */
-	.short	0x303c	/* 4087c6cc 303c */
-	.short	0x0080	/* 4087c6ce 0080 */
-	.short	0xd047	/* 4087c6d0 d047 */
-	.short	0x4eba	/* 4087c6d2 4eba */
-	.short	0xc96c	/* 4087c6d4 c96c */
-	.short	0x2f2e	/* 4087c6d6 2f2e */
-	.short	0x0008	/* 4087c6d8 0008 */
-	.short	0x4eba	/* 4087c6da 4eba */
-	.short	0xc9ce	/* 4087c6dc c9ce */
-	.short	0x487a	/* 4087c6de 487a */
-	.short	0x002c	/* 4087c6e0 002c */
-	.short	0x487a	/* 4087c6e2 487a */
-	.short	0x0012	/* 4087c6e4 0012 */
-	.short	0x4eb0	/* 4087c6e6 4eb0 */
-	.short	0x81e1	/* 4087c6e8 81e1 */
-	.short	0x1aa0	/* 4087c6ea 1aa0 */
-	.short	0x4cdf	/* 4087c6ec 4cdf */
-	.short	0x1cc0	/* 4087c6ee 1cc0 */
-	.short	0x4e5e	/* 4087c6f0 4e5e */
-	.short	0x4e74	/* 4087c6f2 4e74 */
-	.short	0x0006	/* 4087c6f4 0006 */
+	moveml	%d6-%d7/%a2-%a4,%sp@-	/* 4087c6b4 48e7 0338 */
+	moveq	#0,%d7			/* 4087c6b8 7e00 */
+	moveb	%fp@(12),%d7		/* 4087c6ba 1e2e 000c */
+	tsjsr	0xab0f			/* 4087c6be 4eb0 81e1 1a3c */
+	bles	loc_4087c6de		/* 4087c6c4 6f18 */
+	moveb	%d7,%sp@-		/* 4087c6c6 1f07 */
+	jsr	%pc@(PUTPICVERB)	/* 4087c6c8 4eba cb36 */
+	movew	#128,%d0		/* 4087c6cc 303c 0080 */
+	addw	%d7,%d0			/* 4087c6d0 d047 */
+	jsr	%pc@(DPUTPICOP)		/* 4087c6d2 4eba c96c */
+	movel	%fp@(8),%sp@-		/* 4087c6d6 2f2e 0008 */
+	jsr	%pc@(PUTPICRGN)		/* 4087c6da 4eba c9ce */
+
+loc_4087c6de:
+	pea	%pc@(sub_4087c70c)	/* 4087c6de 487a 002c */
+	pea	%pc@(sub_4087c6f6)	/* 4087c6e2 487a 0012 */
+	tsjsr	0xab28			/* 4087c6e6 4eb0 81e1 1aa0 */
+	moveml	%sp@+,%d6-%d7/%a2-%a4	/* 4087c6ec 4cdf 1cc0 */
+	unlk	%fp			/* 4087c6f0 4e5e */
+	rtd	#6			/* 4087c6f2 4e74 0006 */
+
+sub_4087c6f6:
 	.short	0x201f	/* 4087c6f6 201f */
 	.short	0x225f	/* 4087c6f8 225f */
 	.short	0x206e	/* 4087c6fa 206e */
@@ -807,6 +796,8 @@ STDRGN:
 	.short	0x2290	/* 4087c706 2290 */
 	.short	0x2040	/* 4087c708 2040 */
 	.short	0x4ed0	/* 4087c70a 4ed0 */
+
+sub_4087c70c:
 	.short	0x2f2e	/* 4087c70c 2f2e */
 	.short	0x0008	/* 4087c70e 0008 */
 	.short	0x4eb0	/* 4087c710 4eb0 */
