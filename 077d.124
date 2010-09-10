@@ -796,32 +796,26 @@ sub_4087c6f6:
 	jmp	%a0@			/* 4087c70a 4ed0 */
 
 sub_4087c70c:
-	.short	0x2f2e	/* 4087c70c 2f2e */
-	.short	0x0008	/* 4087c70e 0008 */
-	.short	0x4eb0	/* 4087c710 4eb0 */
-	.short	0x81e1	/* 4087c712 81e1 */
-	.short	0x1a60	/* 4087c714 1a60 */
-	.short	0x4a07	/* 4087c716 4a07 */
-	.short	0x6622	/* 4087c718 6622 */
-	.short	0x4aab	/* 4087c71a 4aab */
-	.short	0x0060	/* 4087c71c 0060 */
-	.short	0x6716	/* 4087c71e 6716 */
-	.short	0x2f2e	/* 4087c720 2f2e */
-	.short	0x0008	/* 4087c722 0008 */
-	.short	0x2f2c	/* 4087c724 2f2c */
-	.short	0xff6c	/* 4087c726 ff6c */
-	.short	0x486c	/* 4087c728 486c */
-	.short	0xff6a	/* 4087c72a ff6a */
-	.short	0x486c	/* 4087c72c 486c */
-	.short	0xff68	/* 4087c72e ff68 */
-	.short	0x4eb0	/* 4087c730 4eb0 */
-	.short	0x81e1	/* 4087c732 81e1 */
-	.short	0x1a6c	/* 4087c734 1a6c */
-	.short	0x4eba	/* 4087c736 4eba */
-	.short	0x015e	/* 4087c738 015e */
-	.short	0x6004	/* 4087c73a 6004 */
-	.short	0x4eba	/* 4087c73c 4eba */
-	.short	0x00ca	/* 4087c73e 00ca */
+	movel	%fp@(8),%sp@-		/* 4087c70c 2f2e 0008 */
+	tsjsr	0xab18			/* 4087c710 4eb0 81e1 1a60 */
+	tstb	%d7			/* 4087c716 4a07 */
+	bnes	loc_4087c73c		/* 4087c718 6622 */
+	tstl	%a3@(96)		/* 4087c71a 4aab 0060 */
+	beqs	loc_4087c736		/* 4087c71e 6716 */
+	movel	%fp@(8),%sp@-		/* 4087c720 2f2e 0008 */
+	movel	%a4@(-148),%sp@-	/* 4087c724 2f2c ff6c */
+	pea	%a4@(-150)		/* 4087c728 486c ff6a */
+	pea	%a4@(-152)		/* 4087c72c 486c ff68 */
+	tsjsr	0xab1b			/* 4087c730 4eb0 81e1 1a6c */
+
+loc_4087c736:
+	jsr	%pc@(sub_4087c896)	/* 4087c736 4eba 015e */
+	bras	loc_4087c740		/* 4087c73a 6004 */
+
+loc_4087c73c:
+	jsr	%pc@(sub_4087c808)	/* 4087c73c 4eba 00ca */
+
+loc_4087c740:
 	rts				/* 4087c740 4e75 */
 
 	.align	16
@@ -932,6 +926,7 @@ __v__DRAWRGN:
 	.short	0x4e74	/* 4087c804 4e74 */
 	.short	0x000a	/* 4087c806 000a */
 
+sub_4087c808:
 	CallVector	0x2054 165	/* 4087c808 2f30 81e2 2054 0294 */
 	rts				/* 4087c810 4e75 */
 
@@ -997,6 +992,7 @@ __v__FRRGN:
 	.short	0x4e74	/* 4087c892 4e74 */
 	.short	0x000a	/* 4087c894 000a */
 
+sub_4087c896:
 	CallVector	0x2054 166	/* 4087c896 2f30 81e2 2054 0298 */
 	rts				/* 4087c89e 4e75 */
 
