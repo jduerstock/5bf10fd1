@@ -2040,27 +2040,20 @@ sub_4085dfc4:
 	.align	16
 
 __v__DSEDIT:
-	.short	0x206e	/* 4085dfd0 206e */
-	.short	0x0010	/* 4085dfd2 0010 */
-	.short	0x2028	/* 4085dfd4 2028 */
-	.short	0x0002	/* 4085dfd6 0002 */
-	.short	0x0c00	/* 4085dfd8 0c00 */
-	.short	0x0010	/* 4085dfda 0010 */
-	.short	0x6620	/* 4085dfdc 6620 */
-	.short	0x0280	/* 4085dfde 0280 */
-	.short	0x0000	/* 4085dfe0 0000 */
-	.short	0xff00	/* 4085dfe2 ff00 */
-	.short	0xe088	/* 4085dfe4 e088 */
-	.short	0x2f2c	/* 4085dfe6 2f2c */
-	.short	0x00a0	/* 4085dfe8 00a0 */
-	.short	0x0c00	/* 4085dfea 0c00 */
-	.short	0x0078	/* 4085dfec 0078 */
-	.short	0x6740	/* 4085dfee 6740 */
-	.short	0x0c00	/* 4085dff0 0c00 */
-	.short	0x0063	/* 4085dff2 0063 */
-	.short	0x6740	/* 4085dff4 6740 */
-	.short	0x0c00	/* 4085dff6 0c00 */
-	.short	0x0076	/* 4085dff8 0076 */
-	.short	0x674a	/* 4085dffa 674a */
-	.short	0x602e	/* 4085dffc 602e */
-	.short	0x3028	/* 4085dffe 3028 */
+	moveal	%fp@(16),%a0		/* 4085dfd0 206e 0010 */
+	movel	%a0@(2),%d0		/* 4085dfd4 2028 0002 */
+	cmpib	#16,%d0			/* 4085dfd8 0c00 0010 */
+	bnes	loc_4085dffe		/* 4085dfdc 6620 */
+	andil	#65280,%d0		/* 4085dfde 0280 0000 ff00 */
+	lsrl	#8,%d0			/* 4085dfe4 e088 */
+	movel	%a4@(160),%sp@-		/* 4085dfe6 2f2c 00a0 */
+	cmpib	#120,%d0		/* 4085dfea 0c00 0078 */
+	beqs	loc_4085e030		/* 4085dfee 6740 */
+	cmpib	#99,%d0			/* 4085dff0 0c00 0063 */
+	beqs	loc_4085e036		/* 4085dff4 6740 */
+	cmpib	#118,%d0		/* 4085dff6 0c00 0076 */
+	beqs	loc_4085e046		/* 4085dffa 674a */
+	bras	loc_4085e02c		/* 4085dffc 602e */
+
+loc_4085dffe:
+	movew	%a0@(14),%d0		/* 4085dffe 3028 000e */
