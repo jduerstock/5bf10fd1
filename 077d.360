@@ -1441,30 +1441,27 @@ loc_40968cb8:
 	tstw	%d0			/* 40968cbc 4a40 */
 	rts				/* 40968cbe 4e75 */
 
-	.short	0x40e7	/* 40968cc0 40e7 */
-	.short	0x007c	/* 40968cc2 007c */
-	.short	0x0700	/* 40968cc4 0700 */
-	.short	0x202a	/* 40968cc6 202a */
-	.short	0x016c	/* 40968cc8 016c */
-	.short	0x670a	/* 40968cca 670a */
-	.short	0x2640	/* 40968ccc 2640 */
-	.short	0x274a	/* 40968cce 274a */
-	.short	0x0018	/* 40968cd0 0018 */
-	.short	0x2553	/* 40968cd2 2553 */
-	.short	0x016c	/* 40968cd4 016c */
-	.short	0x46df	/* 40968cd6 46df */
-	.short	0x4a80	/* 40968cd8 4a80 */
+	movew	%sr,%sp@-		/* 40968cc0 40e7 */
+	oriw	#1792,%sr		/* 40968cc2 007c 0700 */
+	movel	%a2@(364),%d0		/* 40968cc6 202a 016c */
+	beqs	loc_40968cd6		/* 40968cca 670a */
+	moveal	%d0,%a3			/* 40968ccc 2640 */
+	movel	%a2,%a3@(24)		/* 40968cce 274a 0018 */
+	movel	%a3@,%a2@(364)		/* 40968cd2 2553 016c */
+
+loc_40968cd6:
+	movew	%sp@+,%sr		/* 40968cd6 46df */
+	tstl	%d0			/* 40968cd8 4a80 */
 	rts				/* 40968cda 4e75 */
-	.short	0x0000	/* 40968cdc 0000 */
-	.short	0x0000	/* 40968cde 0000 */
+
+	.align	16
+
 	.short	0x7800	/* 40968ce0 7800 */
 	.short	0x0000	/* 40968ce2 0000 */
 	.short	0x0000	/* 40968ce4 0000 */
 	.short	0x0000	/* 40968ce6 0000 */
-	.short	0x0016	/* 40968ce8 0016 */
-	.short	0x75c0	/* 40968cea 75c0 */
-	.short	0x0016	/* 40968cec 0016 */
-	.short	0x75f0	/* 40968cee 75f0 */
+	.long	0x001675c0		/* 40968ce8 0016 75c0 */
+	.long	0x001675f0		/* 40968cec 0016 75f0 */
 	.short	0x5345	/* 40968cf0 5345 */
 	.short	0x5244	/* 40968cf2 5244 */
 	.short	0x0000	/* 40968cf4 0000 */
