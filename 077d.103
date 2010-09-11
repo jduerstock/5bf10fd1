@@ -1389,41 +1389,34 @@ sub_40867bf6:
 
 __v__GESTALTSCRIPTMGR:
 	linkw	%fp,#0			/* 40867c00 4e56 0000 */
-	.short	0x202e	/* 40867c04 202e */
-	.short	0x000c	/* 40867c06 000c */
-	.short	0x3d7c	/* 40867c08 3d7c */
-	.short	0xea51	/* 40867c0a ea51 */
-	.short	0x0010	/* 40867c0c 0010 */
-	.short	0x43fa	/* 40867c0e 43fa */
-	.short	0x002a	/* 40867c10 002a */
-	.short	0x2219	/* 40867c12 2219 */
-	.short	0x671c	/* 40867c14 671c */
-	.short	0x3419	/* 40867c16 3419 */
-	.short	0xb280	/* 40867c18 b280 */
-	.short	0x66f6	/* 40867c1a 66f6 */
-	.short	0x42a7	/* 40867c1c 42a7 */
-	.short	0x3f02	/* 40867c1e 3f02 */
-	.short	0x2f3c	/* 40867c20 2f3c */
-	.short	0x8402	/* 40867c22 8402 */
-	.short	0x0008	/* 40867c24 0008 */
-	.short	0xa8b5	/* 40867c26 a8b5 */
-	.short	0x206e	/* 40867c28 206e */
-	.short	0x0008	/* 40867c2a 0008 */
-	.short	0x209f	/* 40867c2c 209f */
-	.short	0x426e	/* 40867c2e 426e */
-	.short	0x0010	/* 40867c30 0010 */
-	.short	0x303c	/* 40867c32 303c */
-	.short	0x0008	/* 40867c34 0008 */
-	.short	0x6000	/* 40867c36 6000 */
-	.short	0x080a	/* 40867c38 080a */
-	.short	0x7363	/* 40867c3a 7363 */
-	.short	0x7269	/* 40867c3c 7269 */
-	.short	0x0000	/* 40867c3e 0000 */
-	.short	0x7363	/* 40867c40 7363 */
-	.short	0x7223	/* 40867c42 7223 */
-	.short	0x0004	/* 40867c44 0004 */
-	.short	0x0000	/* 40867c46 0000 */
-	.short	0x0000	/* 40867c48 0000 */
+	movel	%fp@(12),%d0		/* 40867c04 202e 000c */
+	movew	#-5551,%fp@(16)		/* 40867c08 3d7c ea51 0010 */
+	lea	%pc@(str_40867c3a),%a1	/* 40867c0e 43fa 002a */
+
+loc_40867c12:
+	movel	%a1@+,%d1		/* 40867c12 2219 */
+	beqs	loc_40867c32		/* 40867c14 671c */
+	movew	%a1@+,%d2		/* 40867c16 3419 */
+	cmpl	%d0,%d1			/* 40867c18 b280 */
+	bnes	loc_40867c12		/* 40867c1a 66f6 */
+	clrl	%sp@-			/* 40867c1c 42a7 */
+	movew	%d2,%sp@-		/* 40867c1e 3f02 */
+	movel	#-2080243704,%sp@-	/* 40867c20 2f3c 8402 0008 */
+	.short	0xa8b5			/* 40867c26 a8b5 */
+	moveal	%fp@(8),%a0		/* 40867c28 206e 0008 */
+	movel	%sp@+,%a0@		/* 40867c2c 209f */
+	clrw	%fp@(16)		/* 40867c2e 426e 0010 */
+
+loc_40867c32:
+	movew	#8,%d0			/* 40867c32 303c 0008 */
+	braw	STDUNLINK		/* 40867c36 6000 080a */
+
+str_40867c3a:
+	.ascii	"scri"			/* 40867c3a 7363 7269 */
+	.short	0x0000			/* 40867c3e 0000 */
+	.ascii	"scr#"			/* 40867c40 7363 7223 */
+	.short	0x0004			/* 40867c44 0004 */
+	.long	0			/* 40867c46 0000 */
 
 GESTALTSCRIPTMGR:
 	CallVector	0x2060 42	/* 40867c4a 2f30 81e2 2060 00a8 */
