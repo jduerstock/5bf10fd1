@@ -1,39 +1,33 @@
 /* SPLIT HERE */
-	.short	0x2a80	/* 40873000 2a80 */
-	.short	0xdacb	/* 40873002 dacb */
-	.short	0xdc48	/* 40873004 dc48 */
-	.short	0xcc42	/* 40873006 cc42 */
-	.short	0x51cb	/* 40873008 51cb */
-	.short	0xffea	/* 4087300a ffea */
-	.short	0x6000	/* 4087300c 6000 */
-	.short	0xf750	/* 4087300e f750 */
-	.short	0x2ab4	/* 40873010 2ab4 */
-	.short	0x6000	/* 40873012 6000 */
-	.short	0xdacb	/* 40873014 dacb */
-	.short	0xdc48	/* 40873016 dc48 */
-	.short	0xcc42	/* 40873018 cc42 */
-	.short	0x51cb	/* 4087301a 51cb */
-	.short	0xfff4	/* 4087301c fff4 */
-	.short	0x6000	/* 4087301e 6000 */
-	.short	0xf73e	/* 40873020 f73e */
+	movel	%d0,%a5@		/* 40873000 2a80 */
+	addaw	%a3,%a5			/* 40873002 dacb */
+	addw	%a0,%d6			/* 40873004 dc48 */
+	andw	%d2,%d6			/* 40873006 cc42 */
+	dbf	%d3,loc_40872ff4	/* 40873008 51cb ffea */
+	braw	loc_4087275e		/* 4087300c 6000 f750 */
+
+loc_40873010:
+	movel	%a4@(%d6:w),%a5@	/* 40873010 2ab4 6000 */
+	addaw	%a3,%a5			/* 40873014 dacb */
+	addw	%a0,%d6			/* 40873016 dc48 */
+	andw	%d2,%d6			/* 40873018 cc42 */
+	dbf	%d3,loc_40873010	/* 4087301a 51cb fff4 */
+	braw	loc_4087275e		/* 4087301e 6000 f73e */
 
 BXMAIN8:
-	.short	0x4a2e	/* 40873022 4a2e */
-	.short	0xff6e	/* 40873024 ff6e */
-	.short	0x6700	/* 40873026 6700 */
-	.short	0x0098	/* 40873028 0098 */
-	.short	0x262e	/* 4087302a 262e */
-	.short	0xff04	/* 4087302c ff04 */
-	.short	0xc283	/* 4087302e c283 */
-	.short	0x2d41	/* 40873030 2d41 */
-	.short	0xfd94	/* 40873032 fd94 */
-	.short	0xca83	/* 40873034 ca83 */
-	.short	0x600a	/* 40873036 600a */
-	.short	0x0000	/* 40873038 0000 */
-	.short	0x0000	/* 4087303a 0000 */
-	.short	0x0000	/* 4087303c 0000 */
-	.short	0x0000	/* 4087303e 0000 */
-	.short	0xc285	/* 40873040 c285 */
+	tstb	%fp@(-146)		/* 40873022 4a2e ff6e */
+	beqw	loc_408730c0		/* 40873026 6700 0098 */
+	movel	%fp@(-252),%d3		/* 4087302a 262e ff04 */
+	andl	%d3,%d1			/* 4087302e c283 */
+	movel	%d1,%fp@(-620)		/* 40873030 2d41 fd94 */
+	andl	%d3,%d5			/* 40873034 ca83 */
+	bras	loc_40873042		/* 40873036 600a */
+
+	.align	16
+
+	andl	%d5,%d1			/* 40873040 c285 */
+
+loc_40873042:
 	.short	0x2834	/* 40873042 2834 */
 	.short	0x6000	/* 40873044 6000 */
 	.short	0x5846	/* 40873046 5846 */
@@ -97,6 +91,8 @@ BXMAIN8:
 	.short	0x51ca	/* 408730ba 51ca */
 	.short	0xfff6	/* 408730bc fff6 */
 	.short	0xc285	/* 408730be c285 */
+
+loc_408730c0:
 	.short	0x2001	/* 408730c0 2001 */
 	.short	0xc0b4	/* 408730c2 c0b4 */
 	.short	0x6000	/* 408730c4 6000 */
