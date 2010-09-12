@@ -1452,6 +1452,8 @@ DRAWLINE:
 	.short	0xb06e	/* 4086ec4e b06e */
 	.short	0xff90	/* 4086ec50 ff90 */
 	.short	0x6dac	/* 4086ec52 6dac */
+
+loc_4086ec54:
 	.short	0x102e	/* 4086ec54 102e */
 	.short	0xfefe	/* 4086ec56 fefe */
 	.short	0x4eb0	/* 4086ec58 4eb0 */
@@ -1809,22 +1811,20 @@ loc_4086ef2c:
 
 	.align	16
 
-	.short	0x4a87	/* 4086ef40 4a87 */
-	.short	0x6b1c	/* 4086ef42 6b1c */
-	.short	0xefd4	/* 4086ef44 efd4 */
-	.short	0x1922	/* 4086ef46 1922 */
-	.short	0xd9cb	/* 4086ef48 d9cb */
-	.short	0xda47	/* 4086ef4a da47 */
-	.short	0xd980	/* 4086ef4c d980 */
-	.short	0x51ce	/* 4086ef4e 51ce */
-	.short	0xfff4	/* 4086ef50 fff4 */
-	.short	0x6000	/* 4086ef52 6000 */
-	.short	0xfd00	/* 4086ef54 fd00 */
-	.short	0x0000	/* 4086ef56 0000 */
-	.short	0x0000	/* 4086ef58 0000 */
-	.short	0x0000	/* 4086ef5a 0000 */
-	.short	0x0000	/* 4086ef5c 0000 */
-	.short	0x0000	/* 4086ef5e 0000 */
+	tstl	%d7			/* 4086ef40 4a87 */
+	bmis	loc_4086ef60		/* 4086ef42 6b1c */
+
+loc_4086ef44:
+	bfins	%d1,%a4@,%d4,%d2	/* 4086ef44 efd4 1922 */
+	addal	%a3,%a4			/* 4086ef48 d9cb */
+	addw	%d7,%d5			/* 4086ef4a da47 */
+	addxl	%d0,%d4			/* 4086ef4c d980 */
+	dbf	%d6,loc_4086ef44	/* 4086ef4e 51ce fff4 */
+	braw	loc_4086ec54		/* 4086ef52 6000 fd00 */
+
+	.align	16
+
+loc_4086ef60:
 	.short	0xefd4	/* 4086ef60 efd4 */
 	.short	0x1922	/* 4086ef62 1922 */
 	.short	0xd9cb	/* 4086ef64 d9cb */
