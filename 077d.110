@@ -457,44 +457,37 @@ LINE:
 	.align	16
 
 MOVETO:
-	.short	0x205f	/* 4086e470 205f */
-	.short	0x2255	/* 4086e472 2255 */
-	.short	0x337c	/* 4086e474 337c */
-	.short	0x8000	/* 4086e476 8000 */
-	.short	0xff4a	/* 4086e478 ff4a */
-	.short	0x2251	/* 4086e47a 2251 */
-	.short	0x235f	/* 4086e47c 235f */
-	.short	0x0030	/* 4086e47e 0030 */
+	moveal	%sp@+,%a0		/* 4086e470 205f */
+	moveal	%a5@,%a1		/* 4086e472 2255 */
+	movew	#-32768,%a1@(-182)	/* 4086e474 337c 8000 ff4a */
+	moveal	%a1@,%a1		/* 4086e47a 2251 */
+	movel	%sp@+,%a1@(48)		/* 4086e47c 235f 0030 */
 
 __v__COMMONMOVEEND:
-	.short	0x4a69	/* 4086e480 4a69 */
-	.short	0x0006	/* 4086e482 0006 */
-	.short	0x6a06	/* 4086e484 6a06 */
-	.short	0x337c	/* 4086e486 337c */
-	.short	0x8000	/* 4086e488 8000 */
-	.short	0x000e	/* 4086e48a 000e */
-	.short	0x4ed0	/* 4086e48c 4ed0 */
+	tstw	%a1@(6)			/* 4086e480 4a69 0006 */
+	bpls	loc_4086e48c		/* 4086e484 6a06 */
+	movew	#-32768,%a1@(14)	/* 4086e486 337c 8000 000e */
 
+loc_4086e48c:
+	jmp	%a0@			/* 4086e48c 4ed0 */
+
+sub_4086e48e:
 	CallVector	0x2054 61	/* 4086e48e 2f30 81e2 2054 00f4 */
 	rts				/* 4086e496 4e75 */
 
 	.align	16
 
 MOOV:
-	.short	0x205f	/* 4086e4a0 205f */
-	.short	0x301f	/* 4086e4a2 301f */
-	.short	0x321f	/* 4086e4a4 321f */
-	.short	0x2255	/* 4086e4a6 2255 */
-	.short	0x337c	/* 4086e4a8 337c */
-	.short	0x8000	/* 4086e4aa 8000 */
-	.short	0xff4a	/* 4086e4ac ff4a */
-	.short	0x2251	/* 4086e4ae 2251 */
-	.short	0xd169	/* 4086e4b0 d169 */
-	.short	0x0030	/* 4086e4b2 0030 */
-	.short	0xd369	/* 4086e4b4 d369 */
-	.short	0x0032	/* 4086e4b6 0032 */
-	.short	0x60d4	/* 4086e4b8 60d4 */
-	.short	0x4e71	/* 4086e4ba 4e71 */
+	moveal	%sp@+,%a0		/* 4086e4a0 205f */
+	movew	%sp@+,%d0		/* 4086e4a2 301f */
+	movew	%sp@+,%d1		/* 4086e4a4 321f */
+	moveal	%a5@,%a1		/* 4086e4a6 2255 */
+	movew	#-32768,%a1@(-182)	/* 4086e4a8 337c 8000 ff4a */
+	moveal	%a1@,%a1		/* 4086e4ae 2251 */
+	addw	%d0,%a1@(48)		/* 4086e4b0 d169 0030 */
+	addw	%d1,%a1@(50)		/* 4086e4b4 d369 0032 */
+	bras	sub_4086e48e		/* 4086e4b8 60d4 */
+	nop				/* 4086e4ba 4e71 */
 
 	CallVector	0x2054 62	/* 4086e4bc 2f30 81e2 2054 00f8 */
 	rts				/* 4086e4c4 4e75 */
