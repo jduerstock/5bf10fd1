@@ -2028,35 +2028,21 @@ INITCPORT:
 	.short	0x0000	/* 40875fbe 0000 */
 
 __v__INITCOLORSTUFF:
-	.short	0x2f0a	/* 40875fc0 2f0a */
-	.short	0x246f	/* 40875fc2 246f */
-	.short	0x0008	/* 40875fc4 0008 */
-	.short	0x42a7	/* 40875fc6 42a7 */
-	.short	0x42a7	/* 40875fc8 42a7 */
-	.short	0x2f0f	/* 40875fca 2f0f */
-	.short	0x486a	/* 40875fcc 486a */
-	.short	0x0020	/* 40875fce 0020 */
-	.short	0x4eb0	/* 40875fd0 4eb0 */
-	.short	0x81e1	/* 40875fd2 81e1 */
-	.short	0x1a44	/* 40875fd4 1a44 */
-	.short	0x4697	/* 40875fd6 4697 */
-	.short	0x46af	/* 40875fd8 46af */
-	.short	0x0004	/* 40875fda 0004 */
-	.short	0x2f0f	/* 40875fdc 2f0f */
-	.short	0x486a	/* 40875fde 486a */
-	.short	0x003a	/* 40875fe0 003a */
-	.short	0x4eb0	/* 40875fe2 4eb0 */
-	.short	0x81e1	/* 40875fe4 81e1 */
-	.short	0x1a44	/* 40875fe6 1a44 */
-	.short	0x2f0f	/* 40875fe8 2f0f */
-	.short	0x486a	/* 40875fea 486a */
-	.short	0x003e	/* 40875fec 003e */
-	.short	0x4eb0	/* 40875fee 4eb0 */
-	.short	0x81e1	/* 40875ff0 81e1 */
-	.short	0x1a44	/* 40875ff2 1a44 */
-	.short	0x504f	/* 40875ff4 504f */
-	.short	0x2f3c	/* 40875ff6 2f3c */
-	.short	0x0000	/* 40875ff8 0000 */
-	.short	0x0021	/* 40875ffa 0021 */
-	.short	0x4eb0	/* 40875ffc 4eb0 */
-	.short	0x81e1	/* 40875ffe 81e1 */
+	movel	%a2,%sp@-		/* 40875fc0 2f0a */
+	moveal	%sp@(8),%a2		/* 40875fc2 246f 0008 */
+	clrl	%sp@-			/* 40875fc6 42a7 */
+	clrl	%sp@-			/* 40875fc8 42a7 */
+	movel	%sp,%sp@-		/* 40875fca 2f0f */
+	pea	%a2@(32)		/* 40875fcc 486a 0020 */
+	tsjsr	0xab11			/* 40875fd0 4eb0 81e1 1a44 */
+	notl	%sp@			/* 40875fd6 4697 */
+	notl	%sp@(4)			/* 40875fd8 46af 0004 */
+	movel	%sp,%sp@-		/* 40875fdc 2f0f */
+	pea	%a2@(58)		/* 40875fde 486a 003a */
+	tsjsr	0xab11			/* 40875fe2 4eb0 81e1 1a44 */
+	movel	%sp,%sp@-		/* 40875fe8 2f0f */
+	pea	%a2@(62)		/* 40875fea 486a 003e */
+	tsjsr	0xab11			/* 40875fee 4eb0 81e1 1a44 */
+	addqw	#8,%sp			/* 40875ff4 504f */
+	movel	#33,%sp@-		/* 40875ff6 2f3c 0000 0021 */
+	tsjsr	0xa862			/* 40875ffc 4eb0 81e1 0f88 */
