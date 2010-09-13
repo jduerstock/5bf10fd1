@@ -1927,32 +1927,28 @@ PATEXTBL:
 	.short	0x51c9	/* 4087fefe 51c9 */
 	.short	0xfff8	/* 4087ff00 fff8 */
 	rts				/* 4087ff02 4e75 */
-	.short	0x0000	/* 4087ff04 0000 */
-	.short	0x0000	/* 4087ff06 0000 */
-	.short	0x0000	/* 4087ff08 0000 */
-	.short	0x0000	/* 4087ff0a 0000 */
-	.short	0x0000	/* 4087ff0c 0000 */
-	.short	0x0000	/* 4087ff0e 0000 */
-	.short	0x262e	/* 4087ff10 262e */
-	.short	0xff60	/* 4087ff12 ff60 */
-	.short	0x282e	/* 4087ff14 282e */
-	.short	0xff5c	/* 4087ff16 ff5c */
-	.short	0x95c9	/* 4087ff18 95c9 */
-	.short	0x220a	/* 4087ff1a 220a */
-	.short	0xe489	/* 4087ff1c e489 */
-	.short	0x5341	/* 4087ff1e 5341 */
-	.short	0x1018	/* 4087ff20 1018 */
-	.short	0x243b	/* 4087ff22 243b */
-	.short	0x0448	/* 4087ff24 0448 */
-	.short	0x2a02	/* 4087ff26 2a02 */
-	.short	0x4682	/* 4087ff28 4682 */
-	.short	0xca83	/* 4087ff2a ca83 */
-	.short	0xc484	/* 4087ff2c c484 */
-	.short	0x8485	/* 4087ff2e 8485 */
-	.short	0x22c2	/* 4087ff30 22c2 */
-	.short	0x51c9	/* 4087ff32 51c9 */
-	.short	0xffec	/* 4087ff34 ffec */
+
+	.align	16
+
+	movel	%fp@(-160),%d3		/* 4087ff10 262e ff60 */
+	movel	%fp@(-164),%d4		/* 4087ff14 282e ff5c */
+	subal	%a1,%a2			/* 4087ff18 95c9 */
+	movel	%a2,%d1			/* 4087ff1a 220a */
+	lsrl	#2,%d1			/* 4087ff1c e489 */
+	subqw	#1,%d1			/* 4087ff1e 5341 */
+
+loc_4087ff20:
+	moveb	%a0@+,%d0		/* 4087ff20 1018 */
+	movel	%pc@(dword_4087ff6c,%d0:w:4),%d2	/* 4087ff22 243b 0448 */
+	movel	%d2,%d5			/* 4087ff26 2a02 */
+	notl	%d2			/* 4087ff28 4682 */
+	andl	%d3,%d5			/* 4087ff2a ca83 */
+	andl	%d4,%d2			/* 4087ff2c c484 */
+	orl	%d5,%d2			/* 4087ff2e 8485 */
+	movel	%d2,%a1@+		/* 4087ff30 22c2 */
+	dbf	%d1,loc_4087ff20	/* 4087ff32 51c9 ffec */
 	rts				/* 4087ff36 4e75 */
+
 	.short	0x4259	/* 4087ff38 4259 */
 	.short	0x4299	/* 4087ff3a 4299 */
 	.short	0x2251	/* 4087ff3c 2251 */
@@ -1980,6 +1976,7 @@ PATEXTBL:
 	.short	0xffdc	/* 4087ff68 ffdc */
 	rts				/* 4087ff6a 4e75 */
 
+dword_4087ff6c:
 	.long	0x00000000,0x0000000f,0x000000f0,0x000000ff	/* 4087ff6c 0000 0000 0000 000f 0000 00f0 0000 00ff */
 	.long	0x00000f00,0x00000f0f,0x00000ff0,0x00000fff	/* 4087ff7c 0000 0f00 0000 0f0f 0000 0ff0 0000 0fff */
 	.long	0x0000f000,0x0000f00f,0x0000f0f0,0x0000f0ff	/* 4087ff8c 0000 f000 0000 f00f 0000 f0f0 0000 f0ff */
