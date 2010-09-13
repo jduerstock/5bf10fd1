@@ -1891,20 +1891,17 @@ sub_40878f76:
 	rts				/* 40878f7e 4e75 */
 
 DPUTPICBYTE:
-	.short	0x205f	/* 40878f80 205f */
-	.short	0x1f00	/* 40878f82 1f00 */
-	.short	0x2f08	/* 40878f84 2f08 */
+	moveal	%sp@+,%a0		/* 40878f80 205f */
+	moveb	%d0,%sp@-		/* 40878f82 1f00 */
+	movel	%a0,%sp@-		/* 40878f84 2f08 */
 
 __v__PUTPICBYTE:
-	.short	0x486f	/* 40878f86 486f */
-	.short	0x0004	/* 40878f88 0004 */
-	.short	0x3f3c	/* 40878f8a 3f3c */
-	.short	0x0001	/* 40878f8c 0001 */
-	.short	0x4eba	/* 40878f8e 4eba */
-	.short	0xffe6	/* 40878f90 ffe6 */
-	.short	0x205f	/* 40878f92 205f */
-	.short	0x4a1f	/* 40878f94 4a1f */
-	.short	0x4ed0	/* 40878f96 4ed0 */
+	pea	%sp@(4)			/* 40878f86 486f 0004 */
+	movew	#1,%sp@-		/* 40878f8a 3f3c 0001 */
+	jsr	%pc@(sub_40878f76)	/* 40878f8e 4eba ffe6 */
+	moveal	%sp@+,%a0		/* 40878f92 205f */
+	tstb	%sp@+			/* 40878f94 4a1f */
+	jmp	%a0@			/* 40878f96 4ed0 */
 
 PUTPICBYTE:
 	CallVector	0x2054 73	/* 40878f98 2f30 81e2 2054 0124 */
@@ -1913,15 +1910,12 @@ PUTPICBYTE:
 	.align	16
 
 __v__PUTPICWORD:
-	.short	0x486f	/* 40878fb0 486f */
-	.short	0x0004	/* 40878fb2 0004 */
-	.short	0x3f3c	/* 40878fb4 3f3c */
-	.short	0x0002	/* 40878fb6 0002 */
-	.short	0x4eba	/* 40878fb8 4eba */
-	.short	0xffbc	/* 40878fba ffbc */
-	.short	0x205f	/* 40878fbc 205f */
-	.short	0x4a5f	/* 40878fbe 4a5f */
-	.short	0x4ed0	/* 40878fc0 4ed0 */
+	pea	%sp@(4)			/* 40878fb0 486f 0004 */
+	movew	#2,%sp@-		/* 40878fb4 3f3c 0002 */
+	jsr	%pc@(sub_40878f76)	/* 40878fb8 4eba ffbc */
+	moveal	%sp@+,%a0		/* 40878fbc 205f */
+	tstw	%sp@+			/* 40878fbe 4a5f */
+	jmp	%a0@			/* 40878fc0 4ed0 */
 
 sub_40878fc2:
 	CallVector	0x2054 74	/* 40878fc2 2f30 81e2 2054 0128 */
