@@ -76,8 +76,8 @@ loc_4087d0ac:
 	notb	%d6			/* 4087d0ac 4606 */
 	rts				/* 4087d0ae 4e75 */
 
-	.short	0x5444	/* 4087d0b0 5444 */
-	.short	0x3ac4	/* 4087d0b2 3ac4 */
+	addqw	#2,%d4			/* 4087d0b0 5444 */
+	movew	%d4,%a5@+		/* 4087d0b2 3ac4 */
 	.short	0x6126	/* 4087d0b4 6126 */
 	.short	0x5244	/* 4087d0b6 5244 */
 	rts				/* 4087d0b8 4e75 */
@@ -2015,36 +2015,32 @@ off_4087de68:
 	.align	16
 
 __v__ONEBITPROC:
-	.short	0x50ef	/* 4087dfb0 50ef */
-	.short	0x000c	/* 4087dfb2 000c */
-	.short	0x206f	/* 4087dfb4 206f */
-	.short	0x0008	/* 4087dfb6 0008 */
+	st	%sp@(12)		/* 4087dfb0 50ef 000c */
+	moveal	%sp@(8),%a0		/* 4087dfb4 206f 0008 */
 	moveq	#0,%d0			/* 4087dfb8 7000 */
-	.short	0x7200	/* 4087dfba 7200 */
-	.short	0x3010	/* 4087dfbc 3010 */
-	.short	0x2240	/* 4087dfbe 2240 */
-	.short	0x3228	/* 4087dfc0 3228 */
-	.short	0x0002	/* 4087dfc2 0002 */
-	.short	0xd280	/* 4087dfc4 d280 */
-	.short	0x3028	/* 4087dfc6 3028 */
-	.short	0x0004	/* 4087dfc8 0004 */
-	.short	0xd280	/* 4087dfca d280 */
-	.short	0xd280	/* 4087dfcc d280 */
-	.short	0xe489	/* 4087dfce e489 */
-	.short	0xd289	/* 4087dfd0 d289 */
-	.short	0x3028	/* 4087dfd2 3028 */
-	.short	0x0002	/* 4087dfd4 0002 */
-	.short	0xd280	/* 4087dfd6 d280 */
-	.short	0xd280	/* 4087dfd8 d280 */
-	.short	0xe489	/* 4087dfda e489 */
-	.short	0x226f	/* 4087dfdc 226f */
-	.short	0x0004	/* 4087dfde 0004 */
-	.short	0x4291	/* 4087dfe0 4291 */
-	.short	0x4a41	/* 4087dfe2 4a41 */
-	.short	0x6b02	/* 4087dfe4 6b02 */
-	.short	0x5291	/* 4087dfe6 5291 */
-	.short	0x4e74	/* 4087dfe8 4e74 */
-	.short	0x0008	/* 4087dfea 0008 */
+	moveq	#0,%d1			/* 4087dfba 7200 */
+	movew	%a0@,%d0		/* 4087dfbc 3010 */
+	moveal	%d0,%a1			/* 4087dfbe 2240 */
+	movew	%a0@(2),%d1		/* 4087dfc0 3228 0002 */
+	addl	%d0,%d1			/* 4087dfc4 d280 */
+	movew	%a0@(4),%d0		/* 4087dfc6 3028 0004 */
+	addl	%d0,%d1			/* 4087dfca d280 */
+	addl	%d0,%d1			/* 4087dfcc d280 */
+	lsrl	#2,%d1			/* 4087dfce e489 */
+	addl	%a1,%d1			/* 4087dfd0 d289 */
+	movew	%a0@(2),%d0		/* 4087dfd2 3028 0002 */
+	addl	%d0,%d1			/* 4087dfd6 d280 */
+	addl	%d0,%d1			/* 4087dfd8 d280 */
+	lsrl	#2,%d1			/* 4087dfda e489 */
+	moveal	%sp@(4),%a1		/* 4087dfdc 226f 0004 */
+	clrl	%a1@			/* 4087dfe0 4291 */
+	tstw	%d1			/* 4087dfe2 4a41 */
+	bmis	loc_4087dfe8		/* 4087dfe4 6b02 */
+	addql	#1,%a1@			/* 4087dfe6 5291 */
+
+loc_4087dfe8:
+	rtd	#8			/* 4087dfe8 4e74 0008 */
+
 	.short	0x2078	/* 4087dfec 2078 */
 	.short	0x1aac	/* 4087dfee 1aac */
 	.short	0x0c44	/* 4087dff0 0c44 */
