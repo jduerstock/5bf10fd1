@@ -91,6 +91,7 @@
 
 	.align	16
 
+sub_4098c0d0:
 	linkw	%fp,#0			/* 4098c0d0 4e56 0000 */
 	movew	%fp@(14),%d0		/* 4098c0d4 302e 000e */
 	extl	%d0			/* 4098c0d8 48c0 */
@@ -104,27 +105,26 @@
 	.align	16
 
 sub_4098c0f0:
-	.short	0x4e56	/* 4098c0f0 4e56 */
-	.short	0x0000	/* 4098c0f2 0000 */
-	.short	0x2f0c	/* 4098c0f4 2f0c */
-	.short	0x286e	/* 4098c0f6 286e */
-	.short	0x0008	/* 4098c0f8 0008 */
-	.short	0x7048	/* 4098c0fa 7048 */
-	.short	0xa71e	/* 4098c0fc a71e */
-	.short	0x2888	/* 4098c0fe 2888 */
-	.short	0x6606	/* 4098c100 6606 */
-	.short	0x3038	/* 4098c102 3038 */
-	.short	0x0220	/* 4098c104 0220 */
-	.short	0x600c	/* 4098c106 600c */
+	linkw	%fp,#0			/* 4098c0f0 4e56 0000 */
+	movel	%a4,%sp@-		/* 4098c0f4 2f0c */
+	moveal	%fp@(8),%a4		/* 4098c0f6 286e 0008 */
+	moveq	#72,%d0			/* 4098c0fa 7048 */
+	.short	0xa71e			/* 4098c0fc a71e */
+	movel	%a0,%a4@		/* 4098c0fe 2888 */
+	bnes	loc_4098c108		/* 4098c100 6606 */
+	movew	0x220,%d0		/* 4098c102 3038 0220 */
+	bras	loc_4098c114		/* 4098c106 600c */
+
+loc_4098c108:
 	moveq	#1,%d0			/* 4098c108 7001 */
-	.short	0x2f00	/* 4098c10a 2f00 */
-	.short	0x2f14	/* 4098c10c 2f14 */
-	.short	0x4eba	/* 4098c10e 4eba */
-	.short	0xffc0	/* 4098c110 ffc0 */
+	movel	%d0,%sp@-		/* 4098c10a 2f00 */
+	movel	%a4@,%sp@-		/* 4098c10c 2f14 */
+	jsr	%pc@(sub_4098c0d0)	/* 4098c10e 4eba ffc0 */
 	moveq	#0,%d0			/* 4098c112 7000 */
-	.short	0x286e	/* 4098c114 286e */
-	.short	0xfffc	/* 4098c116 fffc */
-	.short	0x4e5e	/* 4098c118 4e5e */
+
+loc_4098c114:
+	moveal	%fp@(-4),%a4		/* 4098c114 286e fffc */
+	unlk	%fp			/* 4098c118 4e5e */
 	rts				/* 4098c11a 4e75 */
 
 	.align	16
@@ -1966,17 +1966,12 @@ loc_4098cfc8:
 	.short	0x4fef	/* 4098cfe2 4fef */
 	.short	0x0032	/* 4098cfe4 0032 */
 	rts				/* 4098cfe6 4e75 */
-	.short	0x0000	/* 4098cfe8 0000 */
-	.short	0x0000	/* 4098cfea 0000 */
-	.short	0x0000	/* 4098cfec 0000 */
-	.short	0x0000	/* 4098cfee 0000 */
+
+	.align	16
 
 sub_4098cff0:
-	.short	0x4e56	/* 4098cff0 4e56 */
-	.short	0x0000	/* 4098cff2 0000 */
-	.short	0x302e	/* 4098cff4 302e */
-	.short	0x000e	/* 4098cff6 000e */
-	.short	0x48c0	/* 4098cff8 48c0 */
-	.short	0x2f00	/* 4098cffa 2f00 */
-	.short	0x2f2e	/* 4098cffc 2f2e */
-	.short	0x0008	/* 4098cffe 0008 */
+	linkw	%fp,#0			/* 4098cff0 4e56 0000 */
+	movew	%fp@(14),%d0		/* 4098cff4 302e 000e */
+	extl	%d0			/* 4098cff8 48c0 */
+	movel	%d0,%sp@-		/* 4098cffa 2f00 */
+	movel	%fp@(8),%sp@-		/* 4098cffc 2f2e 0008 */
