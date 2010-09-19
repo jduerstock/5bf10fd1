@@ -1519,39 +1519,33 @@ ALI_BLOCKINIT:
 
 __v__ALI_BLOCKCOMPARE:
 	linkw	%fp,#0			/* 40847df0 4e56 0000 */
-	.short	0x48e7	/* 40847df4 48e7 */
-	.short	0x0118	/* 40847df6 0118 */
-	.short	0x2e2e	/* 40847df8 2e2e */
-	.short	0x0008	/* 40847dfa 0008 */
-	.short	0x266e	/* 40847dfc 266e */
-	.short	0x0010	/* 40847dfe 0010 */
-	.short	0x286e	/* 40847e00 286e */
-	.short	0x000c	/* 40847e02 000c */
-	.short	0x600a	/* 40847e04 600a */
-	.short	0xb70c	/* 40847e06 b70c */
-	.short	0x6706	/* 40847e08 6706 */
-	.short	0x422e	/* 40847e0a 422e */
-	.short	0x0014	/* 40847e0c 0014 */
-	.short	0x600e	/* 40847e0e 600e */
-	.short	0x2007	/* 40847e10 2007 */
-	.short	0x5387	/* 40847e12 5387 */
-	.short	0x4a80	/* 40847e14 4a80 */
-	.short	0x66ee	/* 40847e16 66ee */
-	.short	0x1d7c	/* 40847e18 1d7c */
-	.short	0x0001	/* 40847e1a 0001 */
-	.short	0x0014	/* 40847e1c 0014 */
-	.short	0x4cee	/* 40847e1e 4cee */
-	.short	0x1880	/* 40847e20 1880 */
-	.short	0xfff4	/* 40847e22 fff4 */
-	.short	0x4e5e	/* 40847e24 4e5e */
-	.short	0x4e74	/* 40847e26 4e74 */
-	.short	0x000c	/* 40847e28 000c */
+	moveml	%d7/%a3-%a4,%sp@-	/* 40847df4 48e7 0118 */
+	movel	%fp@(8),%d7		/* 40847df8 2e2e 0008 */
+	moveal	%fp@(16),%a3		/* 40847dfc 266e 0010 */
+	moveal	%fp@(12),%a4		/* 40847e00 286e 000c */
+	bras	loc_40847e10		/* 40847e04 600a */
+
+loc_40847e06:
+	cmpmb	%a4@+,%a3@+		/* 40847e06 b70c */
+	beqs	loc_40847e10		/* 40847e08 6706 */
+	clrb	%fp@(20)		/* 40847e0a 422e 0014 */
+	bras	loc_40847e1e		/* 40847e0e 600e */
+
+loc_40847e10:
+	movel	%d7,%d0			/* 40847e10 2007 */
+	subql	#1,%d7			/* 40847e12 5387 */
+	tstl	%d0			/* 40847e14 4a80 */
+	bnes	loc_40847e06		/* 40847e16 66ee */
+	moveb	#1,%fp@(20)		/* 40847e18 1d7c 0001 0014 */
+
+loc_40847e1e:
+	moveml	%fp@(-12),%d7/%a3-%a4	/* 40847e1e 4cee 1880 fff4 */
+	unlk	%fp			/* 40847e24 4e5e */
+	rtd	#12			/* 40847e26 4e74 000c */
 
 ALI_BLOCKCOMPARE:
-	.short	0x2278	/* 40847e2a 2278 */
-	.short	0x2018	/* 40847e2c 2018 */
-	.short	0x2269	/* 40847e2e 2269 */
-	.short	0x00e8	/* 40847e30 00e8 */
+	moveal	0x2018,%a1		/* 40847e2a 2278 2018 */
+	moveal	%a1@(232),%a1		/* 40847e2e 2269 00e8 */
 	jmp	%a1@			/* 40847e32 4ed1 */
 
 	.align	16
