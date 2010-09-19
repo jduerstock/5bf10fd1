@@ -1563,67 +1563,52 @@ AL_GETALIASINFO:
 	.align	16
 
 __v__AL_FOLLOWFINDERALIAS:
-	.short	0x4e56	/* 40845f80 4e56 */
-	.short	0xffb8	/* 40845f82 ffb8 */
-	.short	0x48e7	/* 40845f84 48e7 */
-	.short	0x0318	/* 40845f86 0318 */
-	.short	0x266e	/* 40845f88 266e */
-	.short	0x0008	/* 40845f8a 0008 */
-	.short	0x286e	/* 40845f8c 286e */
-	.short	0x000c	/* 40845f8e 000c */
-	.short	0x3d7c	/* 40845f90 3d7c */
-	.short	0x0001	/* 40845f92 0001 */
-	.short	0xffb8	/* 40845f94 ffb8 */
-	.short	0x4a2e	/* 40845f96 4a2e */
-	.short	0x0010	/* 40845f98 0010 */
-	.short	0x6704	/* 40845f9a 6704 */
+	linkw	%fp,#-72		/* 40845f80 4e56 ffb8 */
+	moveml	%d6-%d7/%a3-%a4,%sp@-	/* 40845f84 48e7 0318 */
+	moveal	%fp@(8),%a3		/* 40845f88 266e 0008 */
+	moveal	%fp@(12),%a4		/* 40845f8c 286e 000c */
+	movew	#1,%fp@(-72)		/* 40845f90 3d7c 0001 ffb8 */
+	tstb	%fp@(16)		/* 40845f96 4a2e 0010 */
+	beqs	loc_40845fa0		/* 40845f9a 6704 */
 	moveq	#1,%d0			/* 40845f9c 7001 */
-	.short	0x6002	/* 40845f9e 6002 */
+	bras	loc_40845fa2		/* 40845f9e 6002 */
+
+loc_40845fa0:
 	moveq	#0,%d0			/* 40845fa0 7000 */
-	.short	0x49c0	/* 40845fa2 49c0 */
-	.short	0x2c00	/* 40845fa4 2c00 */
-	.short	0x206e	/* 40845fa6 206e */
-	.short	0x0016	/* 40845fa8 0016 */
-	.short	0x43ee	/* 40845faa 43ee */
-	.short	0xffba	/* 40845fac ffba */
-	.short	0x7010	/* 40845fae 7010 */
-	.short	0x22d8	/* 40845fb0 22d8 */
-	.short	0x51c8	/* 40845fb2 51c8 */
-	.short	0xfffc	/* 40845fb4 fffc */
-	.short	0x32d8	/* 40845fb6 32d8 */
-	.short	0x558f	/* 40845fb8 558f */
-	.short	0x486e	/* 40845fba 486e */
-	.short	0xffba	/* 40845fbc ffba */
-	.short	0x2006	/* 40845fbe 2006 */
-	.short	0x80bc	/* 40845fc0 80bc */
-	.short	0x0000	/* 40845fc2 0000 */
-	.short	0x0500	/* 40845fc4 0500 */
-	.short	0x2f00	/* 40845fc6 2f00 */
-	.short	0x2f2e	/* 40845fc8 2f2e */
-	.short	0x0012	/* 40845fca 0012 */
-	.short	0x486e	/* 40845fcc 486e */
-	.short	0xffb8	/* 40845fce ffb8 */
-	.short	0x2f0c	/* 40845fd0 2f0c */
-	.short	0x2f0b	/* 40845fd2 2f0b */
+
+loc_40845fa2:
+	extbl	%d0			/* 40845fa2 49c0 */
+	movel	%d0,%d6			/* 40845fa4 2c00 */
+	moveal	%fp@(22),%a0		/* 40845fa6 206e 0016 */
+	lea	%fp@(-70),%a1		/* 40845faa 43ee ffba */
+	moveq	#16,%d0			/* 40845fae 7010 */
+
+loc_40845fb0:
+	movel	%a0@+,%a1@+		/* 40845fb0 22d8 */
+	dbf	%d0,loc_40845fb0	/* 40845fb2 51c8 fffc */
+	movew	%a0@+,%a1@+		/* 40845fb6 32d8 */
+	subql	#2,%sp			/* 40845fb8 558f */
+	pea	%fp@(-70)		/* 40845fba 486e ffba */
+	movel	%d6,%d0			/* 40845fbe 2006 */
+	.short	0x80bc,0x0000,0x0500	/* orl #1280,%d0 /* 40845fc0 80bc 0000 0500 */
+	movel	%d0,%sp@-		/* 40845fc6 2f00 */
+	movel	%fp@(18),%sp@-		/* 40845fc8 2f2e 0012 */
+	pea	%fp@(-72)		/* 40845fcc 486e ffb8 */
+	movel	%a4,%sp@-		/* 40845fd0 2f0c */
+	movel	%a3,%sp@-		/* 40845fd2 2f0b */
 	moveq	#0,%d0			/* 40845fd4 7000 */
-	.short	0x2f00	/* 40845fd6 2f00 */
-	.short	0x2f00	/* 40845fd8 2f00 */
-	.short	0x7005	/* 40845fda 7005 */
-	.short	0xa823	/* 40845fdc a823 */
-	.short	0x3e1f	/* 40845fde 3e1f */
-	.short	0x6668	/* 40845fe0 6668 */
-	.short	0x302e	/* 40845fe2 302e */
-	.short	0xffba	/* 40845fe4 ffba */
-	.short	0xb054	/* 40845fe6 b054 */
-	.short	0x6660	/* 40845fe8 6660 */
-	.short	0x202e	/* 40845fea 202e */
-	.short	0xffbc	/* 40845fec ffbc */
-	.short	0xb0ac	/* 40845fee b0ac */
-	.short	0x0002	/* 40845ff0 0002 */
-	.short	0x6656	/* 40845ff2 6656 */
-	.short	0x3d7c	/* 40845ff4 3d7c */
-	.short	0x0001	/* 40845ff6 0001 */
-	.short	0xffb8	/* 40845ff8 ffb8 */
-	.short	0x558f	/* 40845ffa 558f */
-	.short	0x486e	/* 40845ffc 486e */
-	.short	0xffba	/* 40845ffe ffba */
+	movel	%d0,%sp@-		/* 40845fd6 2f00 */
+	movel	%d0,%sp@-		/* 40845fd8 2f00 */
+	moveq	#5,%d0			/* 40845fda 7005 */
+	.short	0xa823			/* 40845fdc a823 */
+	movew	%sp@+,%d7		/* 40845fde 3e1f */
+	bnes	loc_4084604a		/* 40845fe0 6668 */
+	movew	%fp@(-70),%d0		/* 40845fe2 302e ffba */
+	cmpw	%a4@,%d0		/* 40845fe6 b054 */
+	bnes	loc_4084604a		/* 40845fe8 6660 */
+	movel	%fp@(-68),%d0		/* 40845fea 202e ffbc */
+	cmpl	%a4@(2),%d0		/* 40845fee b0ac 0002 */
+	bnes	loc_4084604a		/* 40845ff2 6656 */
+	movew	#1,%fp@(-72)		/* 40845ff4 3d7c 0001 ffb8 */
+	subql	#2,%sp			/* 40845ffa 558f */
+	pea	%fp@(-70)		/* 40845ffc 486e ffba */
