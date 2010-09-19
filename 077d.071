@@ -1492,32 +1492,27 @@ AL_FSEQUALSTRINGBYLENGTH:
 
 __v__ALI_BLOCKINIT:
 	linkw	%fp,#0			/* 40847db0 4e56 0000 */
-	.short	0x48e7	/* 40847db4 48e7 */
-	.short	0x0308	/* 40847db6 0308 */
-	.short	0x1c2e	/* 40847db8 1c2e */
-	.short	0x000c	/* 40847dba 000c */
-	.short	0x2e2e	/* 40847dbc 2e2e */
-	.short	0x0008	/* 40847dbe 0008 */
-	.short	0x286e	/* 40847dc0 286e */
-	.short	0x000e	/* 40847dc2 000e */
-	.short	0x6002	/* 40847dc4 6002 */
-	.short	0x18c6	/* 40847dc6 18c6 */
-	.short	0x2007	/* 40847dc8 2007 */
-	.short	0x5387	/* 40847dca 5387 */
-	.short	0x4a80	/* 40847dcc 4a80 */
-	.short	0x66f6	/* 40847dce 66f6 */
-	.short	0x4cee	/* 40847dd0 4cee */
-	.short	0x10c0	/* 40847dd2 10c0 */
-	.short	0xfff4	/* 40847dd4 fff4 */
-	.short	0x4e5e	/* 40847dd6 4e5e */
-	.short	0x4e74	/* 40847dd8 4e74 */
-	.short	0x000a	/* 40847dda 000a */
+	moveml	%d6-%d7/%a4,%sp@-	/* 40847db4 48e7 0308 */
+	moveb	%fp@(12),%d6		/* 40847db8 1c2e 000c */
+	movel	%fp@(8),%d7		/* 40847dbc 2e2e 0008 */
+	moveal	%fp@(14),%a4		/* 40847dc0 286e 000e */
+	bras	loc_40847dc8		/* 40847dc4 6002 */
+
+loc_40847dc6:
+	moveb	%d6,%a4@+		/* 40847dc6 18c6 */
+
+loc_40847dc8:
+	movel	%d7,%d0			/* 40847dc8 2007 */
+	subql	#1,%d7			/* 40847dca 5387 */
+	tstl	%d0			/* 40847dcc 4a80 */
+	bnes	loc_40847dc6		/* 40847dce 66f6 */
+	moveml	%fp@(-12),%d6-%d7/%a4	/* 40847dd0 4cee 10c0 fff4 */
+	unlk	%fp			/* 40847dd6 4e5e */
+	rtd	#10			/* 40847dd8 4e74 000a */
 
 ALI_BLOCKINIT:
-	.short	0x2278	/* 40847ddc 2278 */
-	.short	0x2018	/* 40847dde 2018 */
-	.short	0x2269	/* 40847de0 2269 */
-	.short	0x00e4	/* 40847de2 00e4 */
+	moveal	0x2018,%a1		/* 40847ddc 2278 2018 */
+	moveal	%a1@(228),%a1		/* 40847de0 2269 00e4 */
 	jmp	%a1@			/* 40847de4 4ed1 */
 
 	.align	16
