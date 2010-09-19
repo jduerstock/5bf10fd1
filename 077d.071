@@ -1714,33 +1714,29 @@ sub_40847faa:
 
 __v__AL_GETVARPTR:
 	linkw	%fp,#0			/* 40847fc0 4e56 0000 */
-	.short	0x48e7	/* 40847fc4 48e7 */
-	.short	0x0308	/* 40847fc6 0308 */
-	.short	0x3c2e	/* 40847fc8 3c2e */
-	.short	0x000c	/* 40847fca 000c */
-	.short	0x206e	/* 40847fcc 206e */
-	.short	0x000e	/* 40847fce 000e */
-	.short	0x49e8	/* 40847fd0 49e8 */
-	.short	0x0096	/* 40847fd2 0096 */
-	.short	0x7e09	/* 40847fd4 7e09 */
-	.short	0xbc54	/* 40847fd6 bc54 */
-	.short	0x671c	/* 40847fd8 671c */
+	moveml	%d6-%d7/%a4,%sp@-	/* 40847fc4 48e7 0308 */
+	movew	%fp@(12),%d6		/* 40847fc8 3c2e 000c */
+	moveal	%fp@(14),%a0		/* 40847fcc 206e 000e */
+	lea	%a0@(150),%a4		/* 40847fd0 49e8 0096 */
+	moveq	#9,%d7			/* 40847fd4 7e09 */
+
+loc_40847fd6:
+	cmpw	%a4@,%d6		/* 40847fd6 bc54 */
+	beqs	loc_40847ff6		/* 40847fd8 671c */
 	moveq	#-1,%d0			/* 40847fda 70ff */
-	.short	0xb054	/* 40847fdc b054 */
-	.short	0x6716	/* 40847fde 6716 */
-	.short	0x302c	/* 40847fe0 302c */
-	.short	0x0002	/* 40847fe2 0002 */
-	.short	0x48c0	/* 40847fe4 48c0 */
-	.short	0x5280	/* 40847fe6 5280 */
-	.short	0x72fe	/* 40847fe8 72fe */
-	.short	0xc280	/* 40847fea c280 */
-	.short	0xd28c	/* 40847fec d28c */
-	.short	0x5881	/* 40847fee 5881 */
-	.short	0x2841	/* 40847ff0 2841 */
-	.short	0x51cf	/* 40847ff2 51cf */
-	.short	0xffe2	/* 40847ff4 ffe2 */
-	.short	0x206e	/* 40847ff6 206e */
-	.short	0x0008	/* 40847ff8 0008 */
-	.short	0x30ac	/* 40847ffa 30ac */
-	.short	0x0002	/* 40847ffc 0002 */
-	.short	0x204c	/* 40847ffe 204c */
+	cmpw	%a4@,%d0		/* 40847fdc b054 */
+	beqs	loc_40847ff6		/* 40847fde 6716 */
+	movew	%a4@(2),%d0		/* 40847fe0 302c 0002 */
+	extl	%d0			/* 40847fe4 48c0 */
+	addql	#1,%d0			/* 40847fe6 5280 */
+	moveq	#-2,%d1			/* 40847fe8 72fe */
+	andl	%d0,%d1			/* 40847fea c280 */
+	addl	%a4,%d1			/* 40847fec d28c */
+	addql	#4,%d1			/* 40847fee 5881 */
+	moveal	%d1,%a4			/* 40847ff0 2841 */
+	dbf	%d7,loc_40847fd6	/* 40847ff2 51cf ffe2 */
+
+loc_40847ff6:
+	moveal	%fp@(8),%a0		/* 40847ff6 206e 0008 */
+	movew	%a4@(2),%a0@		/* 40847ffa 30ac 0002 */
+	moveal	%a4,%a0			/* 40847ffe 204c */
