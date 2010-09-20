@@ -891,28 +891,31 @@ loc_408a36ba:
 	.align	16
 
 NEWPTRSYSCLEAR:
-	.short	0x225f	/* 408a36e0 225f */
-	.short	0x201f	/* 408a36e2 201f */
-	.short	0xa71e	/* 408a36e4 a71e */
-	.short	0x2e88	/* 408a36e6 2e88 */
+	moveal	%sp@+,%a1		/* 408a36e0 225f */
+	movel	%sp@+,%d0		/* 408a36e2 201f */
+	.short	0xa71e			/* 408a36e4 a71e */
+	movel	%a0,%sp@		/* 408a36e6 2e88 */
 	jmp	%a1@			/* 408a36e8 4ed1 */
 
 	.align	16
 
-	.short	0x225f	/* 408a36f0 225f */
-	.short	0x205f	/* 408a36f2 205f */
-	.short	0xa021	/* 408a36f4 a021 */
-	.short	0x2e80	/* 408a36f6 2e80 */
-	.short	0x6a02	/* 408a36f8 6a02 */
-	.short	0x4297	/* 408a36fa 4297 */
+	moveal	%sp@+,%a1		/* 408a36f0 225f */
+	moveal	%sp@+,%a0		/* 408a36f2 205f */
+	.short	0xa021			/* 408a36f4 a021 */
+	movel	%d0,%sp@		/* 408a36f6 2e80 */
+	bpls	loc_408a36fc		/* 408a36f8 6a02 */
+	clrl	%sp@			/* 408a36fa 4297 */
+
+loc_408a36fc:
 	jmp	%a1@			/* 408a36fc 4ed1 */
-	.short	0x0000	/* 408a36fe 0000 */
+
+	.align	16
 
 NEWHANDLESYSCLEAR:
-	.short	0x225f	/* 408a3700 225f */
-	.short	0x201f	/* 408a3702 201f */
-	.short	0xa722	/* 408a3704 a722 */
-	.short	0x2e88	/* 408a3706 2e88 */
+	moveal	%sp@+,%a1		/* 408a3700 225f */
+	movel	%sp@+,%d0		/* 408a3702 201f */
+	.short	0xa722			/* 408a3704 a722 */
+	movel	%a0,%sp@		/* 408a3706 2e88 */
 	jmp	%a1@			/* 408a3708 4ed1 */
 
 	.align	16
@@ -967,15 +970,19 @@ loc_408a3722:
 	.align	16
 
 NGETTRAPADDRESS:
-	.short	0x225f	/* 408a3790 225f */
-	.short	0x121f	/* 408a3792 121f */
-	.short	0x301f	/* 408a3794 301f */
-	.short	0x4a01	/* 408a3796 4a01 */
-	.short	0x6704	/* 408a3798 6704 */
-	.short	0xa746	/* 408a379a a746 */
-	.short	0x6002	/* 408a379c 6002 */
-	.short	0xa346	/* 408a379e a346 */
-	.short	0x2e88	/* 408a37a0 2e88 */
+	moveal	%sp@+,%a1		/* 408a3790 225f */
+	moveb	%sp@+,%d1		/* 408a3792 121f */
+	movew	%sp@+,%d0		/* 408a3794 301f */
+	tstb	%d1			/* 408a3796 4a01 */
+	beqs	loc_408a379e		/* 408a3798 6704 */
+	.short	0xa746			/* 408a379a a746 */
+	bras	loc_408a37a0		/* 408a379c 6002 */
+
+loc_408a379e:
+	.short	0xa346			/* 408a379e a346 */
+
+loc_408a37a0:
+	movel	%a0,%sp@		/* 408a37a0 2e88 */
 	jmp	%a1@			/* 408a37a2 4ed1 */
 
 	.align	16
