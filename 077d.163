@@ -1005,38 +1005,38 @@ loc_408a37c2:
 	.align	16
 
 EQUALSTRING:
-	.short	0x206f	/* 408a37d0 206f */
-	.short	0x000c	/* 408a37d2 000c */
-	.short	0x226f	/* 408a37d4 226f */
-	.short	0x0008	/* 408a37d6 0008 */
+	moveal	%sp@(12),%a0		/* 408a37d0 206f 000c */
+	moveal	%sp@(8),%a1		/* 408a37d4 226f 0008 */
 	moveq	#0,%d0			/* 408a37d8 7000 */
-	.short	0x1018	/* 408a37da 1018 */
-	.short	0x4840	/* 408a37dc 4840 */
-	.short	0x1019	/* 408a37de 1019 */
-	.short	0x4a2f	/* 408a37e0 4a2f */
-	.short	0x0004	/* 408a37e2 0004 */
-	.short	0x670e	/* 408a37e4 670e */
-	.short	0x4a2f	/* 408a37e6 4a2f */
-	.short	0x0006	/* 408a37e8 0006 */
-	.short	0x6704	/* 408a37ea 6704 */
-	.short	0xa43c	/* 408a37ec a43c */
-	.short	0x6010	/* 408a37ee 6010 */
-	.short	0xa03c	/* 408a37f0 a03c */
-	.short	0x600c	/* 408a37f2 600c */
-	.short	0x4a2f	/* 408a37f4 4a2f */
-	.short	0x0006	/* 408a37f6 0006 */
-	.short	0x6704	/* 408a37f8 6704 */
-	.short	0xa63c	/* 408a37fa a63c */
-	.short	0x6002	/* 408a37fc 6002 */
-	.short	0xa23c	/* 408a37fe a23c */
-	.short	0x0a00	/* 408a3800 0a00 */
-	.short	0x0001	/* 408a3802 0001 */
-	.short	0x1f40	/* 408a3804 1f40 */
-	.short	0x0010	/* 408a3806 0010 */
-	.short	0x205f	/* 408a3808 205f */
-	.short	0x4fef	/* 408a380a 4fef */
-	.short	0x000c	/* 408a380c 000c */
-	.short	0x4ed0	/* 408a380e 4ed0 */
+	moveb	%a0@+,%d0		/* 408a37da 1018 */
+	swap	%d0			/* 408a37dc 4840 */
+	moveb	%a1@+,%d0		/* 408a37de 1019 */
+	tstb	%sp@(4)			/* 408a37e0 4a2f 0004 */
+	beqs	loc_408a37f4		/* 408a37e4 670e */
+	tstb	%sp@(6)			/* 408a37e6 4a2f 0006 */
+	beqs	loc_408a37f0		/* 408a37ea 6704 */
+	.short	0xa43c			/* 408a37ec a43c */
+	bras	loc_408a3800		/* 408a37ee 6010 */
+
+loc_408a37f0:
+	.short	0xa03c			/* 408a37f0 a03c */
+	bras	loc_408a3800		/* 408a37f2 600c */
+
+loc_408a37f4:
+	tstb	%sp@(6)			/* 408a37f4 4a2f 0006 */
+	beqs	loc_408a37fe		/* 408a37f8 6704 */
+	.short	0xa63c			/* 408a37fa a63c */
+	bras	loc_408a3800		/* 408a37fc 6002 */
+
+loc_408a37fe:
+	.short	0xa23c			/* 408a37fe a23c */
+
+loc_408a3800:
+	eorib	#1,%d0			/* 408a3800 0a00 0001 */
+	moveb	%d0,%sp@(16)		/* 408a3804 1f40 0010 */
+	moveal	%sp@+,%a0		/* 408a3808 205f */
+	lea	%sp@(12),%sp		/* 408a380a 4fef 000c */
+	jmp	%a0@			/* 408a380e 4ed0 */
 
 GETDCTLENTRY:
 	.short	0x205f	/* 408a3810 205f */
