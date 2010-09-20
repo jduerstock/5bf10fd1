@@ -1039,30 +1039,33 @@ loc_408a3800:
 	jmp	%a0@			/* 408a380e 4ed0 */
 
 GETDCTLENTRY:
-	.short	0x205f	/* 408a3810 205f */
-	.short	0x301f	/* 408a3812 301f */
-	.short	0x4297	/* 408a3814 4297 */
-	.short	0x4640	/* 408a3816 4640 */
-	.short	0xb078	/* 408a3818 b078 */
-	.short	0x01d2	/* 408a381a 01d2 */
-	.short	0x640a	/* 408a381c 640a */
-	.short	0xe548	/* 408a381e e548 */
-	.short	0x2278	/* 408a3820 2278 */
-	.short	0x011c	/* 408a3822 011c */
-	.short	0x2eb1	/* 408a3824 2eb1 */
-	.short	0x0000	/* 408a3826 0000 */
-	.short	0x4ed0	/* 408a3828 4ed0 */
-	.short	0x0000	/* 408a382a 0000 */
-	.short	0x0000	/* 408a382c 0000 */
-	.short	0x0000	/* 408a382e 0000 */
-	.short	0x225f	/* 408a3830 225f */
-	.short	0x101f	/* 408a3832 101f */
-	.short	0x205f	/* 408a3834 205f */
-	.short	0x6604	/* 408a3836 6604 */
-	.short	0xa000	/* 408a3838 a000 */
-	.short	0x6002	/* 408a383a 6002 */
-	.short	0xa400	/* 408a383c a400 */
-	.short	0x3e80	/* 408a383e 3e80 */
+	moveal	%sp@+,%a0		/* 408a3810 205f */
+	movew	%sp@+,%d0		/* 408a3812 301f */
+	clrl	%sp@			/* 408a3814 4297 */
+	notw	%d0			/* 408a3816 4640 */
+	cmpw	0x1d2,%d0		/* 408a3818 b078 01d2 */
+	bccs	loc_408a3828		/* 408a381c 640a */
+	lslw	#2,%d0			/* 408a381e e548 */
+	moveal	0x11c,%a1		/* 408a3820 2278 011c */
+	movel	%a1@(0x0000,%d0:w),%sp@ /* 408a3824 2eb1 0000 */
+
+loc_408a3828:
+	jmp	%a0@			/* 408a3828 4ed0 */
+
+	.align	16
+
+	moveal	%sp@+,%a1		/* 408a3830 225f */
+	moveb	%sp@+,%d0		/* 408a3832 101f */
+	moveal	%sp@+,%a0		/* 408a3834 205f */
+	bnes	loc_408a383c		/* 408a3836 6604 */
+	.short	0xa000			/* 408a3838 a000 */
+	bras	loc_408a383e		/* 408a383a 6002 */
+
+loc_408a383c:
+	.short	0xa400			/* 408a383c a400 */
+
+loc_408a383e:
+	movew	%d0,%sp@		/* 408a383e 3e80 */
 	jmp	%a1@			/* 408a3840 4ed1 */
 
 	.align	16
