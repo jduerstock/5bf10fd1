@@ -1,36 +1,33 @@
 /* SPLIT HERE */
-	.short	0x670a	/* 408a3000 670a */
-	.short	0x8229	/* 408a3002 8229 */
-	.short	0x0003	/* 408a3004 0003 */
-	.short	0x5c49	/* 408a3006 5c49 */
-	.short	0x51ce	/* 408a3008 51ce */
-	.short	0xffee	/* 408a300a ffee */
-	.short	0x5246	/* 408a300c 5246 */
-	.short	0x30c1	/* 408a300e 30c1 */
-	.short	0x20cc	/* 408a3010 20cc */
-	.short	0x20c5	/* 408a3012 20c5 */
-	.short	0x51ce	/* 408a3014 51ce */
-	.short	0xffbc	/* 408a3016 ffbc */
-	.short	0x200b	/* 408a3018 200b */
-	.short	0x670e	/* 408a301a 670e */
-	.short	0x204b	/* 408a301c 204b */
-	.short	0x2050	/* 408a301e 2050 */
-	.short	0x31e8	/* 408a3020 31e8 */
-	.short	0x0014	/* 408a3022 0014 */
-	.short	0x0a5a	/* 408a3024 0a5a */
-	.short	0x6000	/* 408a3026 6000 */
-	.short	0xff60	/* 408a3028 ff60 */
-	.short	0x31ee	/* 408a302a 31ee */
-	.short	0xfffe	/* 408a302c fffe */
-	.short	0x0a5a	/* 408a302e 0a5a */
-	.short	0x2d4a	/* 408a3030 2d4a */
-	.short	0x000c	/* 408a3032 000c */
-	.short	0x4cdf	/* 408a3034 4cdf */
-	.short	0x1ce2	/* 408a3036 1ce2 */
-	.short	0x4e5e	/* 408a3038 4e5e */
-	.short	0x205f	/* 408a303a 205f */
-	.short	0x584f	/* 408a303c 584f */
-	.short	0x4ed0	/* 408a303e 4ed0 */
+	beqs	loc_408a300c		/* 408a3000 670a */
+	orb	%a1@(3),%d1		/* 408a3002 8229 0003 */
+	addqw	#6,%a1			/* 408a3006 5c49 */
+	dbf	%d6,loc_408a2ff8	/* 408a3008 51ce ffee */
+
+loc_408a300c:
+	addqw	#1,%d6			/* 408a300c 5246 */
+
+loc_408a300e:
+	movew	%d1,%a0@+		/* 408a300e 30c1 */
+	movel	%a4,%a0@+		/* 408a3010 20cc */
+	movel	%d5,%a0@+		/* 408a3012 20c5 */
+	dbf	%d6,loc_408a2fd2	/* 408a3014 51ce ffbc */
+	movel	%a3,%d0			/* 408a3018 200b */
+	beqs	loc_408a302a		/* 408a301a 670e */
+	moveal	%a3,%a0			/* 408a301c 204b */
+	moveal	%a0@,%a0		/* 408a301e 2050 */
+	movew	%a0@(20),0xa5a		/* 408a3020 31e8 0014 0a5a */
+	braw	loc_408a2f88		/* 408a3026 6000 ff60 */
+
+loc_408a302a:
+	movew	%fp@(-2),0xa5a		/* 408a302a 31ee fffe 0a5a */
+	movel	%a2,%fp@(12)		/* 408a3030 2d4a 000c */
+	moveml	%sp@+,%d1/%d5-%d7/%a2-%a4	/* 408a3034 4cdf 1ce2 */
+	unlk	%fp			/* 408a3038 4e5e */
+	moveal	%sp@+,%a0		/* 408a303a 205f */
+	addqw	#4,%sp			/* 408a303c 584f */
+	jmp	%a0@			/* 408a303e 4ed0 */
+
 	.short	0x3a1f	/* 408a3040 3a1f */
 	.short	0x4843	/* 408a3042 4843 */
 	.short	0x4243	/* 408a3044 4243 */
