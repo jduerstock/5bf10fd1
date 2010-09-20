@@ -383,29 +383,24 @@ loc_408a32d8:
 	jmp	%a1@			/* 408a32d8 4ed1 */
 
 sub_408a32da:
-	.short	0x4a41	/* 408a32da 4a41 */
-	.short	0x6606	/* 408a32dc 6606 */
-	.short	0x3238	/* 408a32de 3238 */
-	.short	0x0ba6	/* 408a32e0 0ba6 */
-	.short	0x600a	/* 408a32e2 600a */
-	.short	0x0c41	/* 408a32e4 0c41 */
-	.short	0x0001	/* 408a32e6 0001 */
-	.short	0x6604	/* 408a32e8 6604 */
-	.short	0x3238	/* 408a32ea 3238 */
-	.short	0x0984	/* 408a32ec 0984 */
+	tstw	%d1			/* 408a32da 4a41 */
+	bnes	loc_408a32e4		/* 408a32dc 6606 */
+	movew	0xba6,%d1		/* 408a32de 3238 0ba6 */
+	bras	sub_408a32ee		/* 408a32e2 600a */
+
+loc_408a32e4:
+	cmpiw	#1,%d1			/* 408a32e4 0c41 0001 */
+	bnes	sub_408a32ee		/* 408a32e8 6604 */
+	movew	0x984,%d1		/* 408a32ea 3238 0984 */
 
 sub_408a32ee:
-	.short	0x594f	/* 408a32ee 594f */
-	.short	0x2f3c	/* 408a32f0 2f3c */
-	.short	0x464f	/* 408a32f2 464f */
-	.short	0x4e44	/* 408a32f4 4e44 */
-	.short	0x3f01	/* 408a32f6 3f01 */
-	.short	0x31fc	/* 408a32f8 31fc */
-	.short	0xffff	/* 408a32fa ffff */
-	.short	0x0b9e	/* 408a32fc 0b9e */
-	.short	0xa9a0	/* 408a32fe a9a0 */
-	.short	0x201f	/* 408a3300 201f */
-	.short	0x2040	/* 408a3302 2040 */
+	subqw	#4,%sp			/* 408a32ee 594f */
+	movel	#1179602500,%sp@-	/* 408a32f0 2f3c 464f 4e44 */
+	movew	%d1,%sp@-		/* 408a32f6 3f01 */
+	movew	#-1,0xb9e		/* 408a32f8 31fc ffff 0b9e */
+	.short	0xa9a0			/* 408a32fe a9a0 */
+	movel	%sp@+,%d0		/* 408a3300 201f */
+	moveal	%d0,%a0			/* 408a3302 2040 */
 	rts				/* 408a3304 4e75 */
 
 REALFONT:
