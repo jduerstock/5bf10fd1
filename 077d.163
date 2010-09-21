@@ -1812,22 +1812,18 @@ NBPSETNTE:
 	rts				/* 408a3e6e 4e75 */
 
 sub_408a3e70:
-	.short	0x2f08	/* 408a3e70 2f08 */
-	.short	0x426f	/* 408a3e72 426f */
-	.short	0x0008	/* 408a3e74 0008 */
-	.short	0x2038	/* 408a3e76 2038 */
-	.short	0x02d8	/* 408a3e78 02d8 */
-	.short	0x0c80	/* 408a3e7a 0c80 */
-	.short	0xffff	/* 408a3e7c ffff */
-	.short	0xffff	/* 408a3e7e ffff */
-	.short	0x670c	/* 408a3e80 670c */
-	.short	0x4a80	/* 408a3e82 4a80 */
-	.short	0x6708	/* 408a3e84 6708 */
-	.short	0x2040	/* 408a3e86 2040 */
-	.short	0x1f68	/* 408a3e88 1f68 */
-	.short	0x0019	/* 408a3e8a 0019 */
-	.short	0x0009	/* 408a3e8c 0009 */
-	.short	0x205f	/* 408a3e8e 205f */
+	movel	%a0,%sp@-		/* 408a3e70 2f08 */
+	clrw	%sp@(8)			/* 408a3e72 426f 0008 */
+	movel	0x2d8,%d0		/* 408a3e76 2038 02d8 */
+	cmpil	#-1,%d0			/* 408a3e7a 0c80 ffff ffff */
+	beqs	loc_408a3e8e		/* 408a3e80 670c */
+	tstl	%d0			/* 408a3e82 4a80 */
+	beqs	loc_408a3e8e		/* 408a3e84 6708 */
+	moveal	%d0,%a0			/* 408a3e86 2040 */
+	moveb	%a0@(25),%sp@(9)	/* 408a3e88 1f68 0019 0009 */
+
+loc_408a3e8e:
+	moveal	%sp@+,%a0		/* 408a3e8e 205f */
 	rts				/* 408a3e90 4e75 */
 
 	.align	16
