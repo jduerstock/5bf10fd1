@@ -694,27 +694,21 @@ GI_ExecuteDTM:
 
 	.align	16
 
-	.short	0x4e56	/* 408ab600 4e56 */
-	.short	0x0000	/* 408ab602 0000 */
-	.short	0x2f2e	/* 408ab604 2f2e */
-	.short	0x000c	/* 408ab606 000c */
-	.short	0x2f2e	/* 408ab608 2f2e */
-	.short	0x0008	/* 408ab60a 0008 */
-	.short	0x4eba	/* 408ab60c 4eba */
-	.short	0x0112	/* 408ab60e 0112 */
-	.short	0x4e5e	/* 408ab610 4e5e */
+	linkw	%fp,#0			/* 408ab600 4e56 0000 */
+	movel	%fp@(12),%sp@-		/* 408ab604 2f2e 000c */
+	movel	%fp@(8),%sp@-		/* 408ab608 2f2e 0008 */
+	jsr	%pc@(AllocTempMem)	/* 408ab60c 4eba 0112 */
+	unlk	%fp			/* 408ab610 4e5e */
 	rts				/* 408ab612 4e75 */
 
 	.align	16
 
-	.short	0x4e56	/* 408ab620 4e56 */
-	.short	0x0000	/* 408ab622 0000 */
-	.short	0x2f2e	/* 408ab624 2f2e */
-	.short	0x0008	/* 408ab626 0008 */
-	.short	0x4eba	/* 408ab628 4eba */
-	.short	0x0156	/* 408ab62a 0156 */
-	.short	0x4e5e	/* 408ab62c 4e5e */
+	linkw	%fp,#0			/* 408ab620 4e56 0000 */
+	movel	%fp@(8),%sp@-		/* 408ab624 2f2e 0008 */
+	jsr	%pc@(sub_408ab780)	/* 408ab628 4eba 0156 */
+	unlk	%fp			/* 408ab62c 4e5e */
 	rts				/* 408ab62e 4e75 */
+
 	.short	0x4e56	/* 408ab630 4e56 */
 	.short	0x0000	/* 408ab632 0000 */
 	.short	0x206e	/* 408ab634 206e */
@@ -880,8 +874,10 @@ AllocTempMem:
 	.short	0xffec	/* 408ab776 ffec */
 	.short	0x4e5e	/* 408ab778 4e5e */
 	rts				/* 408ab77a 4e75 */
-	.short	0x0000	/* 408ab77c 0000 */
-	.short	0x0000	/* 408ab77e 0000 */
+
+	.align	16
+
+sub_408ab780:
 	.short	0x4e56	/* 408ab780 4e56 */
 	.short	0x0000	/* 408ab782 0000 */
 	.short	0x2f0c	/* 408ab784 2f0c */
