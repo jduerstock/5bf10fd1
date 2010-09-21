@@ -1169,10 +1169,10 @@ off_4080ba84:
 	.short	loc_4080ba92-off_4080ba84	/* 4080ba84 000e */
 	.short	loc_4080ba94-off_4080ba84	/* 4080ba86 0010 */
 	.short	loc_4080baa4-off_4080ba84	/* 4080ba88 0020 */
-	.short	0x0032	/* 4080ba8a 0032 */
-	.short	0x0056	/* 4080ba8c 0056 */
-	.short	0x0058	/* 4080ba8e 0058 */
-	.short	0x005a	/* 4080ba90 005a */
+	.short	loc_4080bab6-off_4080ba84	/* 4080ba8a 0032 */
+	.short	loc_4080bada-off_4080ba84	/* 4080ba8c 0056 */
+	.short	loc_4080badc-off_4080ba84	/* 4080ba8e 0058 */
+	.short	loc_4080bade-off_4080ba84	/* 4080ba90 005a */
 
 loc_4080ba92:
 	rts				/* 4080ba92 4e75 */
@@ -1190,37 +1190,48 @@ loc_4080baa2:
 	rts				/* 4080baa2 4e75 */
 
 loc_4080baa4:
-	.short	0x072a	/* 4080baa4 072a */
-	.short	0x001b	/* 4080baa6 001b */
-	.short	0x6708	/* 4080baa8 6708 */
-	.short	0x6138	/* 4080baaa 6138 */
-	.short	0x6176	/* 4080baac 6176 */
-	.short	0x6134	/* 4080baae 6134 */
-	.short	0x6002	/* 4080bab0 6002 */
-	.short	0x6170	/* 4080bab2 6170 */
+	btst	%d3,%a2@(27)		/* 4080baa4 072a 001b */
+	beqs	loc_4080bab2		/* 4080baa8 6708 */
+	bsrs	sub_4080bae4		/* 4080baaa 6138 */
+	bsrs	sub_4080bb24		/* 4080baac 6176 */
+	bsrs	sub_4080bae4		/* 4080baae 6134 */
+	bras	loc_4080bab4		/* 4080bab0 6002 */
+
+loc_4080bab2:
+	bsrs	sub_4080bb24		/* 4080bab2 6170 */
+
+loc_4080bab4:
 	rts				/* 4080bab4 4e75 */
-	.short	0x4a32	/* 4080bab6 4a32 */
-	.short	0x3044	/* 4080bab8 3044 */
-	.short	0x6610	/* 4080baba 6610 */
-	.short	0x072a	/* 4080babc 072a */
-	.short	0x001b	/* 4080babe 001b */
-	.short	0x6704	/* 4080bac0 6704 */
-	.short	0x6120	/* 4080bac2 6120 */
-	.short	0x6012	/* 4080bac4 6012 */
-	.short	0x50f2	/* 4080bac6 50f2 */
-	.short	0x3044	/* 4080bac8 3044 */
-	.short	0x600c	/* 4080baca 600c */
-	.short	0x072a	/* 4080bacc 072a */
-	.short	0x001b	/* 4080bace 001b */
-	.short	0x6606	/* 4080bad0 6606 */
-	.short	0x6150	/* 4080bad2 6150 */
-	.short	0x4232	/* 4080bad4 4232 */
-	.short	0x3044	/* 4080bad6 3044 */
+
+loc_4080bab6:
+	tstb	%a2@(0x0044,%d3:w)	/* 4080bab6 4a32 3044 */
+	bnes	loc_4080bacc		/* 4080baba 6610 */
+	btst	%d3,%a2@(27)		/* 4080babc 072a 001b */
+	beqs	loc_4080bac6		/* 4080bac0 6704 */
+	bsrs	sub_4080bae4		/* 4080bac2 6120 */
+	bras	loc_4080bad8		/* 4080bac4 6012 */
+
+loc_4080bac6:
+	st	%a2@(0x0044,%d3:w)	/* 4080bac6 50f2 3044 */
+	bras	loc_4080bad8		/* 4080baca 600c */
+
+loc_4080bacc:
+	btst	%d3,%a2@(27)		/* 4080bacc 072a 001b */
+	bnes	loc_4080bad8		/* 4080bad0 6606 */
+	bsrs	sub_4080bb24		/* 4080bad2 6150 */
+	clrb	%a2@(0x0044,%d3:w)	/* 4080bad4 4232 3044 */
+
+loc_4080bad8:
 	rts				/* 4080bad8 4e75 */
+
+loc_4080bada:
 	rts				/* 4080bada 4e75 */
+
+loc_4080badc:
 	rts				/* 4080badc 4e75 */
-	.short	0x486a	/* 4080bade 486a */
-	.short	0x0044	/* 4080bae0 0044 */
+
+loc_4080bade:
+	pea	%a2@(68)		/* 4080bade 486a 0044 */
 	rts				/* 4080bae2 4e75 */
 
 sub_4080bae4:
