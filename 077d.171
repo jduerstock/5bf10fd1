@@ -260,59 +260,39 @@ loc_408ab254:
 	.align	16
 
 InstallExceptionHandler:
-	.short	0x4e56	/* 408ab270 4e56 */
-	.short	0x0000	/* 408ab272 0000 */
-	.short	0x48e7	/* 408ab274 48e7 */
-	.short	0x0118	/* 408ab276 0118 */
-	.short	0x2e2e	/* 408ab278 2e2e */
-	.short	0x0018	/* 408ab27a 0018 */
-	.short	0x266e	/* 408ab27c 266e */
-	.short	0x0008	/* 408ab27e 0008 */
-	.short	0x286e	/* 408ab280 286e */
-	.short	0x000c	/* 408ab282 000c */
-	.short	0x38bc	/* 408ab284 38bc */
-	.short	0x4eb9	/* 408ab286 4eb9 */
-	.short	0x41fa	/* 408ab288 41fa */
-	.short	0xfc06	/* 408ab28a fc06 */
-	.short	0x2948	/* 408ab28c 2948 */
-	.short	0x0002	/* 408ab28e 0002 */
-	.short	0x294b	/* 408ab290 294b */
-	.short	0x0006	/* 408ab292 0006 */
-	.short	0x296e	/* 408ab294 296e */
-	.short	0x0010	/* 408ab296 0010 */
-	.short	0x000a	/* 408ab298 000a */
-	.short	0x296e	/* 408ab29a 296e */
-	.short	0x0014	/* 408ab29c 0014 */
-	.short	0x000e	/* 408ab29e 000e */
-	.short	0x3947	/* 408ab2a0 3947 */
-	.short	0x001a	/* 408ab2a2 001a */
-	.short	0x7005	/* 408ab2a4 7005 */
-	.short	0xb0ab	/* 408ab2a6 b0ab */
-	.short	0x0004	/* 408ab2a8 0004 */
-	.short	0x660e	/* 408ab2aa 660e */
-	.short	0x2f0c	/* 408ab2ac 2f0c */
-	.short	0xf4e8	/* 408ab2ae f4e8 */
-	.short	0x5488	/* 408ab2b0 5488 */
-	.short	0xf4e8	/* 408ab2b2 f4e8 */
-	.short	0x5488	/* 408ab2b4 5488 */
-	.short	0xf4e8	/* 408ab2b6 f4e8 */
-	.short	0x584f	/* 408ab2b8 584f */
-	.short	0x2973	/* 408ab2ba 2973 */
-	.short	0x7c68	/* 408ab2bc 7c68 */
-	.short	0x0016	/* 408ab2be 0016 */
-	.short	0x278c	/* 408ab2c0 278c */
-	.short	0x7c68	/* 408ab2c2 7c68 */
-	.short	0x2f07	/* 408ab2c4 2f07 */
-	.short	0x2f0c	/* 408ab2c6 2f0c */
-	.short	0x4eba	/* 408ab2c8 4eba */
-	.short	0xfbb6	/* 408ab2ca fbb6 */
-	.short	0x2940	/* 408ab2cc 2940 */
-	.short	0x0012	/* 408ab2ce 0012 */
-	.short	0x504f	/* 408ab2d0 504f */
-	.short	0x4cee	/* 408ab2d2 4cee */
-	.short	0x1880	/* 408ab2d4 1880 */
-	.short	0xfff4	/* 408ab2d6 fff4 */
-	.short	0x4e5e	/* 408ab2d8 4e5e */
+	linkw	%fp,#0			/* 408ab270 4e56 0000 */
+	moveml	%d7/%a3-%a4,%sp@-	/* 408ab274 48e7 0118 */
+	movel	%fp@(24),%d7		/* 408ab278 2e2e 0018 */
+	moveal	%fp@(8),%a3		/* 408ab27c 266e 0008 */
+	moveal	%fp@(12),%a4		/* 408ab280 286e 000c */
+	movew	#20153,%a4@		/* 408ab284 38bc 4eb9 */
+	lea	%pc@(sub_408aae90),%a0	/* 408ab288 41fa fc06 */
+	movel	%a0,%a4@(2)		/* 408ab28c 2948 0002 */
+	movel	%a3,%a4@(6)		/* 408ab290 294b 0006 */
+	movel	%fp@(16),%a4@(10)	/* 408ab294 296e 0010 000a */
+	movel	%fp@(20),%a4@(14)	/* 408ab29a 296e 0014 000e */
+	movew	%d7,%a4@(26)		/* 408ab2a0 3947 001a */
+	moveq	#5,%d0			/* 408ab2a4 7005 */
+	cmpl	%a3@(4),%d0		/* 408ab2a6 b0ab 0004 */
+	bnes	loc_408ab2ba		/* 408ab2aa 660e */
+	movel	%a4,%sp@-		/* 408ab2ac 2f0c */
+	.short	0xf4e8			/* cpushl	%bc,%a0@	/* 408ab2ae f4e8 */
+	addql	#2,%a0			/* 408ab2b0 5488 */
+	.short	0xf4e8			/* cpushl	%bc,%a0@	/* 408ab2b2 f4e8 */
+	addql	#2,%a0			/* 408ab2b4 5488 */
+	.short	0xf4e8			/* cpushl	%bc,%a0@	/* 408ab2b6 f4e8 */
+	addqw	#4,%sp			/* 408ab2b8 584f */
+
+loc_408ab2ba:
+	movel	%a3@(0x0068,%d7:l:4),%a4@(22)	/* 408ab2ba 2973 7c68 0016 */
+	movel	%a4,%a3@(0x0068,%d7:l:4)	/* 408ab2c0 278c 7c68 */
+	movel	%d7,%sp@-		/* 408ab2c4 2f07 */
+	movel	%a4,%sp@-		/* 408ab2c6 2f0c */
+	jsr	%pc@(InstallExceptionVector)	/* 408ab2c8 4eba fbb6 */
+	movel	%d0,%a4@(18)		/* 408ab2cc 2940 0012 */
+	addqw	#8,%sp			/* 408ab2d0 504f */
+	moveml	%fp@(-12),%d7/%a3-%a4	/* 408ab2d2 4cee 1880 fff4 */
+	unlk	%fp			/* 408ab2d8 4e5e */
 	rts				/* 408ab2da 4e75 */
 
 	.align	16
