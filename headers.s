@@ -256,6 +256,10 @@
 		.short	0xa06e
 	.endm
 
+	.macro	_IOPMsgRequest
+		.short	0xa087
+	.endm
+
 	.macro	_NewHandle
 		.short	0xa122
 	.endm
