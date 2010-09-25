@@ -633,4 +633,4 @@
 	.equ	JVBLTask, 0x0d28
 	.equ	JSwapMMU, 0x0dbc
 	.equ	LaunchFlag, 0x0902
-
+	.equ	SInfoPtr, 0x0cbc
