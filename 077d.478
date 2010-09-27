@@ -544,25 +544,20 @@ loc_409de564:
 	rts				/* 409de568 4e75 */
 
 sub_409de56a:
-	.short	0x2f00	/* 409de56a 2f00 */
-	.short	0x2f09	/* 409de56c 2f09 */
-	.short	0x2f00	/* 409de56e 2f00 */
-	.short	0x2f2e	/* 409de570 2f2e */
-	.short	0x0020	/* 409de572 0020 */
-	.short	0x206e	/* 409de574 206e */
-	.short	0x003c	/* 409de576 003c */
-	.short	0x4e90	/* 409de578 4e90 */
-	.short	0x504f	/* 409de57a 504f */
-	.short	0x225f	/* 409de57c 225f */
-	.short	0x2340	/* 409de57e 2340 */
-	.short	0x0008	/* 409de580 0008 */
-	.short	0x236e	/* 409de582 236e */
-	.short	0x0020	/* 409de584 0020 */
-	.short	0x0004	/* 409de586 0004 */
-	.short	0x201f	/* 409de588 201f */
+	movel	%d0,%sp@-		/* 409de56a 2f00 */
+	movel	%a1,%sp@-		/* 409de56c 2f09 */
+	movel	%d0,%sp@-		/* 409de56e 2f00 */
+	movel	%fp@(32),%sp@-		/* 409de570 2f2e 0020 */
+	moveal	%fp@(60),%a0		/* 409de574 206e 003c */
+	jsr	%a0@			/* 409de578 4e90 */
+	addqw	#8,%sp			/* 409de57a 504f */
+	moveal	%sp@+,%a1		/* 409de57c 225f */
+	movel	%d0,%a1@(8)		/* 409de57e 2340 0008 */
+	movel	%fp@(32),%a1@(4)	/* 409de582 236e 0020 0004 */
+	movel	%sp@+,%d0		/* 409de588 201f */
 	rts				/* 409de58a 4e75 */
-	.short	0x0000	/* 409de58c 0000 */
-	.short	0x0000	/* 409de58e 0000 */
+
+	.align	16
 
 	linkw	%fp,#0			/* 409de590 4e56 0000 */
 	movel	%a2,%sp@-		/* 409de594 2f0a */
@@ -584,12 +579,11 @@ sub_409de56a:
 	.align	16
 
 loc_409de5c0:
-	.short	0x207a	/* 409de5c0 207a */
-	.short	0xf8ee	/* 409de5c2 f8ee */
-	.short	0x2f00	/* 409de5c4 2f00 */
-	.short	0x4e90	/* 409de5c6 4e90 */
+	moveal	%pc@(byte_409ddeb0),%a0	/* 409de5d2 207a f8ee */
+	movel	%d0,%sp@-		/* 409de5c4 2f00 */
+	jsr	%a0@			/* 409de5c6 4e90 */
 	moveq	#-1,%d0			/* 409de5c8 70ff */
-	.short	0x4e5e	/* 409de5ca 4e5e */
+	unlk	%fp			/* 409de5ca 4e5e */
 	rts				/* 409de5cc 4e75 */
 
 	linkw	%fp,#-4			/* 409de5ce 4e56 fffc */
@@ -1021,44 +1015,39 @@ loc_409de9e2:
 	.align	16
 
 sub_409de9f0:
-	.short	0x225f	/* 409de9f0 225f */
-	.short	0x101f	/* 409de9f2 101f */
-	.short	0x205f	/* 409de9f4 205f */
-	.short	0x6604	/* 409de9f6 6604 */
-	.short	0xa004	/* 409de9f8 a004 */
-	.short	0x6002	/* 409de9fa 6002 */
-	.short	0xa404	/* 409de9fc a404 */
-	.short	0x3e80	/* 409de9fe 3e80 */
+	moveal	%sp@+,%a1		/* 409de9f0 225f */
+	moveb	%sp@+,%d0		/* 409de9f2 101f */
+	moveal	%sp@+,%a0		/* 409de9f4 205f */
+	bnes	loc_409de9fc		/* 409de9f6 6604 */
+	.short	0xa004			/* 409de9f8 a004 */
+	bras	loc_409de9fe		/* 409de9fa 6002 */
+
+loc_409de9fc:
+	.short	0xa404			/* 409de9fc a404 */
+
+loc_409de9fe:
+	movew	%d0,%sp@		/* 409de9fe 3e80 */
 	jmp	%a1@			/* 409dea00 4ed1 */
-	.short	0x0000	/* 409dea02 0000 */
-	.short	0x0000	/* 409dea04 0000 */
-	.short	0x0000	/* 409dea06 0000 */
-	.short	0x0000	/* 409dea08 0000 */
-	.short	0x0000	/* 409dea0a 0000 */
-	.short	0x0000	/* 409dea0c 0000 */
-	.short	0x0000	/* 409dea0e 0000 */
-	.short	0x02ff	/* 409dea10 02ff */
-	.short	0xe86c	/* 409dea12 e86c */
-	.short	0xff00	/* 409dea14 ff00 */
-	.short	0x0000	/* 409dea16 0000 */
+
+	.align	16
+
+	.long	0x02ffe86c		/* 409dea10 02ff e86c */
+	.long	0xff000000		/* 409dea14 ff00 0000 */
+
 	.string	"Network_Ethernet_Apple_Sonic"	/* 409dea18 4e65 */
 	.byte	0x00	/* 409dea35 00 */
 	.short	0x0004	/* 409dea36 0004 */
 	.short	0x0001	/* 409dea38 0001 */
 	.short	0x0001	/* 409dea3a 0001 */
 	.short	0x0110	/* 409dea3c 0110 */
-	.short	0x01ff	/* 409dea3e 01ff */
-	.short	0xfff8	/* 409dea40 fff8 */
-	.short	0x02ff	/* 409dea42 02ff */
-	.short	0xffd6	/* 409dea44 ffd6 */
-	.short	0x04ff	/* 409dea46 04ff */
-	.short	0xffca	/* 409dea48 ffca */
-	.short	0x0700	/* 409dea4a 0700 */
-	.short	0x0000	/* 409dea4c 0000 */
-	.short	0x0800	/* 409dea4e 0800 */
-	.short	0x0001	/* 409dea50 0001 */
-	.short	0xff00	/* 409dea52 ff00 */
-	.short	0x0000	/* 409dea54 0000 */
+
+	.long	0x01fffff8		/* 409dea3e 01ff fff8 */
+	.long	0x02ffffd6		/* 409dea42 02ff ffd6 */
+	.long	0x04ffffca		/* 409dea46 04ff ffca */
+	.long	0x07000000		/* 409dea4a 0700 0000 */
+	.long	0x08000001		/* 409dea4e 0800 0001 */
+	.long	0xff000000		/* 409dea52 ff00 0000 */
+
 	.string	"CPU_68030__MacIIFamily"	/* 409dea56 4350 */
 	.byte	0	/* 409dea6d 00 */
 	.short	0x000a	/* 409dea6e 000a */
