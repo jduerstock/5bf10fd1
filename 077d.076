@@ -523,70 +523,56 @@ __v__AddComponentFSSpec:
 	.align	16
 
 __v__GrowRTFileTable:
-	.short	0x4e56	/* 4084c4e0 4e56 */
-	.short	0xfffc	/* 4084c4e2 fffc */
-	.short	0x48e7	/* 4084c4e4 48e7 */
-	.short	0x0318	/* 4084c4e6 0318 */
-	.short	0x3c2e	/* 4084c4e8 3c2e */
-	.short	0x000a	/* 4084c4ea 000a */
-	.short	0x2878	/* 4084c4ec 2878 */
-	.short	0x028a	/* 4084c4ee 028a */
-	.short	0x7e48	/* 4084c4f0 7e48 */
-	.short	0xcfec	/* 4084c4f2 cfec */
-	.short	0x0012	/* 4084c4f4 0012 */
-	.short	0x266c	/* 4084c4f6 266c */
-	.short	0x0024	/* 4084c4f8 0024 */
-	.short	0x48c6	/* 4084c4fa 48c6 */
-	.short	0x2206	/* 4084c4fc 2206 */
-	.short	0x7048	/* 4084c4fe 7048 */
-	.short	0x4c00	/* 4084c500 4c00 */
-	.short	0x1800	/* 4084c502 1800 */
-	.short	0xd287	/* 4084c504 d287 */
-	.short	0x2001	/* 4084c506 2001 */
-	.short	0xa71e	/* 4084c508 a71e */
-	.short	0x2848	/* 4084c50a 2848 */
-	.short	0x2d4c	/* 4084c50c 2d4c */
-	.short	0xfffc	/* 4084c50e fffc */
-	.short	0x200c	/* 4084c510 200c */
-	.short	0x6606	/* 4084c512 6606 */
-	.short	0x3038	/* 4084c514 3038 */
-	.short	0x0220	/* 4084c516 0220 */
-	.short	0x6024	/* 4084c518 6024 */
-	.short	0x204b	/* 4084c51a 204b */
-	.short	0x224c	/* 4084c51c 224c */
-	.short	0x2007	/* 4084c51e 2007 */
-	.short	0xa02e	/* 4084c520 a02e */
-	.short	0x2078	/* 4084c522 2078 */
-	.short	0x028a	/* 4084c524 028a */
-	.short	0x216e	/* 4084c526 216e */
-	.short	0xfffc	/* 4084c528 fffc */
-	.short	0x0024	/* 4084c52a 0024 */
-	.short	0x2078	/* 4084c52c 2078 */
-	.short	0x028a	/* 4084c52e 028a */
-	.short	0xdd68	/* 4084c530 dd68 */
-	.short	0x0012	/* 4084c532 0012 */
-	.short	0x200b	/* 4084c534 200b */
-	.short	0x6704	/* 4084c536 6704 */
-	.short	0x204b	/* 4084c538 204b */
-	.short	0xa01f	/* 4084c53a a01f */
+	linkw	%fp,#-4			/* 4084c4e0 4e56 fffc */
+	moveml	%d6-%d7/%a3-%a4,%sp@-	/* 4084c4e4 48e7 0318 */
+	movew	%fp@(10),%d6		/* 4084c4e8 3c2e 000a */
+	moveal	0x28a,%a4		/* 4084c4ec 2878 028a */
+	moveq	#72,%d7			/* 4084c4f0 7e48 */
+	mulsw	%a4@(18),%d7		/* 4084c4f2 cfec 0012 */
+	moveal	%a4@(36),%a3		/* 4084c4f6 266c 0024 */
+	extl	%d6			/* 4084c4fa 48c6 */
+	movel	%d6,%d1			/* 4084c4fc 2206 */
+	moveq	#72,%d0			/* 4084c4fe 7048 */
+	mulsl	%d0,%d1			/* 4084c500 4c00 1800 */
+	addl	%d7,%d1			/* 4084c504 d287 */
+	movel	%d1,%d0			/* 4084c506 2001 */
+	.short	0xa71e			/* 4084c508 a71e */
+	moveal	%a0,%a4			/* 4084c50a 2848 */
+	movel	%a4,%fp@(-4)		/* 4084c50c 2d4c fffc */
+	movel	%a4,%d0			/* 4084c510 200c */
+	bnes	loc_4084c51a		/* 4084c512 6606 */
+	movew	0x220,%d0		/* 4084c514 3038 0220 */
+	bras	loc_4084c53e		/* 4084c518 6024 */
+
+loc_4084c51a:
+	moveal	%a3,%a0			/* 4084c51a 204b */
+	moveal	%a4,%a1			/* 4084c51c 224c */
+	movel	%d7,%d0			/* 4084c51e 2007 */
+	.short	0xa02e			/* 4084c520 a02e */
+	moveal	0x28a,%a0		/* 4084c522 2078 028a */
+	movel	%fp@(-4),%a0@(36)	/* 4084c526 216e fffc 0024 */
+	moveal	0x28a,%a0		/* 4084c52c 2078 028a */
+	addw	%d6,%a0@(18)		/* 4084c530 dd68 0012 */
+	movel	%a3,%d0			/* 4084c534 200b */
+	beqs	loc_4084c53c		/* 4084c536 6704 */
+	moveal	%a3,%a0			/* 4084c538 204b */
+	.short	0xa01f			/* 4084c53a a01f */
+
+loc_4084c53c:
 	moveq	#0,%d0			/* 4084c53c 7000 */
-	.short	0x4cee	/* 4084c53e 4cee */
-	.short	0x18c0	/* 4084c540 18c0 */
-	.short	0xffec	/* 4084c542 ffec */
-	.short	0x4e5e	/* 4084c544 4e5e */
+
+loc_4084c53e:
+	moveml	%fp@(-20),%d6-%d7/%a3-%a4	/* 4084c53e 4cee 18c0 ffec */
+	unlk	%fp			/* 4084c544 4e5e */
 	rts				/* 4084c546 4e75 */
+
 	.short	0x2278	/* 4084c548 2278 */
 	.short	0x2020	/* 4084c54a 2020 */
 	.short	0x2269	/* 4084c54c 2269 */
 	.short	0x0018	/* 4084c54e 0018 */
 	jmp	%a1@			/* 4084c550 4ed1 */
-	.short	0x0000	/* 4084c552 0000 */
-	.short	0x0000	/* 4084c554 0000 */
-	.short	0x0000	/* 4084c556 0000 */
-	.short	0x0000	/* 4084c558 0000 */
-	.short	0x0000	/* 4084c55a 0000 */
-	.short	0x0000	/* 4084c55c 0000 */
-	.short	0x0000	/* 4084c55e 0000 */
+
+	.align	16
 
 __v__AddComponentResFile:
 	.short	0x4e56	/* 4084c560 4e56 */
