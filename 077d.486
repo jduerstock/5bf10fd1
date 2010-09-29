@@ -366,15 +366,16 @@ off_409e626a:
 	movel	%a3@,%a2@(8)		/* 409e63a2 2553 0008 */
 	braw	.L409e6286		/* 409e63a6 6000 fede */
 
-	.short	0x7200	/* 409e63aa 7200 */
-	.short	0xe9eb	/* 409e63ac e9eb */
-	.short	0x0841	/* 409e63ae 0841 */
-	.short	0x001c	/* 409e63b0 001c */
-	.short	0x1480	/* 409e63b2 1480 */
-	.short	0x6000	/* 409e63b4 6000 */
-	.short	0xfed0	/* 409e63b6 fed0 */
-	.short	0x7201	/* 409e63b8 7201 */
-	.short	0x60f0	/* 409e63ba 60f0 */
+	moveq	#0,%d1			/* 409e63aa 7200 */
+
+.L409e63ac:
+	bfextu	%a3@(28),%d1,1,%d0	/* 409e63ac e9eb 0841 001c */
+	moveb	%d0,%a2@		/* 409e63b2 1480 */
+	braw	.L409e6286		/* 409e63b4 6000 fed0 */
+
+	moveq	#1,%d1			/* 409e63b8 7201 */
+	bras	.L409e63ac		/* 409e63ba 60f0 */
+
 	.short	0x24ab	/* 409e63bc 24ab */
 	.short	0x0008	/* 409e63be 0008 */
 	.short	0x6000	/* 409e63c0 6000 */
@@ -931,53 +932,52 @@ sub_409e668a:
 	braw	.L409e6882		/* 409e6922 6000 ff5e */
 
 sub_409e6926:
-	.short	0x48e7	/* 409e6926 48e7 */
-	.short	0xfc60	/* 409e6928 fc60 */
-	.short	0x2453	/* 409e692a 2453 */
-	.short	0x226b	/* 409e692c 226b */
-	.short	0x0010	/* 409e692e 0010 */
-	.short	0x3829	/* 409e6930 3829 */
-	.short	0x0028	/* 409e6932 0028 */
-	.short	0x1429	/* 409e6934 1429 */
-	.short	0x000d	/* 409e6936 000d */
-	.short	0x43e9	/* 409e6938 43e9 */
-	.short	0x002a	/* 409e693a 002a */
-	.short	0x303c	/* 409e693c 303c */
-	.short	0x001e	/* 409e693e 001e */
-	.short	0xc0c1	/* 409e6940 c0c1 */
-	.short	0xd3c0	/* 409e6942 d3c0 */
-	.short	0x3629	/* 409e6944 3629 */
-	.short	0x0004	/* 409e6946 0004 */
-	.short	0x4a02	/* 409e6948 4a02 */
-	.short	0x6604	/* 409e694a 6604 */
-	.short	0xe74b	/* 409e694c e74b */
-	.short	0x6002	/* 409e694e 6002 */
-	.short	0xe54b	/* 409e6950 e54b */
-	.short	0x0c01	/* 409e6952 0c01 */
-	.short	0x0005	/* 409e6954 0005 */
-	.short	0x6602	/* 409e6956 6602 */
-	.short	0xe24b	/* 409e6958 e24b */
-	.short	0x5343	/* 409e695a 5343 */
-	.short	0x43fa	/* 409e695c 43fa */
-	.short	0xe1c6	/* 409e695e e1c6 */
-	.short	0x2431	/* 409e6960 2431 */
-	.short	0x1400	/* 409e6962 1400 */
-	.short	0x3a03	/* 409e6964 3a03 */
-	.short	0x24c2	/* 409e6966 24c2 */
-	.short	0x0c01	/* 409e6968 0c01 */
-	.short	0x0005	/* 409e696a 0005 */
-	.short	0x6606	/* 409e696c 6606 */
-	.short	0x4682	/* 409e696e 4682 */
-	.short	0x24c2	/* 409e6970 24c2 */
-	.short	0x4682	/* 409e6972 4682 */
-	.short	0x51cd	/* 409e6974 51cd */
-	.short	0xfff0	/* 409e6976 fff0 */
-	.short	0x4682	/* 409e6978 4682 */
-	.short	0x51cc	/* 409e697a 51cc */
-	.short	0xffe8	/* 409e697c ffe8 */
-	.short	0x4cdf	/* 409e697e 4cdf */
-	.short	0x063f	/* 409e6980 063f */
+	moveml	%d0-%d5/%a1-%a2,%sp@-	/* 409e6926 48e7 fc60 */
+	moveal	%a3@,%a2		/* 409e692a 2453 */
+	moveal	%a3@(16),%a1		/* 409e692c 226b 0010 */
+	movew	%a1@(40),%d4		/* 409e6930 3829 0028 */
+	moveb	%a1@(13),%d2		/* 409e6934 1429 000d */
+	lea	%a1@(42),%a1		/* 409e6938 43e9 002a */
+	movew	#30,%d0			/* 409e693c 303c 001e */
+	muluw	%d1,%d0			/* 409e6940 c0c1 */
+	addal	%d0,%a1			/* 409e6942 d3c0 */
+	movew	%a1@(4),%d3		/* 409e6944 3629 0004 */
+	tstb	%d2			/* 409e6948 4a02 */
+	bnes	loc_409e6950		/* 409e694a 6604 */
+	lslw	#3,%d3			/* 409e694c e74b */
+	bras	loc_409e6952		/* 409e694e 6002 */
+
+loc_409e6950:
+	lslw	#2,%d3			/* 409e6950 e54b */
+
+loc_409e6952:
+	cmpib	#5,%d1			/* 409e6952 0c01 0005 */
+	bnes	loc_409e695a		/* 409e6956 6602 */
+	lsrw	#1,%d3			/* 409e6958 e24b */
+
+loc_409e695a:
+	subqw	#1,%d3			/* 409e695a 5343 */
+	lea	%pc@(byte_409e4b24),%a1	/* 409e695c 43fa e1c6 */
+	movel	%a1@(%d1:w:4),%d2	/* 409e6960 2431 1400 */
+
+.L409e6964:
+	movew	%d3,%d5			/* 409e6964 3a03 */
+
+.L409e6966:
+	movel	%d2,%a2@+		/* 409e6966 24c2 */
+	cmpib	#5,%d1			/* 409e6968 0c01 0005 */
+	bnes	loc_409e6974		/* 409e696c 6606 */
+	notl	%d2			/* 409e696e 4682 */
+	movel	%d2,%a2@+		/* 409e6970 24c2 */
+	notl	%d2			/* 409e6972 4682 */
+
+loc_409e6974:
+	dbf	%d5,.L409e6966		/* 409e6974 51cd fff0 */
+	notl	%d2			/* 409e6978 4682 */
+	dbf	%d4,.L409e6964		/* 409e697a 51cc ffe8 */
+	moveml	%sp@+,%d0-%d5/%a1-%a2	/* 409e697e 4cdf 063f */
 	rts				/* 409e6982 4e75 */
+
 	.short	0x48e7	/* 409e6984 48e7 */
 	.short	0xfc60	/* 409e6986 fc60 */
 	.short	0x2453	/* 409e6988 2453 */
