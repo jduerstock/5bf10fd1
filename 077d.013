@@ -390,7 +390,7 @@ sub_4080d380:
 	.align	16
 
 DOCKINGDISPATCH:
-	moveal	0x1ff8,%a0		/* 4080d390 2078 1ff8 */
+	moveal	DockingGlobals,%a0	/* 4080d390 2078 1ff8 */
 	moveal	%a0@,%a1		/* 4080d394 2250 */
 	cmpil	#1936486260,%sp@(8)	/* 4080d396 0caf 736c 6f74 0008 */
 	bnes	loc_4080d3ac		/* 4080d39e 660c */
@@ -409,7 +409,7 @@ sub_4080d3ae:
 	moveq	#0,%d0			/* 4080d3b2 7000 */
 	cmpil	#1935893283,%sp@+	/* 4080d3b4 0c9f 7363 6323 */
 	bnes	loc_4080d3c4		/* 4080d3ba 6608 */
-	moveal	0x1ff8,%a0		/* 4080d3bc 2078 1ff8 */
+	moveal	DockingGlobals,%a0	/* 4080d3bc 2078 1ff8 */
 	movel	%a0@(148),%d0		/* 4080d3c0 2028 0094 */
 
 loc_4080d3c4:
@@ -421,7 +421,7 @@ sub_4080d3c8:
 	addqw	#4,%sp			/* 4080d3ca 584f */
 	movel	%sp@+,%d1		/* 4080d3cc 221f */
 	moveq	#0,%d0			/* 4080d3ce 7000 */
-	moveal	0x1ff8,%a0		/* 4080d3d0 2078 1ff8 */
+	moveal	DockingGlobals,%a0	/* 4080d3d0 2078 1ff8 */
 	cmpil	#1935893283,%d1		/* 4080d3d4 0c81 7363 6323 */
 	bnes	loc_4080d3e2		/* 4080d3da 6606 */
 	movel	%a0@(148),%d0		/* 4080d3dc 2028 0094 */
@@ -484,7 +484,7 @@ loc_4080d45a:
 	addl	%d0,%d0			/* 4080d46e d080 */
 	_NewPtrSysClear			/* 4080d470 a71e */
 	bnew	loc_4080d4fa		/* 4080d472 6600 0086 */
-	movel	%a0,0x1ff8		/* 4080d476 21c8 1ff8 */
+	movel	%a0,DockingGlobals	/* 4080d476 21c8 1ff8 */
 	moveal	%a0,%a2			/* 4080d47a 2448 */
 	lea	%pc@(sub_4080d3ae),%a1	/* 4080d47c 43fa ff30 */
 	movel	%a1,%a0@+		/* 4080d480 20c9 */
@@ -554,7 +554,7 @@ SETUPDOCKBASES:
 	bsrs	sub_4080d532		/* 4080d508 6128 */
 	beqw	locret_4080d6d4		/* 4080d50a 6700 01c8 */
 	movel	%a2,%sp@-		/* 4080d50e 2f0a */
-	moveal	0x1ff8,%a2		/* 4080d510 2478 1ff8 */
+	moveal	DockingGlobals,%a2	/* 4080d510 2478 1ff8 */
 	bsrw	sub_4080d77c		/* 4080d514 6100 0266 */
 	moveal	%sp@+,%a2		/* 4080d518 245f */
 	movel	#1751414642,%d0		/* 4080d51a 203c 6864 7772 */
@@ -572,23 +572,23 @@ sub_4080d532:
 	cmpal	%a0,%a1			/* 4080d540 b3c8 */
 	rts				/* 4080d542 4e75 */
 
-	CallVector	0x1ff8 40	/* 4080d544 2f30 81e2 1ff8 00a0 */
+	CallVector	DockingGlobals 40	/* 4080d544 2f30 81e2 1ff8 00a0 */
 	rts				/* 4080d54c 4e75 */
 
 sub_4080d54e:
 	movel	%a1,%sp@-		/* 4080d54e 2f09 */
 	movel	#1936483696,%d0		/* 4080d550 203c 736c 6570 */
 	bsrw	sub_4080d7a4		/* 4080d556 6100 024c */
-	.short	0x2180,0x81e2,0x1ff8,0x005c	/* movel %d0,@(0x1ff8)@(0x5c) /* 4080d55a 2180 81e2 1ff8 005c */
+	.short	0x2180,0x81e2,DockingGlobals,0x005c /* movel %d0,([DockingGlobals],0x5c) /* 4080d55a 2180 81e2 1ff8 005c */
 	moveal	%sp@+,%a1		/* 4080d562 225f */
 	jmp	%a1@			/* 4080d564 4ed1 */
 
-	CallVector	0x1ff8 41	/* 4080d566 2f30 81e2 1ff8 00a4 */
+	CallVector	DockingGlobals 41	/* 4080d566 2f30 81e2 1ff8 00a4 */
 	rts				/* 4080d56e 4e75 */
 
 sub_4080d570:
 	moveml	%d3-%d4/%a1-%a2,%sp@-	/* 4080d570 48e7 1860 */
-	moveal	0x1ff8,%a2		/* 4080d574 2478 1ff8 */
+	moveal	DockingGlobals,%a2		/* 4080d574 2478 1ff8 */
 	bclr	#1,%a2@(5)		/* 4080d578 08aa 0001 0005 */
 	bnes	loc_4080d5b0		/* 4080d57e 6630 */
 	bsrw	sub_4080d714		/* 4080d580 6100 0192 */
@@ -675,7 +675,7 @@ sub_4080d638:
 	rts				/* 4080d64c 4e75 */
 
 sub_4080d64e:
-	CallVector	0x1ff8 43	/* 4080d64e 2f30 81e2 1ff8 00ac */
+	CallVector	DockingGlobals 43	/* 4080d64e 2f30 81e2 1ff8 00ac */
 	rts				/* 4080d656 4e75 */
 
 sub_4080d658:
@@ -1076,14 +1076,14 @@ sub_4080d9d2:
 	rts				/* 4080da0a 4e75 */
 
 DOCKINGSLEEPDENIED:
-	CallVector	0x1ff8 55	/* 4080da0c 2f30 81e2 1ff8 00dc */
+	CallVector	DockingGlobals 55	/* 4080da0c 2f30 81e2 1ff8 00dc */
 	rts				/* 4080da14 4e75 */
 
 sub_4080da16:
 	moveml	%d0-%d2/%a0-%a1,%sp@-	/* 4080da16 48e7 e0c0 */
 	bsrw	sub_4080d532		/* 4080da1a 6100 fb16 */
 	beqs	loc_4080da2c		/* 4080da1e 670c */
-	moveal	0x1ff8,%a0		/* 4080da20 2078 1ff8 */
+	moveal	DockingGlobals,%a0	/* 4080da20 2078 1ff8 */
 	lea	%a0@(56),%a0		/* 4080da24 41e8 0038 */
 	bsrw	sub_4080db24		/* 4080da28 6100 00fa */
 
@@ -1092,7 +1092,7 @@ loc_4080da2c:
 	rts				/* 4080da30 4e75 */
 
 sub_4080da32:
-	CallVector	0x1ff8 56	/* 4080da32 2f30 81e2 1ff8 00e0 */
+	CallVector	DockingGlobals 56	/* 4080da32 2f30 81e2 1ff8 00e0 */
 	rts				/* 4080da3a 4e75 */
 
 sub_4080da3c:
@@ -1101,7 +1101,7 @@ sub_4080da3c:
 	beqs	loc_4080da62		/* 4080da44 671c */
 	movel	#1701471092,%d0		/* 4080da46 203c 656a 6374 */
 	bsrw	sub_4080d7a4		/* 4080da4c 6100 fd56 */
-	moveal	0x1ff8,%a0		/* 4080da50 2078 1ff8 */
+	moveal	DockingGlobals,%a0	/* 4080da50 2078 1ff8 */
 	bset	#1,%a0@(5)		/* 4080da54 08e8 0001 0005 */
 	lea	%a0@(96),%a0		/* 4080da5a 41e8 0060 */
 	bsrw	sub_4080db24		/* 4080da5e 6100 00c4 */
@@ -1117,7 +1117,7 @@ sub_4080da68:
 	bras	sub_4080da8c		/* 4080da78 6012 */
 
 sub_4080da7a:
-	moveal	0x1ff8,%a1		/* 4080da7a 2278 1ff8 */
+	moveal	DockingGlobals,%a1	/* 4080da7a 2278 1ff8 */
 	clrb	%a1@(53)		/* 4080da7e 4229 0035 */
 	movel	#1701475191,%d0		/* 4080da82 203c 656a 7377 */
 	bsrw	sub_4080d7a4		/* 4080da88 6100 fd1a */
@@ -1138,7 +1138,7 @@ sub_4080da98:
 	_GetToolboxTrapAddress		/* 4080daa6 a746 */
 	cmpal	%a0,%a1			/* 4080daa8 b3c8 */
 	beqs	loc_4080dac6		/* 4080daaa 671a */
-	moveal	0x1ff8,%a2		/* 4080daac 2478 1ff8 */
+	moveal	DockingGlobals,%a2	/* 4080daac 2478 1ff8 */
 	movel	%a0,%a2@(140)		/* 4080dab0 2548 008c */
 	lea	%pc@(sub_4080db3a),%a0	/* 4080dab4 41fa 0084 */
 	movew	#0xabf7,%d0		/* 4080dab8 303c abf7 */
@@ -1154,7 +1154,7 @@ sub_4080dac8:
 	moveal	0xd18,%a1		/* 4080dace 2278 0d18 */
 	tstb	%a1@(125)		/* 4080dad2 4a29 007d */
 	beqs	loc_4080db38		/* 4080dad6 6760 */
-	moveal	0x1ff8,%a2		/* 4080dad8 2478 1ff8 */
+	moveal	DockingGlobals,%a2	/* 4080dad8 2478 1ff8 */
 	tstb	%a2@(53)		/* 4080dadc 4a2a 0035 */
 	bmis	loc_4080db38		/* 4080dae0 6b56 */
 	movel	#1701475191,%d0		/* 4080dae2 203c 656a 7377 */
@@ -1191,7 +1191,7 @@ loc_4080db38:
 	rts				/* 4080db38 4e75 */
 
 sub_4080db3a:
-	moveal	0x1ff8,%a1		/* 4080db3a 2278 1ff8 */
+	moveal	DockingGlobals,%a1	/* 4080db3a 2278 1ff8 */
 	tstb	%a1@(53)		/* 4080db3e 4a29 0035 */
 	bpls	loc_4080db72		/* 4080db42 6a2e */
 	tstb	%a1@(52)		/* 4080db44 4a29 0034 */
