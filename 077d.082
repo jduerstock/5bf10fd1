@@ -429,13 +429,13 @@ loc_4085243c:
 	extbl	%d0			/* 40852448 49c0 */
 	movel	%d0,%d7			/* 4085244a 2e00 */
 	addl	%d6,%d7			/* 4085244c de86 */
-	cmpl	%a4@(0x0000,%d7:l:8),%d4	/* 4085244e b8b4 7e00 */
+	cmpl	%a4@(%d7:l:8),%d4	/* 4085244e b8b4 7e00 */
 	bccs	loc_40852458		/* 40852452 6404 */
 	movel	%d7,%d5			/* 40852454 2a07 */
 	bras	loc_4085246a		/* 40852456 6012 */
 
 loc_40852458:
-	cmpl	%a4@(0x0000,%d7:l:8),%d4	/* 40852458 b8b4 7e00 */
+	cmpl	%a4@(%d7:l:8),%d4	/* 40852458 b8b4 7e00 */
 	blss	loc_40852464		/* 4085245c 6306 */
 	movel	%d7,%d6			/* 4085245e 2c07 */
 	addql	#1,%d6			/* 40852460 5286 */
@@ -700,22 +700,16 @@ __v__GetGlobalHandle:
 	.align	16
 
 __v__FromResource:
-	.short	0x302f	/* 408526a0 302f */
-	.short	0x000a	/* 408526a2 000a */
-	.short	0x222f	/* 408526a4 222f */
-	.short	0x0004	/* 408526a6 0004 */
-	.short	0x594f	/* 408526a8 594f */
-	.short	0xe540	/* 408526aa e540 */
-	.short	0x43fa	/* 408526ac 43fa */
-	.short	0xff82	/* 408526ae ff82 */
-	.short	0x2f31	/* 408526b0 2f31 */
-	.short	0x0000	/* 408526b2 0000 */
-	.short	0x3f01	/* 408526b4 3f01 */
-	.short	0x31fc	/* 408526b6 31fc */
-	.short	0xffff	/* 408526b8 ffff */
-	.short	0x0b9e	/* 408526ba 0b9e */
-	.short	0xa9a0	/* 408526bc a9a0 */
-	.short	0x201f	/* 408526be 201f */
+	movew	%sp@(10),%d0		/* 408526a0 302f 000a */
+	movel	%sp@(4),%d1		/* 408526a4 222f 0004 */
+	subqw	#4,%sp			/* 408526a8 594f */
+	aslw	#2,%d0			/* 408526aa e540 */
+	lea	%pc@(byte_40852630),%a1	/* 408526ac 43fa ff82 */
+	movel	%a1@(%d0:w),%sp@-	/* 408526b0 2f31 0000 */
+	movew	%d1,%sp@-		/* 408526b4 3f01 */
+	movew	#-1,0xb9e		/* 408526b6 31fc ffff 0b9e */
+	.short	0xa9a0			/* 408526bc a9a0 */
+	movel	%sp@+,%d0		/* 408526be 201f */
 	rts				/* 408526c0 4e75 */
 
 	CallVector	0x2038 3	/* 408526c2 2f30 81e2 2038 000c */
