@@ -712,47 +712,46 @@ __v__FromResource:
 	movel	%sp@+,%d0		/* 408526be 201f */
 	rts				/* 408526c0 4e75 */
 
+sub_408526c2:
 	CallVector	0x2038 3	/* 408526c2 2f30 81e2 2038 000c */
 	rts				/* 408526ca 4e75 */
 
 	.align	16
 
 __v____PLOTICONID:
-	.short	0x7200	/* 408526d0 7200 */
-	.short	0x205f	/* 408526d2 205f */
-	.short	0x301f	/* 408526d4 301f */
-	.short	0x48c0	/* 408526d6 48c0 */
-	.short	0x2f00	/* 408526d8 2f00 */
-	.short	0x487a	/* 408526da 487a */
-	.short	0xffe6	/* 408526dc ffe6 */
-	.short	0x6026	/* 408526de 6026 */
+	moveq	#0,%d1			/* 408526d0 7200 */
+	moveal	%sp@+,%a0		/* 408526d2 205f */
+	movew	%sp@+,%d0		/* 408526d4 301f */
+	extl	%d0			/* 408526d6 48c0 */
+	movel	%d0,%sp@-		/* 408526d8 2f00 */
+	pea	%pc@(sub_408526c2)	/* 408526da 487a ffe6 */
+	bras	loc_40852706		/* 408526de 6026 */
 
 __v____LOADICONCACHE:
-	.short	0x7201	/* 408526e0 7201 */
-	.short	0x601c	/* 408526e2 601c */
+	moveq	#1,%d1			/* 408526e0 7201 */
+	bras	loc_40852700		/* 408526e2 601c */
 
 __v____PLOTICONSUITE:
-	.short	0x322f	/* 408526e4 322f */
-	.short	0x0008	/* 408526e6 0008 */
-	.short	0x0241	/* 408526e8 0241 */
-	.short	0x0f00	/* 408526ea 0f00 */
-	.short	0x6610	/* 408526ec 6610 */
-	.short	0x206f	/* 408526ee 206f */
-	.short	0x0004	/* 408526f0 0004 */
-	.short	0x2050	/* 408526f2 2050 */
-	.short	0x3028	/* 408526f4 3028 */
-	.short	0x0002	/* 408526f6 0002 */
-	.short	0x6704	/* 408526f8 6704 */
-	.short	0x816f	/* 408526fa 816f */
-	.short	0x0008	/* 408526fc 0008 */
-	.short	0x7200	/* 408526fe 7200 */
-	.short	0x205f	/* 40852700 205f */
-	.short	0x487a	/* 40852702 487a */
-	.short	0x0b0a	/* 40852704 0b0a */
-	.short	0x3f01	/* 40852706 3f01 */
-	.short	0x2f08	/* 40852708 2f08 */
-	.short	0x4efa	/* 4085270a 4efa */
-	.short	0x18d6	/* 4085270c 18d6 */
+	movew	%sp@(8),%d1		/* 408526e4 322f 0008 */
+	andiw	#3840,%d1		/* 408526e8 0241 0f00 */
+	bnes	loc_408526fe		/* 408526ec 6610 */
+	moveal	%sp@(4),%a0		/* 408526ee 206f 0004 */
+	moveal	%a0@,%a0		/* 408526f2 2050 */
+	movew	%a0@(2),%d0		/* 408526f4 3028 0002 */
+	beqs	loc_408526fe		/* 408526f8 6704 */
+	orw	%d0,%sp@(8)		/* 408526fa 816f 0008 */
+
+loc_408526fe:
+	moveq	#0,%d1			/* 408526fe 7200 */
+
+loc_40852700:
+	moveal	%sp@+,%a0		/* 40852700 205f */
+	pea	%pc@(sub_4085320e)	/* 40852702 487a 0b0a */
+
+loc_40852706:
+	movew	%d1,%sp@-		/* 40852706 3f01 */
+	movel	%a0,%sp@-		/* 40852708 2f08 */
+	jmp	%pc@(sub_40853fe2)	/* 4085270a 4efa 18d6 */
 
 __LOADICONCACHE:
 	CallVector	0x2038 5	/* 4085270e 2f30 81e2 2038 0014 */
