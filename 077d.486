@@ -350,30 +350,22 @@ off_409e626a:
 	moveml	%sp@+,%d4-%d7		/* 409e6372 4cdf 00f0 */
 	braw	.L409e6286		/* 409e6376 6000 ff0e */
 
-	.short	0x4a9f	/* 409e637a 4a9f */
-	.short	0x4cdf	/* 409e637c 4cdf */
-	.short	0x00f0	/* 409e637e 00f0 */
-	.short	0x6000	/* 409e6380 6000 */
-	.short	0xff00	/* 409e6382 ff00 */
-	.short	0x3212	/* 409e6384 3212 */
-	.short	0x3401	/* 409e6386 3401 */
-	.short	0x6100	/* 409e6388 6100 */
-	.short	0x02a8	/* 409e638a 02a8 */
-	.short	0x6600	/* 409e638c 6600 */
-	.short	0xfef4	/* 409e638e fef4 */
-	.short	0x357c	/* 409e6390 357c */
-	.short	0x0001	/* 409e6392 0001 */
-	.short	0x0006	/* 409e6394 0006 */
-	.short	0x6000	/* 409e6396 6000 */
-	.short	0xfeee	/* 409e6398 feee */
-	.short	0x4a6a	/* 409e639a 4a6a */
-	.short	0x0006	/* 409e639c 0006 */
-	.short	0x6600	/* 409e639e 6600 */
-	.short	0xfee2	/* 409e63a0 fee2 */
-	.short	0x2553	/* 409e63a2 2553 */
-	.short	0x0008	/* 409e63a4 0008 */
-	.short	0x6000	/* 409e63a6 6000 */
-	.short	0xfede	/* 409e63a8 fede */
+	tstl	%sp@+			/* 409e637a 4a9f */
+	moveml	%sp@+,%d4-%d7		/* 409e637c 4cdf 00f0 */
+	braw	.L409e6282		/* 409e6380 6000 ff00 */
+
+	movew	%a2@,%d1		/* 409e6384 3212 */
+	movew	%d1,%d2			/* 409e6386 3401 */
+	bsrw	sub_409e6632		/* 409e6388 6100 02a8 */
+	bnew	.L409e6282		/* 409e638c 6600 fef4 */
+	movew	#1,%a2@(6)		/* 409e6390 357c 0001 0006 */
+	braw	.L409e6286		/* 409e6396 6000 feee */
+
+	tstw	%a2@(6)			/* 409e639a 4a6a 0006 */
+	bnew	.L409e6282		/* 409e639e 6600 fee2 */
+	movel	%a3@,%a2@(8)		/* 409e63a2 2553 0008 */
+	braw	.L409e6286		/* 409e63a6 6000 fede */
+
 	.short	0x7200	/* 409e63aa 7200 */
 	.short	0xe9eb	/* 409e63ac e9eb */
 	.short	0x0841	/* 409e63ae 0841 */
