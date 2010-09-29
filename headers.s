@@ -520,6 +520,10 @@
 		.short	0xa99a
 	.endm
 
+	.macro	_SetResLoad
+		.short	0xa99b
+	.endm
+
 	.macro	_GetResource
 		.short	0xa9a0
 	.endm
