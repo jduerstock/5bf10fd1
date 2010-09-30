@@ -642,3 +642,4 @@
 	.equ	JSwapMMU, 0x0dbc
 	.equ	LaunchFlag, 0x0902
 	.equ	SInfoPtr, 0x0cbc
+	.equ	DockingGlobals, 0x1ff8
