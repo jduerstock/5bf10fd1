@@ -125,7 +125,7 @@ CLOSE:
 loc_4080d11e:
 	moveml	%d3-%d5/%a2-%a4,%sp@-	/* 4080d11e 48e7 1c38 */
 	movel	%a0,%d5			/* 4080d122 2a08 */
-	bsrw	sub_4080cd0e		/* 4080d124 6100 fbe8 */
+	bsrw	MapUnit			/* 4080d124 6100 fbe8 */
 	btst	#5,%a1@(5)		/* 4080d128 0829 0005 0005 */
 	beqs	loc_4080d110		/* 4080d12e 67e0 */
 	movel	0x6d8,%sp@-		/* 4080d130 2f38 06d8 */
@@ -173,7 +173,7 @@ loc_4080d19a:
 
 loc_4080d1a2:
 	movel	%a0,%d5			/* 4080d1a2 2a08 */
-	bsrw	sub_4080cd0e		/* 4080d1a4 6100 fb68 */
+	bsrw	MapUnit			/* 4080d1a4 6100 fb68 */
 	cmpib	#3,%d1			/* 4080d1a8 0c01 0003 */
 	bgts	loc_4080d1b2		/* 4080d1ac 6e04 */
 	clrl	%a0@(40)		/* 4080d1ae 42a8 0028 */
@@ -208,7 +208,7 @@ loc_4080d200:
 	movew	%d0,%a0@(16)		/* 4080d200 3140 0010 */
 	rts				/* 4080d204 4e75 */
 
-sub_4080d206:
+WRITE:
 	btst	#0,0xdd5		/* 4080d206 0838 0000 0dd5 */
 	beqs	loc_4080d210		/* 4080d20c 6702 */
 	_IdleUpdate			/* 4080d20e a285 */
@@ -224,14 +224,14 @@ loc_4080d21a:
 	moveq	#1,%d4			/* 4080d220 7801 */
 	braw	loc_4080d1a2		/* 4080d222 6000 ff7e */
 
-sub_4080d226:
+CONTROLTRAP:
 	moveml	%d3-%d5/%a2-%a4,%sp@-	/* 4080d226 48e7 1c38 */
 	movew	%a0@(24),%d2		/* 4080d22a 3428 0018 */
 	moveq	#-17,%d0		/* 4080d22e 70ef */
 	moveq	#2,%d4			/* 4080d230 7802 */
 	braw	loc_4080d1a2		/* 4080d232 6000 ff6e */
 
-sub_4080d236:
+STATUSTRAP:
 	moveml	%d3-%d5/%a2-%a4,%sp@-	/* 4080d236 48e7 1c38 */
 	movew	%a0@(24),%d2		/* 4080d23a 3428 0018 */
 	movel	%a0,%d5			/* 4080d23e 2a08 */
@@ -242,15 +242,15 @@ sub_4080d236:
 	braw	loc_4080d1a2		/* 4080d24c 6000 ff54 */
 
 loc_4080d250:
-	bsrw	sub_4080cd0e		/* 4080d250 6100 fabc */
+	bsrw	MapUnit			/* 4080d250 6100 fabc */
 	movel	%a2,%a0@(28)		/* 4080d254 214a 001c */
 	braw	loc_4080d110		/* 4080d258 6000 feb6 */
 
-sub_4080d25c:
+KILLIOTRAP:
 	moveml	%d3-%d5/%a2-%a4,%sp@-	/* 4080d25c 48e7 1c38 */
 	movew	%a0@(24),%d2		/* 4080d260 3428 0018 */
 	movel	%a0,%d5			/* 4080d264 2a08 */
-	bsrw	sub_4080cd0e		/* 4080d266 6100 faa6 */
+	bsrw	MapUnit			/* 4080d266 6100 faa6 */
 	movew	#1,%a0@(26)		/* 4080d26a 317c 0001 001a */
 	movew	%sr,%sp@-		/* 4080d270 40e7 */
 	oriw	#1792,%sr		/* 4080d272 007c 0700 */
