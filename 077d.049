@@ -134,41 +134,27 @@ DTREMOVECOMMENT:
 	.align	16
 
 __v__DTFLUSH:
-	.short	0x4eba	/* 40831170 4eba */
-	.short	0xb2a0	/* 40831172 b2a0 */
-	.short	0x6100	/* 40831174 6100 */
-	.short	0xf14a	/* 40831176 f14a */
-	.short	0x6100	/* 40831178 6100 */
-	.short	0xf0a6	/* 4083117a f0a6 */
-	.short	0x48e6	/* 4083117c 48e6 */
-	.short	0x0098	/* 4083117e 0098 */
-	.short	0x9cfc	/* 40831180 9cfc */
-	.short	0x00c8	/* 40831182 00c8 */
-	.short	0x2848	/* 40831184 2848 */
-	.short	0x6100	/* 40831186 6100 */
-	.short	0xf228	/* 40831188 f228 */
-	.short	0x661e	/* 4083118a 661e */
-	.short	0x41d6	/* 4083118c 41d6 */
-	.short	0x316b	/* 4083118e 316b */
-	.short	0x0008	/* 40831190 0008 */
-	.short	0x0018	/* 40831192 0018 */
-	.short	0x6100	/* 40831194 6100 */
-	.short	0xf020	/* 40831196 f020 */
-	.short	0x6610	/* 40831198 6610 */
-	.short	0x41d6	/* 4083119a 41d6 */
-	.short	0x316b	/* 4083119c 316b */
-	.short	0x0010	/* 4083119e 0010 */
-	.short	0x0016	/* 408311a0 0016 */
-	.short	0x42a8	/* 408311a2 42a8 */
-	.short	0x0012	/* 408311a4 0012 */
-	.short	0x6100	/* 408311a6 6100 */
-	.short	0xef52	/* 408311a8 ef52 */
-	.short	0x4dee	/* 408311aa 4dee */
-	.short	0x00c8	/* 408311ac 00c8 */
-	.short	0x4cde	/* 408311ae 4cde */
-	.short	0x1900	/* 408311b0 1900 */
-	.short	0x6000	/* 408311b2 6000 */
-	.short	0xf07c	/* 408311b4 f07c */
+	jsr	%pc@(FSQUEUE)		/* 40831170 4eba b2a0 */
+	bsrw	DTRFNEXTFSCHECK		/* 40831174 6100 f14a */
+	bsrw	DESKMGRQUEUE		/* 40831178 6100 f0a6 */
+	moveml	%a0/%a3-%a4,%fp@-	/* 4083117c 48e6 0098 */
+	subaw	#200,%fp		/* 40831180 9cfc 00c8 */
+	moveal	%a0,%a4			/* 40831184 2848 */
+	bsrw	DTSETUP			/* 40831186 6100 f228 */
+	bnes	loc_408311aa		/* 4083118a 661e */
+	lea	%fp@,%a0		/* 4083118c 41d6 */
+	movew	%a3@(8),%a0@(24)	/* 4083118e 316b 0008 0018 */
+	bsrw	DOBTFLUSH		/* 40831194 6100 f020 */
+	bnes	loc_408311aa		/* 40831198 6610 */
+	lea	%fp@,%a0		/* 4083119a 41d6 */
+	movew	%a3@(16),%a0@(22)	/* 4083119c 316b 0010 0016 */
+	clrl	%a0@(18)		/* 408311a2 42a8 0012 */
+	bsrw	DOFLUSHVOL		/* 408311a6 6100 ef52 */
+
+loc_408311aa:
+	lea	%fp@(200),%fp		/* 408311aa 4dee 00c8 */
+	moveml	%fp@+,%a0/%a3-%a4	/* 408311ae 4cde 1900 */
+	braw	DTDONE			/* 408311b2 6000 f07c */
 
 DTFLUSH:
 	CallVector	0x2030 124	/* 408311b6 2f30 81e2 2030 01f0 */
