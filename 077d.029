@@ -212,15 +212,17 @@ sub_4081d126:
 
 sub_4081d1b2:
 	moveq	#0,%d0			/* 4081d1b2 7000 */
-	.short	0x082b	/* 4081d1b4 082b */
-	.short	0x0003	/* 4081d1b6 0003 */
-	.short	0x0050	/* 4081d1b8 0050 */
-	.short	0x6602	/* 4081d1ba 6602 */
-	.short	0x7005	/* 4081d1bc 7005 */
-	.short	0x4a40	/* 4081d1be 4a40 */
+	btst	#3,%a3@(80)		/* 4081d1b4 082b 0003 0050 */
+	bnes	loc_4081d1be		/* 4081d1ba 6602 */
+	moveq	#5,%d0			/* 4081d1bc 7005 */
+
+loc_4081d1be:
+	tstw	%d0			/* 4081d1be 4a40 */
 	rts				/* 4081d1c0 4e75 */
+
 	CallVector	0x205c 110	/* 4081d1c2 2f30 81e2 205c 01b8 */
 	rts				/* 4081d1ca 4e75 */
+
 	CallVector	0x205c 112	/* 4081d1cc 2f30 81e2 205c 01c0 */
 	rts				/* 4081d1d4 4e75 */
 
@@ -424,7 +426,7 @@ loc_4081d398:
 	bnes	loc_4081d3b2		/* 4081d3ac 6604 */
 
 loc_4081d3ae:
-	jmp	%pc@(SCSIMGR)	/* 4081d3ae 4efa f8c0 */
+	jmp	%pc@(SCSIMGR)		/* 4081d3ae 4efa f8c0 */
 
 loc_4081d3b2:
 	btst	#1,%a0@(0x0000,%d0:w)	/* 4081d3b2 0830 0001 0000 */
@@ -448,7 +450,7 @@ loc_4081d3da:
 	dbf	%d0,loc_4081d3da	/* 4081d3dc 51c8 fffc */
 	movel	%d1,%a1@+		/* 4081d3e0 22c1 */
 	movew	%sp@,%a1@		/* 4081d3e2 3297 */
-	jsr	%pc@(SCSIMGR)	/* 4081d3e4 4eba f88a */
+	jsr	%pc@(SCSIMGR)		/* 4081d3e4 4eba f88a */
 	movew	%sp@(6),%d0		/* 4081d3e8 302f 0006 */
 	movew	%sp@+,%sp@(4)		/* 4081d3ec 3f5f 0004 */
 	lea	%pc@(word_4081d49e),%a0	/* 4081d3f0 41fa 00ac */
@@ -514,29 +516,29 @@ loc_4081d476:
 	jmp	%a0@			/* 4081d480 4ed0 */
 
 word_4081d482:
-	.short	0x0001	/* 4081d482 0001 */
-	.short	0x0001	/* 4081d484 0001 */
-	.short	0x0002	/* 4081d486 0002 */
-	.short	0x0004	/* 4081d488 0004 */
-	.short	0x0007	/* 4081d48a 0007 */
-	.short	0x0003	/* 4081d48c 0003 */
-	.short	0x0003	/* 4081d48e 0003 */
-	.short	0x0001	/* 4081d490 0001 */
-	.short	0x0003	/* 4081d492 0003 */
-	.short	0x0003	/* 4081d494 0003 */
-	.short	0x0001	/* 4081d496 0001 */
-	.short	0x0002	/* 4081d498 0002 */
-	.short	0x0003	/* 4081d49a 0003 */
-	.short	0x0002	/* 4081d49c 0002 */
+	.short	0x0001			/* 4081d482 0001 */
+	.short	0x0001			/* 4081d484 0001 */
+	.short	0x0002			/* 4081d486 0002 */
+	.short	0x0004			/* 4081d488 0004 */
+	.short	0x0007			/* 4081d48a 0007 */
+	.short	0x0003			/* 4081d48c 0003 */
+	.short	0x0003			/* 4081d48e 0003 */
+	.short	0x0001			/* 4081d490 0001 */
+	.short	0x0003			/* 4081d492 0003 */
+	.short	0x0003			/* 4081d494 0003 */
+	.short	0x0001			/* 4081d496 0001 */
+	.short	0x0002			/* 4081d498 0002 */
+	.short	0x0003			/* 4081d49a 0003 */
+	.short	0x0002			/* 4081d49c 0002 */
 
 word_4081d49e:
-	.short	0x050a	/* 4081d49e 050a */
-	.short	0x0900	/* 4081d4a0 0900 */
-	.short	0x0500	/* 4081d4a2 0500 */
-	.short	0x0000	/* 4081d4a4 0000 */
-	.short	0x0000	/* 4081d4a6 0000 */
-	.short	0x0009	/* 4081d4a8 0009 */
-	.short	0x0000	/* 4081d4aa 0000 */
+	.short	0x050a			/* 4081d49e 050a */
+	.short	0x0900			/* 4081d4a0 0900 */
+	.short	0x0500			/* 4081d4a2 0500 */
+	.short	0x0000			/* 4081d4a4 0000 */
+	.short	0x0000			/* 4081d4a6 0000 */
+	.short	0x0009			/* 4081d4a8 0009 */
+	.short	0x0000			/* 4081d4aa 0000 */
 
 	CallVector	0x205c 2	/* 4081d4ac 2f30 81e2 205c 0008 */
 	rts				/* 4081d4b4 4e75 */
@@ -658,9 +660,10 @@ HALaction:
 
 	.align	16
 
-	.short	0x4e71	/* 4081d5f0 4e71 */
-	.short	0x700e	/* 4081d5f2 700e */
-	.short	0xa9c9	/* 4081d5f4 a9c9 */
+	nop				/* 4081d5f0 4e71 */
+	moveq	#14,%d0			/* 4081d5f2 700e */
+	_SysError			/* 4081d5f4 a9c9 */
+
 	rts				/* 4081d5f6 4e75 */
 
 __v__DoInitiate:
