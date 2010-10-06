@@ -235,8 +235,18 @@
 		.short	0xa06e
 	.endm
 
+	.macro	_SCalcStep
+		moveq	#40,%d0
+		.short	0xa06e
+	.endm
+
 	.macro	_SUpdateSRT
 		moveq	#43,%d0
+		.short	0xa06e
+	.endm
+
+	.macro	_SFindSInfoRecPtr
+		moveq	#47,%d0
 		.short	0xa06e
 	.endm
 
