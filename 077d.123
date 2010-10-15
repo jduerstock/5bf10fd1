@@ -338,38 +338,46 @@ INITOVAL:
 	.align	16
 
 __v__BUMPOVAL:
-	.short	0xb05b	/* 4087b3a0 b05b */
-	.short	0x6d3c	/* 4087b3a2 6d3c */
-	.short	0xb05b	/* 4087b3a4 b05b */
-	.short	0x6c38	/* 4087b3a6 6c38 */
-	.short	0x3013	/* 4087b3a8 3013 */
-	.short	0x545b	/* 4087b3aa 545b */
-	.short	0x4cd3	/* 4087b3ac 4cd3 */
-	.short	0x07fe	/* 4087b3ae 07fe */
-	.short	0x600c	/* 4087b3b0 600c */
-	.short	0xd3ca	/* 4087b3b2 d3ca */
-	.short	0x91ca	/* 4087b3b4 91ca */
-	.short	0xd685	/* 4087b3b6 d685 */
-	.short	0xd584	/* 4087b3b8 d584 */
-	.short	0xda87	/* 4087b3ba da87 */
-	.short	0xd986	/* 4087b3bc d986 */
-	.short	0xb481	/* 4087b3be b481 */
-	.short	0x6df0	/* 4087b3c0 6df0 */
-	.short	0x600c	/* 4087b3c2 600c */
-	.short	0x93ca	/* 4087b3c4 93ca */
-	.short	0xd1ca	/* 4087b3c6 d1ca */
-	.short	0x9a87	/* 4087b3c8 9a87 */
-	.short	0x9986	/* 4087b3ca 9986 */
-	.short	0x9685	/* 4087b3cc 9685 */
-	.short	0x9584	/* 4087b3ce 9584 */
-	.short	0xb481	/* 4087b3d0 b481 */
-	.short	0x6ef0	/* 4087b3d2 6ef0 */
-	.short	0x5240	/* 4087b3d4 5240 */
-	.short	0x48c0	/* 4087b3d6 48c0 */
-	.short	0xe580	/* 4087b3d8 e580 */
-	.short	0x9280	/* 4087b3da 9280 */
-	.short	0x48d3	/* 4087b3dc 48d3 */
-	.short	0x07fe	/* 4087b3de 07fe */
+	cmpw	%a3@+,%d0		/* 4087b3a0 b05b */
+	blts	loc_4087b3e0		/* 4087b3a2 6d3c */
+	cmpw	%a3@+,%d0		/* 4087b3a4 b05b */
+	bges	loc_4087b3e0		/* 4087b3a6 6c38 */
+	movew	%a3@,%d0		/* 4087b3a8 3013 */
+	addqw	#2,%a3@+		/* 4087b3aa 545b */
+	moveml	%a3@,%d1-%a2		/* 4087b3ac 4cd3 07fe */
+	bras	loc_4087b3be		/* 4087b3b0 600c */
+
+loc_4087b3b2:
+	addal	%a2,%a1			/* 4087b3b2 d3ca */
+	subal	%a2,%a0			/* 4087b3b4 91ca */
+	addl	%d5,%d3			/* 4087b3b6 d685 */
+	addxl	%d4,%d2			/* 4087b3b8 d584 */
+	addl	%d7,%d5			/* 4087b3ba da87 */
+	addxl	%d6,%d4			/* 4087b3bc d986 */
+
+loc_4087b3be:
+	cmpl	%d1,%d2			/* 4087b3be b481 */
+	blts	loc_4087b3b2		/* 4087b3c0 6df0 */
+	bras	loc_4087b3d0		/* 4087b3c2 600c */
+
+loc_4087b3c4:
+	subal	%a2,%a1			/* 4087b3c4 93ca */
+	addal	%a2,%a0			/* 4087b3c6 d1ca */
+	subl	%d7,%d5			/* 4087b3c8 9a87 */
+	subxl	%d6,%d4			/* 4087b3ca 9986 */
+	subl	%d5,%d3			/* 4087b3cc 9685 */
+	subxl	%d4,%d2			/* 4087b3ce 9584 */
+
+loc_4087b3d0:
+	cmpl	%d1,%d2			/* 4087b3d0 b481 */
+	bgts	loc_4087b3c4		/* 4087b3d2 6ef0 */
+	addqw	#1,%d0			/* 4087b3d4 5240 */
+	extl	%d0			/* 4087b3d6 48c0 */
+	asll	#2,%d0			/* 4087b3d8 e580 */
+	subl	%d0,%d1			/* 4087b3da 9280 */
+	moveml	%d1-%a2,%a3@		/* 4087b3dc 48d3 07fe */
+
+loc_4087b3e0:
 	rts				/* 4087b3e0 4e75 */
 
 BUMPOVAL:
