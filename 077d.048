@@ -134,18 +134,17 @@ loc_408300dc:
 	braw	loc_4082ffe2		/* 408300de 6000 ff02 */
 
 DOGETFCBINFO:
-	.short	0x2d1f	/* 408300e2 2d1f */
-	.short	0x6100	/* 408300e4 6100 */
-	.short	0xfe8a	/* 408300e6 fe8a */
-	.short	0x6608	/* 408300e8 6608 */
-	.short	0x7008	/* 408300ea 7008 */
-	.short	0xa260	/* 408300ec a260 */
-	.short	0x6000	/* 408300ee 6000 */
-	.short	0xfed4	/* 408300f0 fed4 */
-	.short	0x7008	/* 408300f2 7008 */
-	.short	0xa660	/* 408300f4 a660 */
-	.short	0x6000	/* 408300f6 6000 */
-	.short	0xfeea	/* 408300f8 feea */
+	movel	%sp@+,%fp@-		/* 408300e2 2d1f */
+	bsrw	__v__BOTTLENECKIO	/* 408300e4 6100 fe8a */
+	bnes	loc_408300f2		/* 408300e8 6608 */
+	moveq	#8,%d0			/* 408300ea 7008 */
+	.short	0xa260			/* 408300ec a260 */
+	braw	loc_4082ffc4		/* 408300ee 6000 fed4 */
+
+loc_408300f2:
+	moveq	#8,%d0			/* 408300f2 7008 */
+	.short	0xa660			/* 408300f4 a660 */
+	braw	loc_4082ffe2		/* 408300f6 6000 feea */
 
 DOFLUSHVOL:
 	.short	0x2d1f	/* 408300fa 2d1f */
