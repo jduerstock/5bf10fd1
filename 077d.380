@@ -676,17 +676,18 @@ loc_4097c5b0:
 
 sub_4097c5e8:
 	moveq	#0,%d0			/* 4097c5e8 7000 */
-	.short	0x1018	/* 4097c5ea 1018 */
-	.short	0x4840	/* 4097c5ec 4840 */
-	.short	0x1019	/* 4097c5ee 1019 */
-	.short	0x323c	/* 4097c5f0 323c */
-	.short	0xa03c	/* 4097c5f2 a03c */
-	.short	0x487a	/* 4097c5f4 487a */
-	.short	0x0008	/* 4097c5f6 0008 */
-	.short	0x2f2a	/* 4097c5f8 2f2a */
-	.short	0x0388	/* 4097c5fa 0388 */
+	moveb	%a0@+,%d0		/* 4097c5ea 1018 */
+	swap	%d0			/* 4097c5ec 4840 */
+	moveb	%a1@+,%d0		/* 4097c5ee 1019 */
+
+loc_4097c5f0:
+	movew	#0xa03c,%d1		/* 4097c5f0 323c a03c */
+	pea	%pc@(sub_4097c5fe)	/* 4097c5f4 487a 0008 */
+	movel	%a2@(904),%sp@-		/* 4097c5f8 2f2a 0388 */
 	rts				/* 4097c5fc 4e75 */
-	.short	0x4a40	/* 4097c5fe 4a40 */
+
+sub_4097c5fe:
+	tstw	%d0			/* 4097c5fe 4a40 */
 	rts				/* 4097c600 4e75 */
 
 sub_4097c602:
