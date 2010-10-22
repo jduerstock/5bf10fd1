@@ -1444,12 +1444,10 @@ APPLITERATOR:
 	moveq	#0,%d0			/* 40830c8e 7000 */
 	.short	0x2f1e	/* 40830c90 2f1e */
 	rts				/* 40830c92 4e75 */
-	.short	0x0000	/* 40830c94 0000 */
-	.short	0x0000	/* 40830c96 0000 */
-	.short	0x0000	/* 40830c98 0000 */
-	.short	0x0000	/* 40830c9a 0000 */
-	.short	0x0000	/* 40830c9c 0000 */
-	.short	0x0000	/* 40830c9e 0000 */
+
+	.align	16
+
+sub_40830ca0:
 	.short	0x48e7	/* 40830ca0 48e7 */
 	.short	0x00c0	/* 40830ca2 00c0 */
 	moveq	#0,%d0			/* 40830ca4 7000 */
@@ -1659,57 +1657,47 @@ DTADDAPPL:
 	.align	16
 
 REMOVEAPPLCALLBACK:
-	.short	0x526a	/* 40830e40 526a */
-	.short	0x014a	/* 40830e42 014a */
-	.short	0x082a	/* 40830e44 082a */
-	.short	0x0003	/* 40830e46 0003 */
-	.short	0x014c	/* 40830e48 014c */
-	.short	0x670a	/* 40830e4a 670a */
-	.short	0x08ea	/* 40830e4c 08ea */
-	.short	0x0004	/* 40830e4e 0004 */
-	.short	0x014c	/* 40830e50 014c */
+	addqw	#1,%a2@(330)		/* 40830e40 526a 014a */
+	btst	#3,%a2@(332)		/* 40830e44 082a 0003 014c */
+	beqs	loc_40830e56		/* 40830e4a 670a */
+	bset	#4,%a2@(332)		/* 40830e4c 08ea 0004 014c */
 	moveq	#0,%d0			/* 40830e52 7000 */
-	.short	0x6036	/* 40830e54 6036 */
-	.short	0x202a	/* 40830e56 202a */
-	.short	0x00d4	/* 40830e58 00d4 */
-	.short	0xb0aa	/* 40830e5a b0aa */
-	.short	0x00fa	/* 40830e5c 00fa */
-	.short	0x6614	/* 40830e5e 6614 */
-	.short	0x6100	/* 40830e60 6100 */
-	.short	0xfe3e	/* 40830e62 fe3e */
-	.short	0x660e	/* 40830e64 660e */
-	.short	0x08ea	/* 40830e66 08ea */
-	.short	0x0003	/* 40830e68 0003 */
-	.short	0x014c	/* 40830e6a 014c */
-	.short	0x356a	/* 40830e6c 356a */
-	.short	0x00ce	/* 40830e6e 00ce */
-	.short	0x013e	/* 40830e70 013e */
-	.short	0x6016	/* 40830e72 6016 */
-	.short	0x202a	/* 40830e74 202a */
-	.short	0x0144	/* 40830e76 0144 */
-	.short	0xb0aa	/* 40830e78 b0aa */
-	.short	0x00d0	/* 40830e7a 00d0 */
-	.short	0x620c	/* 40830e7c 620c */
-	.short	0x356a	/* 40830e7e 356a */
-	.short	0x00ce	/* 40830e80 00ce */
-	.short	0x0148	/* 40830e82 0148 */
-	.short	0x256a	/* 40830e84 256a */
-	.short	0x00d0	/* 40830e86 00d0 */
-	.short	0x0144	/* 40830e88 0144 */
+	bras	loc_40830e8c		/* 40830e54 6036 */
+
+loc_40830e56:
+	movel	%a2@(212),%d0		/* 40830e56 202a 00d4 */
+	cmpl	%a2@(250),%d0		/* 40830e5a b0aa 00fa */
+	bnes	loc_40830e74		/* 40830e5e 6614 */
+	bsrw	sub_40830ca0		/* 40830e60 6100 fe3e */
+	bnes	loc_40830e74		/* 40830e64 660e */
+	bset	#3,%a2@(332)		/* 40830e66 08ea 0003 014c */
+	movew	%a2@(206),%a2@(318)	/* 40830e6c 356a 00ce 013e */
+	bras	loc_40830e8a		/* 40830e72 6016 */
+
+loc_40830e74:
+	movel	%a2@(324),%d0		/* 40830e74 202a 0144 */
+	cmpl	%a2@(208),%d0		/* 40830e78 b0aa 00d0 */
+	bhis	loc_40830e8a		/* 40830e7c 620c */
+	movew	%a2@(206),%a2@(328)	/* 40830e7e 356a 00ce 0148 */
+	movel	%a2@(208),%a2@(324)	/* 40830e84 256a 00d0 0144 */
+
+loc_40830e8a:
 	moveq	#1,%d0			/* 40830e8a 7001 */
+
+loc_40830e8c:
 	rts				/* 40830e8c 4e75 */
 
 	.align	16
 
 __v__DTREMOVEAPPL:
-	jsr	%pc@(FSQUEUE)	/* 40830e90 4eba b580 */
+	jsr	%pc@(FSQUEUE)		/* 40830e90 4eba b580 */
 	bsrw	DTRFNEXTFSCHECK		/* 40830e94 6100 f42a */
 	bsrw	DESKMGRQUEUE		/* 40830e98 6100 f386 */
 	moveml	%d1-%d2/%a0-%a4,%fp@-	/* 40830e9c 48e6 60f8 */
 	subaw	#334,%fp		/* 40830ea0 9cfc 014e */
 	moveal	%fp,%a2			/* 40830ea4 244e */
 	moveal	%a0,%a4			/* 40830ea6 2848 */
-	bsrw	DTSETUP		/* 40830ea8 6100 f506 */
+	bsrw	DTSETUP			/* 40830ea8 6100 f506 */
 	bnew	loc_40830f4a		/* 40830eac 6600 009c */
 	lea	%a2@,%a0		/* 40830eb0 41d2 */
 	movel	%a4@(18),%a0@(18)	/* 40830eb2 216c 0012 0012 */
@@ -1728,7 +1716,7 @@ loc_40830ed8:
 	clrw	%a2@(328)		/* 40830ee0 426a 0148 */
 	clrw	%a2@(330)		/* 40830ee4 426a 014a */
 	movel	%a4@(52),%d1		/* 40830ee8 222c 0034 */
-	bsrw	SETUPAPPLITERATOR		/* 40830eec 6100 fd12 */
+	bsrw	SETUPAPPLITERATOR	/* 40830eec 6100 fd12 */
 	lea	%pc@(REMOVEAPPLCALLBACK),%a1	/* 40830ef0 43fa ff4e */
 	bsrw	APPLITERATOR		/* 40830ef4 6100 fd6a */
 	btst	#3,%a2@(332)		/* 40830ef8 082a 0003 014c */
