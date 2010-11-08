@@ -307,6 +307,10 @@
 		.short	0xa31e
 	.endm
 
+	.macro	_NewHandleClear
+		.short	0xa322
+	.endm
+
 	.macro	_DisposeHandleSys
 		.short	0xa423
 	.endm
