@@ -124,6 +124,10 @@
 		.short	0xa055
 	.endm
 
+	.macro	_MemoryDispatch
+		.short	0xa05c
+	.endm
+
 	.macro	_GetPhysical
 		moveq	#5,%d0
 		.short	0xa05c
@@ -325,6 +329,10 @@
 
 	.macro	_NewPtrSysClear
 		.short	0xa71e
+	.endm
+
+	.macro	_NewHandleSysClear
+		.short	0xa722
 	.endm
 
 	.macro	_GetToolboxTrapAddress
