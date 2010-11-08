@@ -311,6 +311,10 @@
 		.short	0xa322
 	.endm
 
+	.macro	_NewGestalt
+		.short	0xa3ad
+	.endm
+
 	.macro	_DisposeHandleSys
 		.short	0xa423
 	.endm
