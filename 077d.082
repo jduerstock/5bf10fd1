@@ -830,20 +830,16 @@ sub_408527a6:
 	rts				/* 408527ae 4e75 */
 
 __v__FromMethod:
-	.short	0x302f	/* 408527b0 302f */
-	.short	0x000a	/* 408527b2 000a */
-	.short	0x206f	/* 408527b4 206f */
-	.short	0x0004	/* 408527b6 0004 */
-	.short	0x594f	/* 408527b8 594f */
-	.short	0xe540	/* 408527ba e540 */
-	.short	0x43fa	/* 408527bc 43fa */
-	.short	0xfe72	/* 408527be fe72 */
-	.short	0x2f31	/* 408527c0 2f31 */
-	.short	0x0000	/* 408527c2 0000 */
-	.short	0x2f18	/* 408527c4 2f18 */
-	.short	0x2050	/* 408527c6 2050 */
-	.short	0x4e90	/* 408527c8 4e90 */
-	.short	0x201f	/* 408527ca 201f */
+	movew	%sp@(10),%d0		/* 408527b0 302f 000a */
+	moveal	%sp@(4),%a0		/* 408527b4 206f 0004 */
+	subqw	#4,%sp			/* 408527b8 594f */
+	aslw	#2,%d0			/* 408527ba e540 */
+	lea	%pc@(byte_40852630),%a1	/* 408527bc 43fa fe72 */
+	movel	%a1@(%d0:w),%sp@-	/* 408527c0 2f31 0000 */
+	movel	%a0@+,%sp@-		/* 408527c4 2f18 */
+	moveal	%a0@,%a0		/* 408527c6 2050 */
+	jsr	%a0@			/* 408527c8 4e90 */
+	movel	%sp@+,%d0		/* 408527ca 201f */
 	rts				/* 408527cc 4e75 */
 
 	CallVector	0x2038 13	/* 408527ce 2f30 81e2 2038 0034 */
