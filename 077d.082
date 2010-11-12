@@ -842,31 +842,27 @@ __v__FromMethod:
 	movel	%sp@+,%d0		/* 408527ca 201f */
 	rts				/* 408527cc 4e75 */
 
+sub_408527ce:
 	CallVector	0x2038 13	/* 408527ce 2f30 81e2 2038 0034 */
 	rts				/* 408527d6 4e75 */
 
 	.align	16
 
 __v____PLOTICONMETHOD:
-	.short	0x41ef	/* 408527e0 41ef */
-	.short	0x0014	/* 408527e2 0014 */
-	.short	0x43ef	/* 408527e4 43ef */
-	.short	0x0004	/* 408527e6 0004 */
-	.short	0x554f	/* 408527e8 554f */
-	.short	0x2f20	/* 408527ea 2f20 */
-	.short	0x2f20	/* 408527ec 2f20 */
-	.short	0x2f09	/* 408527ee 2f09 */
-	.short	0x487a	/* 408527f0 487a */
-	.short	0xffdc	/* 408527f2 ffdc */
-	.short	0x4267	/* 408527f4 4267 */
-	.short	0x4eba	/* 408527f6 4eba */
-	.short	0x17ea	/* 408527f8 17ea */
-	.short	0x301f	/* 408527fa 301f */
-	.short	0x2057	/* 408527fc 2057 */
-	.short	0x4fef	/* 408527fe 4fef */
-	.short	0x0014	/* 40852800 0014 */
-	.short	0x3e80	/* 40852802 3e80 */
-	.short	0x4ed0	/* 40852804 4ed0 */
+	lea	%sp@(20),%a0		/* 408527e0 41ef 0014 */
+	lea	%sp@(4),%a1		/* 408527e4 43ef 0004 */
+	subqw	#2,%sp			/* 408527e8 554f */
+	movel	%a0@-,%sp@-		/* 408527ea 2f20 */
+	movel	%a0@-,%sp@-		/* 408527ec 2f20 */
+	movel	%a1,%sp@-		/* 408527ee 2f09 */
+	pea	%pc@(sub_408527ce)	/* 408527f0 487a ffdc */
+	clrw	%sp@-			/* 408527f4 4267 */
+	jsr	%pc@(sub_40853fe2)	/* 408527f6 4eba 17ea */
+	movew	%sp@+,%d0		/* 408527fa 301f */
+	moveal	%sp@,%a0		/* 408527fc 2057 */
+	lea	%sp@(20),%sp		/* 408527fe 4fef 0014 */
+	movew	%d0,%sp@		/* 40852802 3e80 */
+	jmp	%a0@			/* 40852804 4ed0 */
 
 __PLOTICONMETHOD:
 	CallVector	0x2038 14	/* 40852806 2f30 81e2 2038 0038 */
