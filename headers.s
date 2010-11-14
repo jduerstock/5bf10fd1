@@ -295,6 +295,10 @@
 		.short	0xa06e
 	.endm
 
+	.macro	_GetVideoDefault
+		.short	0xa080
+	.endm
+
 	.macro	_GetOSDefault
 		.short	0xa084
 	.endm
