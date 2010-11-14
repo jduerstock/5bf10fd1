@@ -60,6 +60,10 @@
 		.short	0xa002
 	.endm
 
+	.macro	_PBControlSync
+		.short	0xa004
+	.endm
+
 	.macro	_PBStatusSync
 		.short	0xa005
 	.endm
@@ -147,6 +151,10 @@
 	.macro	_GetPhysical
 		moveq	#5,%d0
 		.short	0xa05c
+	.endm
+
+	.macro	_SwapMMUMode
+		.short	0xa05d
 	.endm
 
 	.macro	_NMInstall
