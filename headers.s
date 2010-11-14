@@ -327,6 +327,10 @@
 		.short	0xa322
 	.endm
 
+	.macro	_GetOSTrapAddress
+		.short	0xa346
+	.endm
+
 	.macro	_NewGestalt
 		.short	0xa3ad
 	.endm
