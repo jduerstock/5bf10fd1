@@ -214,34 +214,23 @@ sub_409e124e:
 	rts				/* 409e1278 4e75 */
 
 .L409e127a:
-	.short	0x247a	/* 409e127a 247a */
-	.short	0x05b0	/* 409e127c 05b0 */
-	.short	0x3428	/* 409e127e 3428 */
-	.short	0x001a	/* 409e1280 001a */
-	.short	0x5342	/* 409e1282 5342 */
-	.short	0x67f0	/* 409e1284 67f0 */
-	.short	0x70ef	/* 409e1286 70ef */
-	.short	0x247a	/* 409e1288 247a */
-	.short	0x05a2	/* 409e128a 05a2 */
-	.short	0x0442	/* 409e128c 0442 */
-	.short	0x00ed	/* 409e128e 00ed */
-	.short	0x6d00	/* 409e1290 6d00 */
-	.short	0x0150	/* 409e1292 0150 */
-	.short	0x0c42	/* 409e1294 0c42 */
-	.short	0x000f	/* 409e1296 000f */
-	.short	0x6e00	/* 409e1298 6e00 */
-	.short	0x0148	/* 409e129a 0148 */
-	.short	0x3228	/* 409e129c 3228 */
-	.short	0x001c	/* 409e129e 001c */
-	.short	0x2628	/* 409e12a0 2628 */
-	.short	0x001e	/* 409e12a2 001e */
-	.short	0x343b	/* 409e12a4 343b */
-	.short	0x2320	/* 409e12a6 2320 */
-	.short	0x000a	/* 409e12a8 000a */
-	.short	0x4efb	/* 409e12aa 4efb */
-	.short	0x2120	/* 409e12ac 2120 */
-	.short	0x0004	/* 409e12ae 0004 */
-	.short	0x0020	/* 409e12b0 0020 */
+	moveal	%pc@(byte_409e182c),%a2	/* 409e127a 247a 05b0 */
+	movew	%a0@(26),%d2		/* 409e127e 3428 001a */
+	subqw	#1,%d2			/* 409e1282 5342 */
+	beqs	.L409e1276		/* 409e1284 67f0 */
+	moveq	#-17,%d0		/* 409e1286 70ef */
+	moveal	%pc@(byte_409e182c),%a2	/* 409e1288 247a 05a2 */
+	subiw	#237,%d2		/* 409e128c 0442 00ed */
+	bltw	.L409e13e2		/* 409e1290 6d00 0150 */
+	cmpiw	#15,%d2			/* 409e1294 0c42 000f */
+	bgtw	.L409e13e2		/* 409e1298 6e00 0148 */
+	movew	%a0@(28),%d1		/* 409e129c 3228 001c */
+	movel	%a0@(30),%d3		/* 409e12a0 2628 001e */
+	.short	0x343b,0x2320,0x000a	/* movew %pc@(off_409e12b0,%d2:w:2),%d2 /* 409e12a4 343b 2320 000a */
+	.short	0x4efb,0x2120,0x0004	/* jmp %pc@(off_409e12b0,%d2:w) /* 409e12aa 4efb 2120 0004 */
+
+off_409e12b0:
+	.short	.L409e12d0-off_409e12b0	/* 409e12b0 0020 */
 	.short	0x0132	/* 409e12b2 0132 */
 	.short	0x006c	/* 409e12b4 006c */
 	.short	0x0132	/* 409e12b6 0132 */
@@ -257,6 +246,8 @@ sub_409e124e:
 	.short	0x0274	/* 409e12ca 0274 */
 	.short	0x02dc	/* 409e12cc 02dc */
 	.short	0x0130	/* 409e12ce 0130 */
+
+.L409e12d0:
 	moveq	#0,%d0			/* 409e12d0 7000 */
 	.short	0x3028	/* 409e12d2 3028 */
 	.short	0x0022	/* 409e12d4 0022 */
@@ -394,6 +385,8 @@ sub_409e124e:
 	.short	0x50f2	/* 409e13dc 50f2 */
 	.short	0x2016	/* 409e13de 2016 */
 	.short	0x4240	/* 409e13e0 4240 */
+
+.L409e13e2:
 	.short	0x2252	/* 409e13e2 2252 */
 	.short	0x2078	/* 409e13e4 2078 */
 	.short	0x08fc	/* 409e13e6 08fc */
