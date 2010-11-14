@@ -15,7 +15,7 @@ sub_409e1016:
 loc_409e102e:
 	addqw	#1,%d3			/* 409e102e 5243 */
 	movel	%d3,%d0			/* 409e1030 2003 */
-	.short	0xa02e			/* 409e1032 a02e */
+	_BlockMove			/* 409e1032 a02e */
 	addal	%d3,%a1			/* 409e1034 d3c3 */
 	addil	#26,%d3			/* 409e1036 0683 0000 001a */
 	cmpiw	#255,%d3		/* 409e103c 0c43 00ff */
@@ -45,7 +45,7 @@ loc_409e104a:
 loc_409e1080:
 	lea	%pc@(str_409e0ffb),%a0	/* 409e1080 41fa ff79 */
 	moveq	#26,%d0			/* 409e1084 701a */
-	.short	0xa02e			/* 409e1086 a02e */
+	_BlockMove			/* 409e1086 a02e */
 	lea	%a2@(470),%a1		/* 409e1088 43ea 01d6 */
 	addib	#26,%a1@		/* 409e108c 0611 001a */
 
@@ -159,13 +159,13 @@ loc_409e11ee:
 	linkw	%fp,#0			/* 409e11f6 4e56 0000 */
 	movel	%fp@(8),%d1		/* 409e11fa 222e 0008 */
 	andil	#7,%d1			/* 409e11fe 0281 0000 0007 */
-	beqs	loc_409e1212		/* 409e1204 670c */
+	beqs	.L409e1212		/* 409e1204 670c */
 	moveal	%fp@(16),%a0		/* 409e1206 206e 0010 */
 	moveal	%fp@(20),%a1		/* 409e120a 226e 0014 */
 	moveq	#3,%d0			/* 409e120e 7003 */
 	.short	0xa05c			/* 409e1210 a05c */
 
-loc_409e1212:
+.L409e1212:
 	moveal	%fp@(12),%a0		/* 409e1212 206e 000c */
 	.short	0xa01f			/* 409e1216 a01f */
 	moveq	#0,%d0			/* 409e1218 7000 */
@@ -173,20 +173,20 @@ loc_409e1212:
 	rts				/* 409e121c 4e75 */
 
 sub_409e121e:
-	.short	0x317c	/* 409e121e 317c */
-	.short	0x7fff	/* 409e1220 7fff */
-	.short	0x000a	/* 409e1222 000a */
-	.short	0xa065	/* 409e1224 a065 */
-	.short	0x4a80	/* 409e1226 4a80 */
-	.short	0x6b08	/* 409e1228 6b08 */
-	.short	0x0c80	/* 409e122a 0c80 */
-	.short	0x0000	/* 409e122c 0000 */
-	.short	0x0200	/* 409e122e 0200 */
-	.short	0x6408	/* 409e1230 6408 */
-	.short	0x317c	/* 409e1232 317c */
-	.short	0x0001	/* 409e1234 0001 */
-	.short	0x000a	/* 409e1236 000a */
+	movew	#32767,%a0@(10)		/* 409e121e 317c 7fff 000a */
+	.short	0xa065			/* 409e1224 a065 */
+	tstl	%d0			/* 409e1226 4a80 */
+	bmis	.L409e1232		/* 409e1228 6b08 */
+	cmpil	#512,%d0		/* 409e122a 0c80 0000 0200 */
+	bccs	.L409e123a		/* 409e1230 6408 */
+
+.L409e1232:
+	movew	#1,%a0@(10)		/* 409e1232 317c 0001 000a */
+
+loc_409e1238:
 	rts				/* 409e1238 4e75 */
+
+.L409e123a:
 	.short	0x45e8	/* 409e123a 45e8 */
 	.short	0xfeb4	/* 409e123c feb4 */
 	.short	0x08aa	/* 409e123e 08aa */
