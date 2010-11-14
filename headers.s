@@ -478,6 +478,10 @@
 		.short	0xa89d
 	.endm
 
+	.macro	_OffsetRect
+		.short	0xa8a8
+	.endm
+
 	.macro	_PtInRect
 		.short	0xa8ad
 	.endm
