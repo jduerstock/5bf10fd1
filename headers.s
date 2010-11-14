@@ -128,6 +128,10 @@
 		.short	0xa03c
 	.endm
 
+	.macro	_SetTrapAddress
+		.short	0xa047
+	.endm
+
 	.macro	_HPurge
 		.short	0xa049
 	.endm
@@ -203,6 +207,11 @@
 
 	.macro	_SPutPRAMRec
 		moveq	#18,%d0
+		.short	0xa06e
+	.endm
+
+	.macro	_SNextSRsrc
+		moveq	#20,%d0
 		.short	0xa06e
 	.endm
 
