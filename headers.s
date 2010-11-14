@@ -48,6 +48,10 @@
 		.short	\addr
 	.endm
 
+	.macro	_PBOpenSync
+		.short	0xa000
+	.endm
+
 	.macro	_PBReadSync
 		.short	0xa002
 	.endm
@@ -58,6 +62,10 @@
 
 	.macro	_PBGetFInfoSync
 		.short	0xa00c
+	.endm
+
+	.macro	_PBGetEOFSync
+		.short	0xa011
 	.endm
 
 	.macro	_SetVol
