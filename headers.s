@@ -52,6 +52,10 @@
 		.short	0xa000
 	.endm
 
+	.macro	_PBCloseSync
+		.short	0xa001
+	.endm
+
 	.macro	_PBReadSync
 		.short	0xa002
 	.endm
@@ -282,6 +286,10 @@
 		.short	0xa06e
 	.endm
 
+	.macro	_GetOSDefault
+		.short	0xa084
+	.endm
+
 	.macro	_IOPMsgRequest
 		.short	0xa087
 	.endm
@@ -329,6 +337,10 @@
 
 	.macro	_ReserveMemSys
 		.short	0xa440
+	.endm
+
+	.macro	_NewPtrSys
+		.short	0xa51e
 	.endm
 
 	.macro	_NewHandleSys
