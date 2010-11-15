@@ -408,7 +408,11 @@
 		.short	0xa746
 	.endm
 
-	.macro	__SndDoImmediate
+	.macro	_SndDoCommand
+		.short	0xa803
+	.endm
+
+	.macro	_SndDoImmediate
 		.short	0xa804
 	.endm
 
