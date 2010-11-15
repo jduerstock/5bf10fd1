@@ -380,6 +380,10 @@
 		.short	0xa528
 	.endm
 
+	.macro	_PBHDeleteAsync
+		.short	0xa609
+	.endm
+
 	.macro	_SetToolboxTrapAddress
 		.short	0xa647
 	.endm
