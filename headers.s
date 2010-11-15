@@ -327,6 +327,10 @@
 		.short	0xa204
 	.endm
 
+	.macro	_PBHDeleteSync
+		.short	0xa209
+	.endm
+
 	.macro	_SetOSTrapAddress
 		.short	0xa247
 	.endm
