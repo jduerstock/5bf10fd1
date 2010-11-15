@@ -408,6 +408,10 @@
 		.short	0xa746
 	.endm
 
+	.macro	__SndDoImmediate
+		.short	0xa804
+	.endm
+
 	.macro	_SndPlay
 		.short	0xa805
 	.endm
