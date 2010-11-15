@@ -360,6 +360,10 @@
 		.short	0xa3ad
 	.endm
 
+	.macro	_PBCloseAsync
+		.short	0xa401
+	.endm
+
 	.macro	_DisposeHandleSys
 		.short	0xa423
 	.endm
