@@ -906,7 +906,7 @@ SndVBLInt:
 
 CancelDriftOfTimer:
 	moveal	%sp@(4),%a0		/* 4084f7a0 206f 0004 */
-	.short	0xa059			/* 4084f7a4 a059 */
+	_RemoveTimeTask			/* 4084f7a4 a059 */
 	clrl	%a0@(14)		/* 4084f7a6 42a8 000e */
 	.short	0xa458			/* 4084f7aa a458 */
 	rts				/* 4084f7ac 4e75 */
@@ -928,23 +928,20 @@ loc_4084f7cc:
 	rts				/* 4084f7cc 4e75 */
 
 loc_4084f7ce:
-	.short	0x3028	/* 4084f7ce 3028 */
-	.short	0x0004	/* 4084f7d0 0004 */
-	.short	0x0800	/* 4084f7d2 0800 */
-	.short	0x000f	/* 4084f7d4 000f */
-	.short	0x6708	/* 4084f7d6 6708 */
-	.short	0xa059	/* 4084f7d8 a059 */
-	.short	0x42a8	/* 4084f7da 42a8 */
-	.short	0x000e	/* 4084f7dc 000e */
-	.short	0xa458	/* 4084f7de a458 */
-	.short	0x202f	/* 4084f7e0 202f */
-	.short	0x000c	/* 4084f7e2 000c */
-	.short	0x4480	/* 4084f7e4 4480 */
-	.short	0xa05a	/* 4084f7e6 a05a */
+	movew	%a0@(4),%d0		/* 4084f7ce 3028 0004 */
+	btst	#15,%d0			/* 4084f7d2 0800 000f */
+	beqs	loc_4084f7e0		/* 4084f7d6 6708 */
+	_RemoveTimeTask			/* 4084f7d8 a059 */
+	clrl	%a0@(14)		/* 4084f7da 42a8 000e */
+	.short	0xa458			/* 4084f7de a458 */
+
+loc_4084f7e0:
+	movel	%sp@(12),%d0		/* 4084f7e0 202f 000c */
+	negl	%d0			/* 4084f7e4 4480 */
+	.short	0xa05a			/* 4084f7e6 a05a */
 	rts				/* 4084f7e8 4e75 */
-	.short	0x0000	/* 4084f7ea 0000 */
-	.short	0x0000	/* 4084f7ec 0000 */
-	.short	0x0000	/* 4084f7ee 0000 */
+
+	.align	16
 
 word_4084f7f0:
 	.short	0x000a	/* 4084f7f0 000a */
