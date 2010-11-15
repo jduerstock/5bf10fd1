@@ -144,6 +144,10 @@
 		.short	0xa055
 	.endm
 
+	.macro	_RemoveTimeTask
+		.short	0xa059
+	.endm
+
 	.macro	_MemoryDispatch
 		.short	0xa05c
 	.endm
