@@ -372,6 +372,10 @@
 		.short	0xa423
 	.endm
 
+	.macro	_DriverInstallReserveMem
+		.short	0xa43d
+	.endm
+
 	.macro	_ReserveMemSys
 		.short	0xa440
 	.endm
