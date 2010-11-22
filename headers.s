@@ -124,6 +124,10 @@
 		.short	0xa033
 	.endm
 
+	.macro	_VRemove
+		.short	0xa034
+	.endm
+
 	.macro	_Delay
 		.short	0xa03b
 	.endm
