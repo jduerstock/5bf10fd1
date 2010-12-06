@@ -144,6 +144,10 @@
 		.short	0xa049
 	.endm
 
+	.macro	_ReadXPRAM
+		.short	0xa051
+	.endm
+
 	.macro	_StripAddress
 		.short	0xa055
 	.endm
