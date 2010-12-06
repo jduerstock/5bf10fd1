@@ -939,18 +939,21 @@ loc_409e0622:
 	.short	0x4840	/* 409e0822 4840 */
 	.short	0x303c	/* 409e0824 303c */
 	.short	0x00fc	/* 409e0826 00fc */
-	.short	0xa051	/* 409e0828 a051 */
-	.short	0x201f	/* 409e082a 201f */
-	.short	0x676e	/* 409e082c 676e */
-	.short	0x43fa	/* 409e082e 43fa */
-	.short	0x0010	/* 409e0830 0010 */
-	.short	0x2219	/* 409e0832 2219 */
-	.short	0x6766	/* 409e0834 6766 */
-	.short	0x2419	/* 409e0836 2419 */
-	.short	0xb280	/* 409e0838 b280 */
-	.short	0x66f6	/* 409e083a 66f6 */
-	.short	0x1c02	/* 409e083c 1c02 */
-	.short	0x605c	/* 409e083e 605c */
+	_ReadXPRAM			/* 409e0828 a051 */
+	movel	%sp@+,%d0		/* 409e082a 201f */
+	beqs	loc_409e089c		/* 409e082c 676e */
+	lea	%pc@(byte_409e0840),%a1	/* 409e082e 43fa 0010 */
+
+loc_409e0832:
+	movel	%a1@+,%d1		/* 409e0832 2219 */
+	beqs	loc_409e089c		/* 409e0834 6766 */
+	movel	%a1@+,%d2		/* 409e0836 2419 */
+	cmpl	%d0,%d1			/* 409e0838 b280 */
+	bnes	loc_409e0832		/* 409e083a 66f6 */
+	moveb	%d2,%d6			/* 409e083c 1c02 */
+	bras	loc_409e089c		/* 409e083e 605c */
+
+byte_409e0840:
 	.short	0x524e	/* 409e0840 524e */
 	.short	0x494e	/* 409e0842 494e */
 	.short	0x0000	/* 409e0844 0000 */
@@ -997,6 +1000,8 @@ loc_409e0622:
 	.short	0x0007	/* 409e0896 0007 */
 	.short	0x0206	/* 409e0898 0206 */
 	.short	0x003f	/* 409e089a 003f */
+
+loc_409e089c:
 	.short	0x246e	/* 409e089c 246e */
 	.short	0xff9c	/* 409e089e ff9c */
 	.short	0x08d2	/* 409e08a0 08d2 */
