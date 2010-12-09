@@ -454,38 +454,28 @@ loc_408b9520:
 	rte				/* 408b9534 4e73 */
 
 sub_408b9536:
-	.short	0x082e	/* 408b9536 082e */
-	.short	0x0001	/* 408b9538 0001 */
-	.short	0xff24	/* 408b953a ff24 */
-	.short	0x6706	/* 408b953c 6706 */
-	.short	0x41ee	/* 408b953e 41ee */
-	.short	0xfef4	/* 408b9540 fef4 */
-	.short	0x6004	/* 408b9542 6004 */
-	.short	0x41ee	/* 408b9544 41ee */
-	.short	0xff34	/* 408b9546 ff34 */
-	.short	0x0890	/* 408b9548 0890 */
-	.short	0x0007	/* 408b954a 0007 */
-	.short	0x56e8	/* 408b954c 56e8 */
-	.short	0x0002	/* 408b954e 0002 */
-	.short	0x6100	/* 408b9550 6100 */
-	.short	0x301c	/* 408b9552 301c */
-	.short	0x0c40	/* 408b9554 0c40 */
-	.short	0x0003	/* 408b9556 0003 */
-	.short	0x6614	/* 408b9558 6614 */
-	.short	0x1d6e	/* 408b955a 1d6e */
-	.short	0xff84	/* 408b955c ff84 */
-	.short	0xffac	/* 408b955e ffac */
-	.short	0x6100	/* 408b9560 6100 */
-	.short	0x2e8c	/* 408b9562 2e8c */
-	.short	0x1d6e	/* 408b9564 1d6e */
-	.short	0xffac	/* 408b9566 ffac */
-	.short	0xff84	/* 408b9568 ff84 */
-	.short	0x6000	/* 408b956a 6000 */
-	.short	0x10c2	/* 408b956c 10c2 */
-	.short	0x6100	/* 408b956e 6100 */
-	.short	0x2e22	/* 408b9570 2e22 */
-	.short	0x6000	/* 408b9572 6000 */
-	.short	0x10ba	/* 408b9574 10ba */
+	btst	#1,%fp@(-220)		/* 408b9536 082e 0001 ff24 */
+	beqs	loc_408b9544		/* 408b953c 6706 */
+	lea	%fp@(-268),%a0		/* 408b953e 41ee fef4 */
+	bras	loc_408b9548		/* 408b9542 6004 */
+
+loc_408b9544:
+	lea	%fp@(-204),%a0		/* 408b9544 41ee ff34 */
+
+loc_408b9548:
+	bclr	#7,%a0@			/* 408b9548 0890 0007 */
+	sne	%a0@(2)			/* 408b954c 56e8 0002 */
+	bsrw	sub_408bc56e		/* 408b9550 6100 301c */
+	cmpiw	#3,%d0			/* 408b9554 0c40 0003 */
+	bnes	loc_408b956e		/* 408b9558 6614 */
+	moveb	%fp@(-124),%fp@(-84)	/* 408b955a 1d6e ff84 ffac */
+	bsrw	sub_408bc3ee		/* 408b9560 6100 2e8c */
+	moveb	%fp@(-84),%fp@(-124)	/* 408b9564 1d6e ffac ff84 */
+	braw	sub_408ba62e		/* 408b956a 6000 10c2 */
+
+loc_408b956e:
+	bsrw	sub_408bc392		/* 408b956e 6100 2e22 */
+	braw	sub_408ba62e		/* 408b9572 6000 10ba */
 
 sub_408b9576:
 	.short	0x4e56	/* 408b9576 4e56 */
