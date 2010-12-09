@@ -334,21 +334,18 @@ loc_408b9382:
 	rts				/* 408b9390 4e75 */
 
 sub_408b9392:
-	.short	0x0cae	/* 408b9392 0cae */
-	.short	0xffff	/* 408b9394 ffff */
-	.short	0xffff	/* 408b9396 ffff */
-	.short	0xff2c	/* 408b9398 ff2c */
-	.short	0x6610	/* 408b939a 6610 */
-	.short	0x0c6e	/* 408b939c 0c6e */
-	.short	0xc000	/* 408b939e c000 */
-	.short	0xff28	/* 408b93a0 ff28 */
-	.short	0x670c	/* 408b93a2 670c */
-	.short	0x0c6e	/* 408b93a4 0c6e */
-	.short	0xbfff	/* 408b93a6 bfff */
-	.short	0xff28	/* 408b93a8 ff28 */
-	.short	0x6704	/* 408b93aa 6704 */
+	cmpil	#-1,%fp@(-212)		/* 408b9392 0cae ffff ffff ff2c */
+	bnes	loc_408b93ac		/* 408b939a 6610 */
+	cmpiw	#-16384,%fp@(-216)	/* 408b939c 0c6e c000 ff28 */
+	beqs	loc_408b93b0		/* 408b93a2 670c */
+	cmpiw	#-16385,%fp@(-216)	/* 408b93a4 0c6e bfff ff28 */
+	beqs	loc_408b93b0		/* 408b93aa 6704 */
+
+loc_408b93ac:
 	moveq	#1,%d0			/* 408b93ac 7001 */
 	rts				/* 408b93ae 4e75 */
+
+loc_408b93b0:
 	moveq	#0,%d0			/* 408b93b0 7000 */
 	rts				/* 408b93b2 4e75 */
 
