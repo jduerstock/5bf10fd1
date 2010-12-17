@@ -84,6 +84,10 @@
 		.short	0xa015
 	.endm
 
+	.macro	_PBEject
+		.short	0xa017
+	.endm
+
 	.macro	_DisposePtr
 		.short	0xa01f
 	.endm
@@ -524,6 +528,10 @@
 
 	.macro	_OffsetRect
 		.short	0xa8a8
+	.endm
+
+	.macro	_UnionRect
+		.short	0xa8ab
 	.endm
 
 	.macro	_PtInRect
