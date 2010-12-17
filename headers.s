@@ -72,6 +72,10 @@
 		.short	0xa00c
 	.endm
 
+	.macro	_PBMountVol
+		.short	0xa00f
+	.endm
+
 	.macro	_PBGetEOFSync
 		.short	0xa011
 	.endm
