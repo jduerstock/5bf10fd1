@@ -360,6 +360,11 @@
 		.short	0xa260
 	.endm
 
+	.macro	__PBCloseWDSync
+		moveq	#2,%d0
+		.short	0xa260
+	.endm
+
 	.macro	_IdleUpdate
 		.short	0xa285
 	.endm
