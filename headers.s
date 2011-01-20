@@ -433,6 +433,10 @@
 		.short	0xa746
 	.endm
 
+	.macro	_SoundDispatch
+		.short	0xa800
+	.endm
+
 	.macro	_SndDisposeChannel
 		.short	0xa801
 	.endm
