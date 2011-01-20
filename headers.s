@@ -433,6 +433,10 @@
 		.short	0xa746
 	.endm
 
+	.macro	_SndAddModifier
+		.short	0xa802
+	.endm
+
 	.macro	_SndDoCommand
 		.short	0xa803
 	.endm
