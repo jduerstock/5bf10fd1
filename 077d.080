@@ -494,10 +494,10 @@ loc_408504ea:
 	movew	%d5,%d0			/* 408504f0 3005 */
 	extl	%d0			/* 408504f2 48c0 */
 	asll	#8,%d0			/* 408504f4 e180 */
-	.short	0xa024			/* 408504f6 a024 */
+	_SetHandleSize			/* 408504f6 a024 */
 	movew	0x220,%d6		/* 408504f8 3c38 0220 */
 	moveal	%a3,%a0			/* 408504fc 204b */
-	.short	0xa029			/* 408504fe a029 */
+	_HLock				/* 408504fe a029 */
 	tstw	%d6			/* 40850500 4a46 */
 	beqs	loc_40850508		/* 40850502 6704 */
 	movew	%d6,%d0			/* 40850504 3006 */
@@ -537,7 +537,7 @@ insertInQueue:
 	linkw	%fp,#0			/* 40850540 4e56 0000 */
 	moveml	%d7/%a4,%sp@-		/* 40850544 48e7 0108 */
 	moveal	%fp@(8),%a4		/* 40850548 286e 0008 */
-	jsr	%pc@(BlockInts)	/* 4085054c 4eba f302 */
+	jsr	%pc@(BlockInts)		/* 4085054c 4eba f302 */
 	movew	%d0,%d7			/* 40850550 3e00 */
 	movew	%a4@(32),%d0		/* 40850552 302c 0020 */
 	cmpw	%a4@(34),%d0		/* 40850556 b06c 0022 */
@@ -594,7 +594,7 @@ loc_408505c6:
 	addqw	#1,%a4@(32)		/* 408505ca 526c 0020 */
 	extl	%d0			/* 408505ce 48c0 */
 	moveal	%fp@(12),%a0		/* 408505d0 206e 000c */
-	lea	%a4@(0x0024,%d0:l:8),%a1	/* 408505d4 43f4 0e24 */
+	lea	%a4@(0x24,%d0:l:8),%a1	/* 408505d4 43f4 0e24 */
 	movel	%a1@+,%a0@+		/* 408505d8 20d9 */
 	movel	%a1@+,%a0@+		/* 408505da 20d9 */
 	movew	%a4@(32),%d0		/* 408505dc 302c 0020 */
@@ -963,7 +963,7 @@ findModifier:
 	linkw	%fp,#-4			/* 40850980 4e56 fffc */
 	moveml	%d3/%a3-%a4,%sp@-	/* 40850984 48e7 1018 */
 	movel	%fp@(8),%d0		/* 40850988 202e 0008 */
-	.short	0xa055			/* 4085098c a055 */
+	_StripAddress			/* 4085098c a055 */
 	movel	%d0,%fp@(-4)		/* 4085098e 2d40 fffc */
 	moveal	ExpandMem,%a0		/* 40850992 2078 02b6 */
 	moveal	%a0@(272),%a0		/* 40850996 2068 0110 */
@@ -976,7 +976,7 @@ loc_4085099e:
 
 loc_408509a4:
 	movel	%a4@(4),%d0		/* 408509a4 202c 0004 */
-	.short	0xa055			/* 408509a8 a055 */
+	_StripAddress			/* 408509a8 a055 */
 	cmpl	%fp@(-4),%d0		/* 408509aa b0ae fffc */
 	bnes	loc_408509b4		/* 408509ae 6604 */
 	movel	%a4,%d0			/* 408509b0 200c */
@@ -1006,7 +1006,7 @@ disposeChannel:
 	linkw	%fp,#-8			/* 408509d0 4e56 fff8 */
 	moveml	%d3/%a3-%a4,%sp@-	/* 408509d4 48e7 1018 */
 	movel	%fp@(8),%d0		/* 408509d8 202e 0008 */
-	.short	0xa055			/* 408509dc a055 */
+	_StripAddress			/* 408509dc a055 */
 	moveal	%d0,%a4			/* 408509de 2840 */
 	moveal	ExpandMem,%a0		/* 408509e0 2078 02b6 */
 	moveal	%a0@(272),%a0		/* 408509e4 2068 0110 */
@@ -1015,7 +1015,7 @@ disposeChannel:
 
 loc_408509ec:
 	movel	%a3@,%d0		/* 408509ec 2013 */
-	.short	0xa055			/* 408509ee a055 */
+	_StripAddress			/* 408509ee a055 */
 	cmpal	%d0,%a4			/* 408509f0 b9c0 */
 	bnes	loc_408509fc		/* 408509f2 6608 */
 	moveal	%fp@(8),%a0		/* 408509f4 206e 0008 */
