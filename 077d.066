@@ -955,17 +955,18 @@ sub_408427b0:
 	bras	loc_408427c2		/* 408427b6 600a */
 
 sub_408427b8:
-	.short	0x6604	/* 408427b8 6604 */
+	bnes	loc_408427be		/* 408427b8 6604 */
 
 loc_408427ba:
-	.short	0x7093	/* 408427ba 7093 */
-	.short	0x6004	/* 408427bc 6004 */
-	.short	0x6100	/* 408427be 6100 */
-	.short	0x15ec	/* 408427c0 15ec */
+	moveq	#-109,%d0		/* 408427ba 7093 */
+	bras	loc_408427c2		/* 408427bc 6004 */
+
+loc_408427be:
+	bsrw	A32SETSIZE		/* 408427be 6100 15ec */
 
 loc_408427c2:
-	.short	0x2049	/* 408427c2 2049 */
-	.short	0x6082	/* 408427c4 6082 */
+	moveal	%a1,%a0			/* 408427c2 2049 */
+	bras	loc_40842748		/* 408427c4 6082 */
 
 HANDLEZONETRAP:
 	movel	#104,%sp@-		/* 408427c6 2f3c 0000 0068 */
@@ -973,16 +974,12 @@ HANDLEZONETRAP:
 	rts				/* 408427d0 4e75 */
 
 sub_408427d2:
-	.short	0x204e	/* 408427d2 204e */
-	.short	0x6000	/* 408427d4 6000 */
-	.short	0xff70	/* 408427d6 ff70 */
+	moveal	%fp,%a0			/* 408427d2 204e */
+	braw	loc_40842746		/* 408427d4 6000 ff70 */
 
 RECOVERHANDLETRAP:
-	.short	0x2f3c	/* 408427d8 2f3c */
-	.short	0x0000	/* 408427da 0000 */
-	.short	0x006c	/* 408427dc 006c */
-	.short	0x2f38	/* 408427de 2f38 */
-	.short	0x1fe0	/* 408427e0 1fe0 */
+	movel	#108,%sp@-		/* 408427d8 2f3c 0000 006c */
+	movel	0x1fe0,%sp@-		/* 408427de 2f38 1fe0 */
 	rts				/* 408427e2 4e75 */
 
 sub_408427e4:
