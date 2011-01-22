@@ -559,6 +559,10 @@
 		.short	0xa8b0
 	.endm
 
+	.macro	_ScriptUtil
+		.short	0xa8b5
+	.endm
+
 	.macro	_DisposeRgn
 		.short	0xa8d9
 	.endm
