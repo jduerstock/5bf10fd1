@@ -550,53 +550,56 @@ __v__NFINDSCRIPTRUN:
 	jmp	%pc@(sub_4086693e)	/* 408694bc 4efa d480 */
 
 loc_408694c0:
-	.short	0x0c42	/* 408694c0 0c42 */
-	.short	0xffff	/* 408694c2 ffff */
-	.short	0x6d24	/* 408694c4 6d24 */
-	.short	0x2278	/* 408694c6 2278 */
-	.short	0x0ba0	/* 408694c8 0ba0 */
-	.short	0x6e04	/* 408694ca 6e04 */
-	.short	0x3429	/* 408694cc 3429 */
-	.short	0x0026	/* 408694ce 0026 */
-	.short	0x3202	/* 408694d0 3202 */
-	.short	0xe549	/* 408694d2 e549 */
-	.short	0x2231	/* 408694d4 2231 */
-	.short	0x1072	/* 408694d6 1072 */
-	.short	0x6708	/* 408694d8 6708 */
-	.short	0x2041	/* 408694da 2041 */
-	.short	0x4a28	/* 408694dc 4a28 */
-	.short	0x0004	/* 408694de 0004 */
-	.short	0x660e	/* 408694e0 660e */
-	.short	0x2069	/* 408694e2 2069 */
-	.short	0x0072	/* 408694e4 0072 */
-	.short	0x7400	/* 408694e6 7400 */
-	.short	0x6006	/* 408694e8 6006 */
-	.short	0x5d4f	/* 408694ea 5d4f */
-	.short	0x6128	/* 408694ec 6128 */
-	.short	0x341f	/* 408694ee 341f */
-	.short	0x4842	/* 408694f0 4842 */
-	.short	0x2268	/* 408694f2 2268 */
-	.short	0x0024	/* 408694f4 0024 */
+	cmpiw	#-1,%d2			/* 408694c0 0c42 ffff */
+	blts	loc_408694ea		/* 408694c4 6d24 */
+	moveal	0xba0,%a1		/* 408694c6 2278 0ba0 */
+	bgts	loc_408694d0		/* 408694ca 6e04 */
+	movew	%a1@(38),%d2		/* 408694cc 3429 0026 */
+
+loc_408694d0:
+	movew	%d2,%d1			/* 408694d0 3202 */
+	lslw	#2,%d1			/* 408694d2 e549 */
+	movel	%a1@(0x0072,%d1:w),%d1	/* 408694d4 2231 1072 */
+	beqs	loc_408694e2		/* 408694d8 6708 */
+	moveal	%d1,%a0			/* 408694da 2041 */
+	tstb	%a0@(4)			/* 408694dc 4a28 0004 */
+	bnes	loc_408694f0		/* 408694e0 660e */
+
+loc_408694e2:
+	moveal	%a1@(114),%a0		/* 408694e2 2069 0072 */
+	moveq	#0,%d2			/* 408694e6 7400 */
+	bras	loc_408694f0		/* 408694e8 6006 */
+
+loc_408694ea:
+	subqw	#6,%sp			/* 408694ea 5d4f */
+	bsrs	__v__FONTSCRIPT		/* 408694ec 6128 */
+	movew	%sp@+,%d2		/* 408694ee 341f */
+
+loc_408694f0:
+	swap	%d2			/* 408694f0 4842 */
+	moveal	%a0@(36),%a1		/* 408694f2 2268 0024 */
 	jmp	%a1@			/* 408694f6 4ed1 */
 
 __v__BITBUCKET:
-	.short	0x205f	/* 408694f8 205f */
-	.short	0x201f	/* 408694fa 201f */
+	moveal	%sp@+,%a0		/* 408694f8 205f */
+	movel	%sp@+,%d0		/* 408694fa 201f */
 
 __v__BITBUCKETREG:
-	.short	0x4840	/* 408694fc 4840 */
-	.short	0x7200	/* 408694fe 7200 */
-	.short	0x1200	/* 40869500 1200 */
-	.short	0xe048	/* 40869502 e048 */
-	.short	0x0240	/* 40869504 0240 */
-	.short	0x007f	/* 40869506 007f */
-	.short	0xdec1	/* 40869508 dec1 */
-	.short	0x224f	/* 4086950a 224f */
-	.short	0x6002	/* 4086950c 6002 */
-	.short	0x4219	/* 4086950e 4219 */
-	.short	0x51c8	/* 40869510 51c8 */
-	.short	0xfffc	/* 40869512 fffc */
-	.short	0x4ed0	/* 40869514 4ed0 */
+	swap	%d0			/* 408694fc 4840 */
+	moveq	#0,%d1			/* 408694fe 7200 */
+	moveb	%d0,%d1			/* 40869500 1200 */
+	lsrw	#8,%d0			/* 40869502 e048 */
+	andiw	#127,%d0		/* 40869504 0240 007f */
+	addaw	%d1,%sp			/* 40869508 dec1 */
+	moveal	%sp,%a1			/* 4086950a 224f */
+	bras	loc_40869510		/* 4086950c 6002 */
+
+.L4086950e:
+	clrb	%a1@+			/* 4086950e 4219 */
+
+loc_40869510:
+	dbf	%d0,.L4086950e		/* 40869510 51c8 fffc */
+	jmp	%a0@			/* 40869514 4ed0 */
 
 __v__FONTSCRIPT:
 	.short	0x4a38	/* 40869516 4a38 */
