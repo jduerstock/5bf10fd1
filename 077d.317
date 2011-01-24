@@ -56,10 +56,10 @@ loc_4093d072:
 
 loc_4093d074:
 	extl	%d7			/* 4093d074 48c7 */
-	tstl	%a4@(0x0004,%d7:l:4)	/* 4093d076 4ab4 7c04 */
+	tstl	%a4@(4,%d7:l:4)		/* 4093d076 4ab4 7c04 */
 	beqs	loc_4093d088		/* 4093d07a 670c */
 	extl	%d7			/* 4093d07c 48c7 */
-	movel	%a4@(0x0004,%d7:l:4),%sp@-	/* 4093d07e 2f34 7c04 */
+	movel	%a4@(4,%d7:l:4),%sp@-	/* 4093d07e 2f34 7c04 */
 	movew	#40,%sp@-		/* 4093d082 3f3c 0028 */
 	.short	0xa9e7			/* 4093d086 a9e7 */
 
@@ -82,30 +82,23 @@ loc_4093d0a4:
 	rtd	#26			/* 4093d0ac 4e74 001a */
 
 sub_4093d0b0:
-	.short	0x4e56	/* 4093d0b0 4e56 */
-	.short	0xfff8	/* 4093d0b2 fff8 */
-	.short	0x48e7	/* 4093d0b4 48e7 */
-	.short	0x0f18	/* 4093d0b6 0f18 */
-	.short	0x266e	/* 4093d0b8 266e */
-	.short	0x0010	/* 4093d0ba 0010 */
-	.short	0x598f	/* 4093d0bc 598f */
-	.short	0x2f0b	/* 4093d0be 2f0b */
-	.short	0xa917	/* 4093d0c0 a917 */
-	.short	0x285f	/* 4093d0c2 285f */
-	.short	0x206e	/* 4093d0c4 206e */
-	.short	0x000c	/* 4093d0c6 000c */
-	.short	0x3010	/* 4093d0c8 3010 */
-	.short	0x6b00	/* 4093d0ca 6b00 */
-	.short	0x01ee	/* 4093d0cc 01ee */
-	.short	0x0c40	/* 4093d0ce 0c40 */
-	.short	0x0006	/* 4093d0d0 0006 */
-	.short	0x6e00	/* 4093d0d2 6e00 */
-	.short	0x01e6	/* 4093d0d4 01e6 */
-	.short	0xd040	/* 4093d0d6 d040 */
-	.short	0x303b	/* 4093d0d8 303b */
-	.short	0x0006	/* 4093d0da 0006 */
-	.short	0x4efb	/* 4093d0dc 4efb */
-	.short	0x0000	/* 4093d0de 0000 */
+	linkw	%fp,#-8			/* 4093d0b0 4e56 fff8 */
+	moveml	%d4-%d7/%a3-%a4,%sp@-	/* 4093d0b4 48e7 0f18 */
+	moveal	%fp@(16),%a3		/* 4093d0b8 266e 0010 */
+	subql	#4,%sp			/* 4093d0bc 598f */
+	movel	%a3,%sp@-		/* 4093d0be 2f0b */
+	.short	0xa917			/* 4093d0c0 a917 */
+	moveal	%sp@+,%a4		/* 4093d0c2 285f */
+	moveal	%fp@(12),%a0		/* 4093d0c4 206e 000c */
+	movew	%a0@,%d0		/* 4093d0c8 3010 */
+	bmiw	loc_4093d2ba		/* 4093d0ca 6b00 01ee */
+	cmpiw	#6,%d0			/* 4093d0ce 0c40 0006 */
+	bgtw	loc_4093d2ba		/* 4093d0d2 6e00 01e6 */
+	addw	%d0,%d0			/* 4093d0d6 d040 */
+	movew	%pc@(word_4093d0e0,%d0:w),%d0	/* 4093d0d8 303b 0006 */
+	jmp	%pc@(%d0:w)		/* 4093d0dc 4efb 0000 */
+
+word_4093d0e0:
 	.short	0x0010	/* 4093d0e0 0010 */
 	.short	0x00c8	/* 4093d0e2 00c8 */
 	.short	0x01dc	/* 4093d0e4 01dc */
@@ -343,6 +336,8 @@ sub_4093d0b0:
 	.short	0x0014	/* 4093d2b4 0014 */
 	.short	0x504f	/* 4093d2b6 504f */
 	.short	0x6004	/* 4093d2b8 6004 */
+
+loc_4093d2ba:
 	.short	0x422e	/* 4093d2ba 422e */
 	.short	0x0014	/* 4093d2bc 0014 */
 	.short	0x4cee	/* 4093d2be 4cee */
