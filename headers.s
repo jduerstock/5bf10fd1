@@ -539,6 +539,10 @@
 		.short	0xa89d
 	.endm
 
+	.macro	_PenNormal
+		.short	0xa89e
+	.endm
+
 	.macro	_EraseRect
 		.short	0xa8a3
 	.endm
