@@ -768,6 +768,11 @@
 		.short	0xabf5
 	.endm
 
+	.macro	_DSPGetOwnerClient
+		movew	#71,%d0	
+		.short	0xabf5
+	.endm
+
 	.macro	_DSPGetCPUDeviceGivenIndex
 		movew	#121,%d0	
 		.short	0xabf5
