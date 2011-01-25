@@ -748,6 +748,11 @@
 		.short	0xabf5
 	.endm
 
+	.macro	_DSPSetTaskInactive
+		movew	#29,%d0	
+		.short	0xabf5
+	.endm
+
 	.macro	_DSPNewAddress
 		movew	#31,%d0	
 		.short	0xabf5
