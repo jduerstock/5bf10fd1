@@ -773,6 +773,11 @@
 		.short	0xabf5
 	.endm
 
+	.macro	_DSPGetTaskGivenSectionTable
+		movew	#124,%d0	
+		.short	0xabf5
+	.endm
+
 	.macro	_DSPPowerManager
 		movew	#284,%d0	
 		.short	0xabf5
