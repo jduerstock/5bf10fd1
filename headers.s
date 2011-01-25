@@ -696,6 +696,10 @@
 		.short	0xa9e5
 	.endm
 
+	.macro	_Pack0
+		.short	0xa9e7
+	.endm
+
 	.macro	_FP68K
 		.short	0xa9eb
 	.endm
