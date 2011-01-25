@@ -335,6 +335,10 @@
 		.short	0xa087
 	.endm
 
+	.macro	_Translate24To32
+		.short	0xa091
+	.endm
+
 	.macro	_NewHandle
 		.short	0xa122
 	.endm
@@ -708,6 +712,10 @@
 		.short	0xa9eb
 	.endm
 
+	.macro	_Debugger
+		.short	0xa9ff
+	.endm
+
 	.macro	_PlotCIcon
 		.short	0xaa1f
 	.endm
@@ -775,6 +783,11 @@
 
 	.macro	_DSPGetOwnerClient
 		movew	#71,%d0	
+		.short	0xabf5
+	.endm
+
+	.macro	_DSPGetTaskStatus
+		movew	#92,%d0	
 		.short	0xabf5
 	.endm
 
