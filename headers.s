@@ -323,6 +323,14 @@
 		.short	0xa06e
 	.endm
 
+	.macro	_SIntInstall
+		.short	0xa075
+	.endm
+
+	.macro	_SIntRemove
+		.short	0xa076
+	.endm
+
 	.macro	_GetVideoDefault
 		.short	0xa080
 	.endm
