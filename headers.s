@@ -223,6 +223,11 @@
 		.short	0xa06e
 	.endm
 
+	.macro	_SGetSRsrc
+		moveq	#11,%d0
+		.short	0xa06e
+	.endm
+
 	.macro	_SGetTypeSRsrc
 		moveq	#12,%d0
 		.short	0xa06e
