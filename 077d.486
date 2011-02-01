@@ -1404,39 +1404,37 @@ sub_409e6ea2:
 	rts				/* 409e6f1e 4e75 */
 
 sub_409e6f20:
-	.short	0x203c	/* 409e6f20 203c */
-	.short	0xfffb	/* 409e6f22 fffb */
-	.short	0x0000	/* 409e6f24 0000 */
-	.short	0x3038	/* 409e6f26 3038 */
-	.short	0x0d00	/* 409e6f28 0d00 */
-	.short	0x51c8	/* 409e6f2a 51c8 */
-	.short	0xfffe	/* 409e6f2c fffe */
-	.short	0x5280	/* 409e6f2e 5280 */
-	.short	0x66f4	/* 409e6f30 66f4 */
+	movel	#-327680,%d0		/* 409e6f20 203c fffb 0000 */
+
+loc_409e6f26:
+	movew	0xd00,%d0		/* 409e6f26 3038 0d00 */
+
+.L409e6f2a:
+	dbf	%d0,.L409e6f2a		/* 409e6f2a 51c8 fffe */
+	addql	#1,%d0			/* 409e6f2e 5280 */
+	bnes	loc_409e6f26		/* 409e6f30 66f4 */
 	rts				/* 409e6f32 4e75 */
 
 sub_409e6f34:
-	.short	0x740d	/* 409e6f34 740d */
-	.short	0x223c	/* 409e6f36 223c */
-	.short	0x0000	/* 409e6f38 0000 */
-	.short	0x1e24	/* 409e6f3a 1e24 */
+	moveq	#13,%d2			/* 409e6f34 740d */
+	movel	#7716,%d1		/* 409e6f36 223c 0000 1e24 */
+
+.L409e6f3c:
 	moveq	#1,%d0			/* 409e6f3c 7001 */
-	.short	0xc081	/* 409e6f3e c081 */
-	.short	0x1080	/* 409e6f40 1080 */
-	.short	0xe289	/* 409e6f42 e289 */
-	.short	0x51ca	/* 409e6f44 51ca */
-	.short	0xfff6	/* 409e6f46 fff6 */
-	.short	0x7407	/* 409e6f48 7407 */
-	.short	0x4200	/* 409e6f4a 4200 */
-	.short	0x1210	/* 409e6f4c 1210 */
-	.short	0x0201	/* 409e6f4e 0201 */
-	.short	0x0001	/* 409e6f50 0001 */
-	.short	0x8001	/* 409e6f52 8001 */
-	.short	0xe218	/* 409e6f54 e218 */
-	.short	0x51ca	/* 409e6f56 51ca */
-	.short	0xfff4	/* 409e6f58 fff4 */
-	.short	0x0c00	/* 409e6f5a 0c00 */
-	.short	0x002a	/* 409e6f5c 002a */
+	andl	%d1,%d0			/* 409e6f3e c081 */
+	moveb	%d0,%a0@		/* 409e6f40 1080 */
+	lsrl	#1,%d1			/* 409e6f42 e289 */
+	dbf	%d2,.L409e6f3c		/* 409e6f44 51ca fff6 */
+	moveq	#7,%d2			/* 409e6f48 7407 */
+	clrb	%d0			/* 409e6f4a 4200 */
+
+.L409e6f4c:
+	moveb	%a0@,%d1		/* 409e6f4c 1210 */
+	andib	#1,%d1			/* 409e6f4e 0201 0001 */
+	orb	%d1,%d0			/* 409e6f52 8001 */
+	rorb	#1,%d0			/* 409e6f54 e218 */
+	dbf	%d2,.L409e6f4c		/* 409e6f56 51ca fff4 */
+	cmpib	#42,%d0			/* 409e6f5a 0c00 002a */
 	rts				/* 409e6f5e 4e75 */
 
 sub_409e6f60:
