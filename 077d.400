@@ -1225,40 +1225,26 @@ loc_40990db0:
 	rts				/* 40990db0 4e75 */
 
 sub_40990db2:
-	.short	0x137c	/* 40990db2 137c */
-	.short	0x00ff	/* 40990db4 00ff */
-	.short	0x003a	/* 40990db6 003a */
-	.short	0x103c	/* 40990db8 103c */
-	.short	0x009a	/* 40990dba 009a */
-	.short	0x6100	/* 40990dbc 6100 */
-	.short	0x003a	/* 40990dbe 003a */
-	.short	0x1029	/* 40990dc0 1029 */
-	.short	0x000c	/* 40990dc2 000c */
-	.short	0x13fc	/* 40990dc4 13fc */
-	.short	0x0020	/* 40990dc6 0020 */
-	.short	0x50f0	/* 40990dc8 50f0 */
-	.short	0x3c00	/* 40990dca 3c00 */
-	.short	0x6100	/* 40990dcc 6100 */
-	.short	0x002a	/* 40990dce 002a */
-	.short	0x137c	/* 40990dd0 137c */
-	.short	0x0001	/* 40990dd2 0001 */
-	.short	0x001a	/* 40990dd4 001a */
-	.short	0x7200	/* 40990dd6 7200 */
-	.short	0x3238	/* 40990dd8 3238 */
-	.short	0x0d00	/* 40990dda 0d00 */
-	.short	0xe181	/* 40990ddc e181 */
-	.short	0x6100	/* 40990dde 6100 */
-	.short	0x0150	/* 40990de0 0150 */
-	.short	0x0c29	/* 40990de2 0c29 */
-	.short	0x00ff	/* 40990de4 00ff */
-	.short	0x003a	/* 40990de6 003a */
-	.short	0x6604	/* 40990de8 6604 */
-	.short	0x5381	/* 40990dea 5381 */
-	.short	0x66f0	/* 40990dec 66f0 */
-	.short	0x13fc	/* 40990dee 13fc */
-	.short	0x00a0	/* 40990df0 00a0 */
-	.short	0x50f0	/* 40990df2 50f0 */
-	.short	0x3c00	/* 40990df4 3c00 */
+	moveb	#0xff,%a1@(58)		/* 40990db2 137c 00ff 003a */
+	moveb	#0x9a,%d0		/* 40990db8 103c 009a */
+	bsrw	sub_40990df8		/* 40990dbc 6100 003a */
+	moveb	%a1@(12),%d0		/* 40990dc0 1029 000c */
+	moveb	#32,0x50f03c00		/* 40990dc4 13fc 0020 50f0 3c00 */
+	bsrw	sub_40990df8		/* 40990dcc 6100 002a */
+	moveb	#1,%a1@(26)		/* 40990dd0 137c 0001 001a */
+	moveq	#0,%d1			/* 40990dd6 7200 */
+	movew	0xd00,%d1		/* 40990dd8 3238 0d00 */
+	asll	#8,%d1			/* 40990ddc e181 */
+
+loc_40990dde:
+	bsrw	sub_40990f30		/* 40990dde 6100 0150 */
+	cmpib	#0xff,%a1@(58)		/* 40990de2 0c29 00ff 003a */
+	bnes	loc_40990dee		/* 40990de8 6604 */
+	subql	#1,%d1			/* 40990dea 5381 */
+	bnes	loc_40990dde		/* 40990dec 66f0 */
+
+loc_40990dee:
+	moveb	#0xa0,0x50f03c00	/* 40990dee 13fc 00a0 50f0 3c00 */
 	rts				/* 40990df6 4e75 */
 
 sub_40990df8:
