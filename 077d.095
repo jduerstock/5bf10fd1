@@ -1101,67 +1101,62 @@ sub_4085fa28:
 	moveq	#-1,%d1			/* 4085fa28 72ff */
 
 sub_4085fa2a:
-	.short	0x202a	/* 4085fa2a 202a */
-	.short	0x0004	/* 4085fa2c 0004 */
-	.short	0xc0b8	/* 4085fa2e c0b8 */
-	.short	0x031a	/* 4085fa30 031a */
+	movel	%a2@(4),%d0		/* 4085fa2a 202a 0004 */
+	andl	0x31a,%d0		/* 4085fa2e c0b8 031a */
 
 loc_4085fa32:
-	.short	0x48e7	/* 4085fa32 48e7 */
-	.short	0x3f10	/* 4085fa34 3f10 */
-	.short	0x2400	/* 4085fa36 2400 */
-	.short	0x6100	/* 4085fa38 6100 */
-	.short	0x0704	/* 4085fa3a 0704 */
-	.short	0x6b5e	/* 4085fa3c 6b5e */
-	.short	0x47f8	/* 4085fa3e 47f8 */
-	.short	0x0a06	/* 4085fa40 0a06 */
-	.short	0x598b	/* 4085fa42 598b */
-	.short	0x2c0b	/* 4085fa44 2c0b */
-	.short	0x7eff	/* 4085fa46 7eff */
-	.short	0xe28f	/* 4085fa48 e28f */
-	.short	0x4a41	/* 4085fa4a 4a41 */
-	.short	0x6b24	/* 4085fa4c 6b24 */
-	.short	0x032a	/* 4085fa4e 032a */
-	.short	0x0004	/* 4085fa50 0004 */
-	.short	0x6714	/* 4085fa52 6714 */
-	.short	0x202a	/* 4085fa54 202a */
-	.short	0x0004	/* 4085fa56 0004 */
-	.short	0xc0b8	/* 4085fa58 c0b8 */
-	.short	0x031a	/* 4085fa5a 031a */
-	.short	0xb480	/* 4085fa5c b480 */
-	.short	0x6c08	/* 4085fa5e 6c08 */
-	.short	0xbe80	/* 4085fa60 be80 */
-	.short	0x6f04	/* 4085fa62 6f04 */
-	.short	0x2e00	/* 4085fa64 2e00 */
-	.short	0x2c0a	/* 4085fa66 2c0a */
-	.short	0x45ea	/* 4085fa68 45ea */
-	.short	0x000c	/* 4085fa6a 000c */
-	.short	0x51cc	/* 4085fa6c 51cc */
-	.short	0xffe0	/* 4085fa6e ffe0 */
-	.short	0x601c	/* 4085fa70 601c */
-	.short	0x202a	/* 4085fa72 202a */
-	.short	0x0004	/* 4085fa74 0004 */
-	.short	0xc0b8	/* 4085fa76 c0b8 */
-	.short	0x031a	/* 4085fa78 031a */
-	.short	0xb480	/* 4085fa7a b480 */
-	.short	0x6c08	/* 4085fa7c 6c08 */
-	.short	0xbe80	/* 4085fa7e be80 */
-	.short	0x6f04	/* 4085fa80 6f04 */
-	.short	0x2e00	/* 4085fa82 2e00 */
-	.short	0x2c0a	/* 4085fa84 2c0a */
-	.short	0x45ea	/* 4085fa86 45ea */
-	.short	0x000c	/* 4085fa88 000c */
-	.short	0x51cc	/* 4085fa8a 51cc */
-	.short	0xffe6	/* 4085fa8c ffe6 */
-	.short	0x2446	/* 4085fa8e 2446 */
-	.short	0x2007	/* 4085fa90 2007 */
-	.short	0x2e2a	/* 4085fa92 2e2a */
-	.short	0x0004	/* 4085fa94 0004 */
-	.short	0xceb8	/* 4085fa96 ceb8 */
-	.short	0x031a	/* 4085fa98 031a */
-	.short	0xbe80	/* 4085fa9a be80 */
-	.short	0x4cdf	/* 4085fa9c 4cdf */
-	.short	0x08fc	/* 4085fa9e 08fc */
+	moveml	%d2-%d7/%a3,%sp@-	/* 4085fa32 48e7 3f10 */
+	movel	%d0,%d2			/* 4085fa36 2400 */
+	bsrw	sub_4086013e		/* 4085fa38 6100 0704 */
+	bmis	loc_4085fa9c		/* 4085fa3c 6b5e */
+	lea	0xa06,%a3		/* 4085fa3e 47f8 0a06 */
+	subql	#4,%a3			/* 4085fa42 598b */
+	movel	%a3,%d6			/* 4085fa44 2c0b */
+	moveq	#-1,%d7			/* 4085fa46 7eff */
+	lsrl	#1,%d7			/* 4085fa48 e28f */
+	tstw	%d1			/* 4085fa4a 4a41 */
+	bmis	.L4085fa72		/* 4085fa4c 6b24 */
+
+.L4085fa4e:
+	btst	%d1,%a2@(4)		/* 4085fa4e 032a 0004 */
+	beqs	loc_4085fa68		/* 4085fa52 6714 */
+	movel	%a2@(4),%d0		/* 4085fa54 202a 0004 */
+	andl	0x31a,%d0		/* 4085fa58 c0b8 031a */
+	cmpl	%d0,%d2			/* 4085fa5c b480 */
+	bges	loc_4085fa68		/* 4085fa5e 6c08 */
+	cmpl	%d0,%d7			/* 4085fa60 be80 */
+	bles	loc_4085fa68		/* 4085fa62 6f04 */
+	movel	%d0,%d7			/* 4085fa64 2e00 */
+	movel	%a2,%d6			/* 4085fa66 2c0a */
+
+loc_4085fa68:
+	lea	%a2@(12),%a2		/* 4085fa68 45ea 000c */
+	dbf	%d4,.L4085fa4e		/* 4085fa6c 51cc ffe0 */
+	bras	loc_4085fa8e		/* 4085fa70 601c */
+
+.L4085fa72:
+	movel	%a2@(4),%d0		/* 4085fa72 202a 0004 */
+	andl	0x31a,%d0		/* 4085fa76 c0b8 031a */
+	cmpl	%d0,%d2			/* 4085fa7a b480 */
+	bges	loc_4085fa86		/* 4085fa7c 6c08 */
+	cmpl	%d0,%d7			/* 4085fa7e be80 */
+	bles	loc_4085fa86		/* 4085fa80 6f04 */
+	movel	%d0,%d7			/* 4085fa82 2e00 */
+	movel	%a2,%d6			/* 4085fa84 2c0a */
+
+loc_4085fa86:
+	lea	%a2@(12),%a2		/* 4085fa86 45ea 000c */
+	dbf	%d4,.L4085fa72		/* 4085fa8a 51cc ffe6 */
+
+loc_4085fa8e:
+	moveal	%d6,%a2			/* 4085fa8e 2446 */
+	movel	%d7,%d0			/* 4085fa90 2007 */
+	movel	%a2@(4),%d7		/* 4085fa92 2e2a 0004 */
+	andl	0x31a,%d7		/* 4085fa96 ceb8 031a */
+	cmpl	%d0,%d7			/* 4085fa9a be80 */
+
+loc_4085fa9c:
+	moveml	%sp@+,%d2-%d7/%a3	/* 4085fa9c 4cdf 08fc */
 	rts				/* 4085faa0 4e75 */
 
 UPDATERESFILE:
