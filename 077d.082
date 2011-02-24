@@ -922,14 +922,13 @@ __v____ADDICONTOSUITE:
 	bras	.L40852896		/* 40852892 6002 */
 
 __v____GETICONFROMSUITE:
-	.short	0x7200	/* 40852894 7200 */
+	moveq	#0,%d1			/* 40852894 7200 */
 
 .L40852896:
-	.short	0x2057	/* 40852896 2057 */
-	.short	0x2e81	/* 40852898 2e81 */
-	.short	0x2f08	/* 4085289a 2f08 */
-	.short	0x4efa	/* 4085289c 4efa */
-	.short	0x06f8	/* 4085289e 06f8 */
+	moveal	%sp@,%a0		/* 40852896 2057 */
+	movel	%d1,%sp@		/* 40852898 2e81 */
+	movel	%a0,%sp@-		/* 4085289a 2f08 */
+	jmp	%pc@(sub_40852f96)	/* 4085289c 4efa 06f8 */
 
 sub_408528a0:
 	CallVector	0x2038 19 	/* 408528a0 2f30 81e2 2038 004c */
@@ -1710,6 +1709,7 @@ __v__EDITICONSUITE:
 	unlk	%fp			/* 40852f90 4e5e */
 	rtd	#16			/* 40852f92 4e74 0010 */
 
+sub_40852f96:
 	moveal	0x2038,%a1		/* 40852f96 2278 2038 */
 	moveal	%a1@(140),%a1		/* 40852f9a 2269 008c */
 	jmp	%a1@			/* 40852f9e 4ed1 */
