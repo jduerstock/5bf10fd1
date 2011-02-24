@@ -941,37 +941,41 @@ __ADDICONTOSUITE:
 	.align	16
 
 __v__ADJUSTRGN:
-	.short	0x206f	/* 408528c0 206f */
-	.short	0x0004	/* 408528c2 0004 */
-	.short	0x226f	/* 408528c4 226f */
-	.short	0x0008	/* 408528c6 0008 */
-	.short	0x5889	/* 408528c8 5889 */
-	.short	0x2f2f	/* 408528ca 2f2f */
-	.short	0x000c	/* 408528cc 000c */
-	.short	0x2018	/* 408528ce 2018 */
-	.short	0x2210	/* 408528d0 2210 */
-	.short	0x4841	/* 408528d2 4841 */
-	.short	0x9259	/* 408528d4 9259 */
-	.short	0x4841	/* 408528d6 4841 */
-	.short	0x9251	/* 408528d8 9251 */
-	.short	0xb280	/* 408528da b280 */
-	.short	0x660e	/* 408528dc 660e */
-	.short	0x4a80	/* 408528de 4a80 */
-	.short	0x6604	/* 408528e0 6604 */
-	.short	0x588f	/* 408528e2 588f */
-	.short	0x6010	/* 408528e4 6010 */
-	.short	0x2f00	/* 408528e6 2f00 */
-	.short	0xa8e0	/* 408528e8 a8e0 */
-	.short	0x600a	/* 408528ea 600a */
-	.short	0x5d89	/* 408528ec 5d89 */
-	.short	0x2f09	/* 408528ee 2f09 */
-	.short	0x5988	/* 408528f0 5988 */
-	.short	0x2f08	/* 408528f2 2f08 */
-	.short	0xa8fb	/* 408528f4 a8fb */
-	.short	0x205f	/* 408528f6 205f */
-	.short	0x700c	/* 408528f8 700c */
-	.short	0xdfc0	/* 408528fa dfc0 */
-	.short	0x4ed0	/* 408528fc 4ed0 */
+	moveal	%sp@(4),%a0		/* 408528c0 206f 0004 */
+	moveal	%sp@(8),%a1		/* 408528c4 226f 0008 */
+	addql	#4,%a1			/* 408528c8 5889 */
+	movel	%sp@(12),%sp@-		/* 408528ca 2f2f 000c */
+	movel	%a0@+,%d0		/* 408528ce 2018 */
+	movel	%a0@,%d1		/* 408528d0 2210 */
+	swap	%d1			/* 408528d2 4841 */
+	subw	%a1@+,%d1		/* 408528d4 9259 */
+	swap	%d1			/* 408528d6 4841 */
+	subw	%a1@,%d1		/* 408528d8 9251 */
+	cmpl	%d0,%d1			/* 408528da b280 */
+	bnes	loc_408528ec		/* 408528dc 660e */
+	tstl	%d0			/* 408528de 4a80 */
+	bnes	loc_408528e6		/* 408528e0 6604 */
+	addql	#4,%sp			/* 408528e2 588f */
+	bras	loc_408528f6		/* 408528e4 6010 */
+
+loc_408528e6:
+	movel	%d0,%sp@-		/* 408528e6 2f00 */
+	.short	0xa8e0			/* 408528e8 a8e0 */
+	bras	loc_408528f6		/* 408528ea 600a */
+
+loc_408528ec:
+	subql	#6,%a1			/* 408528ec 5d89 */
+	movel	%a1,%sp@-		/* 408528ee 2f09 */
+	subql	#4,%a0			/* 408528f0 5988 */
+	movel	%a0,%sp@-		/* 408528f2 2f08 */
+	.short	0xa8fb			/* 408528f4 a8fb */
+
+loc_408528f6:
+	moveal	%sp@+,%a0		/* 408528f6 205f */
+	moveq	#12,%d0			/* 408528f8 700c */
+	addal	%d0,%sp			/* 408528fa dfc0 */
+	jmp	%a0@			/* 408528fc 4ed0 */
+
 	rts				/* 408528fe 4e75 */
 
 sub_40852900:
