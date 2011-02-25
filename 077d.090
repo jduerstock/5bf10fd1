@@ -77,6 +77,7 @@ loc_4085a0b2:
 	unlk	%fp			/* 4085a0ba 4e5e */
 	rtd	#4			/* 4085a0bc 4e74 0004 */
 
+sub_4085a0c0:
 	moveal	0x2084,%a1		/* 4085a0c0 2278 2084 */
 	moveal	%a1@(132),%a1		/* 4085a0c4 2269 0084 */
 	jmp	%a1@			/* 4085a0c8 4ed1 */
@@ -298,7 +299,7 @@ __v__PaintTheDesk:
 loc_4085a310:
 	movel	%a4,%sp@-		/* 4085a310 2f0c */
 	.short	0xa873			/* 4085a312 a873 */
-	jsr	%pc@(PAINTDESK)	/* 4085a314 4eba d03a */
+	jsr	%pc@(PAINTDESK)		/* 4085a314 4eba d03a */
 	moveml	%fp@(-16),%a3-%a4	/* 4085a318 4cee 1800 fff0 */
 	unlk	%fp			/* 4085a31e 4e5e */
 	rts				/* 4085a320 4e75 */
@@ -312,99 +313,83 @@ PaintTheDesk:
 
 __v__PAINTACTION:
 	linkw	%fp,#0			/* 4085a330 4e56 0000 */
-	.short	0x48e7	/* 4085a334 48e7 */
-	.short	0x0018	/* 4085a336 0018 */
-	.short	0x266e	/* 4085a338 266e */
-	.short	0x0008	/* 4085a33a 0008 */
-	.short	0x286e	/* 4085a33c 286e */
-	.short	0x0010	/* 4085a33e 0010 */
-	.short	0x4a2c	/* 4085a340 4a2c */
-	.short	0x006e	/* 4085a342 006e */
-	.short	0x6608	/* 4085a344 6608 */
-	.short	0x3d7c	/* 4085a346 3d7c */
-	.short	0x02bc	/* 4085a348 02bc */
-	.short	0x0014	/* 4085a34a 0014 */
-	.short	0x6046	/* 4085a34c 6046 */
-	.short	0x0c6c	/* 4085a34e 0c6c */
-	.short	0xdead	/* 4085a350 dead */
-	.short	0x004a	/* 4085a352 004a */
-	.short	0x673a	/* 4085a354 673a */
+	moveml	%a3-%a4,%sp@-		/* 4085a334 48e7 0018 */
+	moveal	%fp@(8),%a3		/* 4085a338 266e 0008 */
+	moveal	%fp@(16),%a4		/* 4085a33c 286e 0010 */
+	tstb	%a4@(110)		/* 4085a340 4a2c 006e */
+	bnes	loc_4085a34e		/* 4085a344 6608 */
+	movew	#700,%fp@(20)		/* 4085a346 3d7c 02bc 0014 */
+	bras	loc_4085a394		/* 4085a34c 6046 */
+
+loc_4085a34e:
+	cmpiw	#-8531,%a4@(74)		/* 4085a34e 0c6c dead 004a */
+	beqs	loc_4085a390		/* 4085a354 673a */
 	moveq	#-1,%d0			/* 4085a356 70ff */
-	.short	0xb093	/* 4085a358 b093 */
-	.short	0x672a	/* 4085a35a 672a */
-	.short	0x598f	/* 4085a35c 598f */
-	.short	0x2f0c	/* 4085a35e 2f0c */
-	.short	0x303c	/* 4085a360 303c */
-	.short	0x0405	/* 4085a362 0405 */
-	.short	0xaaa2	/* 4085a364 aaa2 */
-	.short	0x205f	/* 4085a366 205f */
-	.short	0x2050	/* 4085a368 2050 */
-	.short	0x3028	/* 4085a36a 3028 */
-	.short	0x0006	/* 4085a36c 0006 */
-	.short	0x48c0	/* 4085a36e 48c0 */
-	.short	0xb9d3	/* 4085a370 b9d3 */
-	.short	0x6608	/* 4085a372 6608 */
-	.short	0x223c	/* 4085a374 223c */
-	.short	0x0000	/* 4085a376 0000 */
-	.short	0x8000	/* 4085a378 8000 */
-	.short	0x6006	/* 4085a37a 6006 */
-	.short	0x223c	/* 4085a37c 223c */
-	.short	0x0000	/* 4085a37e 0000 */
-	.short	0x4000	/* 4085a380 4000 */
-	.short	0xc240	/* 4085a382 c240 */
-	.short	0x670a	/* 4085a384 670a */
-	.short	0x2f0c	/* 4085a386 2f0c */
-	.short	0x2f2b	/* 4085a388 2f2b */
-	.short	0x0004	/* 4085a38a 0004 */
-	.short	0x4eba	/* 4085a38c 4eba */
-	.short	0xcf1c	/* 4085a38e cf1c */
-	.short	0x426e	/* 4085a390 426e */
-	.short	0x0014	/* 4085a392 0014 */
-	.short	0x4cee	/* 4085a394 4cee */
-	.short	0x1800	/* 4085a396 1800 */
-	.short	0xfff8	/* 4085a398 fff8 */
-	.short	0x4e5e	/* 4085a39a 4e5e */
-	.short	0x4e74	/* 4085a39c 4e74 */
-	.short	0x000c	/* 4085a39e 000c */
+	cmpl	%a3@,%d0		/* 4085a358 b093 */
+	beqs	loc_4085a386		/* 4085a35a 672a */
+	subql	#4,%sp			/* 4085a35c 598f */
+	movel	%a4,%sp@-		/* 4085a35e 2f0c */
+	movew	#1029,%d0		/* 4085a360 303c 0405 */
+	.short	0xaaa2			/* 4085a364 aaa2 */
+	moveal	%sp@+,%a0		/* 4085a366 205f */
+	moveal	%a0@,%a0		/* 4085a368 2050 */
+	movew	%a0@(6),%d0		/* 4085a36a 3028 0006 */
+	extl	%d0			/* 4085a36e 48c0 */
+	cmpal	%a3@,%a4		/* 4085a370 b9d3 */
+	bnes	loc_4085a37c		/* 4085a372 6608 */
+	movel	#32768,%d1		/* 4085a374 223c 0000 8000 */
+	bras	loc_4085a382		/* 4085a37a 6006 */
+
+loc_4085a37c:
+	movel	#16384,%d1		/* 4085a37c 223c 0000 4000 */
+
+loc_4085a382:
+	andw	%d0,%d1			/* 4085a382 c240 */
+	beqs	loc_4085a390		/* 4085a384 670a */
+
+loc_4085a386:
+	movel	%a4,%sp@-		/* 4085a386 2f0c */
+	movel	%a3@(4),%sp@-		/* 4085a388 2f2b 0004 */
+	jsr	%pc@(sub_408572aa)	/* 4085a38c 4eba cf1c */
+
+loc_4085a390:
+	clrw	%fp@(20)		/* 4085a390 426e 0014 */
+
+loc_4085a394:
+	moveml	%fp@(-8),%a3-%a4	/* 4085a394 4cee 1800 fff8 */
+	unlk	%fp			/* 4085a39a 4e5e */
+	rtd	#12			/* 4085a39c 4e74 000c */
 
 PAINTACTION:
-	.short	0x2278	/* 4085a3a0 2278 */
-	.short	0x2084	/* 4085a3a2 2084 */
-	.short	0x2269	/* 4085a3a4 2269 */
-	.short	0x009c	/* 4085a3a6 009c */
+	moveal	0x2084,%a1		/* 4085a3a0 2278 2084 */
+	moveal	%a1@(156),%a1		/* 4085a3a4 2269 009c */
 	jmp	%a1@			/* 4085a3a8 4ed1 */
 
 	.align	16
 
 __v__CalcAncestorRgnsForPaintActions:
 	linkw	%fp,#0			/* 4085a3b0 4e56 0000 */
-	.short	0x2f0c	/* 4085a3b4 2f0c */
-	.short	0x387c	/* 4085a3b6 387c */
-	.short	0x02b6	/* 4085a3b8 02b6 */
-	.short	0x2078	/* 4085a3ba 2078 */
-	.short	0x02b6	/* 4085a3bc 02b6 */
-	.short	0x4a68	/* 4085a3be 4a68 */
-	.short	0x01a8	/* 4085a3c0 01a8 */
-	.short	0x660a	/* 4085a3c2 660a */
-	.short	0x2f2e	/* 4085a3c4 2f2e */
-	.short	0x0008	/* 4085a3c6 0008 */
-	.short	0x4eba	/* 4085a3c8 4eba */
-	.short	0xfcf6	/* 4085a3ca fcf6 */
-	.short	0x6008	/* 4085a3cc 6008 */
-	.short	0x2078	/* 4085a3ce 2078 */
-	.short	0x02b6	/* 4085a3d0 02b6 */
-	.short	0x4268	/* 4085a3d2 4268 */
-	.short	0x01a8	/* 4085a3d4 01a8 */
-	.short	0x286e	/* 4085a3d6 286e */
-	.short	0xfffc	/* 4085a3d8 fffc */
-	.short	0x4e5e	/* 4085a3da 4e5e */
+	movel	%a4,%sp@-		/* 4085a3b4 2f0c */
+	moveaw	#694,%a4		/* 4085a3b6 387c 02b6 */
+	moveal	0x2b6,%a0		/* 4085a3ba 2078 02b6 */
+	tstw	%a0@(424)		/* 4085a3be 4a68 01a8 */
+	bnes	loc_4085a3ce		/* 4085a3c2 660a */
+	movel	%fp@(8),%sp@-		/* 4085a3c4 2f2e 0008 */
+	jsr	%pc@(sub_4085a0c0)	/* 4085a3c8 4eba fcf6 */
+	bras	loc_4085a3d6		/* 4085a3cc 6008 */
+
+loc_4085a3ce:
+	moveal	0x2b6,%a0		/* 4085a3ce 2078 02b6 */
+	clrw	%a0@(424)		/* 4085a3d2 4268 01a8 */
+
+loc_4085a3d6:
+	moveal	%fp@(-4),%a4		/* 4085a3d6 286e fffc */
+	unlk	%fp			/* 4085a3da 4e5e */
 	rts				/* 4085a3dc 4e75 */
 
 CalcAncestorRgnsForPaintActions:
-	.short	0x2278	/* 4085a3de 2278 */
-	.short	0x2084	/* 4085a3e0 2084 */
-	.short	0x2269	/* 4085a3e2 2269 */
-	.short	0x00a0	/* 4085a3e4 00a0 */
+	moveal	0x2084,%a1		/* 4085a3de 2278 2084 */
+	moveal	%a1@(160),%a1		/* 4085a3e2 2269 00a0 */
 	jmp	%a1@			/* 4085a3e6 4ed1 */
 
 	.align	16
