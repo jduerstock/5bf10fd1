@@ -2,7 +2,7 @@
 	unlk	%fp			/* 40859002 4e5e */
 	rts				/* 40859004 4e75 */
 
-sub_40859006:
+WindowAtPos:
 	moveal	0x2084,%a1		/* 40859006 2278 2084 */
 	moveal	%a1@(24),%a1		/* 4085900a 2269 0018 */
 	jmp	%a1@			/* 4085900e 4ed1 */
@@ -20,7 +20,7 @@ __v__FINDFIRST:
 loc_4085902c:
 	movel	%a4,%sp@-		/* 4085902c 2f0c */
 	movel	%a3,%sp@-		/* 4085902e 2f0b */
-	jsr	%pc@(sub_40859006)	/* 40859030 4eba ffd4 */
+	jsr	%pc@(WindowAtPos)	/* 40859030 4eba ffd4 */
 	tstl	%d0			/* 40859034 4a80 */
 	addqw	#8,%sp			/* 40859036 504f */
 	beqs	loc_40859042		/* 40859038 6708 */
@@ -57,7 +57,7 @@ loc_40859086:
 	unlk	%fp			/* 4085908c 4e5e */
 	rtd	#12			/* 4085908e 4e74 000c */
 
-sub_40859092:
+FINDFIRST:
 	moveal	0x2084,%a1		/* 40859092 2278 2084 */
 	moveal	%a1@(28),%a1		/* 40859096 2269 001c */
 	jmp	%a1@			/* 4085909a 4ed1 */
@@ -82,7 +82,7 @@ __v__NextPosToCheck:
 	.short	0xa8a8			/* 408590ca a8a8 */
 	movel	%fp@(16),%sp@-		/* 408590cc 2f2e 0010 */
 	movel	%a4,%sp@-		/* 408590d0 2f0c */
-	jsr	%pc@(sub_40858ed6)	/* 408590d2 4eba fe02 */
+	jsr	%pc@(TestContent)	/* 408590d2 4eba fe02 */
 	tstb	%d0			/* 408590d6 4a00 */
 	addqw	#8,%sp			/* 408590d8 504f */
 	beqs	loc_408590e0		/* 408590da 6704 */
@@ -102,7 +102,7 @@ loc_408590e0:
 	.short	0xa8a8			/* 408590fc a8a8 */
 	movel	%fp@(16),%sp@-		/* 408590fe 2f2e 0010 */
 	movel	%a4,%sp@-		/* 40859102 2f0c */
-	jsr	%pc@(sub_40858ed6)	/* 40859104 4eba fdd0 */
+	jsr	%pc@(TestContent)	/* 40859104 4eba fdd0 */
 	moveq	#0,%d1			/* 40859108 7200 */
 	moveb	%d0,%d1			/* 4085910a 1200 */
 	movel	%d1,%d0			/* 4085910c 2001 */
@@ -113,7 +113,7 @@ loc_40859110:
 	unlk	%fp			/* 40859116 4e5e */
 	rts				/* 40859118 4e75 */
 
-sub_4085911a:
+NextPosToCheck:
 	moveal	0x2084,%a1		/* 4085911a 2278 2084 */
 	moveal	%a1@(32),%a1		/* 4085911e 2269 0020 */
 	jmp	%a1@			/* 40859122 4ed1 */
@@ -138,7 +138,7 @@ __v__GetNextStaggerPos:
 	.short	0xa8a8			/* 40859160 a8a8 */
 	movel	%fp@(16),%sp@-		/* 40859162 2f2e 0010 */
 	movel	%a3,%sp@-		/* 40859166 2f0b */
-	jsr	%pc@(sub_40858ed6)	/* 40859168 4eba fd6c */
+	jsr	%pc@(TestContent)	/* 40859168 4eba fd6c */
 	tstb	%d0			/* 4085916c 4a00 */
 	addqw	#8,%sp			/* 4085916e 504f */
 	beqw	loc_4085921a		/* 40859170 6700 00a8 */
@@ -154,14 +154,14 @@ __v__GetNextStaggerPos:
 	movel	%fp@(8),%fp@(-16)	/* 40859194 2d6e 0008 fff0 */
 	movel	%a3@,%sp@-		/* 4085919a 2f13 */
 	pea	%fp@(-28)		/* 4085919c 486e ffe4 */
-	jsr	%pc@(sub_40858fc6)	/* 408591a0 4eba fe24 */
+	jsr	%pc@(CreateCheckRect)	/* 408591a0 4eba fe24 */
 	subql	#2,%sp			/* 408591a4 558f */
 	moveq	#-1,%d0			/* 408591a6 70ff */
 	movel	%d0,%sp@-		/* 408591a8 2f00 */
 	moveq	#0,%d1			/* 408591aa 7200 */
 	movel	%d1,%sp@-		/* 408591ac 2f01 */
 	movel	%d1,%sp@-		/* 408591ae 2f01 */
-	pea	%pc@(sub_40859092)	/* 408591b0 487a fee0 */
+	pea	%pc@(FINDFIRST)	/* 408591b0 487a fee0 */
 	pea	%fp@(-28)		/* 408591b4 486e ffe4 */
 	moveq	#-8,%d0			/* 408591b8 70f8 */
 	.short	0xa829			/* 408591ba a829 */
@@ -179,7 +179,7 @@ loc_408591d2:
 	movel	%fp@(16),%sp@-		/* 408591d2 2f2e 0010 */
 	movel	%a3,%sp@-		/* 408591d6 2f0b */
 	pea	%fp@(-4)		/* 408591d8 486e fffc */
-	jsr	%pc@(sub_4085911a)	/* 408591dc 4eba ff3c */
+	jsr	%pc@(NextPosToCheck)	/* 408591dc 4eba ff3c */
 	tstl	%d0			/* 408591e0 4a80 */
 	lea	%sp@(12),%sp		/* 408591e2 4fef 000c */
 	bnes	loc_408591ee		/* 408591e6 6606 */
@@ -189,7 +189,7 @@ loc_408591d2:
 loc_408591ee:
 	movel	%a3@,%sp@-		/* 408591ee 2f13 */
 	pea	%fp@(-28)		/* 408591f0 486e ffe4 */
-	jsr	%pc@(sub_40858fc6)	/* 408591f4 4eba fdd0 */
+	jsr	%pc@(CreateCheckRect)	/* 408591f4 4eba fdd0 */
 	addqw	#8,%sp			/* 408591f8 504f */
 	bras	loc_40859210		/* 408591fa 6014 */
 
@@ -198,7 +198,7 @@ loc_408591fc:
 	subql	#1,%d7			/* 408591fe 5387 */
 	pea	%fp@(-28)		/* 40859200 486e ffe4 */
 	movel	%a4@,%sp@-		/* 40859204 2f14 */
-	jsr	%pc@(sub_40859006)	/* 40859206 4eba fdfe */
+	jsr	%pc@(WindowAtPos)	/* 40859206 4eba fdfe */
 	tstl	%d0			/* 4085920a 4a80 */
 	addqw	#8,%sp			/* 4085920c 504f */
 	bnes	loc_408591d2		/* 4085920e 66c2 */
@@ -217,7 +217,7 @@ loc_4085921a:
 	unlk	%fp			/* 40859222 4e5e */
 	rts				/* 40859224 4e75 */
 
-sub_40859226:
+GetNextStaggerPos:
 	moveal	0x2084,%a1		/* 40859226 2278 2084 */
 	moveal	%a1@(36),%a1		/* 4085922a 2269 0024 */
 	jmp	%a1@			/* 4085922e 4ed1 */
@@ -247,7 +247,7 @@ __v____POSITIONWINDOW:
 	lea	%sp@(12),%sp		/* 4085927a 4fef 000c */
 	beqs	loc_4085928a		/* 4085927e 670a */
 	pea	%fp@(-16)		/* 40859280 486e fff0 */
-	jsr	%pc@(sub_40858e4e)	/* 40859284 4eba fbc8 */
+	jsr	%pc@(ScreenWithMostOf)	/* 40859284 4eba fbc8 */
 	addqw	#4,%sp			/* 40859288 584f */
 
 loc_4085928a:
@@ -329,7 +329,7 @@ loc_40859330:
 	pea	%fp@(-16)		/* 40859338 486e fff0 */
 	movel	%fp@(-8),%sp@-		/* 4085933c 2f2e fff8 */
 	movel	%a4,%sp@-		/* 40859340 2f0c */
-	jsr	%pc@(sub_40859226)	/* 40859342 4eba fee2 */
+	jsr	%pc@(GetNextStaggerPos)	/* 40859342 4eba fee2 */
 	movel	%d0,%fp@(-8)		/* 40859346 2d40 fff8 */
 	lea	%sp@(20),%sp		/* 4085934a 4fef 0014 */
 
@@ -377,7 +377,7 @@ loc_408593a8:
 	unlk	%fp			/* 408593b4 4e5e */
 	rts				/* 408593b6 4e75 */
 
-sub_408593b8:
+GetMainScreenRect:
 	moveal	0x2084,%a1		/* 408593b8 2278 2084 */
 	moveal	%a1@(44),%a1		/* 408593bc 2269 002c */
 	jmp	%a1@			/* 408593c0 4ed1 */
@@ -397,7 +397,7 @@ loc_408593e0:
 	tstl	%d0			/* 408593e6 4a80 */
 	bnes	loc_408593f6		/* 408593e8 660c */
 	pea	%fp@(-8)		/* 408593ea 486e fff8 */
-	jsr	%pc@(sub_408593b8)	/* 408593ee 4eba ffc8 */
+	jsr	%pc@(GetMainScreenRect)	/* 408593ee 4eba ffc8 */
 	addqw	#4,%sp			/* 408593f2 584f */
 	bras	loc_40859434		/* 408593f4 603e */
 
@@ -432,7 +432,7 @@ loc_40859408:
 
 loc_4085942a:
 	pea	%fp@(-8)		/* 4085942a 486e fff8 */
-	jsr	%pc@(sub_408593b8)	/* 4085942e 4eba ff88 */
+	jsr	%pc@(GetMainScreenRect)	/* 4085942e 4eba ff88 */
 	addqw	#4,%sp			/* 40859432 584f */
 
 loc_40859434:
@@ -569,7 +569,7 @@ loc_40859580:
 	unlk	%fp			/* 40859584 4e5e */
 	rts				/* 40859586 4e75 */
 
-sub_40859588:
+IsZoomed:
 	moveal	0x2084,%a1		/* 40859588 2278 2084 */
 	moveal	%a1@(56),%a1		/* 4085958c 2269 0038 */
 	jmp	%a1@			/* 40859590 4ed1 */
@@ -597,7 +597,7 @@ loc_408595be:
 	.short	0xa029			/* 408595c8 a029 */
 	movew	#1,%a3@			/* 408595ca 36bc 0001 */
 	movel	%fp@(16),%sp@-		/* 408595ce 2f2e 0010 */
-	jsr	%pc@(sub_40859588)	/* 408595d2 4eba ffb4 */
+	jsr	%pc@(IsZoomed)	/* 408595d2 4eba ffb4 */
 	moveb	%d0,%a3@(10)		/* 408595d6 1740 000a */
 	addqw	#4,%sp			/* 408595da 584f */
 	beqs	loc_408595f2		/* 408595dc 6714 */
@@ -1229,7 +1229,7 @@ loc_40859ba0:
 	unlk	%fp			/* 40859bb0 4e5e */
 	rtd	#28			/* 40859bb2 4e74 001c */
 
-sub_40859bb6:
+NEWWINDOWCOMMON:
 	moveal	0x2084,%a1		/* 40859bb6 2278 2084 */
 	moveal	%a1@(80),%a1		/* 40859bba 2269 0050 */
 	jmp	%a1@			/* 40859bbe 4ed1 */
@@ -1250,7 +1250,7 @@ __v____NEWLAYER:
 	movel	%fp@(8),%sp@-		/* 40859be4 2f2e 0008 */
 	moveq	#1,%d1			/* 40859be8 7201 */
 	moveb	%d1,%sp@-		/* 40859bea 1f01 */
-	jsr	%pc@(sub_40859bb6)	/* 40859bec 4eba ffc8 */
+	jsr	%pc@(NEWWINDOWCOMMON)	/* 40859bec 4eba ffc8 */
 	movel	%sp@+,%a4@		/* 40859bf0 289f */
 	subql	#2,%sp			/* 40859bf2 558f */
 	movew	#3,%d0			/* 40859bf4 303c 0003 */
@@ -1269,7 +1269,7 @@ loc_40859c0a:
 	unlk	%fp			/* 40859c12 4e5e */
 	rtd	#16			/* 40859c14 4e74 0010 */
 
-sub_40859c18:
+__NEWLAYER:
 	moveal	0x2084,%a1		/* 40859c18 2278 2084 */
 	moveal	%a1@(84),%a1		/* 40859c1c 2269 0054 */
 	jmp	%a1@			/* 40859c20 4ed1 */
@@ -1360,6 +1360,7 @@ __v____SWAPCURLAYER:
 	unlk	%fp			/* 40859d0a 4e5e */
 	rtd	#4			/* 40859d0c 4e74 0004 */
 
+__SWAPCURLAYER:
 	moveal	0x2084,%a1		/* 40859d10 2278 2084 */
 	moveal	%a1@(96),%a1		/* 40859d14 2269 0060 */
 	jmp	%a1@			/* 40859d18 4ed1 */
@@ -1378,7 +1379,7 @@ __v____GETDESKPORT:
 	moveal	%a1@(100),%a1		/* 40859d3a 2269 0064 */
 	jmp	%a1@			/* 40859d3e 4ed1 */
 
-sub_40859d40:
+__GETSUBWINDOWS:
 	linkw	%fp,#0			/* 40859d40 4e56 0000 */
 	movel	%a4,%sp@-		/* 40859d44 2f0c */
 	moveal	%fp@(8),%a4		/* 40859d46 286e 0008 */
@@ -1430,7 +1431,7 @@ loc_40859da4:
 	bnes	loc_40859db6		/* 40859daa 660a */
 	subql	#4,%sp			/* 40859dac 598f */
 	movel	%a4,%sp@-		/* 40859dae 2f0c */
-	jsr	%pc@(sub_40859d40)	/* 40859db0 4eba ff8e */
+	jsr	%pc@(__GETSUBWINDOWS)	/* 40859db0 4eba ff8e */
 	moveal	%sp@+,%a3		/* 40859db4 265f */
 
 loc_40859db6:
@@ -1528,7 +1529,7 @@ loc_40859e72:
 	unlk	%fp			/* 40859e76 4e5e */
 	rtd	#12			/* 40859e78 4e74 000c */
 
-sub_40859e7c:
+PARENTSEARCH:
 	moveal	0x2084,%a1		/* 40859e7c 2278 2084 */
 	moveal	%a1@(108),%a1		/* 40859e80 2269 006c */
 	jmp	%a1@			/* 40859e84 4ed1 */
@@ -1558,7 +1559,7 @@ loc_40859eb6:
 	movel	%d0,%sp@-		/* 40859ec0 2f00 */
 	moveq	#0,%d1			/* 40859ec2 7200 */
 	movel	%d1,%sp@-		/* 40859ec4 2f01 */
-	pea	%pc@(sub_40859e7c)	/* 40859ec6 487a ffb4 */
+	pea	%pc@(PARENTSEARCH)	/* 40859ec6 487a ffb4 */
 	pea	%fp@(-4)		/* 40859eca 486e fffc */
 	moveq	#-8,%d0			/* 40859ece 70f8 */
 	.short	0xa829			/* 40859ed0 a829 */
@@ -1570,7 +1571,7 @@ loc_40859eb6:
 	movel	0xa90,%sp@-		/* 40859edc 2f38 0a90 */
 	subql	#4,%sp			/* 40859ee0 598f */
 	jsr	%pc@(__GETROOTLAYER)	/* 40859ee2 4eba 006c */
-	pea	%pc@(sub_40859e7c)	/* 40859ee6 487a ff94 */
+	pea	%pc@(PARENTSEARCH)	/* 40859ee6 487a ff94 */
 	pea	%fp@(-4)		/* 40859eea 486e fffc */
 	moveq	#-8,%d0			/* 40859eee 70f8 */
 	.short	0xa829			/* 40859ef0 a829 */
@@ -1649,6 +1650,7 @@ loc_40859f82:
 	unlk	%fp			/* 40859f88 4e5e */
 	rts				/* 40859f8a 4e75 */
 
+IsAncestor:
 	moveal	0x2084,%a1		/* 40859f8c 2278 2084 */
 	moveal	%a1@(120),%a1		/* 40859f90 2269 0078 */
 	jmp	%a1@			/* 40859f94 4ed1 */
@@ -1669,7 +1671,7 @@ __v____INITLAYERS:
 	.short	0xa8d8			/* 40859fbe a8d8 */
 	movel	%sp@+,%a4@(122)		/* 40859fc0 295f 007a */
 	movel	%a4,0x9e2		/* 40859fc4 21cc 09e2 */
-	jsr	%pc@(sub_40857736)	/* 40859fc8 4eba d76c */
+	jsr	%pc@(INITWINDOWSGUTS)	/* 40859fc8 4eba d76c */
 	clrw	%d7			/* 40859fcc 4247 */
 
 loc_40859fce:
@@ -1685,7 +1687,7 @@ loc_40859fce:
 	movel	%d0,%sp@-		/* 40859fe4 2f00 */
 	moveq	#0,%d0			/* 40859fe6 7000 */
 	movel	%d0,%sp@-		/* 40859fe8 2f00 */
-	jsr	%pc@(sub_40859c18)	/* 40859fea 4eba fc2c */
+	jsr	%pc@(__NEWLAYER)	/* 40859fea 4eba fc2c */
 	movel	%fp@(-4),%sp@-		/* 40859fee 2f2e fffc */
 	moveq	#4,%d0			/* 40859ff2 7004 */
 	.short	0xa829			/* 40859ff4 a829 */

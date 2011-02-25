@@ -313,7 +313,7 @@ loc_408572a2:
 	.short	0xa8d9			/* 408572a4 a8d9 */
 	braw	__v__PAINTODONE		/* 408572a6 6000 ff78 */
 
-sub_408572aa:
+PAINTONEGUTS:
 	CallVector	0x2084 63	/* 408572aa 2f30 81e2 2084 00fc */
 	rts				/* 408572b2 4e75 */
 
@@ -591,7 +591,7 @@ __v__ALLOCCPORT:
 	.short	0xaa00			/* 40857532 aa00 */
 	rts				/* 40857534 4e75 */
 
-sub_40857536:
+ALLOCPORT:
 	CallVector	0x2084 72	/* 40857536 2f30 81e2 2084 0120 */
 	rts				/* 4085753e 4e75 */
 
@@ -601,7 +601,7 @@ sub_40857536:
 	CallVector	0x2084 74	/* 4085754a 2f30 81e2 2084 0128 */
 	rts				/* 40857552 4e75 */
 
-sub_40857554:
+ALLOCP1:
 	CallVector	0x2084 73	/* 40857554 2f30 81e2 2084 0124 */
 	rts				/* 4085755c 4e75 */
 
@@ -644,14 +644,14 @@ loc_408575c0:
 	movel	%sp@+,0x118		/* 408575c0 21df 0118 */
 
 loc_408575c4:
-	bsrw	sub_40857536		/* 408575c4 6100 ff70 */
+	bsrw	ALLOCPORT		/* 408575c4 6100 ff70 */
 	movel	%a3,0x9de		/* 408575c8 21cb 09de */
 	moveal	%a3,%a4			/* 408575cc 284b */
 	movel	%a4@(24),%d6		/* 408575ce 2c2c 0018 */
 	movel	%a4@(28),%d7		/* 408575d2 2e2c 001c */
 	moveq	#108,%d0		/* 408575d6 706c */
 	moveq	#-1,%d1			/* 408575d8 72ff */
-	bsrw	sub_40857554		/* 408575da 6100 ff78 */
+	bsrw	ALLOCP1		/* 408575da 6100 ff78 */
 	movel	%a3,0xd2c		/* 408575de 21cb 0d2c */
 	movel	%a3@(24),%a4@(24)	/* 408575e2 296b 0018 0018 */
 	movel	%a3@(28),%a4@(28)	/* 408575e8 296b 001c 001c */
@@ -684,8 +684,8 @@ loc_40857618:
 	movel	%a3@(24),%sp@-		/* 40857624 2f2b 0018 */
 	.short	0xa8dc			/* 40857628 a8dc */
 	.short	0xa930			/* 4085762a a930 */
-	jsr	%pc@(sub_4085abf4)	/* 4085762c 4eba 35c6 */
-	jsr	%pc@(sub_4085ae7a)	/* 40857630 4eba 3848 */
+	jsr	%pc@(CALCMBHEIGHT)	/* 4085762c 4eba 35c6 */
+	jsr	%pc@(DRAWMBAR)	/* 40857630 4eba 3848 */
 	moveal	%d7,%a0			/* 40857634 2047 */
 	moveal	%a0@,%a0		/* 40857636 2050 */
 	lea	%a0@(2),%a0		/* 40857638 41e8 0002 */
@@ -786,7 +786,7 @@ loc_408576be:
 	unlk	%fp			/* 40857732 4e5e */
 	rts				/* 40857734 4e75 */
 
-sub_40857736:
+INITWINDOWSGUTS:
 	CallVector	0x2084 76	/* 40857736 2f30 81e2 2084 0130 */
 	rts				/* 4085773e 4e75 */
 
@@ -944,6 +944,7 @@ loc_4085787a:
 	movel	%sp@+,%sp@		/* 4085787e 2e9f */
 	rts				/* 40857880 4e75 */
 
+CLOSEWINDOWGUTS:
 	CallVector	0x2084 78	/* 40857882 2f30 81e2 2084 0138 */
 	rts				/* 4085788a 4e75 */
 
