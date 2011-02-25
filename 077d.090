@@ -444,46 +444,31 @@ loc_4085a452:
 	.align	16
 
 __PAINTBEHIND:
-	.short	0x4e56	/* 4085a460 4e56 */
-	.short	0xfff8	/* 4085a462 fff8 */
-	.short	0x48e7	/* 4085a464 48e7 */
-	.short	0x0018	/* 4085a466 0018 */
-	.short	0x266e	/* 4085a468 266e */
-	.short	0x0008	/* 4085a46a 0008 */
-	.short	0x286e	/* 4085a46c 286e */
-	.short	0x000c	/* 4085a46e 000c */
-	.short	0x2f0c	/* 4085a470 2f0c */
-	.short	0x4eba	/* 4085a472 4eba */
-	.short	0xff6a	/* 4085a474 ff6a */
-	.short	0x2f0b	/* 4085a476 2f0b */
-	.short	0x4eba	/* 4085a478 4eba */
-	.short	0xfea8	/* 4085a47a fea8 */
+	linkw	%fp,#-8			/* 4085a460 4e56 fff8 */
+	moveml	%a3-%a4,%sp@-		/* 4085a464 48e7 0018 */
+	moveal	%fp@(8),%a3		/* 4085a468 266e 0008 */
+	moveal	%fp@(12),%a4		/* 4085a46c 286e 000c */
+	movel	%a4,%sp@-		/* 4085a470 2f0c */
+	jsr	%pc@(CalcAncestorRgnsForPaintActions)	/* 4085a472 4eba ff6a */
+	movel	%a3,%sp@-		/* 4085a476 2f0b */
+	jsr	%pc@(PaintTheDesk)	/* 4085a478 4eba fea8 */
 	moveq	#-1,%d0			/* 4085a47c 70ff */
-	.short	0x2d40	/* 4085a47e 2d40 */
-	.short	0xfff8	/* 4085a480 fff8 */
-	.short	0x2d4b	/* 4085a482 2d4b */
-	.short	0xfffc	/* 4085a484 fffc */
-	.short	0x558f	/* 4085a486 558f */
-	.short	0x2f0c	/* 4085a488 2f0c */
+	movel	%d0,%fp@(-8)		/* 4085a47e 2d40 fff8 */
+	movel	%a3,%fp@(-4)		/* 4085a482 2d4b fffc */
+	subql	#2,%sp			/* 4085a486 558f */
+	movel	%a4,%sp@-		/* 4085a488 2f0c */
 	moveq	#-1,%d0			/* 4085a48a 70ff */
-	.short	0x2f00	/* 4085a48c 2f00 */
-	.short	0x7200	/* 4085a48e 7200 */
-	.short	0x2f01	/* 4085a490 2f01 */
-	.short	0x487a	/* 4085a492 487a */
-	.short	0xff0c	/* 4085a494 ff0c */
-	.short	0x486e	/* 4085a496 486e */
-	.short	0xfff8	/* 4085a498 fff8 */
-	.short	0x70f8	/* 4085a49a 70f8 */
-	.short	0xa829	/* 4085a49c a829 */
-	.short	0x31fc	/* 4085a49e 31fc */
-	.short	0xffff	/* 4085a4a0 ffff */
-	.short	0x09dc	/* 4085a4a2 09dc */
-	.short	0x4cee	/* 4085a4a4 4cee */
-	.short	0x1800	/* 4085a4a6 1800 */
-	.short	0xfff0	/* 4085a4a8 fff0 */
-	.short	0x4e5e	/* 4085a4aa 4e5e */
-	.short	0x4e74	/* 4085a4ac 4e74 */
-	.short	0x0008	/* 4085a4ae 0008 */
+	movel	%d0,%sp@-		/* 4085a48c 2f00 */
+	moveq	#0,%d1			/* 4085a48e 7200 */
+	movel	%d1,%sp@-		/* 4085a490 2f01 */
+	pea	%pc@(PAINTACTION)	/* 4085a492 487a ff0c */
+	pea	%fp@(-8)		/* 4085a496 486e fff8 */
+	moveq	#-8,%d0			/* 4085a49a 70f8 */
+	.short	0xa829			/* 4085a49c a829 */
+	movew	#-1,0x9dc		/* 4085a49e 31fc ffff 09dc */
+	moveml	%fp@(-16),%a3-%a4	/* 4085a4a4 4cee 1800 fff0 */
+	unlk	%fp			/* 4085a4aa 4e5e */
+	rtd	#8			/* 4085a4ac 4e74 0008 */
 
 __v____PAINTONEPAL:
 	.short	0x4e56	/* 4085a4b0 4e56 */
