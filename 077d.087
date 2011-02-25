@@ -965,81 +965,80 @@ __v__MAKEDEACTIVE:
 loc_408578ac:
 	rts				/* 408578ac 4e75 */
 
+sub_408578ae:
 	CallVector	0x2084 79	/* 408578ae 2f30 81e2 2084 013c */
 	rts				/* 408578b6 4e75 */
 
 	.align	16
 
 DISPOSEWINDOW:
-	.short	0x2f2f	/* 408578c0 2f2f */
-	.short	0x0004	/* 408578c2 0004 */
-	.short	0xa92d	/* 408578c4 a92d */
-	.short	0x225f	/* 408578c6 225f */
-	.short	0x205f	/* 408578c8 205f */
-	.short	0xa01f	/* 408578ca a01f */
+	movel	%sp@(4),%sp@-		/* 408578c0 2f2f 0004 */
+	.short	0xa92d			/* 408578c4 a92d */
+	moveal	%sp@+,%a1		/* 408578c6 225f */
+	moveal	%sp@+,%a0		/* 408578c8 205f */
+	.short	0xa01f			/* 408578ca a01f */
 	jmp	%a1@			/* 408578cc 4ed1 */
-	.short	0x0000	/* 408578ce 0000 */
-	.short	0x2078	/* 408578d0 2078 */
-	.short	0x09d6	/* 408578d2 09d6 */
-	.short	0x4a28	/* 408578d4 4a28 */
-	.short	0x006e	/* 408578d6 006e */
-	.short	0x660e	/* 408578d8 660e */
-	.short	0xb1ef	/* 408578da b1ef */
-	.short	0x0004	/* 408578dc 0004 */
-	.short	0x6718	/* 408578de 6718 */
-	.short	0x2068	/* 408578e0 2068 */
-	.short	0x0090	/* 408578e2 0090 */
-	.short	0x2008	/* 408578e4 2008 */
-	.short	0x66ec	/* 408578e6 66ec */
-	.short	0x2f2f	/* 408578e8 2f2f */
-	.short	0x0004	/* 408578ea 0004 */
-	.short	0x1f3c	/* 408578ec 1f3c */
-	.short	0x0001	/* 408578ee 0001 */
-	.short	0xa908	/* 408578f0 a908 */
-	.short	0x205f	/* 408578f2 205f */
-	.short	0x584f	/* 408578f4 584f */
-	.short	0x4ed0	/* 408578f6 4ed0 */
-	.short	0x2f08	/* 408578f8 2f08 */
-	.short	0xa91f	/* 408578fa a91f */
-	.short	0x60ea	/* 408578fc 60ea */
-	.short	0x0000	/* 408578fe 0000 */
+
+	.align	16
+
+	moveal	0x9d6,%a0		/* 408578d0 2078 09d6 */
+
+loc_408578d4:
+	tstb	%a0@(110)		/* 408578d4 4a28 006e */
+	bnes	loc_408578e8		/* 408578d8 660e */
+	cmpal	%sp@(4),%a0		/* 408578da b1ef 0004 */
+	beqs	loc_408578f8		/* 408578de 6718 */
+	moveal	%a0@(144),%a0		/* 408578e0 2068 0090 */
+	movel	%a0,%d0			/* 408578e4 2008 */
+	bnes	loc_408578d4		/* 408578e6 66ec */
+
+loc_408578e8:
+	movel	%sp@(4),%sp@-		/* 408578e8 2f2f 0004 */
+	moveb	#1,%sp@-		/* 408578ec 1f3c 0001 */
+	.short	0xa908			/* 408578f0 a908 */
+	moveal	%sp@+,%a0		/* 408578f2 205f */
+	addqw	#4,%sp			/* 408578f4 584f */
+	jmp	%a0@			/* 408578f6 4ed0 */
+
+loc_408578f8:
+	movel	%a0,%sp@-		/* 408578f8 2f08 */
+	.short	0xa91f			/* 408578fa a91f */
+	bras	loc_408578e8		/* 408578fc 60ea */
+
+	.align	16
 
 HIDEWINDOW:
-	.short	0x594f	/* 40857900 594f */
-	.short	0x4eba	/* 40857902 4eba */
-	.short	0x2ee4	/* 40857904 2ee4 */
-	.short	0x2f2f	/* 40857906 2f2f */
-	.short	0x0008	/* 40857908 0008 */
-	.short	0x4267	/* 4085790a 4267 */
-	.short	0xa908	/* 4085790c a908 */
-	.short	0x201f	/* 4085790e 201f */
-	.short	0xb0af	/* 40857910 b0af */
-	.short	0x0004	/* 40857912 0004 */
-	.short	0x6612	/* 40857914 6612 */
-	.short	0x6100	/* 40857916 6100 */
-	.short	0xff96	/* 40857918 ff96 */
-	.short	0x594f	/* 4085791a 594f */
-	.short	0x4eba	/* 4085791c 4eba */
-	.short	0x2eca	/* 4085791e 2eca */
-	.short	0x21d7	/* 40857920 21d7 */
-	.short	0x0a64	/* 40857922 0a64 */
-	.short	0x6706	/* 40857924 6706 */
-	.short	0xa91f	/* 40857926 a91f */
-	.short	0x2e9f	/* 40857928 2e9f */
+	subqw	#4,%sp			/* 40857900 594f */
+	jsr	%pc@(__ACTIVEWINDOW)	/* 40857902 4eba 2ee4 */
+	movel	%sp@(8),%sp@-		/* 40857906 2f2f 0008 */
+	clrw	%sp@-			/* 4085790a 4267 */
+	.short	0xa908			/* 4085790c a908 */
+	movel	%sp@+,%d0		/* 4085790e 201f */
+	cmpl	%sp@(4),%d0		/* 40857910 b0af 0004 */
+	bnes	loc_40857928		/* 40857914 6612 */
+	bsrw	sub_408578ae		/* 40857916 6100 ff96 */
+	subqw	#4,%sp			/* 4085791a 594f */
+	jsr	%pc@(__ACTIVEWINDOW)	/* 4085791c 4eba 2eca */
+	movel	%sp@,0xa64		/* 40857920 21d7 0a64 */
+	beqs	loc_4085792c		/* 40857924 6706 */
+	.short	0xa91f			/* 40857926 a91f */
+
+loc_40857928:
+	movel	%sp@+,%sp@		/* 40857928 2e9f */
 	rts				/* 4085792a 4e75 */
-	.short	0x584f	/* 4085792c 584f */
-	.short	0x60f8	/* 4085792e 60f8 */
+
+loc_4085792c:
+	addqw	#4,%sp			/* 4085792c 584f */
+	bras	loc_40857928		/* 4085792e 60f8 */
 
 GETWREFCON:
-	.short	0x323c	/* 40857930 323c */
-	.short	0x0098	/* 40857932 0098 */
+	movew	#152,%d1		/* 40857930 323c 0098 */
 
 __v__GETWCOMMON:
-	.short	0x205f	/* 40857934 205f */
-	.short	0x225f	/* 40857936 225f */
-	.short	0x2eb1	/* 40857938 2eb1 */
-	.short	0x1000	/* 4085793a 1000 */
-	.short	0x4ed0	/* 4085793c 4ed0 */
+	moveal	%sp@+,%a0		/* 40857934 205f */
+	moveal	%sp@+,%a1		/* 40857936 225f */
+	movel	%a1@(%d1:w),%sp@	/* 40857938 2eb1 1000 */
+	jmp	%a0@			/* 4085793c 4ed0 */
 
 	CallVector	0x2084	80	/* 4085793e 2f30 81e2 2084 0140 */
 	rts				/* 40857946 4e75 */
