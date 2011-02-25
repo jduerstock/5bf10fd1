@@ -951,20 +951,18 @@ CLOSEWINDOWGUTS:
 	.align	16
 
 __v__MAKEDEACTIVE:
-	.short	0x2f00	/* 40857890 2f00 */
-	.short	0x2f00	/* 40857892 2f00 */
-	.short	0x4267	/* 40857894 4267 */
-	.short	0xa91c	/* 40857896 a91c */
-	.short	0x201f	/* 40857898 201f */
-	.short	0x4ab8	/* 4085789a 4ab8 */
-	.short	0x0a68	/* 4085789c 0a68 */
-	.short	0x6e0c	/* 4085789e 6e0c */
-	.short	0x2040	/* 408578a0 2040 */
-	.short	0x31e8	/* 408578a2 31e8 */
-	.short	0x006c	/* 408578a4 006c */
-	.short	0x0a22	/* 408578a6 0a22 */
-	.short	0x21c0	/* 408578a8 21c0 */
-	.short	0x0a68	/* 408578aa 0a68 */
+	movel	%d0,%sp@-		/* 40857890 2f00 */
+	movel	%d0,%sp@-		/* 40857892 2f00 */
+	clrw	%sp@-			/* 40857894 4267 */
+	.short	0xa91c			/* 40857896 a91c */
+	movel	%sp@+,%d0		/* 40857898 201f */
+	tstl	0xa68			/* 4085789a 4ab8 0a68 */
+	bgts	loc_408578ac		/* 4085789e 6e0c */
+	moveal	%d0,%a0			/* 408578a0 2040 */
+	movew	%a0@(108),0xa22		/* 408578a2 31e8 006c 0a22 */
+	movel	%d0,0xa68		/* 408578a8 21c0 0a68 */
+
+loc_408578ac:
 	rts				/* 408578ac 4e75 */
 
 	CallVector	0x2084 79	/* 408578ae 2f30 81e2 2084 013c */
