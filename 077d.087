@@ -1758,39 +1758,28 @@ SELWIN1:
 	.align	16
 
 __v__BRINGTOFRONT:
-	.short	0x4278	/* 40857fc0 4278 */
-	.short	0x0a44	/* 40857fc2 0a44 */
+	clrw	0xa44			/* 40857fc0 4278 0a44 */
 
 __v__BTF1:
-	.short	0x48e7	/* 40857fc4 48e7 */
-	.short	0x1e38	/* 40857fc6 1e38 */
-	.short	0x266f	/* 40857fc8 266f */
-	.short	0x0020	/* 40857fca 0020 */
-	.short	0x6100	/* 40857fcc 6100 */
-	.short	0xf50c	/* 40857fce f50c */
-	.short	0x45f8	/* 40857fd0 45f8 */
-	.short	0x09d6	/* 40857fd2 09d6 */
-	.short	0xb7d2	/* 40857fd4 b7d2 */
-	.short	0x6700	/* 40857fd6 6700 */
-	.short	0x0084	/* 40857fd8 0084 */
-	.short	0x6100	/* 40857fda 6100 */
-	.short	0xf390	/* 40857fdc f390 */
-	.short	0x261f	/* 40857fde 261f */
-	.short	0x2852	/* 40857fe0 2852 */
+	moveml	%d3-%d6/%a2-%a4,%sp@-	/* 40857fc4 48e7 1e38 */
+	moveal	%sp@(32),%a3		/* 40857fc8 266f 0020 */
+	bsrw	SETWPORT		/* 40857fcc 6100 f50c */
+	lea	0x9d6,%a2		/* 40857fd0 45f8 09d6 */
+	cmpal	%a2@,%a3		/* 40857fd4 b7d2 */
+	beqw	loc_4085805c		/* 40857fd6 6700 0084 */
+	bsrw	GETNEWRGN		/* 40857fda 6100 f390 */
+	movel	%sp@+,%d3		/* 40857fde 261f */
+	moveal	%a2@,%a4		/* 40857fe0 2852 */
 
 loc_40857fe2:
-	.short	0xb9cb	/* 40857fe2 b9cb */
-	.short	0x6740	/* 40857fe4 6740 */
-	.short	0x4a2c	/* 40857fe6 4a2c */
-	.short	0x006e	/* 40857fe8 006e */
-	.short	0x6732	/* 40857fea 6732 */
-	.short	0x204c	/* 40857fec 204c */
-	.short	0x6100	/* 40857fee 6100 */
-	.short	0xf05e	/* 40857ff0 f05e */
-	.short	0x2c28	/* 40857ff2 2c28 */
-	.short	0x0006	/* 40857ff4 0006 */
-	.short	0x2a2c	/* 40857ff6 2a2c */
-	.short	0x0018	/* 40857ff8 0018 */
-	.short	0x2f05	/* 40857ffa 2f05 */
-	.short	0x2f06	/* 40857ffc 2f06 */
-	.short	0x6100	/* 40857ffe 6100 */
+	cmpal	%a3,%a4			/* 40857fe2 b9cb */
+	beqs	loc_40858026		/* 40857fe4 6740 */
+	tstb	%a4@(110)		/* 40857fe6 4a2c 006e */
+	beqs	loc_4085801e		/* 40857fea 6732 */
+	moveal	%a4,%a0			/* 40857fec 204c */
+	bsrw	PORTTOBITMAP		/* 40857fee 6100 f05e */
+	movel	%a0@(6),%d6		/* 40857ff2 2c28 0006 */
+	movel	%a4@(24),%d5		/* 40857ff6 2a2c 0018 */
+	movel	%d5,%sp@-		/* 40857ffa 2f05 */
+	movel	%d6,%sp@-		/* 40857ffc 2f06 */
+	bsrw	NEGWORDS		/* 40857ffe 6100 008a */
