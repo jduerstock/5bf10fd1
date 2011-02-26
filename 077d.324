@@ -893,22 +893,23 @@ sub_40944830:
 	.short	0x0000	/* 4094489e 0000 */
 
 sub_409448a0:
-	.short	0x5d8f	/* 409448a0 5d8f */
-	.short	0x486f	/* 409448a2 486f */
-	.short	0x0002	/* 409448a4 0002 */
-	.short	0x303c	/* 409448a6 303c */
-	.short	0x0203	/* 409448a8 0203 */
-	.short	0xaa68	/* 409448aa aa68 */
-	.short	0x4a5f	/* 409448ac 4a5f */
-	.short	0x6604	/* 409448ae 6604 */
-	.short	0x205f	/* 409448b0 205f */
-	.short	0x4ed0	/* 409448b2 4ed0 */
-	.short	0x205f	/* 409448b4 205f */
-	.short	0xdefc	/* 409448b6 defc */
-	.short	0x000c	/* 409448b8 000c */
-	.short	0x4257	/* 409448ba 4257 */
-	.short	0x4ed0	/* 409448bc 4ed0 */
-	.short	0x0000	/* 409448be 0000 */
+	subql	#6,%sp			/* 409448a0 5d8f */
+	pea	%sp@(2)			/* 409448a2 486f 0002 */
+	movew	#515,%d0		/* 409448a6 303c 0203 */
+	.short	0xaa68			/* 409448aa aa68 */
+	tstw	%sp@+			/* 409448ac 4a5f */
+	bnes	loc_409448b4		/* 409448ae 6604 */
+	moveal	%sp@+,%a0		/* 409448b0 205f */
+	jmp	%a0@			/* 409448b2 4ed0 */
+
+loc_409448b4:
+	moveal	%sp@+,%a0		/* 409448b4 205f */
+	addaw	#12,%sp			/* 409448b6 defc 000c */
+	clrw	%sp@			/* 409448ba 4257 */
+	jmp	%a0@			/* 409448bc 4ed0 */
+
+	.align	16
+
 	.short	0x201f	/* 409448c0 201f */
 	.short	0x3f3c	/* 409448c2 3f3c */
 	.short	0x0402	/* 409448c4 0402 */
