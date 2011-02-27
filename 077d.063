@@ -200,7 +200,7 @@ loc_4083f16e:
 	movew	0xab0,%d5		/* 4083f178 3a38 0ab0 */
 	bsrs	sub_4083f1cc		/* 4083f17c 614e */
 	moveal	0xab4,%a0		/* 4083f17e 2078 0ab4 */
-	.short	0xa02a			/* 4083f182 a02a */
+	_HUnlock			/* 4083f182 a02a */
 
 loc_4083f184:
 	rts				/* 4083f184 4e75 */
@@ -235,7 +235,7 @@ loc_4083f1c2:
 
 loc_4083f1c6:
 	moveal	%sp@+,%a0		/* 4083f1c6 205f */
-	.short	0xa02a			/* 4083f1c8 a02a */
+	_HUnlock			/* 4083f1c8 a02a */
 	rts				/* 4083f1ca 4e75 */
 
 sub_4083f1cc:
@@ -374,7 +374,7 @@ loc_4083f2de:
 	bnes	loc_4083f2b2		/* 4083f2e4 66cc */
 	subqw	#4,%a2			/* 4083f2e6 594a */
 	moveal	%a3@(74),%a0		/* 4083f2e8 206b 004a */
-	.short	0xa02a			/* 4083f2ec a02a */
+	_HUnlock			/* 4083f2ec a02a */
 	moveal	%a2,%a0			/* 4083f2ee 204a */
 	movew	%d4,%d0			/* 4083f2f0 3004 */
 	bsrw	sub_40840128		/* 4083f2f2 6100 0e34 */
@@ -386,7 +386,7 @@ sub_4083f300:
 	moveml	%d2-%d3/%a2,%sp@-	/* 4083f300 48e7 3020 */
 	moveal	%a0,%a2			/* 4083f304 2448 */
 	moveal	%a3@(74),%a0		/* 4083f306 206b 004a */
-	.short	0xa02a			/* 4083f30a a02a */
+	_HUnlock			/* 4083f30a a02a */
 	moveal	%a0@,%a1		/* 4083f30c 2250 */
 	moveq	#1,%d0			/* 4083f30e 7001 */
 	addw	%a1@,%d0		/* 4083f310 d051 */
@@ -530,17 +530,16 @@ loc_4083f41a:
 	rts				/* 4083f426 4e75 */
 
 sub_4083f428:
-	.short	0x225f	/* 4083f428 225f */
-	.short	0x206b	/* 4083f42a 206b */
-	.short	0x003e	/* 4083f42c 003e */
-	.short	0xa02a	/* 4083f42e a02a */
-	.short	0x598f	/* 4083f430 598f */
-	.short	0x2f08	/* 4083f432 2f08 */
-	.short	0x3f2b	/* 4083f434 3f2b */
-	.short	0x0020	/* 4083f436 0020 */
-	.short	0x4267	/* 4083f438 4267 */
-	.short	0x42a7	/* 4083f43a 42a7 */
+	moveal	%sp@+,%a1		/* 4083f428 225f */
+	moveal	%a3@(62),%a0		/* 4083f42a 206b 003e */
+	_HUnlock			/* 4083f42e a02a */
+	subql	#4,%sp			/* 4083f430 598f */
+	movel	%a0,%sp@-		/* 4083f432 2f08 */
+	movew	%a3@(32),%sp@-		/* 4083f434 3f2b 0020 */
+	clrw	%sp@-			/* 4083f438 4267 */
+	clrl	%sp@-			/* 4083f43a 42a7 */
 	jmp	%a1@			/* 4083f43c 4ed1 */
+
 	.short	0x4a45	/* 4083f43e 4a45 */
 	.short	0x674a	/* 4083f440 674a */
 	.short	0x206b	/* 4083f442 206b */
