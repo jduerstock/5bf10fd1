@@ -282,39 +282,33 @@ __v__LockZoneHandle:
 	.align	16
 
 __v__UnlockZoneHandle:
-	.short	0x4e56	/* 408a0290 4e56 */
-	.short	0x0000	/* 408a0292 0000 */
-	.short	0x48e7	/* 408a0294 48e7 */
-	.short	0x0118	/* 408a0296 0118 */
-	.short	0x286e	/* 408a0298 286e */
-	.short	0x000c	/* 408a029a 000c */
-	.short	0x200c	/* 408a029c 200c */
-	.short	0x671c	/* 408a029e 671c */
-	.short	0x2f0c	/* 408a02a0 2f0c */
-	.short	0x4eba	/* 408a02a2 4eba */
-	.short	0xfe56	/* 408a02a4 fe56 */
-	.short	0x2640	/* 408a02a6 2640 */
-	.short	0x206e	/* 408a02a8 206e */
-	.short	0x0008	/* 408a02aa 0008 */
-	.short	0xa02a	/* 408a02ac a02a */
-	.short	0x3e38	/* 408a02ae 3e38 */
-	.short	0x0220	/* 408a02b0 0220 */
-	.short	0x2f0b	/* 408a02b2 2f0b */
-	.short	0x4eba	/* 408a02b4 4eba */
-	.short	0xfe44	/* 408a02b6 fe44 */
-	.short	0x504f	/* 408a02b8 504f */
-	.short	0x6002	/* 408a02ba 6002 */
-	.short	0x7e8f	/* 408a02bc 7e8f */
-	.short	0x3007	/* 408a02be 3007 */
-	.short	0x4cee	/* 408a02c0 4cee */
-	.short	0x1880	/* 408a02c2 1880 */
-	.short	0xfff4	/* 408a02c4 fff4 */
-	.short	0x4e5e	/* 408a02c6 4e5e */
+	linkw	%fp,#0			/* 408a0290 4e56 0000 */
+	moveml	%d7/%a3-%a4,%sp@-	/* 408a0294 48e7 0118 */
+	moveal	%fp@(12),%a4		/* 408a0298 286e 000c */
+	movel	%a4,%d0			/* 408a029c 200c */
+	beqs	loc_408a02bc		/* 408a029e 671c */
+	movel	%a4,%sp@-		/* 408a02a0 2f0c */
+	jsr	%pc@(SwapZone)		/* 408a02a2 4eba fe56 */
+	moveal	%d0,%a3			/* 408a02a6 2640 */
+	moveal	%fp@(8),%a0		/* 408a02a8 206e 0008 */
+	.short	0xa02a			/* 408a02ac a02a */
+	movew	0x220,%d7		/* 408a02ae 3e38 0220 */
+	movel	%a3,%sp@-		/* 408a02b2 2f0b */
+	jsr	%pc@(SwapZone)		/* 408a02b4 4eba fe44 */
+	addqw	#8,%sp			/* 408a02b8 504f */
+	bras	loc_408a02be		/* 408a02ba 6002 */
+
+loc_408a02bc:
+	moveq	#-113,%d7		/* 408a02bc 7e8f */
+
+loc_408a02be:
+	movew	%d7,%d0			/* 408a02be 3007 */
+	moveml	%fp@(-12),%d7/%a3-%a4	/* 408a02c0 4cee 1880 fff4 */
+	unlk	%fp			/* 408a02c6 4e5e */
 	rts				/* 408a02c8 4e75 */
-	.short	0x2278	/* 408a02ca 2278 */
-	.short	0x202c	/* 408a02cc 202c */
-	.short	0x2269	/* 408a02ce 2269 */
-	.short	0x01fc	/* 408a02d0 01fc */
+
+	moveal	0x202c,%a1		/* 408a02ca 2278 202c */
+	moveal	%a1@(508),%a1		/* 408a02ce 2269 01fc */
 	jmp	%a1@			/* 408a02d2 4ed1 */
 
 	.align	16
