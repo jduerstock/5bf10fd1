@@ -223,16 +223,23 @@ loc_4092d1be:
 	rts				/* 4092d1c0 4e75 */
 
 sub_4092d1c2:
-	.short	0x2050	/* 4092d1c2 2050 */
-	.short	0x2018	/* 4092d1c4 2018 */
-	.short	0x670c	/* 4092d1c6 670c */
-	.short	0xb280	/* 4092d1c8 b280 */
-	.short	0x6704	/* 4092d1ca 6704 */
-	.short	0x5848	/* 4092d1cc 5848 */
-	.short	0x60f4	/* 4092d1ce 60f4 */
-	.short	0x2018	/* 4092d1d0 2018 */
-	.short	0x4840	/* 4092d1d2 4840 */
+	moveal	%a0@,%a0		/* 4092d1c2 2050 */
+
+loc_4092d1c4:
+	movel	%a0@+,%d0		/* 4092d1c4 2018 */
+	beqs	loc_4092d1d4		/* 4092d1c6 670c */
+	cmpl	%d0,%d1			/* 4092d1c8 b280 */
+	beqs	loc_4092d1d0		/* 4092d1ca 6704 */
+	addqw	#4,%a0			/* 4092d1cc 5848 */
+	bras	loc_4092d1c4		/* 4092d1ce 60f4 */
+
+loc_4092d1d0:
+	movel	%a0@+,%d0		/* 4092d1d0 2018 */
+	swap	%d0			/* 4092d1d2 4840 */
+
+loc_4092d1d4:
 	rts				/* 4092d1d4 4e75 */
+
 	.short	0x7801	/* 4092d1d6 7801 */
 	.short	0x204c	/* 4092d1d8 204c */
 	.short	0xa029	/* 4092d1da a029 */
