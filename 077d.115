@@ -1572,18 +1572,18 @@ __v__GETMAINCRSR:
 	.short	0x000e	/* 40873c20 000e */
 	.short	0x4ed0	/* 40873c22 4ed0 */
 
-sub_40873c24:
+GETMAINCRSR:
 	CallVector	0x2054 232	/* 40873c24 2f30 81e2 2054 03a0 */
 	rts				/* 40873c2c 4e75 */
 
 	CallVector	0x2054 229	/* 40873c2e 2f30 81e2 2054 0394 */
 	rts				/* 40873c36 4e75 */
 
-sub_40873c38:
+ERASECURSOR:
 	CallVector	0x2054 230	/* 40873c38 2f30 81e2 2054 0398 */
 	rts				/* 40873c40 4e75 */
 
-sub_40873c42:
+DRAWCURSOR:
 	CallVector	0x2054 231	/* 40873c42 2f30 81e2 2054 039c */
 	rts				/* 40873c4a 4e75 */
 
@@ -1644,7 +1644,7 @@ __v__SETCRSRDATA:
 	.short	0x0c20	/* 40873cbe 0c20 */
 	rts				/* 40873cc0 4e75 */
 
-sub_40873cc2:
+SETCRSRDATA:
 	CallVector	0x2054 233	/* 40873cc2 2f30 81e2 2054 03a4 */
 	rts				/* 40873cca 4e75 */
 
@@ -1653,7 +1653,7 @@ sub_40873cc2:
 	moveml	%d0-%d6/%a0-%a4/%fp,%sp@-	/* 40873cd0 48e7 fefa */
 	movel	0x118,%sp@-		/* 40873cd4 2f38 0118 */
 	movel	0x2a6,0x118		/* 40873cd8 21f8 02a6 0118 */
-	bsrw	sub_40873c38		/* 40873cde 6100 ff58 */
+	bsrw	ERASECURSOR		/* 40873cde 6100 ff58 */
 	moveb	#1,0x8cd		/* 40873ce2 11fc 0001 08cd */
 	movel	0xd62,%d0		/* 40873ce8 2038 0d62 */
 	cmpl	0xa06,%d0		/* 40873cec b0b8 0a06 */
@@ -1673,7 +1673,7 @@ sub_40873cc2:
 	movel	%a0,%a4@(2)		/* 40873d18 2948 0002 */
 	.short	0xa029			/* 40873d1c a029 */
 	moveq	#2,%d0			/* 40873d1e 7002 */
-	jsr	%pc@(sub_40877404)	/* 40873d20 4eba 36e2 */
+	jsr	%pc@(RNEWHANDLE)	/* 40873d20 4eba 36e2 */
 	movel	%a0,%a4@(6)		/* 40873d24 2948 0006 */
 	movel	#1024,%d1		/* 40873d28 223c 0000 0400 */
 	bsrw	sub_40873e26		/* 40873d2e 6100 00f6 */
@@ -1755,13 +1755,13 @@ loc_40873dfc:
 	movel	%fp@(30),%d4		/* 40873dfc 282e 001e */
 	moveal	%d4,%fp			/* 40873e00 2c44 */
 	bnew	loc_40873d5c		/* 40873e02 6600 ff58 */
-	bsrw	sub_40873c24		/* 40873e06 6100 fe1c */
+	bsrw	GETMAINCRSR		/* 40873e06 6100 fe1c */
 	moveal	0x89c,%a1		/* 40873e0a 2278 089c */
 	moveal	%a1@,%a1		/* 40873e0e 2251 */
-	jsr	%pc@(sub_40873cc2)	/* 40873e10 4eba feb0 */
+	jsr	%pc@(SETCRSRDATA)	/* 40873e10 4eba feb0 */
 	movel	%sp@+,0x118		/* 40873e14 21df 0118 */
 	clrb	0x8cd			/* 40873e18 4238 08cd */
-	bsrw	sub_40873c42		/* 40873e1c 6100 fe24 */
+	bsrw	DRAWCURSOR		/* 40873e1c 6100 fe24 */
 	moveml	%sp@+,%d0-%d6/%a0-%a4/%fp	/* 40873e20 4cdf 5f7f */
 	rts				/* 40873e24 4e75 */
 
