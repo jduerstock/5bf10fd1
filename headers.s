@@ -120,6 +120,10 @@
 		.short	0xa02c
 	.endm
 
+	.macro	_SetApplLimit
+		.short	0xa02d
+	.endm
+
 	.macro	_BlockMove
 		.short	0xa02e
 	.endm
