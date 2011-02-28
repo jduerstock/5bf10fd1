@@ -261,7 +261,7 @@ loc_40885200:
 	movel	#30,%sp@-		/* 40885220 2f3c 0000 001e */
 	tsjsr	0xa863			/* 40885226 4eb0 81e1 0f8c */
 	clrl	%sp@-			/* 4088522c 42a7 */
-	jsr	%pc@(sub_40885410)	/* 4088522e 4eba 01e0 */
+	jsr	%pc@(MASKEND)	/* 4088522e 4eba 01e0 */
 	moveal	%sp@+,%a4		/* 40885232 285f */
 	movel	0xcc8,%fp@(-18)		/* 40885234 2d78 0cc8 ffee */
 	movel	%a4,0xcc8		/* 4088523a 21cc 0cc8 */
@@ -463,7 +463,7 @@ __v__GETTEMPDEVICE:
 	.short	0x285f	/* 4088540c 285f */
 	rts				/* 4088540e 4e75 */
 
-sub_40885410:
+MASKEND:
 	CallVector	0x2054 65	/* 40885410 2f30 81e2 2054 0104 */
 	rts				/* 40885418 4e75 */
 
@@ -536,9 +536,9 @@ loc_40885490:
 	movew	%d4,%fp@(-14)		/* 408854ca 3d44 fff2 */
 	clrw	%fp@(-72)		/* 408854ce 426e ffb8 */
 	clrw	%fp@(-74)		/* 408854d2 426e ffb6 */
-	jsr	%pc@(sub_40887410)	/* 408854d6 4eba 1f38 */
+	jsr	%pc@(CALCDEVS)	/* 408854d6 4eba 1f38 */
 	clrw	%sp@-			/* 408854da 4267 */
-	jsr	%pc@(sub_40886c58)	/* 408854dc 4eba 177a */
+	jsr	%pc@(SCATTERDEVICES)	/* 408854dc 4eba 177a */
 	tstl	%fp@(-48)		/* 408854e0 4aae ffd0 */
 	beqw	loc_4088557e		/* 408854e4 6700 0098 */
 	lea	%a4@(16),%a4		/* 408854e8 49ec 0010 */
@@ -591,7 +591,7 @@ loc_40885550:
 	movew	%fp@(-72),%fp@(-76)	/* 40885558 3d6e ffb8 ffb4 */
 	movew	%fp@(-74),%fp@(-78)	/* 4088555e 3d6e ffb6 ffb2 */
 	movew	%d4,%fp@(-28)		/* 40885564 3d44 ffe4 */
-	jsr	%pc@(sub_40886d7c)	/* 40885568 4eba 1812 */
+	jsr	%pc@(SETDEV)	/* 40885568 4eba 1812 */
 	beqs	loc_40885570		/* 4088556c 6702 */
 	addqw	#1,%d3			/* 4088556e 5243 */
 
@@ -616,12 +616,12 @@ loc_4088557e:
 	notl	%d1			/* 408855a6 4681 */
 	andl	%d1,%d0			/* 408855a8 c081 */
 	beqs	loc_408855b0		/* 408855aa 6704 */
-	jsr	%pc@(sub_4088750a)	/* 408855ac 4eba 1f5c */
+	jsr	%pc@(UNRESERVEDEVICES)	/* 408855ac 4eba 1f5c */
 
 loc_408855b0:
 	clrw	%sp@-			/* 408855b0 4267 */
-	jsr	%pc@(sub_40886c58)	/* 408855b2 4eba 16a4 */
-	jsr	%pc@(sub_408872f0)	/* 408855b6 4eba 1d38 */
+	jsr	%pc@(SCATTERDEVICES)	/* 408855b2 4eba 16a4 */
+	jsr	%pc@(UPDATEDEVICES)	/* 408855b6 4eba 1d38 */
 	movel	%fp@(-44),%a1@(8)	/* 408855ba 236e ffd4 0008 */
 	subqw	#1,%d3			/* 408855c0 5343 */
 
@@ -697,31 +697,31 @@ loc_4088564c:
 	bfset	%fp@(-116),%d3,1	/* 40885676 eeee 08c1 ff8c */
 	clrw	%sp@-			/* 4088567c 4267 */
 	movew	%a2@(12),%sp@-		/* 4088567e 3f2a 000c */
-	jsr	%pc@(sub_40886244)	/* 40885682 4eba 0bc0 */
+	jsr	%pc@(FINDLINK)	/* 40885682 4eba 0bc0 */
 	movew	%sp@+,%d2		/* 40885686 341f */
 	bnes	loc_408856ba		/* 40885688 6630 */
 	movew	%d3,%sp@-		/* 4088568a 3f03 */
-	jsr	%pc@(sub_4088639e)	/* 4088568c 4eba 0d10 */
+	jsr	%pc@(PILLAGE)	/* 4088568c 4eba 0d10 */
 	movew	%d3,%d2			/* 40885690 3403 */
 	bras	loc_408856ac		/* 40885692 6018 */
 
 loc_40885694:
 	clrw	%sp@-			/* 40885694 4267 */
 	movew	%a2@(12),%sp@-		/* 40885696 3f2a 000c */
-	jsr	%pc@(sub_40886244)	/* 4088569a 4eba 0ba8 */
+	jsr	%pc@(FINDLINK)	/* 4088569a 4eba 0ba8 */
 	movew	%sp@+,%d2		/* 4088569e 341f */
 	bnes	loc_408856ba		/* 408856a0 6618 */
 	subqw	#2,%sp			/* 408856a2 554f */
-	bsrw	sub_408863ce		/* 408856a4 6100 0d28 */
+	bsrw	GIMMEINDEX		/* 408856a4 6100 0d28 */
 	movew	%sp@+,%d2		/* 408856a8 341f */
 	beqs	loc_408856c0		/* 408856aa 6714 */
 
 loc_408856ac:
 	movew	%d2,%sp@-		/* 408856ac 3f02 */
-	jsr	%pc@(sub_4088639e)	/* 408856ae 4eba 0cee */
+	jsr	%pc@(PILLAGE)	/* 408856ae 4eba 0cee */
 	movew	%d4,%d0			/* 408856b2 3004 */
 	moveal	%a2,%a0			/* 408856b4 204a */
-	bsrw	sub_40885a8e		/* 408856b6 6100 03d6 */
+	bsrw	CLAIMINDEX		/* 408856b6 6100 03d6 */
 
 loc_408856ba:
 	bset	#15,%a2@(10)		/* 408856ba 08ea 000f 000a */
@@ -772,7 +772,7 @@ __v__CHECKALLDEVICECLUTS:
 	.short	0x0f18	/* 40885712 0f18 */
 	rts				/* 40885714 4e75 */
 
-sub_40885716:
+CHECKALLDEVICECLUTS:
 	CallVector	0x2054 100	/* 40885716 2f30 81e2 2054 0190 */
 	rts				/* 4088571e 4e75 */
 
@@ -983,7 +983,7 @@ loc_408858c8:
 	unlk	%fp			/* 408858ce 4e5e */
 	rtd	#4			/* 408858d0 4e74 0004 */
 
-sub_408858d4:
+RECORDPALETTE:
 	CallVector	0x2054 104	/* 408858d4 2f30 81e2 2054 01a0 */
 	rts				/* 408858dc 4e75 */
 
@@ -1204,7 +1204,7 @@ __v__CLAIMINDEX:
 	.short	0xffae	/* 40885a8a ffae */
 	rts				/* 40885a8c 4e75 */
 
-sub_40885a8e:
+CLAIMINDEX:
 	CallVector	0x2054 105	/* 40885a8e 2f30 81e2 2054 01a4 */
 	rts				/* 40885a96 4e75 */
 
@@ -1281,7 +1281,7 @@ __v__CLEARPALETTE:
 	.short	0x4e74	/* 40885b28 4e74 */
 	.short	0x0004	/* 40885b2a 0004 */
 
-sub_40885b2c:
+CLEARPALETTE:
 	CallVector	0x2054 106	/* 40885b2c 2f30 81e2 2054 01a8 */
 	rts				/* 40885b34 4e75 */
 
@@ -1382,7 +1382,7 @@ loc_40885c14:
 	unlk	%fp			/* 40885c18 4e5e */
 	rtd	#4			/* 40885c1a 4e74 0004 */
 
-sub_40885c1e:
+ERASEPALETTE:
 	CallVector	0x2054 108	/* 40885c1e 2f30 81e2 2054 01b0 */
 	rts				/* 40885c26 4e75 */
 
@@ -1657,10 +1657,10 @@ DISPOSEPALETTE:
 	cmpaw	#0,%a2			/* 40885e4a b4fc 0000 */
 	beqs	loc_40885e62		/* 40885e4e 6712 */
 	movel	%a2,%sp@-		/* 40885e50 2f0a */
-	jsr	%pc@(sub_40885b2c)	/* 40885e52 4eba fcd8 */
+	jsr	%pc@(CLEARPALETTE)	/* 40885e52 4eba fcd8 */
 	bnes	loc_40885e62		/* 40885e56 660a */
 	movel	%a2,%sp@-		/* 40885e58 2f0a */
-	jsr	%pc@(sub_40885c1e)	/* 40885e5a 4eba fdc2 */
+	jsr	%pc@(ERASEPALETTE)	/* 40885e5a 4eba fdc2 */
 	moveal	%a2,%a0			/* 40885e5e 204a */
 	_DisposeHandle			/* 40885e60 a023 */
 
