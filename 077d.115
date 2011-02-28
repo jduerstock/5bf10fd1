@@ -1627,7 +1627,7 @@ SETCRSRDATA:
 	tsjsr	0xaa03			/* 40873d10 4eb0 81e1 160c */
 	moveal	%sp@+,%a0		/* 40873d16 205f */
 	movel	%a0,%a4@(2)		/* 40873d18 2948 0002 */
-	.short	0xa029			/* 40873d1c a029 */
+	_HLock				/* 40873d1c a029 */
 	moveq	#2,%d0			/* 40873d1e 7002 */
 	jsr	%pc@(RNEWHANDLE)	/* 40873d20 4eba 36e2 */
 	movel	%a0,%a4@(6)		/* 40873d24 2948 0006 */
@@ -1722,18 +1722,18 @@ loc_40873dfc:
 	rts				/* 40873e24 4e75 */
 
 sub_40873e26:
-	.short	0x2001	/* 40873e26 2001 */
-	.short	0xa040	/* 40873e28 a040 */
-	.short	0x6608	/* 40873e2a 6608 */
-	.short	0x2001	/* 40873e2c 2001 */
-	.short	0xa322	/* 40873e2e a322 */
-	.short	0xa029	/* 40873e30 a029 */
+	movel	%d1,%d0			/* 40873e26 2001 */
+	.short	0xa040			/* 40873e28 a040 */
+	bnes	loc_40873e34		/* 40873e2a 6608 */
+	movel	%d1,%d0			/* 40873e2c 2001 */
+	.short	0xa322			/* 40873e2e a322 */
+	.short	0xa029			/* 40873e30 a029 */
 	rts				/* 40873e32 4e75 */
-	.short	0x7019	/* 40873e34 7019 */
-	.short	0x4eb0	/* 40873e36 4eb0 */
-	.short	0x81e1	/* 40873e38 81e1 */
-	.short	0x1524	/* 40873e3a 1524 */
-	.short	0xa9ff	/* 40873e3c a9ff */
+
+loc_40873e34:
+	moveq	#25,%d0			/* 40873e34 7019 */
+	tsjsr	0xa9c9			/* 40873e36 4eb0 81e1 1524 */
+	.short	0xa9ff			/* 40873e3c a9ff */
 
 	.align	16
 
