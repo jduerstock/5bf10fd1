@@ -78,7 +78,7 @@ loc_4085d0a0:
 
 loc_4085d0a2:
 	moveal	%a2,%a0			/* 4085d0a2 204a */
-	.short	0xa02a			/* 4085d0a4 a02a */
+	_HUnlock			/* 4085d0a4 a02a */
 	movel	%sp@+,%fp@(18)		/* 4085d0a6 2d5f 0012 */
 
 loc_4085d0aa:
@@ -458,7 +458,7 @@ sub_4085d3e8:
 	movel	%fp@(-44),%sp@-		/* 4085d3e8 2f2e ffd4 */
 	.short	0xa873			/* 4085d3ec a873 */
 	moveal	%a3,%a0			/* 4085d3ee 204b */
-	.short	0xa02a			/* 4085d3f0 a02a */
+	_HUnlock			/* 4085d3f0 a02a */
 	rts				/* 4085d3f2 4e75 */
 
 CLOSEDIALOG:
@@ -1045,32 +1045,27 @@ SHOWDITEM:
 	rts				/* 4085d840 4e75 */
 
 FINDDITEM:
-	.short	0x6100	/* 4085d842 6100 */
-	.short	0xfb54	/* 4085d844 fb54 */
-	.short	0x286e	/* 4085d846 286e */
-	.short	0x000c	/* 4085d848 000c */
-	.short	0x6100	/* 4085d84a 6100 */
-	.short	0xfbde	/* 4085d84c fbde */
-	.short	0x76ff	/* 4085d84e 76ff */
-	.short	0x3d43	/* 4085d850 3d43 */
-	.short	0x0010	/* 4085d852 0010 */
-	.short	0x6100	/* 4085d854 6100 */
-	.short	0x0684	/* 4085d856 0684 */
-	.short	0x6714	/* 4085d858 6714 */
-	.short	0x554f	/* 4085d85a 554f */
-	.short	0x2f2e	/* 4085d85c 2f2e */
-	.short	0x0008	/* 4085d85e 0008 */
-	.short	0x486e	/* 4085d860 486e */
-	.short	0xffd8	/* 4085d862 ffd8 */
-	.short	0xa8ad	/* 4085d864 a8ad */
-	.short	0x4a1f	/* 4085d866 4a1f */
-	.short	0x67ea	/* 4085d868 67ea */
-	.short	0x3d43	/* 4085d86a 3d43 */
-	.short	0x0010	/* 4085d86c 0010 */
-	.short	0x204b	/* 4085d86e 204b */
-	.short	0xa02a	/* 4085d870 a02a */
-	.short	0x6000	/* 4085d872 6000 */
-	.short	0xfe9a	/* 4085d874 fe9a */
+	bsrw	sub_4085d398		/* 4085d842 6100 fb54 */
+	moveal	%fp@(12),%a4		/* 4085d846 286e 000c */
+	bsrw	sub_4085d42a		/* 4085d84a 6100 fbde */
+	moveq	#-1,%d3			/* 4085d84e 76ff */
+	movew	%d3,%fp@(16)		/* 4085d850 3d43 0010 */
+
+loc_4085d854:
+	bsrw	sub_4085deda		/* 4085d854 6100 0684 */
+	beqs	loc_4085d86e		/* 4085d858 6714 */
+	subqw	#2,%sp			/* 4085d85a 554f */
+	movel	%fp@(8),%sp@-		/* 4085d85c 2f2e 0008 */
+	pea	%fp@(-40)		/* 4085d860 486e ffd8 */
+	.short	0xa8ad			/* 4085d864 a8ad */
+	tstb	%sp@+			/* 4085d866 4a1f */
+	beqs	loc_4085d854		/* 4085d868 67ea */
+	movew	%d3,%fp@(16)		/* 4085d86a 3d43 0010 */
+
+loc_4085d86e:
+	moveal	%a3,%a0			/* 4085d86e 204b */
+	_HUnlock			/* 4085d870 a02a */
+	braw	loc_4085d70e		/* 4085d872 6000 fe9a */
 
 sub_4085d876:
 	.short	0x48e7	/* 4085d876 48e7 */
