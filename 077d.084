@@ -1315,48 +1315,37 @@ __v__GetDeviceCheck:
 
 __v__CheckClut:
 	linkw	%fp,#0			/* 40854ac0 4e56 0000 */
-	.short	0x48e7	/* 40854ac4 48e7 */
-	.short	0x0018	/* 40854ac6 0018 */
-	.short	0x286e	/* 40854ac8 286e */
-	.short	0x0008	/* 40854aca 0008 */
-	.short	0x206c	/* 40854acc 206c */
-	.short	0x007a	/* 40854ace 007a */
-	.short	0x4a90	/* 40854ad0 4a90 */
-	.short	0x6616	/* 40854ad2 6616 */
-	.short	0x4eba	/* 40854ad4 4eba */
-	.short	0xdbb4	/* 40854ad6 dbb4 */
-	.short	0x2640	/* 40854ad8 2640 */
-	.short	0x204b	/* 40854ada 204b */
-	.short	0xa029	/* 40854adc a029 */
-	.short	0x2f0c	/* 40854ade 2f0c */
-	.short	0x4eba	/* 40854ae0 4eba */
-	.short	0xff5a	/* 40854ae2 ff5a */
-	.short	0x204b	/* 40854ae4 204b */
-	.short	0xa02a	/* 40854ae6 a02a */
-	.short	0x584f	/* 40854ae8 584f */
-	.short	0x558f	/* 40854aea 558f */
-	.short	0x2f2c	/* 40854aec 2f2c */
-	.short	0x007e	/* 40854aee 007e */
-	.short	0x2f2c	/* 40854af0 2f2c */
-	.short	0x007a	/* 40854af2 007a */
-	.short	0x2f3c	/* 40854af4 2f3c */
-	.short	0x2000	/* 40854af6 2000 */
-	.short	0x4000	/* 40854af8 4000 */
-	.short	0x303c	/* 40854afa 303c */
-	.short	0x1218	/* 40854afc 1218 */
-	.short	0xaaa2	/* 40854afe aaa2 */
+	moveml	%a3-%a4,%sp@-		/* 40854ac4 48e7 0018 */
+	moveal	%fp@(8),%a4		/* 40854ac8 286e 0008 */
+	moveal	%a4@(122),%a0		/* 40854acc 206c 007a */
+	tstl	%a0@			/* 40854ad0 4a90 */
+	bnes	loc_40854aea		/* 40854ad2 6616 */
+	jsr	%pc@(GetGlobalHandle)	/* 40854ad4 4eba dbb4 */
+	moveal	%d0,%a3			/* 40854ad8 2640 */
+	moveal	%a3,%a0			/* 40854ada 204b */
+	.short	0xa029			/* 40854adc a029 */
+	movel	%a4,%sp@-		/* 40854ade 2f0c */
+	jsr	%pc@(MakeClut)	/* 40854ae0 4eba ff5a */
+	moveal	%a3,%a0			/* 40854ae4 204b */
+	.short	0xa02a			/* 40854ae6 a02a */
+	addqw	#4,%sp			/* 40854ae8 584f */
+
+loc_40854aea:
+	subql	#2,%sp			/* 40854aea 558f */
+	movel	%a4@(126),%sp@-		/* 40854aec 2f2c 007e */
+	movel	%a4@(122),%sp@-		/* 40854af0 2f2c 007a */
+	movel	#536887296,%sp@-	/* 40854af4 2f3c 2000 4000 */
+	movew	#4632,%d0		/* 40854afa 303c 1218 */
+	.short	0xaaa2			/* 40854afe aaa2 */
 	moveq	#0,%d0			/* 40854b00 7000 */
-	.short	0x101f	/* 40854b02 101f */
-	.short	0x4a80	/* 40854b04 4a80 */
-	.short	0x4cee	/* 40854b06 4cee */
-	.short	0x1800	/* 40854b08 1800 */
-	.short	0xfff8	/* 40854b0a fff8 */
-	.short	0x4e5e	/* 40854b0c 4e5e */
+	moveb	%sp@+,%d0		/* 40854b02 101f */
+	tstl	%d0			/* 40854b04 4a80 */
+	moveml	%fp@(-8),%a3-%a4	/* 40854b06 4cee 1800 fff8 */
+	unlk	%fp			/* 40854b0c 4e5e */
 	rts				/* 40854b0e 4e75 */
-	.short	0x2278	/* 40854b10 2278 */
-	.short	0x2038	/* 40854b12 2038 */
-	.short	0x2269	/* 40854b14 2269 */
-	.short	0x0118	/* 40854b16 0118 */
+
+	moveal	0x2038,%a1		/* 40854b10 2278 2038 */
+	moveal	%a1@(280),%a1		/* 40854b14 2269 0118 */
 	jmp	%a1@			/* 40854b18 4ed1 */
 
 	.align	16
