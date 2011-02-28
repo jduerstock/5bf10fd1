@@ -1743,13 +1743,11 @@ GETUBYTE:
 	.align	16
 
 __v__GETWORD:
-	.short	0x4267	/* 40878ee0 4267 */
-	.short	0x2f0f	/* 40878ee2 2f0f */
-	.short	0x3f3c	/* 40878ee4 3f3c */
-	.short	0x0002	/* 40878ee6 0002 */
-	.short	0x4eba	/* 40878ee8 4eba */
-	.short	0x0064	/* 40878eea 0064 */
-	.short	0x301f	/* 40878eec 301f */
+	clrw	%sp@-			/* 40878ee0 4267 */
+	movel	%sp,%sp@-		/* 40878ee2 2f0f */
+	movew	#2,%sp@-		/* 40878ee4 3f3c 0002 */
+	jsr	%pc@(GETPICDATA)	/* 40878ee8 4eba 0064 */
+	movew	%sp@+,%d0		/* 40878eec 301f */
 	rts				/* 40878eee 4e75 */
 
 GETWORD:
@@ -1759,13 +1757,11 @@ GETWORD:
 	.align	16
 
 __v__GETLONG:
-	.short	0x42a7	/* 40878f00 42a7 */
-	.short	0x2f0f	/* 40878f02 2f0f */
-	.short	0x3f3c	/* 40878f04 3f3c */
-	.short	0x0004	/* 40878f06 0004 */
-	.short	0x4eba	/* 40878f08 4eba */
-	.short	0x0044	/* 40878f0a 0044 */
-	.short	0x201f	/* 40878f0c 201f */
+	clrl	%sp@-			/* 40878f00 42a7 */
+	movel	%sp,%sp@-		/* 40878f02 2f0f */
+	movew	#4,%sp@-		/* 40878f04 3f3c 0004 */
+	jsr	%pc@(GETPICDATA)	/* 40878f08 4eba 0044 */
+	movel	%sp@+,%d0		/* 40878f0c 201f */
 	rts				/* 40878f0e 4e75 */
 
 GETLONG:
