@@ -1739,26 +1739,23 @@ sub_40878e2c:
 	rts				/* 40878e52 4e75 */
 
 sub_40878e54:
-	.short	0x7802	/* 40878e54 7802 */
-	.short	0x4eba	/* 40878e56 4eba */
-	.short	0x0098	/* 40878e58 0098 */
-	.short	0x2a00	/* 40878e5a 2a00 */
-	.short	0xa122	/* 40878e5c a122 */
-	.short	0x6646	/* 40878e5e 6646 */
-	.short	0x2d48	/* 40878e60 2d48 */
-	.short	0xfffc	/* 40878e62 fffc */
-	.short	0xa029	/* 40878e64 a029 */
-	.short	0x2050	/* 40878e66 2050 */
-	.short	0x3085	/* 40878e68 3085 */
-	.short	0x9a44	/* 40878e6a 9a44 */
-	.short	0x4870	/* 40878e6c 4870 */
-	.short	0x4000	/* 40878e6e 4000 */
-	.short	0x3f05	/* 40878e70 3f05 */
-	.short	0x4eba	/* 40878e72 4eba */
-	.short	0x00da	/* 40878e74 00da */
-	.short	0x206e	/* 40878e76 206e */
-	.short	0xfffc	/* 40878e78 fffc */
-	.short	0xa02a	/* 40878e7a a02a */
+	moveq	#2,%d4			/* 40878e54 7802 */
+	jsr	%pc@(GETWORD)	/* 40878e56 4eba 0098 */
+
+sub_40878e5a:
+	movel	%d0,%d5			/* 40878e5a 2a00 */
+	.short	0xa122			/* 40878e5c a122 */
+	bnes	loc_40878ea6		/* 40878e5e 6646 */
+	movel	%a0,%fp@(-4)		/* 40878e60 2d48 fffc */
+	.short	0xa029			/* 40878e64 a029 */
+	moveal	%a0@,%a0		/* 40878e66 2050 */
+	movew	%d5,%a0@		/* 40878e68 3085 */
+	subw	%d4,%d5			/* 40878e6a 9a44 */
+	pea	%a0@(0x0000,%d4:w)	/* 40878e6c 4870 4000 */
+	movew	%d5,%sp@-		/* 40878e70 3f05 */
+	jsr	%pc@(GETPICDATA)	/* 40878e72 4eba 00da */
+	moveal	%fp@(-4),%a0		/* 40878e76 206e fffc */
+	_HUnlock			/* 40878e7a a02a */
 	rts				/* 40878e7c 4e75 */
 
 loc_40878e7e:
