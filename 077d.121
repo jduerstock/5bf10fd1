@@ -420,44 +420,35 @@ __v__EQUALPAT:
 	.align	16
 
 __v__GETPICTABLE:
-	.short	0x4eba	/* 40879370 4eba */
-	.short	0xfb9e	/* 40879372 fb9e */
-	.short	0x0c80	/* 40879374 0c80 */
-	.short	0x0000	/* 40879376 0000 */
-	.short	0x0100	/* 40879378 0100 */
-	.short	0x6d0a	/* 4087937a 6d0a */
-	.short	0x42a7	/* 4087937c 42a7 */
-	.short	0x4eb0	/* 4087937e 4eb0 */
-	.short	0x81e1	/* 40879380 81e1 */
-	.short	0x16a0	/* 40879382 16a0 */
-	.short	0x201f	/* 40879384 201f */
-	.short	0x2f00	/* 40879386 2f00 */
-	.short	0x4eba	/* 40879388 4eba */
-	.short	0xfb86	/* 4087938a fb86 */
-	.short	0x2f00	/* 4087938c 2f00 */
-	.short	0x3400	/* 4087938e 3400 */
-	.short	0x5242	/* 40879390 5242 */
-	.short	0xc4fc	/* 40879392 c4fc */
-	.short	0x0008	/* 40879394 0008 */
-	.short	0x2002	/* 40879396 2002 */
-	.short	0x5040	/* 40879398 5040 */
-	.short	0x206f	/* 4087939a 206f */
-	.short	0x000c	/* 4087939c 000c */
-	.short	0x4eba	/* 4087939e 4eba */
-	.short	0xe050	/* 408793a0 e050 */
-	.short	0xa029	/* 408793a2 a029 */
-	.short	0x2050	/* 408793a4 2050 */
-	.short	0x201f	/* 408793a6 201f */
-	.short	0x20df	/* 408793a8 20df */
-	.short	0x20c0	/* 408793aa 20c0 */
-	.short	0x2f08	/* 408793ac 2f08 */
-	.short	0x3f02	/* 408793ae 3f02 */
-	.short	0x4eba	/* 408793b0 4eba */
-	.short	0xfb9c	/* 408793b2 fb9c */
-	.short	0x206f	/* 408793b4 206f */
-	.short	0x0004	/* 408793b6 0004 */
-	.short	0xa02a	/* 408793b8 a02a */
-	.short	0x2e9f	/* 408793ba 2e9f */
+	jsr	%pc@(GETLONG)	/* 40879370 4eba fb9e */
+	cmpil	#256,%d0		/* 40879374 0c80 0000 0100 */
+	blts	loc_40879386		/* 4087937a 6d0a */
+	clrl	%sp@-			/* 4087937c 42a7 */
+	tsjsr	0xaa28			/* 4087937e 4eb0 81e1 16a0 */
+	movel	%sp@+,%d0		/* 40879384 201f */
+
+loc_40879386:
+	movel	%d0,%sp@-		/* 40879386 2f00 */
+	jsr	%pc@(GETLONG)	/* 40879388 4eba fb86 */
+	movel	%d0,%sp@-		/* 4087938c 2f00 */
+	movew	%d0,%d2			/* 4087938e 3400 */
+	addqw	#1,%d2			/* 40879390 5242 */
+	muluw	#8,%d2			/* 40879392 c4fc 0008 */
+	movel	%d2,%d0			/* 40879396 2002 */
+	addqw	#8,%d0			/* 40879398 5040 */
+	moveal	%sp@(12),%a0		/* 4087939a 206f 000c */
+	jsr	%pc@(RSETHSIZE)	/* 4087939e 4eba e050 */
+	.short	0xa029			/* 408793a2 a029 */
+	moveal	%a0@,%a0		/* 408793a4 2050 */
+	movel	%sp@+,%d0		/* 408793a6 201f */
+	movel	%sp@+,%a0@+		/* 408793a8 20df */
+	movel	%d0,%a0@+		/* 408793aa 20c0 */
+	movel	%a0,%sp@-		/* 408793ac 2f08 */
+	movew	%d2,%sp@-		/* 408793ae 3f02 */
+	jsr	%pc@(GETPICDATA)	/* 408793b0 4eba fb9c */
+	moveal	%sp@(4),%a0		/* 408793b4 206f 0004 */
+	_HUnlock			/* 408793b8 a02a */
+	movel	%sp@+,%sp@		/* 408793ba 2e9f */
 	rts				/* 408793bc 4e75 */
 
 	CallVector	0x2054 85	/* 408793be 2f30 81e2 2054 0154 */
