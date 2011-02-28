@@ -116,6 +116,10 @@
 		.short	0xa02b
 	.endm
 
+	.macro	_InitApplZone
+		.short	0xa02c
+	.endm
+
 	.macro	_BlockMove
 		.short	0xa02e
 	.endm
