@@ -67,18 +67,15 @@ PUTPICOP:
 	.align	16
 
 __v__PUTPICRGN:
-	.short	0x206f	/* 40879090 206f */
-	.short	0x0004	/* 40879092 0004 */
-	.short	0xa029	/* 40879094 a029 */
-	.short	0x2050	/* 40879096 2050 */
-	.short	0x2f08	/* 40879098 2f08 */
-	.short	0x3f10	/* 4087909a 3f10 */
-	.short	0x4eba	/* 4087909c 4eba */
-	.short	0xfed8	/* 4087909e fed8 */
-	.short	0x206f	/* 408790a0 206f */
-	.short	0x0004	/* 408790a2 0004 */
-	.short	0xa02a	/* 408790a4 a02a */
-	.short	0x2e9f	/* 408790a6 2e9f */
+	moveal	%sp@(4),%a0		/* 40879090 206f 0004 */
+	.short	0xa029			/* 40879094 a029 */
+	moveal	%a0@,%a0		/* 40879096 2050 */
+	movel	%a0,%sp@-		/* 40879098 2f08 */
+	movew	%a0@,%sp@-		/* 4087909a 3f10 */
+	jsr	%pc@(PUTPICDATA)	/* 4087909c 4eba fed8 */
+	moveal	%sp@(4),%a0		/* 408790a0 206f 0004 */
+	_HUnlock			/* 408790a4 a02a */
+	movel	%sp@+,%sp@		/* 408790a6 2e9f */
 	rts				/* 408790a8 4e75 */
 
 PUTPICRGN:
