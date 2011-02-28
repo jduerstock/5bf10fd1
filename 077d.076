@@ -860,51 +860,49 @@ PACK14ENTRY:
 	.align	16
 
 __v__PTCHHMUPDATEHELPMENU:
-	.short	0x2f07	/* 4084c7a0 2f07 */
-	.short	0x594f	/* 4084c7a2 594f */
-	.short	0x3f3c	/* 4084c7a4 3f3c */
-	.short	0xbf96	/* 4084c7a6 bf96 */
-	.short	0xa949	/* 4084c7a8 a949 */
-	.short	0x201f	/* 4084c7aa 201f */
-	.short	0x6734	/* 4084c7ac 6734 */
-	.short	0x2f00	/* 4084c7ae 2f00 */
-	.short	0x3f3c	/* 4084c7b0 3f3c */
-	.short	0x0003	/* 4084c7b2 0003 */
-	.short	0x303c	/* 4084c7b4 303c */
-	.short	0xe9c0	/* 4084c7b6 e9c0 */
-	.short	0x4eba	/* 4084c7b8 4eba */
-	.short	0x0084	/* 4084c7ba 0084 */
-	.short	0x6702	/* 4084c7bc 6702 */
-	.short	0x5240	/* 4084c7be 5240 */
-	.short	0x594f	/* 4084c7c0 594f */
-	.short	0x3f00	/* 4084c7c2 3f00 */
-	.short	0xa9ba	/* 4084c7c4 a9ba */
-	.short	0x2e1f	/* 4084c7c6 2e1f */
-	.short	0x6708	/* 4084c7c8 6708 */
-	.short	0x2047	/* 4084c7ca 2047 */
-	.short	0xa029	/* 4084c7cc a029 */
-	.short	0x2050	/* 4084c7ce 2050 */
-	.short	0x6004	/* 4084c7d0 6004 */
-	.short	0x41fa	/* 4084c7d2 41fa */
-	.short	0x0012	/* 4084c7d4 0012 */
-	.short	0x2f08	/* 4084c7d6 2f08 */
-	.short	0xa947	/* 4084c7d8 a947 */
-	.short	0x2007	/* 4084c7da 2007 */
-	.short	0x6704	/* 4084c7dc 6704 */
-	.short	0x2047	/* 4084c7de 2047 */
-	.short	0xa02a	/* 4084c7e0 a02a */
-	.short	0x2e1f	/* 4084c7e2 2e1f */
+	movel	%d7,%sp@-		/* 4084c7a0 2f07 */
+	subqw	#4,%sp			/* 4084c7a2 594f */
+	movew	#-16490,%sp@-		/* 4084c7a4 3f3c bf96 */
+	.short	0xa949			/* 4084c7a8 a949 */
+	movel	%sp@+,%d0		/* 4084c7aa 201f */
+	beqs	loc_4084c7e2		/* 4084c7ac 6734 */
+	movel	%d0,%sp@-		/* 4084c7ae 2f00 */
+	movew	#3,%sp@-		/* 4084c7b0 3f3c 0003 */
+	movew	#-5696,%d0		/* 4084c7b4 303c e9c0 */
+	jsr	%pc@(PTCHHMGETBALLOONS)	/* 4084c7b8 4eba 0084 */
+	beqs	loc_4084c7c0		/* 4084c7bc 6702 */
+	addqw	#1,%d0			/* 4084c7be 5240 */
+
+loc_4084c7c0:
+	subqw	#4,%sp			/* 4084c7c0 594f */
+	movew	%d0,%sp@-		/* 4084c7c2 3f00 */
+	.short	0xa9ba			/* 4084c7c4 a9ba */
+	movel	%sp@+,%d7		/* 4084c7c6 2e1f */
+	beqs	loc_4084c7d2		/* 4084c7c8 6708 */
+	moveal	%d7,%a0			/* 4084c7ca 2047 */
+	.short	0xa029			/* 4084c7cc a029 */
+	moveal	%a0@,%a0		/* 4084c7ce 2050 */
+	bras	loc_4084c7d6		/* 4084c7d0 6004 */
+
+loc_4084c7d2:
+	lea	%pc@(str_4084c7e6),%a0	/* 4084c7d2 41fa 0012 */
+
+loc_4084c7d6:
+	movel	%a0,%sp@-		/* 4084c7d6 2f08 */
+	.short	0xa947			/* 4084c7d8 a947 */
+	movel	%d7,%d0			/* 4084c7da 2007 */
+	beqs	loc_4084c7e2		/* 4084c7dc 6704 */
+	moveal	%d7,%a0			/* 4084c7de 2047 */
+	.short	0xa02a			/* 4084c7e0 a02a */
+
+loc_4084c7e2:
+	movel	%sp@+,%d7		/* 4084c7e2 2e1f */
 	rts				/* 4084c7e4 4e75 */
-	.short	0x1253	/* 4084c7e6 1253 */
-	.short	0x686f	/* 4084c7e8 686f */
-	.short	0x772f	/* 4084c7ea 772f */
-	.short	0x4869	/* 4084c7ec 4869 */
-	.short	0x6465	/* 4084c7ee 6465 */
-	.short	0x2042	/* 4084c7f0 2042 */
-	.short	0x616c	/* 4084c7f2 616c */
-	.short	0x6c6f	/* 4084c7f4 6c6f */
-	.short	0x6f6e	/* 4084c7f6 6f6e */
-	.short	0x7300	/* 4084c7f8 7300 */
+
+str_4084c7e6:
+	.byte	0x12			/* 4084c7e6 12 */
+	.ascii	"Show/Hide Balloons"	/* 4084c7e8 686f */
+	.byte	0x00			/* 4084c7f9 00 */
 
 PTCHHMUPDATEHELPMENU:
 	CallVector	0x2034 2	/* 4084c7fa 2f30 81e2 2034 0008 */
