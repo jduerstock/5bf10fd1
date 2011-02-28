@@ -646,44 +646,37 @@ sub_4083d59a:
 	.short	0x41f0	/* 4083d5c0 41f0 */
 	.short	0x0000	/* 4083d5c2 0000 */
 	rts				/* 4083d5c4 4e75 */
-	.short	0x48e7	/* 4083d5c6 48e7 */
-	.short	0x2080	/* 4083d5c8 2080 */
-	.short	0x2078	/* 4083d5ca 2078 */
-	.short	0x02b6	/* 4083d5cc 02b6 */
-	.short	0x51e8	/* 4083d5ce 51e8 */
-	.short	0x0038	/* 4083d5d0 0038 */
-	.short	0x43ee	/* 4083d5d2 43ee */
-	.short	0xffdc	/* 4083d5d4 ffdc */
-	.short	0x2d49	/* 4083d5d6 2d49 */
-	.short	0xfff0	/* 4083d5d8 fff0 */
-	.short	0x0c42	/* 4083d5da 0c42 */
-	.short	0x000a	/* 4083d5dc 000a */
-	.short	0x631e	/* 4083d5de 631e */
-	.short	0x2078	/* 4083d5e0 2078 */
-	.short	0x02b6	/* 4083d5e2 02b6 */
-	.short	0x50e8	/* 4083d5e4 50e8 */
-	.short	0x0038	/* 4083d5e6 0038 */
-	.short	0xe34a	/* 4083d5e8 e34a */
-	.short	0x2002	/* 4083d5ea 2002 */
-	.short	0xa322	/* 4083d5ec a322 */
-	.short	0x661a	/* 4083d5ee 661a */
-	.short	0xa029	/* 4083d5f0 a029 */
-	.short	0x6610	/* 4083d5f2 6610 */
-	.short	0x2250	/* 4083d5f4 2250 */
-	.short	0x2d48	/* 4083d5f6 2d48 */
-	.short	0xffdc	/* 4083d5f8 ffdc */
-	.short	0x2d50	/* 4083d5fa 2d50 */
-	.short	0xfff0	/* 4083d5fc fff0 */
-	.short	0x4cdf	/* 4083d5fe 4cdf */
-	.short	0x0104	/* 4083d600 0104 */
+
+	moveml	%d2/%a0,%sp@-		/* 4083d5c6 48e7 2080 */
+	moveal	0x2b6,%a0		/* 4083d5ca 2078 02b6 */
+	sf	%a0@(56)		/* 4083d5ce 51e8 0038 */
+	lea	%fp@(-36),%a1		/* 4083d5d2 43ee ffdc */
+	movel	%a1,%fp@(-16)		/* 4083d5d6 2d49 fff0 */
+	cmpiw	#10,%d2			/* 4083d5da 0c42 000a */
+	blss	loc_4083d5fe		/* 4083d5de 631e */
+	moveal	0x2b6,%a0		/* 4083d5e0 2078 02b6 */
+	st	%a0@(56)		/* 4083d5e4 50e8 0038 */
+	lslw	#1,%d2			/* 4083d5e8 e34a */
+	movel	%d2,%d0			/* 4083d5ea 2002 */
+	.short	0xa322			/* 4083d5ec a322 */
+	bnes	loc_4083d60a		/* 4083d5ee 661a */
+	_HLock				/* 4083d5f0 a029 */
+	bnes	loc_4083d604		/* 4083d5f2 6610 */
+	moveal	%a0@,%a1		/* 4083d5f4 2250 */
+	movel	%a0,%fp@(-36)		/* 4083d5f6 2d48 ffdc */
+	movel	%a0@,%fp@(-16)		/* 4083d5fa 2d50 fff0 */
+
+loc_4083d5fe:
+	moveml	%sp@+,%d2/%a0		/* 4083d5fe 4cdf 0104 */
 	rts				/* 4083d602 4e75 */
 
+loc_4083d604:
 	movel	%d0,%sp@-		/* 4083d604 2f00 */
 	_DisposeHandle			/* 4083d606 a023 */
 	movel	%sp@+,%d0		/* 4083d608 201f */
 
 loc_4083d60a:
-	.short	0xa9c9			/* 4083d60a a9c9 */
+	_SysError			/* 4083d60a a9c9 */
 
 	linkw	%fp,#0			/* 4083d60c 4e56 0000 */
 	.short	0x48e7	/* 4083d610 48e7 */
