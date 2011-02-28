@@ -112,6 +112,10 @@
 		.short	0xa02a
 	.endm
 
+	.macro	_EmptyHandle
+		.short	0xa02b
+	.endm
+
 	.macro	_BlockMove
 		.short	0xa02e
 	.endm
