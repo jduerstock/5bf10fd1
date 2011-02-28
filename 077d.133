@@ -744,32 +744,29 @@ loc_408856ca:
 	.align	16
 
 __v__CHECKALLDEVICECLUTS:
-	.short	0x48e7	/* 408856e0 48e7 */
-	.short	0x18f0	/* 408856e2 18f0 */
-	.short	0x2478	/* 408856e4 2478 */
-	.short	0x0dc8	/* 408856e6 0dc8 */
-	.short	0x204a	/* 408856e8 204a */
-	.short	0xa029	/* 408856ea a029 */
-	.short	0x2652	/* 408856ec 2652 */
-	.short	0x3613	/* 408856ee 3613 */
-	.short	0x5343	/* 408856f0 5343 */
-	.short	0x7800	/* 408856f2 7800 */
-	.short	0x554f	/* 408856f4 554f */
-	.short	0x2f33	/* 408856f6 2f33 */
-	.short	0x3638	/* 408856f8 3638 */
-	.short	0x4eba	/* 408856fa 4eba */
-	.short	0x0adc	/* 408856fc 0adc */
-	.short	0x4a5f	/* 408856fe 4a5f */
-	.short	0x6702	/* 40885700 6702 */
-	.short	0x07c4	/* 40885702 07c4 */
-	.short	0x51cb	/* 40885704 51cb */
-	.short	0xffee	/* 40885706 ffee */
-	.short	0x89ab	/* 40885708 89ab */
-	.short	0x0010	/* 4088570a 0010 */
-	.short	0x204a	/* 4088570c 204a */
-	.short	0xa02a	/* 4088570e a02a */
-	.short	0x4cdf	/* 40885710 4cdf */
-	.short	0x0f18	/* 40885712 0f18 */
+	moveml	%d3-%d4/%a0-%a3,%sp@-	/* 40885710 48e7 18f0 */
+	moveal	0xdc8,%a2		/* 408856e4 2478 0dc8 */
+	moveal	%a2,%a0			/* 408856e8 204a */
+	.short	0xa029			/* 408856ea a029 */
+	moveal	%a2@,%a3		/* 408856ec 2652 */
+	movew	%a3@,%d3		/* 408856ee 3613 */
+	subqw	#1,%d3			/* 408856f0 5343 */
+	moveq	#0,%d4			/* 408856f2 7800 */
+
+.L408856f4:
+	subqw	#2,%sp			/* 408856f4 554f */
+	movel	%a3@(0x0038,%d3:w:8),%sp@-	/* 408856f6 2f33 3638 */
+	jsr	%pc@(CHECKDEVICECOLORS)	/* 408856fa 4eba 0adc */
+	tstw	%sp@+			/* 408856fe 4a5f */
+	beqs	loc_40885704		/* 40885700 6702 */
+	bset	%d3,%d4			/* 40885702 07c4 */
+
+loc_40885704:
+	dbf	%d3,.L408856f4		/* 40885704 51cb ffee */
+	orl	%d4,%a3@(16)		/* 40885708 89ab 0010 */
+	moveal	%a2,%a0			/* 4088570c 204a */
+	.short	0xa02a			/* 4088570e a02a */
+	moveml	%sp@+,%d3-%d4/%a0-%a3	/* 40885710 4cdf 0f18 */
 	rts				/* 40885714 4e75 */
 
 CHECKALLDEVICECLUTS:
