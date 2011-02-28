@@ -133,7 +133,7 @@
 	.short	0x0100	/* 4089b106 0100 */
 	.short	0xa100	/* 4089b108 a100 */
 
-sub_4089b10a:
+GETENCODINGMAP:
 	CallVector	0x202c 76	/* 4089b10a 2f30 81e2 202c 0130 */
 	rts				/* 4089b112 4e75 */
 
@@ -142,7 +142,7 @@ sub_4089b10a:
 __v__GETENCODINGTABLE:
 	linkw	%fp,#0			/* 4089b120 4e56 0000 */
 	movew	%fp@(12),%d0		/* 4089b124 302e 000c */
-	bsrw	sub_4089b10a		/* 4089b128 6100 ffe0 */
+	bsrw	GETENCODINGMAP		/* 4089b128 6100 ffe0 */
 	movel	%a0,%fp@(14)		/* 4089b12c 2d48 000e */
 	moveal	%fp@(8),%a0		/* 4089b130 206e 0008 */
 	movew	%d0,%a0@		/* 4089b134 3080 */
@@ -151,7 +151,7 @@ __v__GETENCODINGTABLE:
 	addql	#6,%sp			/* 4089b13a 5c8f */
 	jmp	%a0@			/* 4089b13c 4ed0 */
 
-sub_4089b13e:
+GETENCODINGTABLE:
 	CallVector	0x202c 77	/* 4089b13e 2f30 81e2 202c 0134 */
 	rts				/* 4089b146 4e75 */
 
@@ -182,7 +182,7 @@ __v__sc_ScanChar:
 	moveal	%fp@(16),%a0		/* 4089b192 206e 0010 */
 	movel	%a0@(12),%sp@-		/* 4089b196 2f28 000c */
 	movel	%a0@(4),%sp@-		/* 4089b19a 2f28 0004 */
-	jsr	%pc@(sub_4089e730)	/* 4089b19e 4eba 3590 */
+	jsr	%pc@(sc_lineInit)	/* 4089b19e 4eba 3590 */
 	moveal	%fp@(16),%a0		/* 4089b1a2 206e 0010 */
 	movel	%d0,%a0@(12)		/* 4089b1a6 2140 000c */
 	moveal	%fp@(16),%a0		/* 4089b1aa 206e 0010 */
@@ -201,7 +201,7 @@ __v__sc_ScanChar:
 	moveal	%fp@(16),%a0		/* 4089b1ce 206e 0010 */
 	movel	%a0@(16),%sp@-		/* 4089b1d2 2f28 0010 */
 	movel	%a0@(8),%sp@-		/* 4089b1d6 2f28 0008 */
-	jsr	%pc@(sub_4089e730)	/* 4089b1da 4eba 3554 */
+	jsr	%pc@(sc_lineInit)	/* 4089b1da 4eba 3554 */
 	moveal	%fp@(16),%a0		/* 4089b1de 206e 0010 */
 	movel	%d0,%a0@(16)		/* 4089b1e2 2140 0010 */
 	lea	%sp@(40),%sp		/* 4089b1e6 4fef 0028 */
@@ -224,7 +224,7 @@ loc_4089b1ec:
 	moveal	%fp@(16),%a0		/* 4089b210 206e 0010 */
 	movel	%a0@(16),%sp@-		/* 4089b214 2f28 0010 */
 	movel	%a0@(8),%sp@-		/* 4089b218 2f28 0008 */
-	jsr	%pc@(sub_4089e730)	/* 4089b21c 4eba 3512 */
+	jsr	%pc@(sc_lineInit)	/* 4089b21c 4eba 3512 */
 	moveal	%fp@(16),%a0		/* 4089b220 206e 0010 */
 	movel	%d0,%a0@(16)		/* 4089b224 2140 0010 */
 	lea	%sp@(20),%sp		/* 4089b228 4fef 0014 */
@@ -360,7 +360,7 @@ loc_4089b396:
 	movel	%fp@(-32),%sp@-		/* 4089b3c0 2f2e ffe0 */
 	movel	%fp@(-36),%sp@-		/* 4089b3c4 2f2e ffdc */
 	movel	%fp@(16),%sp@-		/* 4089b3c8 2f2e 0010 */
-	jsr	%pc@(sub_4089bf40)	/* 4089b3cc 4eba 0b72 */
+	jsr	%pc@(sc_lineGen)	/* 4089b3cc 4eba 0b72 */
 	lea	%sp@(24),%sp		/* 4089b3d0 4fef 0018 */
 	bras	loc_4089b402		/* 4089b3d4 602c */
 
@@ -375,7 +375,7 @@ loc_4089b3d6:
 	movel	%fp@(-32),%sp@-		/* 4089b3ee 2f2e ffe0 */
 	movel	%fp@(-36),%sp@-		/* 4089b3f2 2f2e ffdc */
 	movel	%fp@(16),%sp@-		/* 4089b3f6 2f2e 0010 */
-	jsr	%pc@(sub_4089bfa0)	/* 4089b3fa 4eba 0ba4 */
+	jsr	%pc@(sc_lineGenRows)	/* 4089b3fa 4eba 0ba4 */
 	lea	%sp@(28),%sp		/* 4089b3fe 4fef 001c */
 
 loc_4089b402:
@@ -510,7 +510,7 @@ loc_4089b53a:
 	movel	%a3@(0x0000,%d1:l:4),%sp@-	/* 4089b55a 2f33 1c00 */
 	movel	%fp@(-24),%sp@-		/* 4089b55e 2f2e ffe8 */
 	movel	%fp@(-28),%sp@-		/* 4089b562 2f2e ffe4 */
-	jsr	%pc@(sub_4089ed80)	/* 4089b566 4eba 3818 */
+	jsr	%pc@(sc_DrawParabola)	/* 4089b566 4eba 3818 */
 	tstl	%d0			/* 4089b56a 4a80 */
 	lea	%sp@(40),%sp		/* 4089b56c 4fef 0028 */
 	beqw	loc_4089b69e		/* 4089b570 6700 012c */
@@ -525,7 +525,7 @@ loc_4089b53a:
 	movel	%fp@(-32),%sp@-		/* 4089b58e 2f2e ffe0 */
 	movel	%fp@(-36),%sp@-		/* 4089b592 2f2e ffdc */
 	movel	%fp@(16),%sp@-		/* 4089b596 2f2e 0010 */
-	jsr	%pc@(sub_4089bf40)	/* 4089b59a 4eba 09a4 */
+	jsr	%pc@(sc_lineGen)	/* 4089b59a 4eba 09a4 */
 	lea	%sp@(24),%sp		/* 4089b59e 4fef 0018 */
 	bras	loc_4089b5d0		/* 4089b5a2 602c */
 
@@ -540,7 +540,7 @@ loc_4089b5a4:
 	movel	%fp@(-32),%sp@-		/* 4089b5bc 2f2e ffe0 */
 	movel	%fp@(-36),%sp@-		/* 4089b5c0 2f2e ffdc */
 	movel	%fp@(16),%sp@-		/* 4089b5c4 2f2e 0010 */
-	jsr	%pc@(sub_4089bfa0)	/* 4089b5c8 4eba 09d6 */
+	jsr	%pc@(sc_lineGenRows)	/* 4089b5c8 4eba 09d6 */
 	lea	%sp@(28),%sp		/* 4089b5cc 4fef 001c */
 
 loc_4089b5d0:
@@ -600,7 +600,7 @@ loc_4089b5d0:
 	movel	%a3@(0x0000,%d1:l:4),%sp@-	/* 4089b67c 2f33 1c00 */
 	movel	%fp@(-24),%sp@-		/* 4089b680 2f2e ffe8 */
 	movel	%fp@(-28),%sp@-		/* 4089b684 2f2e ffe4 */
-	jsr	%pc@(sub_4089ed80)	/* 4089b688 4eba 36f6 */
+	jsr	%pc@(sc_DrawParabola)	/* 4089b688 4eba 36f6 */
 	tstl	%d0			/* 4089b68c 4a80 */
 	lea	%sp@(40),%sp		/* 4089b68e 4fef 0028 */
 	beqs	loc_4089b69e		/* 4089b692 670a */
@@ -642,7 +642,7 @@ loc_4089b6d0:
 	movel	%fp@(-32),%sp@-		/* 4089b6ea 2f2e ffe0 */
 	movel	%fp@(-36),%sp@-		/* 4089b6ee 2f2e ffdc */
 	movel	%fp@(16),%sp@-		/* 4089b6f2 2f2e 0010 */
-	jsr	%pc@(sub_4089bf40)	/* 4089b6f6 4eba 0848 */
+	jsr	%pc@(sc_lineGen)	/* 4089b6f6 4eba 0848 */
 	moveal	%fp@(16),%a0		/* 4089b6fa 206e 0010 */
 	movel	%a0,%sp@-		/* 4089b6fe 2f08 */
 	movel	%a0@(16),%sp@-		/* 4089b700 2f28 0010 */
@@ -661,7 +661,7 @@ loc_4089b6d0:
 	movel	%a0@(4),%sp@-		/* 4089b728 2f28 0004 */
 	movel	%a0@(1048),%sp@-	/* 4089b72c 2f28 0418 */
 	movel	%a0@,%sp@-		/* 4089b730 2f10 */
-	jsr	%pc@(sub_4089c010)	/* 4089b732 4eba 08dc */
+	jsr	%pc@(sc_mark)	/* 4089b732 4eba 08dc */
 	lea	%sp@(60),%sp		/* 4089b736 4fef 003c */
 	bras	loc_4089b7a4		/* 4089b73a 6068 */
 
@@ -676,7 +676,7 @@ loc_4089b73c:
 	movel	%fp@(-32),%sp@-		/* 4089b754 2f2e ffe0 */
 	movel	%fp@(-36),%sp@-		/* 4089b758 2f2e ffdc */
 	movel	%fp@(16),%sp@-		/* 4089b75c 2f2e 0010 */
-	jsr	%pc@(sub_4089bfa0)	/* 4089b760 4eba 083e */
+	jsr	%pc@(sc_lineGenRows)	/* 4089b760 4eba 083e */
 	movel	%fp@(-12),%sp@-		/* 4089b764 2f2e fff4 */
 	movel	%fp@(-16),%sp@-		/* 4089b768 2f2e fff0 */
 	moveal	%fp@(16),%a0		/* 4089b76c 206e 0010 */
@@ -695,7 +695,7 @@ loc_4089b73c:
 	movel	%a0@(4),%sp@-		/* 4089b792 2f28 0004 */
 	movel	%a0@(1048),%sp@-	/* 4089b796 2f28 0418 */
 	movel	%a0@,%sp@-		/* 4089b79a 2f10 */
-	jsr	%pc@(sub_4089d460)	/* 4089b79c 4eba 1cc2 */
+	jsr	%pc@(sc_markRows)	/* 4089b79c 4eba 1cc2 */
 	lea	%sp@(68),%sp		/* 4089b7a0 4fef 0044 */
 
 loc_4089b7a4:
@@ -710,12 +710,12 @@ loc_4089b7ac:
 	movel	%fp@(-12),%sp@-		/* 4089b7bc 2f2e fff4 */
 	movel	%fp@(-16),%sp@-		/* 4089b7c0 2f2e fff0 */
 	movel	%fp@(16),%sp@-		/* 4089b7c4 2f2e 0010 */
-	jsr	%pc@(sub_4089be30)	/* 4089b7c8 4eba 0666 */
+	jsr	%pc@(sortRows)	/* 4089b7c8 4eba 0666 */
 	tstl	%fp@(28)		/* 4089b7cc 4aae 001c */
 	lea	%sp@(12),%sp		/* 4089b7d0 4fef 000c */
 	beqs	loc_4089b7e0		/* 4089b7d4 670a */
 	movel	%fp@(16),%sp@-		/* 4089b7d6 2f2e 0010 */
-	jsr	%pc@(sub_4089bd10)	/* 4089b7da 4eba 0534 */
+	jsr	%pc@(sortCols)	/* 4089b7da 4eba 0534 */
 	addqw	#4,%sp			/* 4089b7de 584f */
 
 loc_4089b7e0:
@@ -827,13 +827,13 @@ loc_4089b8ec:
 	movew	%fp@(22),%d0		/* 4089b900 302e 0016 */
 	extl	%d0			/* 4089b904 48c0 */
 	movel	%d0,%sp@-		/* 4089b906 2f00 */
-	jsr	%pc@(sub_4089b940)	/* 4089b908 4eba 0036 */
+	jsr	%pc@(sc_wnNrowFill)	/* 4089b908 4eba 0036 */
 	tstl	%fp@(28)		/* 4089b90c 4aae 001c */
 	lea	%sp@(12),%sp		/* 4089b910 4fef 000c */
 	beqs	loc_4089b924		/* 4089b914 670e */
 	movel	%fp@(28),%sp@-		/* 4089b916 2f2e 001c */
 	movel	%fp@(16),%sp@-		/* 4089b91a 2f2e 0010 */
-	jsr	%pc@(sub_4089e160)	/* 4089b91e 4eba 2840 */
+	jsr	%pc@(sc_orSomeBits)	/* 4089b91e 4eba 2840 */
 	addqw	#8,%sp			/* 4089b922 504f */
 
 loc_4089b924:
@@ -844,14 +844,14 @@ loc_4089b926:
 	unlk	%fp			/* 4089b92c 4e5e */
 	rts				/* 4089b92e 4e75 */
 
-sub_4089b930:
+sc_ScanChar:
 	moveal	0x202c,%a1		/* 4089b930 2278 202c */
 	moveal	%a1@(736),%a1		/* 4089b934 2269 02e0 */
 	jmp	%a1@			/* 4089b938 4ed1 */
 
 	.align	16
 
-sub_4089b940:
+sc_wnNrowFill:
 	linkw	%fp,#-44		/* 4089b940 4e56 ffd4 */
 	moveml	%d4-%d7/%a3-%a4,%sp@-	/* 4089b944 48e7 0f18 */
 	moveal	%fp@(16),%a0		/* 4089b948 206e 0010 */
@@ -1236,7 +1236,7 @@ loc_4089bcf6:
 
 	.align	16
 
-sub_4089bd10:
+sortCols:
 	linkw	%fp,#-18		/* 4089bd10 4e56 ffee */
 	moveml	%d3-%d7/%a3-%a4,%sp@-	/* 4089bd14 48e7 1f18 */
 	moveal	%fp@(8),%a3		/* 4089bd18 266e 0008 */
@@ -1361,7 +1361,7 @@ loc_4089be16:
 
 	.align	16
 
-sub_4089be30:
+sortRows:
 	.short	0x4e56	/* 4089be30 4e56 */
 	.short	0xffec	/* 4089be32 ffec */
 	.short	0x48e7	/* 4089be34 48e7 */
@@ -1500,7 +1500,7 @@ sub_4089be30:
 
 	.align	16
 
-sub_4089bf40:
+sc_lineGen:
 	.short	0x4e56	/* 4089bf40 4e56 */
 	.short	0xfff8	/* 4089bf42 fff8 */
 	.short	0x48e7	/* 4089bf44 48e7 */
@@ -1551,7 +1551,7 @@ sub_4089bf40:
 
 	.align	16
 
-sub_4089bfa0:
+sc_lineGenRows:
 	.short	0x4e56	/* 4089bfa0 4e56 */
 	.short	0xfff8	/* 4089bfa2 fff8 */
 	.short	0x48e7	/* 4089bfa4 48e7 */

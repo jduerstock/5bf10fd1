@@ -52,7 +52,7 @@ loc_40856058:
 __v__NMTASK:
 	linkw	%fp,#-16		/* 40856070 4e56 fff0 */
 	moveml	%d3/%d6-%d7/%a3-%a4,%sp@-	/* 40856074 48e7 1318 */
-	jsr	%pc@(sub_40856380)	/* 40856078 4eba 0306 */
+	jsr	%pc@(disable)	/* 40856078 4eba 0306 */
 	movel	%d0,%d7			/* 4085607c 2e00 */
 	movew	#17,%fp@(-2)		/* 4085607e 3d7c 0011 fffe */
 	movew	#13,%fp@(-4)		/* 40856084 3d7c 000d fffc */
@@ -81,7 +81,7 @@ loc_408560b0:
 	bnes	loc_408560ca		/* 408560bc 660c */
 	movel	%d7,%sp@-		/* 408560be 2f07 */
 	movel	%a3,%sp@-		/* 408560c0 2f0b */
-	jsr	%pc@(sub_40855d40)	/* 408560c2 4eba fc7c */
+	jsr	%pc@(MarkItem)	/* 408560c2 4eba fc7c */
 	addqw	#8,%sp			/* 408560c6 504f */
 	bras	loc_40856118		/* 408560c8 604e */
 
@@ -91,7 +91,7 @@ loc_408560ca:
 	bnes	loc_408560dc		/* 408560ce 660c */
 	movel	%d7,%sp@-		/* 408560d0 2f07 */
 	movel	%a3,%sp@-		/* 408560d2 2f0b */
-	jsr	%pc@(sub_40855d82)	/* 408560d4 4eba fcac */
+	jsr	%pc@(RotateIcon)	/* 408560d4 4eba fcac */
 	addqw	#8,%sp			/* 408560d8 504f */
 	bras	loc_40856118		/* 408560da 603c */
 
@@ -101,7 +101,7 @@ loc_408560dc:
 	bnes	loc_408560ee		/* 408560e0 660c */
 	movel	%d7,%sp@-		/* 408560e2 2f07 */
 	movel	%a3,%sp@-		/* 408560e4 2f0b */
-	jsr	%pc@(sub_40855dde)	/* 408560e6 4eba fcf6 */
+	jsr	%pc@(DoSound)	/* 408560e6 4eba fcf6 */
 	addqw	#8,%sp			/* 408560ea 504f */
 	bras	loc_40856118		/* 408560ec 602a */
 
@@ -111,7 +111,7 @@ loc_408560ee:
 	bnes	loc_40856100		/* 408560f2 660c */
 	movel	%d7,%sp@-		/* 408560f4 2f07 */
 	movel	%a3,%sp@-		/* 408560f6 2f0b */
-	jsr	%pc@(sub_40855f3c)	/* 408560f8 4eba fe42 */
+	jsr	%pc@(DoDialog)	/* 408560f8 4eba fe42 */
 	addqw	#8,%sp			/* 408560fc 504f */
 	bras	loc_40856118		/* 408560fe 6018 */
 
@@ -121,7 +121,7 @@ loc_40856100:
 	bnes	loc_40856112		/* 40856104 660c */
 	movel	%d7,%sp@-		/* 40856106 2f07 */
 	movel	%a3,%sp@-		/* 40856108 2f0b */
-	jsr	%pc@(sub_40855f9a)	/* 4085610a 4eba fe8e */
+	jsr	%pc@(DoRespProc)	/* 4085610a 4eba fe8e */
 	addqw	#8,%sp			/* 4085610e 504f */
 	bras	loc_40856118		/* 40856110 6006 */
 
@@ -130,14 +130,14 @@ loc_40856112:
 
 loc_40856118:
 	movel	%d7,%sp@-		/* 40856118 2f07 */
-	jsr	%pc@(sub_408563a2)	/* 4085611a 4eba 0286 */
+	jsr	%pc@(spl)	/* 4085611a 4eba 0286 */
 	moveal	0xb60,%a0		/* 4085611e 2078 0b60 */
 	pea	%a0@(10)		/* 40856122 4868 000a */
 	moveq	#16,%d0			/* 40856126 7010 */
 	movel	%d0,%sp@-		/* 40856128 2f00 */
-	jsr	%pc@(sub_40855650)	/* 4085612a 4eba f524 */
-	jsr	%pc@(sub_40855688)	/* 4085612e 4eba f558 */
-	jsr	%pc@(sub_408554f8)	/* 40856132 4eba f3c4 */
+	jsr	%pc@(AddAuxRec)	/* 4085612a 4eba f524 */
+	jsr	%pc@(AddIconRec)	/* 4085612e 4eba f558 */
+	jsr	%pc@(GetApplicationMenu)	/* 40856132 4eba f3c4 */
 	moveal	%d0,%a3			/* 40856136 2640 */
 	moveal	0xb60,%a0		/* 40856138 2078 0b60 */
 	moveal	%a0@(12),%a4		/* 4085613c 2868 000c */
@@ -148,7 +148,7 @@ loc_40856118:
 	cmpal	%a0@(34),%a3		/* 4085614c b7e8 0022 */
 	beqs	loc_408561ac		/* 40856150 675a */
 	movel	%a3,%sp@-		/* 40856152 2f0b */
-	jsr	%pc@(sub_40855c78)	/* 40856154 4eba fb22 */
+	jsr	%pc@(ClearMarks)	/* 40856154 4eba fb22 */
 	addqw	#4,%sp			/* 40856158 584f */
 	bras	loc_408561ac		/* 4085615a 6050 */
 
@@ -163,7 +163,7 @@ loc_4085615c:
 	movew	%d0,%sp@-		/* 40856170 3f00 */
 	moveq	#0,%d1			/* 40856172 7200 */
 	movew	%d1,%sp@-		/* 40856174 3f01 */
-	jsr	%pc@(sub_40855cda)	/* 40856176 4eba fb62 */
+	jsr	%pc@(SWAPAPPMARK)	/* 40856176 4eba fb62 */
 	moveal	%a4,%a0			/* 4085617a 204c */
 	moveal	0xb60,%a1		/* 4085617c 2278 0b60 */
 	lea	%a1@(10),%a1		/* 40856180 43e9 000a */
@@ -183,7 +183,7 @@ loc_4085618c:
 	movew	%d0,%sp@-		/* 4085619e 3f00 */
 	moveq	#19,%d1			/* 408561a0 7213 */
 	movew	%d1,%sp@-		/* 408561a2 3f01 */
-	jsr	%pc@(sub_40855cda)	/* 408561a4 4eba fb34 */
+	jsr	%pc@(SWAPAPPMARK)	/* 408561a4 4eba fb34 */
 
 loc_408561a8:
 	moveal	%fp@(-12),%a4		/* 408561a8 286e fff4 */
@@ -259,7 +259,7 @@ loc_40856242:
 loc_4085624c:
 	movel	%d0,%sp@-		/* 4085624c 2f00 */
 	movel	%a3,%sp@-		/* 4085624e 2f0b */
-	jsr	%pc@(sub_408558aa)	/* 40856250 4eba f658 */
+	jsr	%pc@(ValidIconRec)	/* 40856250 4eba f658 */
 	movel	%d0,%fp@(-16)		/* 40856254 2d40 fff0 */
 	cmpal	%fp@(-16),%a3		/* 40856258 b7ee fff0 */
 	addqw	#8,%sp			/* 4085625c 504f */
@@ -331,7 +331,7 @@ loc_408562dc:
 	movew	%fp@(-8,%d0:w),%d0	/* 408562e4 3036 00f8 */
 	extl	%d0			/* 408562e8 48c0 */
 	movel	%d0,%sp@-		/* 408562ea 2f00 */
-	jsr	%pc@(sub_40855be4)	/* 408562ec 4eba f8f6 */
+	jsr	%pc@(NMCallMBarProc)	/* 408562ec 4eba f8f6 */
 	moveal	0xb60,%a0		/* 408562f0 2078 0b60 */
 	moveb	%d0,%a0@(50)		/* 408562f4 1140 0032 */
 	moveal	0xb60,%a0		/* 408562f8 2078 0b60 */
@@ -347,7 +347,7 @@ loc_40856310:
 	unlk	%fp			/* 40856316 4e5e */
 	rts				/* 40856318 4e75 */
 
-sub_4085631a:
+NMTASK:
 	moveal	0x204c,%a1		/* 4085631a 2278 204c */
 	moveal	%a1@(124),%a1		/* 4085631e 2269 007c */
 	jmp	%a1@			/* 40856322 4ed1 */
@@ -361,7 +361,7 @@ __NMINSTALL:
 	_IdleUpdate			/* 4085633a a285 */
 
 loc_4085633c:
-	bsrw	sub_40855960		/* 4085633c 6100 f622 */
+	bsrw	_NMInstall		/* 4085633c 6100 f622 */
 	addql	#4,%sp			/* 40856340 588f */
 	rts				/* 40856342 4e75 */
 
@@ -374,7 +374,7 @@ __NMREMOVE:
 	_IdleUpdate			/* 4085635a a285 */
 
 loc_4085635c:
-	bsrw	sub_408559c2		/* 4085635c 6100 f664 */
+	bsrw	_NMRemove		/* 4085635c 6100 f664 */
 	addql	#4,%sp			/* 40856360 588f */
 	rts				/* 40856362 4e75 */
 
@@ -388,7 +388,7 @@ __v__disable:
 	oriw	#1792,%sr		/* 4085637a 007c 0700 */
 	rts				/* 4085637e 4e75 */
 
-sub_40856380:
+disable:
 	CallVector	0x204c 32	/* 40856380 2f30 81e2 204c 0080 */
 	rts				/* 40856388 4e75 */
 
@@ -403,7 +403,7 @@ __v__spl:
 	movew	%d0,%sr			/* 4085639e 46c0 */
 	rts				/* 408563a0 4e75 */
 
-sub_408563a2:
+spl:
 	CallVector	0x204c 33	/* 408563a2 2f30 81e2 204c 0084 */
 	rts				/* 408563aa 4e75 */
 

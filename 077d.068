@@ -996,7 +996,7 @@ SETARROWCURSOR:
 
 	.align	16
 
-sub_408447e0:
+AL_NEWALIASCOMMON:
 	linkw	%fp,#-2			/* 408447e0 4e56 fffe */
 	moveml	%d7/%a4,%sp@-		/* 408447e4 48e7 0108 */
 	moveal	%fp@(14),%a4		/* 408447e8 286e 000e */
@@ -1017,7 +1017,7 @@ loc_40844800:
 	pea	%fp@(-1)		/* 40844810 486e ffff */
 	movew	%fp@(12),%sp@-		/* 40844814 3f2e 000c */
 	movel	%fp@(8),%sp@-		/* 40844818 2f2e 0008 */
-	jsr	%pc@(sub_408470c2)	/* 4084481c 4eba 28a4 */
+	jsr	%pc@(AL_FILLALIAS)	/* 4084481c 4eba 28a4 */
 	movew	%sp@+,%d7		/* 40844820 3e1f */
 	beqs	loc_4084482c		/* 40844822 6708 */
 	moveal	%a4@,%a0		/* 40844824 2054 */
@@ -1154,7 +1154,7 @@ loc_40844932:
 	movel	%a4,%sp@-		/* 4084493c 2f0c */
 	movew	%d7,%sp@-		/* 4084493e 3f07 */
 	movel	%a3,%sp@-		/* 40844940 2f0b */
-	jsr	%pc@(sub_40847b8e)	/* 40844942 4eba 324a */
+	jsr	%pc@(AL_GETVOLNAME)	/* 40844942 4eba 324a */
 	moveq	#0,%d0			/* 40844946 7000 */
 	moveb	%a3@,%d0		/* 40844948 1013 */
 	cmpib	#27,%d0			/* 4084494a 0c00 001b */
@@ -1175,7 +1175,7 @@ loc_40844958:
 	moveq	#2,%d1			/* 4084497a 7202 */
 	movew	%d1,%sp@-		/* 4084497c 3f01 */
 	pea	%fp@(-270)		/* 4084497e 486e fef2 */
-	jsr	%pc@(sub_408447e0)	/* 40844982 4eba fe5c */
+	jsr	%pc@(AL_NEWALIASCOMMON)	/* 40844982 4eba fe5c */
 	movew	%sp@+,%d7		/* 40844986 3e1f */
 	bnes	loc_408449a2		/* 40844988 6618 */
 	moveq	#0,%d0			/* 4084498a 7000 */
@@ -1252,7 +1252,7 @@ AL_RESOLVEALIAS:
 
 	.align	16
 
-sub_40844a40:
+KindMatches:
 	linkw	%fp,#0			/* 40844a40 4e56 0000 */
 	movel	%a4,%sp@-		/* 40844a44 2f0c */
 	moveal	%fp@(12),%a4		/* 40844a46 286e 000c */
@@ -1282,7 +1282,7 @@ loc_40844a6e:
 
 	.align	16
 
-sub_40844a80:
+AttributesMatch:
 	linkw	%fp,#-4			/* 40844a80 4e56 fffc */
 	moveml	%a3-%a4,%sp@-		/* 40844a84 48e7 0018 */
 	moveal	%fp@(8),%a3		/* 40844a88 266e 0008 */
@@ -1303,7 +1303,7 @@ sub_40844a80:
 	pea	%fp@(-4)		/* 40844ab6 486e fffc */
 	movel	%d0,%sp@-		/* 40844aba 2f00 */
 	movel	%a3,%sp@-		/* 40844abc 2f0b */
-	jsr	%pc@(sub_4084720a)	/* 40844abe 4eba 274a */
+	jsr	%pc@(AL_findVolume)	/* 40844abe 4eba 274a */
 	tstw	%d0			/* 40844ac2 4a40 */
 	lea	%sp@(20),%sp		/* 40844ac4 4fef 0014 */
 	bnes	loc_40844b40		/* 40844ac8 6676 */
@@ -1320,7 +1320,7 @@ loc_40844ad8:
 	movel	%d0,%sp@-		/* 40844ae2 2f00 */
 	moveq	#0,%d0			/* 40844ae4 7000 */
 	movel	%d0,%sp@-		/* 40844ae6 2f00 */
-	jsr	%pc@(sub_40848818)	/* 40844ae8 4eba 3d2e */
+	jsr	%pc@(AL_fixedCreationDate)	/* 40844ae8 4eba 3d2e */
 	cmpl	%a3@(118),%d0		/* 40844aec b0ab 0076 */
 	lea	%sp@(12),%sp		/* 40844af0 4fef 000c */
 	bnes	loc_40844b40		/* 40844af4 664a */
@@ -1346,7 +1346,7 @@ loc_40844b0e:
 	movel	%d0,%sp@-		/* 40844b28 2f00 */
 	moveq	#0,%d0			/* 40844b2a 7000 */
 	movel	%d0,%sp@-		/* 40844b2c 2f00 */
-	jsr	%pc@(sub_40848818)	/* 40844b2e 4eba 3ce8 */
+	jsr	%pc@(AL_fixedCreationDate)	/* 40844b2e 4eba 3ce8 */
 	cmpl	%a3@(118),%d0		/* 40844b32 b0ab 0076 */
 	lea	%sp@(12),%sp		/* 40844b36 4fef 000c */
 	bnes	loc_40844b40		/* 40844b3a 6604 */
@@ -1363,7 +1363,7 @@ loc_40844b42:
 
 	.align	16
 
-sub_40844b50:
+CallClientFilter:
 	linkw	%fp,#-108		/* 40844b50 4e56 ff94 */
 	moveml	%d5-%d7/%a3-%a4,%sp@-	/* 40844b54 48e7 0718 */
 	moveb	%fp@(19),%d6		/* 40844b58 1c2e 0013 */
@@ -1411,7 +1411,7 @@ loc_40844bbe:
 
 	.align	16
 
-sub_40844bd0:
+NewCandidate:
 	linkw	%fp,#0			/* 40844bd0 4e56 0000 */
 	.short	0x48e7	/* 40844bd4 48e7 */
 	.short	0x0f18	/* 40844bd6 0f18 */
@@ -1456,7 +1456,7 @@ sub_40844bd0:
 
 	.align	16
 
-sub_40844c30:
+FilterThisMatch:
 	linkw	%fp,#-114		/* 40844c30 4e56 ff8e */
 	moveml	%d6-%d7/%a3-%a4,%sp@-	/* 40844c34 48e7 0318 */
 	moveb	%fp@(15),%d7		/* 40844c38 1e2e 000f */
@@ -1485,7 +1485,7 @@ loc_40844c62:
 	bnes	loc_40844c90		/* 40844c7e 6610 */
 	movel	%a3,%sp@-		/* 40844c80 2f0b */
 	pea	%fp@(-114)		/* 40844c82 486e ff8e */
-	jsr	%pc@(sub_40844a40)	/* 40844c86 4eba fdb8 */
+	jsr	%pc@(KindMatches)	/* 40844c86 4eba fdb8 */
 	tstb	%d0			/* 40844c8a 4a00 */
 	addqw	#8,%sp			/* 40844c8c 504f */
 	bnes	loc_40844c94		/* 40844c8e 6604 */
@@ -1504,7 +1504,7 @@ loc_40844c94:
 	movel	%d0,%sp@-		/* 40844ca4 2f00 */
 	pea	%fp@(-114)		/* 40844ca6 486e ff8e */
 	movel	%a3,%sp@-		/* 40844caa 2f0b */
-	jsr	%pc@(sub_40844a80)	/* 40844cac 4eba fdd2 */
+	jsr	%pc@(AttributesMatch)	/* 40844cac 4eba fdd2 */
 	tstb	%d0			/* 40844cb0 4a00 */
 	lea	%sp@(12),%sp		/* 40844cb2 4fef 000c */
 	bnes	loc_40844cbc		/* 40844cb6 6604 */
@@ -1527,7 +1527,7 @@ loc_40844cc4:
 	movew	%a4@(28),%d0		/* 40844cdc 302c 001c */
 	extl	%d0			/* 40844ce0 48c0 */
 	movel	%d0,%sp@-		/* 40844ce2 2f00 */
-	jsr	%pc@(sub_40844bd0)	/* 40844ce4 4eba feea */
+	jsr	%pc@(NewCandidate)	/* 40844ce4 4eba feea */
 	tstb	%d0			/* 40844ce8 4a00 */
 	lea	%sp@(20),%sp		/* 40844cea 4fef 0014 */
 	beqs	loc_40844d08		/* 40844cee 6718 */
@@ -1539,7 +1539,7 @@ loc_40844cf0:
 	movel	%d0,%sp@-		/* 40844cf8 2f00 */
 	movel	%fp@(-6),%sp@-		/* 40844cfa 2f2e fffa */
 	movel	%a4,%sp@-		/* 40844cfe 2f0c */
-	jsr	%pc@(sub_40844b50)	/* 40844d00 4eba fe4e */
+	jsr	%pc@(CallClientFilter)	/* 40844d00 4eba fe4e */
 	lea	%sp@(16),%sp		/* 40844d04 4fef 0010 */
 
 loc_40844d08:
@@ -1552,7 +1552,7 @@ loc_40844d0c:
 
 	.align	16
 
-sub_40844d20:
+UpdateFileNumber:
 	linkw	%fp,#0			/* 40844d20 4e56 0000 */
 	.short	0x2f0c	/* 40844d24 2f0c */
 	.short	0x286e	/* 40844d26 286e */
@@ -1577,7 +1577,7 @@ sub_40844d20:
 
 	.align	16
 
-sub_40844d50:
+AddCandidate:
 	linkw	%fp,#0			/* 40844d50 4e56 0000 */
 	.short	0x48e7	/* 40844d54 48e7 */
 	.short	0x0118	/* 40844d56 0118 */
@@ -1618,7 +1618,7 @@ sub_40844d50:
 
 	.align	16
 
-sub_40844da0:
+UpdateAliasListAndFlag:
 	linkw	%fp,#0			/* 40844da0 4e56 0000 */
 	.short	0x48e7	/* 40844da4 48e7 */
 	.short	0x0018	/* 40844da6 0018 */
@@ -1681,7 +1681,7 @@ sub_40844da0:
 
 	.align	16
 
-sub_40844e20:
+FindTarget:
 	linkw	%fp,#-108		/* 40844e20 4e56 ff94 */
 	moveml	%d3/%d6-%d7/%a3-%a4,%sp@-	/* 40844e24 48e7 1318 */
 	moveal	%fp@(12),%a3		/* 40844e28 266e 000c */

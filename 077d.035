@@ -456,7 +456,7 @@ __v__StartTimer:
 	movel	%a4,%sp@-		/* 408233f4 2f0c */
 	moveal	%fp@(8),%a4		/* 408233f6 286e 0008 */
 	movel	#1700881505,%a4@(488)	/* 408233fa 297c 6561 6461 01e8 */
-	lea	%pc@(sub_4082358c),%a0	/* 40823402 41fa 0188 */
+	lea	%pc@(SIMTimerProc),%a0	/* 40823402 41fa 0188 */
 	movel	%a0,%a4@(494)		/* 40823406 2948 01ee */
 	movel	%a4,%a4@(510)		/* 4082340a 294c 01fe */
 	lea	%a4@(488),%a0		/* 4082340e 41ec 01e8 */
@@ -615,7 +615,7 @@ loc_40823576:
 	unlk	%fp			/* 40823588 4e5e */
 	rts				/* 4082358a 4e75 */
 
-sub_4082358c:
+SIMTimerProc:
 	CallVector	0x205c 223	/* 4082358c 2f30 81e2 205c 037c */
 	rts				/* 40823594 4e75 */
 
@@ -632,7 +632,7 @@ __v__InitXPT:
 	tstb	%d7			/* 408235b8 4a07 */
 	beqs	loc_408235c6		/* 408235ba 670a */
 	movel	%a4,%sp@-		/* 408235bc 2f0c */
-	jsr	%pc@(sub_408236de)	/* 408235be 4eba 011e */
+	jsr	%pc@(SetTempXPTg)	/* 408235be 4eba 011e */
 	addqw	#4,%sp			/* 408235c2 584f */
 	bras	loc_408235ce		/* 408235c4 6008 */
 
@@ -662,15 +662,15 @@ loc_408235ec:
 	moveq	#0,%d0			/* 408235f0 7000 */
 	movel	%d0,%a0@		/* 408235f2 2080 */
 	movew	#7,%a4@(304)		/* 408235f4 397c 0007 0130 */
-	lea	%pc@(sub_4081fe60),%a0	/* 408235fa 41fa c864 */
+	lea	%pc@(DEFERREDCALL),%a0	/* 408235fa 41fa c864 */
 	movel	%a0,%a4@(308)		/* 408235fe 2948 0134 */
 	movel	%a4,%sp@-		/* 40823602 2f0c */
-	jsr	%pc@(sub_408246d2)	/* 40823604 4eba 10cc */
+	jsr	%pc@(XlateGlobals)	/* 40823604 4eba 10cc */
 	tstb	%d7			/* 40823608 4a07 */
 	addqw	#4,%sp			/* 4082360a 584f */
 	beqs	loc_4082361e		/* 4082360c 6710 */
 	movel	%a4,%sp@-		/* 4082360e 2f0c */
-	jsr	%pc@(sub_408245fe)	/* 40823610 4eba 0fec */
+	jsr	%pc@(ReRegisterAllSIMs)	/* 40823610 4eba 0fec */
 	tstw	%d0			/* 40823614 4a40 */
 	addqw	#4,%sp			/* 40823616 584f */
 	beqs	loc_4082361e		/* 40823618 6704 */
@@ -678,7 +678,7 @@ loc_408235ec:
 	bras	loc_4082366c		/* 4082361c 604e */
 
 loc_4082361e:
-	jsr	%pc@(sub_4081fff4)	/* 4082361e 4eba c9d4 */
+	jsr	%pc@(Init_SCSIXlate)	/* 4082361e 4eba c9d4 */
 	moveq	#0,%d0			/* 40823622 7000 */
 	movel	%d0,%a4@(72)		/* 40823624 2940 0048 */
 	subql	#4,%sp			/* 40823628 598f */
@@ -686,7 +686,7 @@ loc_4082361e:
 	moveq	#0,%d0			/* 4082362e 7000 */
 	moveb	%d0,%sp@-		/* 40823630 1f00 */
 	jsr	%pc@(sub_40820040)	/* 40823632 4eba ca0c */
-	jsr	%pc@(sub_4081fde6)	/* 40823636 4eba c7ae */
+	jsr	%pc@(ciDebuggerPatch)	/* 40823636 4eba c7ae */
 	movel	%d0,%a4@(76)		/* 4082363a 2940 004c */
 	addqw	#4,%sp			/* 4082363e 584f */
 	beqs	loc_40823652		/* 40823640 6710 */
@@ -698,7 +698,7 @@ loc_4082361e:
 
 loc_40823652:
 	movel	%a4,%sp@-		/* 40823652 2f0c */
-	jsr	%pc@(sub_4081fd0e)	/* 40823654 4eba c6b8 */
+	jsr	%pc@(InitSyncWait)	/* 40823654 4eba c6b8 */
 	pea	%pc@(SCSIAtomic)	/* 40823658 487a c4e6 */
 	movew	#137,%sp@-		/* 4082365c 3f3c 0089 */
 	moveq	#0,%d0			/* 40823660 7000 */
@@ -718,7 +718,7 @@ InitXPT:
 	jmp	%a1@			/* 4082367e 4ed1 */
 
 sub_40823680:
-	bral	sub_408a37b0		/* 40823680 60ff 0008 012e */
+	bral	NSETTRAPADDRESS		/* 40823680 60ff 0008 012e */
 
 	.align	16
 
@@ -762,7 +762,7 @@ __v__SetTempXPTg:
 	.short	0x4e5e	/* 408236da 4e5e */
 	rts				/* 408236dc 4e75 */
 
-sub_408236de:
+SetTempXPTg:
 	.short	0x2278	/* 408236de 2278 */
 	.short	0x205c	/* 408236e0 205c */
 	.short	0x2269	/* 408236e2 2269 */

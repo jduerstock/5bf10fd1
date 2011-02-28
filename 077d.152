@@ -427,7 +427,7 @@ sb_CheckWorkHandle:
 
 	.align	16
 
-sub_40898350:
+sb_SetNewSFNT:
 	.short	0x4e56	/* 40898350 4e56 */
 	.short	0xffd4	/* 40898352 ffd4 */
 	.short	0x48e7	/* 40898354 48e7 */
@@ -642,7 +642,7 @@ IntrinsicStyle:
 
 	.align	16
 
-sub_408984f0:
+sb_InitCacheHead:
 	.short	0x4e56	/* 408984f0 4e56 */
 	.short	0xfff4	/* 408984f2 fff4 */
 	.short	0x48e7	/* 408984f4 48e7 */
@@ -1078,7 +1078,7 @@ __v__sb_ShrinkCacheToMin:
 
 	.align	16
 
-sub_40898860:
+sb_FigureCacheSize:
 	.short	0x4e56	/* 40898860 4e56 */
 	.short	0x0000	/* 40898862 0000 */
 	.short	0x48e7	/* 40898864 48e7 */
@@ -1130,7 +1130,7 @@ __v__sb_ResetHeapState:
 	.short	0x4e5e	/* 408988bc 4e5e */
 	rts				/* 408988be 4e75 */
 
-sub_408988c0:
+sb_ResetHeapState:
 	.short	0x2278	/* 408988c0 2278 */
 	.short	0x202c	/* 408988c2 202c */
 	.short	0x2269	/* 408988c4 2269 */
@@ -1273,7 +1273,7 @@ loc_408989ee:
 	beqs	loc_408989fe		/* 408989f0 670c */
 	movel	%a4@(4),%sp@-		/* 408989f2 2f2c 0004 */
 	movel	%a4@,%sp@-		/* 408989f6 2f14 */
-	jsr	%pc@(sub_40897d42)	/* 408989f8 4eba f348 */
+	jsr	%pc@(sb_DisposeCacheHandle)	/* 408989f8 4eba f348 */
 	addqw	#8,%sp			/* 408989fc 504f */
 
 loc_408989fe:
@@ -1292,7 +1292,7 @@ loc_40898a04:
 	movel	%d0,%a3@(28)		/* 40898a1e 2740 001c */
 	clrw	%a3@(32)		/* 40898a22 426b 0020 */
 	movel	%a3,%sp@-		/* 40898a26 2f0b */
-	jsr	%pc@(sub_40897f9e)	/* 40898a28 4eba f574 */
+	jsr	%pc@(sb_ResetFSWorkState)	/* 40898a28 4eba f574 */
 	lea	%sp@(12),%sp		/* 40898a2c 4fef 000c */
 	bras	loc_40898a80		/* 40898a30 604e */
 
@@ -1320,7 +1320,7 @@ loc_40898a38:
 loc_40898a66:
 	movel	%a4@(4),%sp@-		/* 40898a66 2f2c 0004 */
 	movel	%a4@,%sp@-		/* 40898a6a 2f14 */
-	jsr	%pc@(sub_40897d42)	/* 40898a6c 4eba f2d4 */
+	jsr	%pc@(sb_DisposeCacheHandle)	/* 40898a6c 4eba f2d4 */
 	moveq	#0,%d0			/* 40898a70 7000 */
 	movel	%d0,%a4@		/* 40898a72 2880 */
 	movel	%d0,%a4@(4)		/* 40898a74 2940 0004 */
@@ -1333,7 +1333,7 @@ loc_40898a7a:
 loc_40898a80:
 	movel	%fp@(-8),%sp@-		/* 40898a80 2f2e fff8 */
 	movel	%fp@(-12),%sp@-		/* 40898a84 2f2e fff4 */
-	jsr	%pc@(sub_4089f42c)	/* 40898a88 4eba 69a2 */
+	jsr	%pc@(KillApplicationHeapFragmentTableCaches)	/* 40898a88 4eba 69a2 */
 	movel	%a3@(12),%fp@(-4)	/* 40898a8c 2d6b 000c fffc */
 	addqw	#8,%sp			/* 40898a92 504f */
 	beqs	loc_40898ac2		/* 40898a94 672c */
@@ -1360,7 +1360,7 @@ loc_40898ac2:
 	movel	%fp@(-4),%d0		/* 40898ad4 202e fffc */
 	cmpl	%fp@(-8),%d0		/* 40898ad8 b0ae fff8 */
 	bccs	loc_40898ae2		/* 40898adc 6404 */
-	jsr	%pc@(sub_40897d9a)	/* 40898ade 4eba f2ba */
+	jsr	%pc@(sb_DisposeWorkHandle)	/* 40898ade 4eba f2ba */
 
 loc_40898ae2:
 	movel	%a3@(154),%fp@(-4)	/* 40898ae2 2d6b 009a fffc */
@@ -1380,7 +1380,7 @@ loc_40898af6:
 
 loc_40898b0a:
 	movel	%a3,%sp@-		/* 40898b0a 2f0b */
-	jsr	%pc@(sub_408988c0)	/* 40898b0c 4eba fdb2 */
+	jsr	%pc@(sb_ResetHeapState)	/* 40898b0c 4eba fdb2 */
 	moveq	#0,%d0			/* 40898b10 7000 */
 	movel	%d0,%fp@(16)		/* 40898b12 2d40 0010 */
 	addqw	#4,%sp			/* 40898b16 584f */
@@ -1578,24 +1578,24 @@ loc_40898cd6:
 	movel	%d6,%sp@-		/* 40898cdc 2f06 */
 	movel	%d0,%sp@-		/* 40898cde 2f00 */
 	movel	%fp@(12),%sp@-		/* 40898ce0 2f2e 000c */
-	jsr	%pc@(sub_40898860)	/* 40898ce4 4eba fb7a */
+	jsr	%pc@(sb_FigureCacheSize)	/* 40898ce4 4eba fb7a */
 	addql	#4,%sp			/* 40898ce8 588f */
 	movel	%d0,%sp@-		/* 40898cea 2f00 */
 	pea	%fp@(-12)		/* 40898cec 486e fff4 */
 	movel	%a4@,%sp@-		/* 40898cf0 2f14 */
 	movel	%fp@(8),%sp@-		/* 40898cf2 2f2e 0008 */
-	jsr	%pc@(sub_40897c40)	/* 40898cf6 4eba ef48 */
+	jsr	%pc@(sb_SizeTheBlock)	/* 40898cf6 4eba ef48 */
 	movel	%d0,%fp@(-8)		/* 40898cfa 2d40 fff8 */
 	lea	%sp@(28),%sp		/* 40898cfe 4fef 001c */
 	beqs	loc_40898d7c		/* 40898d02 6778 */
 	movel	%fp@(12),%sp@-		/* 40898d04 2f2e 000c */
-	jsr	%pc@(sub_40898350)	/* 40898d08 4eba f646 */
+	jsr	%pc@(sb_SetNewSFNT)	/* 40898d08 4eba f646 */
 	movel	%d0,%fp@(-4)		/* 40898d0c 2d40 fffc */
 	addqw	#4,%sp			/* 40898d10 584f */
 	bnes	loc_40898d54		/* 40898d12 6640 */
 	movel	%fp@(-8),%sp@-		/* 40898d14 2f2e fff8 */
 	movel	%fp@(12),%sp@-		/* 40898d18 2f2e 000c */
-	jsr	%pc@(sub_408984f0)	/* 40898d1c 4eba f7d2 */
+	jsr	%pc@(sb_InitCacheHead)	/* 40898d1c 4eba f7d2 */
 	movel	%d0,%fp@(-4)		/* 40898d20 2d40 fffc */
 	addqw	#8,%sp			/* 40898d24 504f */
 	bnes	loc_40898d54		/* 40898d26 662c */
@@ -1627,7 +1627,7 @@ loc_40898d54:
 	movel	%d0,%a4@(4)		/* 40898d6c 2940 0004 */
 	moveal	%fp@(-8),%a0		/* 40898d70 206e fff8 */
 	_DisposeHandle			/* 40898d74 a023 */
-	jsr	%pc@(sub_40897620)	/* 40898d76 4eba e8a8 */
+	jsr	%pc@(sb_Debug)	/* 40898d76 4eba e8a8 */
 	bras	loc_40898d82		/* 40898d7a 6006 */
 
 loc_40898d7c:

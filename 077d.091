@@ -4,7 +4,7 @@
 	moveal	%a0@,%a0		/* 4085b006 2050 */
 	rts				/* 4085b008 4e75 */
 
-sub_4085b00a:
+GETA1LIST:
 	moveal	0xa1c,%a1		/* 4085b00a 2278 0a1c */
 	tstl	%a1@			/* 4085b00e 4a91 */
 	beqs	loc_4085b016		/* 4085b010 6704 */
@@ -15,13 +15,13 @@ loc_4085b016:
 	moveq	#84,%d0			/* 4085b016 7054 */
 	_SysError			/* 4085b018 a9c9 */
 
-sub_4085b01a:
+GETHA0LIST:
 	bsrs	GETA0LIST		/* 4085b01a 61e2 */
 	addaw	%a0@,%a0		/* 4085b01c d0d0 */
 	addqw	#6,%a0			/* 4085b01e 5c48 */
 	rts				/* 4085b020 4e75 */
 
-	bsrs	sub_4085b00a		/* 4085b022 61e6 */
+	bsrs	GETA1LIST		/* 4085b022 61e6 */
 	addaw	%a1@,%a1		/* 4085b024 d2d1 */
 	addqw	#6,%a1			/* 4085b026 5c49 */
 	rts				/* 4085b028 4e75 */
@@ -42,12 +42,12 @@ MENUSELECT:
 	st	%a2@(284)		/* 4085b054 50ea 011c */
 
 loc_4085b058:
-	jsr	%pc@(sub_4085e544)	/* 4085b058 4eba 34ea */
+	jsr	%pc@(PUSHMENUSTATE)	/* 4085b058 4eba 34ea */
 	subqw	#4,%sp			/* 4085b05c 594f */
 	movel	%fp@(8),%sp@-		/* 4085b05e 2f2e 0008 */
 	jsr	%pc@(sub_4085b0bc)	/* 4085b062 4eba 0058 */
 	movel	%sp@+,%fp@(12)		/* 4085b066 2d5f 000c */
-	jsr	%pc@(sub_4085e560)	/* 4085b06a 4eba 34f4 */
+	jsr	%pc@(POPMENUSTATE)	/* 4085b06a 4eba 34f4 */
 	movel	%fp@(12),%d0		/* 4085b06e 202e 000c */
 	moveal	0x2b6,%a2		/* 4085b072 2478 02b6 */
 	moveal	%a2@(120),%a2		/* 4085b076 246a 0078 */
@@ -1152,7 +1152,7 @@ SETMCINFO:
 	movel	%a0,0xd50		/* 4085b95e 21c8 0d50 */
 	moveal	%a1,%a0			/* 4085b962 2049 */
 	_DisposeHandle			/* 4085b964 a023 */
-	bsrw	sub_4085bc20		/* 4085b966 6100 02b8 */
+	bsrw	MENUCTBLSANITYCHK		/* 4085b966 6100 02b8 */
 
 loc_4085b96a:
 	rts				/* 4085b96a 4e75 */
@@ -1504,7 +1504,7 @@ SETMCENTRIES:
 
 	.align	16
 
-sub_4085bc20:
+MENUCTBLSANITYCHK:
 	.short	0x4e56	/* 4085bc20 4e56 */
 	.short	0xfff2	/* 4085bc22 fff2 */
 	.short	0x2f02	/* 4085bc24 2f02 */

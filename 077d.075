@@ -103,7 +103,7 @@ loc_4084b0fe:
 	unlk	%fp			/* 4084b104 4e5e */
 	rtd	#4			/* 4084b106 4e74 0004 */
 
-sub_4084b10a:
+UNREGISTERCOMPONENT:
 	moveal	0x2020,%a1		/* 4084b10a 2278 2020 */
 	moveal	%a1@(104),%a1		/* 4084b10e 2269 0068 */
 	jmp	%a1@			/* 4084b112 4ed1 */
@@ -339,7 +339,7 @@ loc_4084b34e:
 	unlk	%fp			/* 4084b354 4e5e */
 	rtd	#4			/* 4084b356 4e74 0004 */
 
-sub_4084b35a:
+OPENCOMPONENTRESFILE:
 	moveal	0x2020,%a1		/* 4084b35a 2278 2020 */
 	moveal	%a1@(120),%a1		/* 4084b35e 2269 0078 */
 	jmp	%a1@			/* 4084b362 4ed1 */
@@ -364,7 +364,7 @@ loc_4084b38c:
 	unlk	%fp			/* 4084b390 4e5e */
 	rtd	#2			/* 4084b392 4e74 0002 */
 
-sub_4084b396:
+CLOSECOMPONENTRESFILE:
 	moveal	0x2020,%a1		/* 4084b396 2278 2020 */
 	moveal	%a1@(124),%a1		/* 4084b39a 2269 007c */
 	jmp	%a1@			/* 4084b39e 4ed1 */
@@ -509,14 +509,14 @@ loc_4084b4a8:
 	movel	%a4@(28),%sp@-		/* 4084b4ba 2f2c 001c */
 	movel	%a4@(32),%sp@-		/* 4084b4be 2f2c 0020 */
 	movel	%a4@(36),%sp@-		/* 4084b4c2 2f2c 0024 */
-	jsr	%pc@(sub_4084acc6)	/* 4084b4c6 4eba f7fe */
+	jsr	%pc@(REGISTERCOMPONENT)	/* 4084b4c6 4eba f7fe */
 	movel	%sp@+,%d7		/* 4084b4ca 2e1f */
 	beqw	loc_4084b558		/* 4084b4cc 6700 008a */
 	movel	%d6,%sp@-		/* 4084b4d0 2f06 */
-	jsr	%pc@(sub_4084a96e)	/* 4084b4d2 4eba f49a */
+	jsr	%pc@(ComponentIDtoRegisteredComponentPointer)	/* 4084b4d2 4eba f49a */
 	moveal	%d0,%a4			/* 4084b4d6 2840 */
 	movel	%d7,%sp@-		/* 4084b4d8 2f07 */
-	jsr	%pc@(sub_4084a96e)	/* 4084b4da 4eba f492 */
+	jsr	%pc@(ComponentIDtoRegisteredComponentPointer)	/* 4084b4da 4eba f492 */
 	moveal	%d0,%a3			/* 4084b4de 2640 */
 	movew	%a4@(46),%a3@(46)	/* 4084b4e0 376c 002e 002e */
 	movel	%a4@(48),%a3@(48)	/* 4084b4e6 276c 0030 0030 */
@@ -566,7 +566,7 @@ loc_4084b560:
 	unlk	%fp			/* 4084b566 4e5e */
 	rtd	#6			/* 4084b568 4e74 0006 */
 
-sub_4084b56c:
+CLONECOMPONENT:
 	.short	0x2278	/* 4084b56c 2278 */
 	.short	0x2020	/* 4084b56e 2020 */
 	.short	0x2269	/* 4084b570 2269 */
@@ -630,7 +630,7 @@ loc_4084b5da:
 	bnew	loc_4084b6ec		/* 4084b5f0 6600 00fa */
 	subql	#2,%sp			/* 4084b5f4 558f */
 	movel	%d7,%sp@-		/* 4084b5f6 2f07 */
-	jsr	%pc@(sub_4084b35a)	/* 4084b5f8 4eba fd60 */
+	jsr	%pc@(OPENCOMPONENTRESFILE)	/* 4084b5f8 4eba fd60 */
 	movew	%sp@+,%d6		/* 4084b5fc 3c1f */
 	bnes	loc_4084b60a		/* 4084b5fe 660a */
 	moveq	#0,%d0			/* 4084b600 7000 */
@@ -713,13 +713,13 @@ loc_4084b6b2:
 	movel	%d7,%sp@-		/* 4084b6b4 2f07 */
 	moveq	#0,%d0			/* 4084b6b6 7000 */
 	movew	%d0,%sp@-		/* 4084b6b8 3f00 */
-	jsr	%pc@(sub_4084b56c)	/* 4084b6ba 4eba feb0 */
+	jsr	%pc@(CLONECOMPONENT)	/* 4084b6ba 4eba feb0 */
 	moveal	%sp@+,%a3		/* 4084b6be 265f */
 
 loc_4084b6c0:
 	subql	#2,%sp			/* 4084b6c0 558f */
 	movew	%d6,%sp@-		/* 4084b6c2 3f06 */
-	jsr	%pc@(sub_4084b396)	/* 4084b6c4 4eba fcd0 */
+	jsr	%pc@(CLOSECOMPONENTRESFILE)	/* 4084b6c4 4eba fcd0 */
 	tstl	%fp@(-8)		/* 4084b6c8 4aae fff8 */
 	addqw	#2,%sp			/* 4084b6cc 544f */
 	beqs	loc_4084b6d8		/* 4084b6ce 6708 */
@@ -1089,7 +1089,7 @@ __v__FINDNEXTCOMPONENT:
 	.short	0x4e74	/* 4084b9ba 4e74 */
 	.short	0x0008	/* 4084b9bc 0008 */
 
-sub_4084b9be:
+FINDNEXTCOMPONENT:
 	.short	0x2278	/* 4084b9be 2278 */
 	.short	0x2020	/* 4084b9c0 2020 */
 	.short	0x2269	/* 4084b9c2 2269 */
@@ -1557,7 +1557,7 @@ __v__OPENCOMPONENT:
 	.short	0x4e74	/* 4084bd6e 4e74 */
 	.short	0x0004	/* 4084bd70 0004 */
 
-sub_4084bd72:
+OPENCOMPONENT:
 	.short	0x2278	/* 4084bd72 2278 */
 	.short	0x2020	/* 4084bd74 2020 */
 	.short	0x2269	/* 4084bd76 2269 */
@@ -1654,7 +1654,7 @@ loc_4084be38:
 	subql	#4,%sp			/* 4084be38 598f */
 	movel	%d7,%sp@-		/* 4084be3a 2f07 */
 	pea	%fp@(-20)		/* 4084be3c 486e ffec */
-	jsr	%pc@(sub_4084b9be)	/* 4084be40 4eba fb7c */
+	jsr	%pc@(FINDNEXTCOMPONENT)	/* 4084be40 4eba fb7c */
 	movel	%sp@+,%d7		/* 4084be44 2e1f */
 	bnes	loc_4084be50		/* 4084be46 6608 */
 	moveq	#0,%d0			/* 4084be48 7000 */
@@ -1664,7 +1664,7 @@ loc_4084be38:
 loc_4084be50:
 	subql	#4,%sp			/* 4084be50 598f */
 	movel	%d7,%sp@-		/* 4084be52 2f07 */
-	jsr	%pc@(sub_4084bd72)	/* 4084be54 4eba ff1c */
+	jsr	%pc@(OPENCOMPONENT)	/* 4084be54 4eba ff1c */
 	movel	%sp@+,%d6		/* 4084be58 2c1f */
 
 loc_4084be5a:
@@ -1691,7 +1691,7 @@ __v__CALLCOMPONENT:
 	.short	0x4e5e	/* 4084be8a 4e5e */
 	rts				/* 4084be8c 4e75 */
 
-sub_4084be8e:
+CALLCOMPONENT:
 	.short	0x2278	/* 4084be8e 2278 */
 	.short	0x2020	/* 4084be90 2020 */
 	.short	0x2269	/* 4084be92 2269 */
@@ -1700,7 +1700,7 @@ sub_4084be8e:
 
 	.align	16
 
-sub_4084bea0:
+GetSystemThenROMRes:
 	linkw	%fp,#0			/* 4084bea0 4e56 0000 */
 	.short	0x48e7	/* 4084bea4 48e7 */
 	.short	0x0708	/* 4084bea6 0708 */
@@ -1760,25 +1760,25 @@ __v__REGISTERCOMPONENTROMRESOURCE:
 	extl	%d0			/* 4084bf1e 48c0 */
 	movel	%d0,%sp@-		/* 4084bf20 2f00 */
 	movel	%a4@(26),%sp@-		/* 4084bf22 2f2c 001a */
-	jsr	%pc@(sub_4084bea0)	/* 4084bf26 4eba ff78 */
+	jsr	%pc@(GetSystemThenROMRes)	/* 4084bf26 4eba ff78 */
 	movel	%d0,%fp@(-16)		/* 4084bf2a 2d40 fff0 */
 	movew	%a4@(36),%d0		/* 4084bf2e 302c 0024 */
 	extl	%d0			/* 4084bf32 48c0 */
 	movel	%d0,%sp@-		/* 4084bf34 2f00 */
 	movel	%a4@(32),%sp@-		/* 4084bf36 2f2c 0020 */
-	jsr	%pc@(sub_4084bea0)	/* 4084bf3a 4eba ff64 */
+	jsr	%pc@(GetSystemThenROMRes)	/* 4084bf3a 4eba ff64 */
 	movel	%d0,%fp@(-12)		/* 4084bf3e 2d40 fff4 */
 	movew	%a4@(42),%d0		/* 4084bf42 302c 002a */
 	extl	%d0			/* 4084bf46 48c0 */
 	movel	%d0,%sp@-		/* 4084bf48 2f00 */
 	movel	%a4@(38),%sp@-		/* 4084bf4a 2f2c 0026 */
-	jsr	%pc@(sub_4084bea0)	/* 4084bf4e 4eba ff50 */
+	jsr	%pc@(GetSystemThenROMRes)	/* 4084bf4e 4eba ff50 */
 	movel	%d0,%fp@(-8)		/* 4084bf52 2d40 fff8 */
 	movew	%a4@(24),%d0		/* 4084bf56 302c 0018 */
 	extl	%d0			/* 4084bf5a 48c0 */
 	movel	%d0,%sp@-		/* 4084bf5c 2f00 */
 	movel	%a4@(20),%sp@-		/* 4084bf5e 2f2c 0014 */
-	jsr	%pc@(sub_4084bea0)	/* 4084bf62 4eba ff3c */
+	jsr	%pc@(GetSystemThenROMRes)	/* 4084bf62 4eba ff3c */
 	movel	%d0,%fp@(-4)		/* 4084bf66 2d40 fffc */
 	subql	#4,%sp			/* 4084bf6a 598f */
 	movel	%a4,%sp@-		/* 4084bf6c 2f0c */
@@ -1788,7 +1788,7 @@ __v__REGISTERCOMPONENTROMRESOURCE:
 	movel	%fp@(-16),%sp@-		/* 4084bf78 2f2e fff0 */
 	movel	%fp@(-12),%sp@-		/* 4084bf7c 2f2e fff4 */
 	movel	%fp@(-8),%sp@-		/* 4084bf80 2f2e fff8 */
-	jsr	%pc@(sub_4084acc6)	/* 4084bf84 4eba ed40 */
+	jsr	%pc@(REGISTERCOMPONENT)	/* 4084bf84 4eba ed40 */
 	movel	%sp@+,%d7		/* 4084bf88 2e1f */
 	moveal	%a3,%a0			/* 4084bf8a 204b */
 	moveb	%d6,%d0			/* 4084bf8c 1006 */
@@ -1816,7 +1816,7 @@ __v__REGISTERCOMPONENTROMRESOURCE:
 	beqs	loc_4084bfde		/* 4084bfcc 6710 */
 	subql	#2,%sp			/* 4084bfce 558f */
 	movel	%d7,%sp@-		/* 4084bfd0 2f07 */
-	jsr	%pc@(sub_4084b10a)	/* 4084bfd2 4eba f136 */
+	jsr	%pc@(UNREGISTERCOMPONENT)	/* 4084bfd2 4eba f136 */
 	moveq	#0,%d0			/* 4084bfd6 7000 */
 	movel	%d0,%fp@(14)		/* 4084bfd8 2d40 000e */
 	addqw	#2,%sp			/* 4084bfdc 544f */
