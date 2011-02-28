@@ -503,29 +503,23 @@ __v__GETPICPIXMAP:
 	.align	16
 
 __v__PUTPICPIXMAP:
-	.short	0x206f	/* 40879440 206f */
-	.short	0x0004	/* 40879442 0004 */
-	.short	0xa029	/* 40879444 a029 */
-	.short	0x2050	/* 40879446 2050 */
-	.short	0x4868	/* 40879448 4868 */
-	.short	0x0004	/* 4087944a 0004 */
-	.short	0x3f3c	/* 4087944c 3f3c */
-	.short	0x002e	/* 4087944e 002e */
-	.short	0x4eba	/* 40879450 4eba */
-	.short	0xfb24	/* 40879452 fb24 */
-	.short	0x206f	/* 40879454 206f */
-	.short	0x0004	/* 40879456 0004 */
-	.short	0x2050	/* 40879458 2050 */
-	.short	0x2028	/* 4087945a 2028 */
-	.short	0x002a	/* 4087945c 002a */
-	.short	0x6706	/* 4087945e 6706 */
-	.short	0x2f00	/* 40879460 2f00 */
-	.short	0x4eba	/* 40879462 4eba */
-	.short	0xff92	/* 40879464 ff92 */
-	.short	0x206f	/* 40879466 206f */
-	.short	0x0004	/* 40879468 0004 */
-	.short	0xa02a	/* 4087946a a02a */
-	.short	0x2e9f	/* 4087946c 2e9f */
+	moveal	%sp@(4),%a0		/* 40879440 206f 0004 */
+	.short	0xa029			/* 40879444 a029 */
+	moveal	%a0@,%a0		/* 40879446 2050 */
+	pea	%a0@(4)			/* 40879448 4868 0004 */
+	movew	#46,%sp@-		/* 4087944c 3f3c 002e */
+	jsr	%pc@(PUTPICDATA)	/* 40879450 4eba fb24 */
+	moveal	%sp@(4),%a0		/* 40879454 206f 0004 */
+	moveal	%a0@,%a0		/* 40879458 2050 */
+	movel	%a0@(42),%d0		/* 4087945a 2028 002a */
+	beqs	loc_40879466		/* 4087945e 6706 */
+	movel	%d0,%sp@-		/* 40879460 2f00 */
+	jsr	%pc@(PUTPICTABLE)	/* 40879462 4eba ff92 */
+
+loc_40879466:
+	moveal	%sp@(4),%a0		/* 40879466 206f 0004 */
+	_HUnlock			/* 4087946a a02a */
+	movel	%sp@+,%sp@		/* 4087946c 2e9f */
 	rts				/* 4087946e 4e75 */
 
 	CallVector	0x2054 88	/* 40879470 2f30 81e2 2054 0160 */
