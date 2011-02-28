@@ -528,35 +528,25 @@ loc_40879466:
 	.align	16
 
 __v__GETPICPIXPAT:
-	.short	0x700a	/* 40879480 700a */
-	.short	0x9ec0	/* 40879482 9ec0 */
-	.short	0x2f0f	/* 40879484 2f0f */
-	.short	0x3f00	/* 40879486 3f00 */
-	.short	0x4eba	/* 40879488 4eba */
-	.short	0xfac4	/* 4087948a fac4 */
-	.short	0x0c57	/* 4087948c 0c57 */
-	.short	0x0002	/* 4087948e 0002 */
-	.short	0x6600	/* 40879490 6600 */
-	.short	0x008a	/* 40879492 008a */
-	.short	0x5d4f	/* 40879494 5d4f */
-	.short	0x6100	/* 40879496 6100 */
-	.short	0xfa78	/* 40879498 fa78 */
-	.short	0x2e80	/* 4087949a 2e80 */
-	.short	0x6100	/* 4087949c 6100 */
-	.short	0xfa52	/* 4087949e fa52 */
-	.short	0x3f40	/* 408794a0 3f40 */
-	.short	0x0004	/* 408794a2 0004 */
-	.short	0x4a6b	/* 408794a4 4a6b */
-	.short	0x0006	/* 408794a6 0006 */
-	.short	0x6b62	/* 408794a8 6b62 */
-	.short	0x2f0f	/* 408794aa 2f0f */
-	.short	0x2f2f	/* 408794ac 2f2f */
-	.short	0x001c	/* 408794ae 001c */
-	.short	0x6108	/* 408794b0 6108 */
-	.short	0x4fef	/* 408794b2 4fef */
-	.short	0x0010	/* 408794b4 0010 */
-	.short	0x6000	/* 408794b6 6000 */
-	.short	0x00a2	/* 408794b8 00a2 */
+	moveq	#10,%d0			/* 40879480 700a */
+	subaw	%d0,%sp			/* 40879482 9ec0 */
+	movel	%sp,%sp@-		/* 40879484 2f0f */
+	movew	%d0,%sp@-		/* 40879486 3f00 */
+	jsr	%pc@(GETPICDATA)	/* 40879488 4eba fac4 */
+	cmpiw	#2,%sp@			/* 4087948c 0c57 0002 */
+	bnew	loc_4087951c		/* 40879490 6600 008a */
+	subqw	#6,%sp			/* 40879494 5d4f */
+	bsrw	GETLONG		/* 40879496 6100 fa78 */
+	movel	%d0,%sp@		/* 4087949a 2e80 */
+	bsrw	GETWORD		/* 4087949c 6100 fa52 */
+	movew	%d0,%sp@(4)		/* 408794a0 3f40 0004 */
+	tstw	%a3@(6)			/* 408794a4 4a6b 0006 */
+	bmis	loc_4087950c		/* 408794a8 6b62 */
+	movel	%sp,%sp@-		/* 408794aa 2f0f */
+	movel	%sp@(28),%sp@-		/* 408794ac 2f2f 001c */
+	bsrs	__v__PUTGRAY		/* 408794b0 6108 */
+	lea	%sp@(16),%sp		/* 408794b2 4fef 0010 */
+	braw	loc_4087955a		/* 408794b6 6000 00a2 */
 
 __v__PUTGRAY:
 	moveal	%sp@(8),%a1		/* 408794ba 226f 0008 */
@@ -594,6 +584,8 @@ byte_408794ec:
 	.short	0x2200	/* 40879506 2200 */
 	.short	0x0000	/* 40879508 0000 */
 	.short	0x0000	/* 4087950a 0000 */
+
+loc_4087950c:
 	.short	0x2f2f	/* 4087950c 2f2f */
 	.short	0x0014	/* 4087950e 0014 */
 	.short	0x486f	/* 40879510 486f */
@@ -602,6 +594,8 @@ byte_408794ec:
 	.short	0x81e1	/* 40879516 81e1 */
 	.short	0x1634	/* 40879518 1634 */
 	.short	0x5c4f	/* 4087951a 5c4f */
+
+loc_4087951c:
 	.short	0x4a6b	/* 4087951c 4a6b */
 	.short	0x0006	/* 4087951e 0006 */
 	.short	0x6b16	/* 40879520 6b16 */
@@ -633,6 +627,8 @@ byte_408794ec:
 	.short	0x2f2f	/* 40879554 2f2f */
 	.short	0x0004	/* 40879556 0004 */
 	.short	0x6104	/* 40879558 6104 */
+
+loc_4087955a:
 	.short	0x4e74	/* 4087955a 4e74 */
 	.short	0x0008	/* 4087955c 0008 */
 	.short	0x206f	/* 4087955e 206f */
