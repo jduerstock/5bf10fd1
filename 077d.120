@@ -668,6 +668,8 @@ loc_408785b2:
 	.short	0x4840	/* 408785b6 4840 */
 	.short	0x4240	/* 408785b8 4240 */
 	.short	0x4840	/* 408785ba 4840 */
+
+loc_408785bc:
 	.short	0x6104	/* 408785bc 6104 */
 	.short	0x6000	/* 408785be 6000 */
 	.short	0x08f4	/* 408785c0 08f4 */
@@ -847,10 +849,10 @@ loc_40878768:
 
 loc_408787a4:
 	moveal	%a0,%a3			/* 408787a4 2648 */
-	jsr	%pc@(GETWORD)	/* 408787a6 4eba 0748 */
+	jsr	%pc@(GETWORD)		/* 408787a6 4eba 0748 */
 	subqw	#2,%d0			/* 408787aa 5540 */
 	movew	%d0,%d6			/* 408787ac 3c00 */
-	jsr	%pc@(GETWORD)	/* 408787ae 4eba 0740 */
+	jsr	%pc@(GETWORD)		/* 408787ae 4eba 0740 */
 	movew	%d0,%d7			/* 408787b2 3e00 */
 	pea	%fp@(-354)		/* 408787b4 486e fe9e */
 	movew	%d6,%sp@-		/* 408787b8 3f06 */
@@ -874,26 +876,19 @@ loc_408787e6:
 	braw	loc_40878eb4		/* 408787e6 6000 06cc */
 
 loc_408787ea:
-	.short	0x4eba	/* 408787ea 4eba */
-	.short	0x0704	/* 408787ec 0704 */
-	.short	0x3f00	/* 408787ee 3f00 */
-	.short	0x4eba	/* 408787f0 4eba */
-	.short	0x071e	/* 408787f2 071e */
-	.short	0x2055	/* 408787f4 2055 */
-	.short	0x2140	/* 408787f6 2140 */
-	.short	0xff42	/* 408787f8 ff42 */
-	.short	0x4eba	/* 408787fa 4eba */
-	.short	0x0714	/* 408787fc 0714 */
-	.short	0x2055	/* 408787fe 2055 */
-	.short	0x2140	/* 40878800 2140 */
-	.short	0xff46	/* 40878802 ff46 */
+	jsr	%pc@(GETWORD)	/* 408787ea 4eba 0704 */
+	movew	%d0,%sp@-		/* 408787ee 3f00 */
+	jsr	%pc@(GETLONG)	/* 408787f0 4eba 071e */
+	moveal	%a5@,%a0		/* 408787f4 2055 */
+	movel	%d0,%a0@(-190)		/* 408787f6 2140 ff42 */
+	jsr	%pc@(GETLONG)	/* 408787fa 4eba 0714 */
+	moveal	%a5@,%a0		/* 408787fe 2055 */
+	movel	%d0,%a0@(-186)		/* 40878800 2140 ff46 */
 	moveq	#0,%d0			/* 40878804 7000 */
-	.short	0x301f	/* 40878806 301f */
-	.short	0x5180	/* 40878808 5180 */
-	.short	0x6e00	/* 4087880a 6e00 */
-	.short	0xfdb0	/* 4087880c fdb0 */
-	.short	0x6000	/* 4087880e 6000 */
-	.short	0x06a4	/* 40878810 06a4 */
+	movew	%sp@+,%d0		/* 40878806 301f */
+	subql	#8,%d0			/* 40878808 5180 */
+	bgtw	loc_408785bc		/* 4087880a 6e00 fdb0 */
+	braw	loc_40878eb4		/* 4087880e 6000 06a4 */
 
 loc_40878812:
 	.short	0x4eba	/* 40878812 4eba */
