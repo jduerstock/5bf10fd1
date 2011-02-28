@@ -451,6 +451,7 @@ loc_40879386:
 	movel	%sp@+,%sp@		/* 408793ba 2e9f */
 	rts				/* 408793bc 4e75 */
 
+GETPICTABLE:
 	CallVector	0x2054 85	/* 408793be 2f30 81e2 2054 0154 */
 	rts				/* 408793c6 4e75 */
 
@@ -477,31 +478,23 @@ PUTPICTABLE:
 	rts				/* 408793fe 4e75 */
 
 __v__GETPICPIXMAP:
-	.short	0x206f	/* 40879400 206f */
-	.short	0x0004	/* 40879402 0004 */
-	.short	0xa029	/* 40879404 a029 */
-	.short	0x2050	/* 40879406 2050 */
-	.short	0x2f28	/* 40879408 2f28 */
-	.short	0x002a	/* 4087940a 002a */
-	.short	0x4298	/* 4087940c 4298 */
-	.short	0x2f08	/* 4087940e 2f08 */
-	.short	0x3f3c	/* 40879410 3f3c */
-	.short	0x002e	/* 40879412 002e */
-	.short	0x4eba	/* 40879414 4eba */
-	.short	0xfb38	/* 40879416 fb38 */
-	.short	0x201f	/* 40879418 201f */
-	.short	0x206f	/* 4087941a 206f */
-	.short	0x0004	/* 4087941c 0004 */
-	.short	0x2050	/* 4087941e 2050 */
-	.short	0x2140	/* 40879420 2140 */
-	.short	0x002a	/* 40879422 002a */
-	.short	0x2f00	/* 40879424 2f00 */
-	.short	0x4eba	/* 40879426 4eba */
-	.short	0xff96	/* 40879428 ff96 */
-	.short	0x206f	/* 4087942a 206f */
-	.short	0x0004	/* 4087942c 0004 */
-	.short	0xa02a	/* 4087942e a02a */
-	.short	0x2e9f	/* 40879430 2e9f */
+	moveal	%sp@(4),%a0		/* 40879400 206f 0004 */
+	_HLock				/* 40879404 a029 */
+	moveal	%a0@,%a0		/* 40879406 2050 */
+	movel	%a0@(42),%sp@-		/* 40879408 2f28 002a */
+	clrl	%a0@+			/* 4087940c 4298 */
+	movel	%a0,%sp@-		/* 4087940e 2f08 */
+	movew	#46,%sp@-		/* 40879410 3f3c 002e */
+	jsr	%pc@(GETPICDATA)	/* 40879414 4eba fb38 */
+	movel	%sp@+,%d0		/* 40879418 201f */
+	moveal	%sp@(4),%a0		/* 4087941a 206f 0004 */
+	moveal	%a0@,%a0		/* 4087941e 2050 */
+	movel	%d0,%a0@(42)		/* 40879420 2140 002a */
+	movel	%d0,%sp@-		/* 40879424 2f00 */
+	jsr	%pc@(GETPICTABLE)	/* 40879426 4eba ff96 */
+	moveal	%sp@(4),%a0		/* 4087942a 206f 0004 */
+	_HUnlock			/* 4087942e a02a */
+	movel	%sp@+,%sp@		/* 40879430 2e9f */
 	rts				/* 40879432 4e75 */
 
 	CallVector	0x2054 87	/* 40879434 2f30 81e2 2054 015c */
