@@ -457,24 +457,19 @@ loc_40879386:
 	.align	16
 
 __v__PUTPICTABLE:
-	.short	0x206f	/* 408793d0 206f */
-	.short	0x0004	/* 408793d2 0004 */
-	.short	0xa029	/* 408793d4 a029 */
-	.short	0x2050	/* 408793d6 2050 */
-	.short	0x2f08	/* 408793d8 2f08 */
-	.short	0x3028	/* 408793da 3028 */
-	.short	0x0006	/* 408793dc 0006 */
-	.short	0x5240	/* 408793de 5240 */
-	.short	0xc0fc	/* 408793e0 c0fc */
-	.short	0x0008	/* 408793e2 0008 */
-	.short	0x5040	/* 408793e4 5040 */
-	.short	0x3f00	/* 408793e6 3f00 */
-	.short	0x4eba	/* 408793e8 4eba */
-	.short	0xfb8c	/* 408793ea fb8c */
-	.short	0x206f	/* 408793ec 206f */
-	.short	0x0004	/* 408793ee 0004 */
-	.short	0xa02a	/* 408793f0 a02a */
-	.short	0x2e9f	/* 408793f2 2e9f */
+	moveal	%sp@(4),%a0		/* 408793d0 206f 0004 */
+	_HLock				/* 408793d4 a029 */
+	moveal	%a0@,%a0		/* 408793d6 2050 */
+	movel	%a0,%sp@-		/* 408793d8 2f08 */
+	movew	%a0@(6),%d0		/* 408793da 3028 0006 */
+	addqw	#1,%d0			/* 408793de 5240 */
+	muluw	#8,%d0			/* 408793e0 c0fc 0008 */
+	addqw	#8,%d0			/* 408793e4 5040 */
+	movew	%d0,%sp@-		/* 408793e6 3f00 */
+	jsr	%pc@(PUTPICDATA)	/* 408793e8 4eba fb8c */
+	moveal	%sp@(4),%a0		/* 408793ec 206f 0004 */
+	_HUnlock			/* 408793f0 a02a */
+	movel	%sp@+,%sp@		/* 408793f2 2e9f */
 	rts				/* 408793f4 4e75 */
 
 PUTPICTABLE:
