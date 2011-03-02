@@ -437,6 +437,8 @@ __v__FSSpecEqual:
 	.short	0xfff4	/* 4084c42a fff4 */
 	.short	0x4e5e	/* 4084c42c 4e5e */
 	rts				/* 4084c42e 4e75 */
+
+FSSpecEqual:
 	.short	0x2278	/* 4084c430 2278 */
 	.short	0x2020	/* 4084c432 2020 */
 	.short	0x2269	/* 4084c434 2269 */
@@ -453,67 +455,59 @@ __v__FSSpecEqual:
 
 __v__AddComponentFSSpec:
 	linkw	%fp,#0			/* 4084c450 4e56 0000 */
-	.short	0x48e7	/* 4084c454 48e7 */
-	.short	0x0718	/* 4084c456 0718 */
-	.short	0x266e	/* 4084c458 266e */
-	.short	0x0008	/* 4084c45a 0008 */
-	.short	0x2078	/* 4084c45c 2078 */
-	.short	0x028a	/* 4084c45e 028a */
-	.short	0x2868	/* 4084c460 2868 */
-	.short	0x0024	/* 4084c462 0024 */
-	.short	0x2078	/* 4084c464 2078 */
-	.short	0x028a	/* 4084c466 028a */
-	.short	0x3a28	/* 4084c468 3a28 */
-	.short	0x0012	/* 4084c46a 0012 */
-	.short	0x4247	/* 4084c46c 4247 */
-	.short	0x6026	/* 4084c46e 6026 */
-	.short	0x4a6c	/* 4084c470 4a6c */
-	.short	0x0002	/* 4084c472 0002 */
-	.short	0x6716	/* 4084c474 6716 */
-	.short	0x2f0b	/* 4084c476 2f0b */
-	.short	0x486c	/* 4084c478 486c */
-	.short	0x0002	/* 4084c47a 0002 */
-	.short	0x4eba	/* 4084c47c 4eba */
-	.short	0xffb2	/* 4084c47e ffb2 */
-	.short	0x4a00	/* 4084c480 4a00 */
-	.short	0x504f	/* 4084c482 504f */
-	.short	0x6708	/* 4084c484 6708 */
-	.short	0x5254	/* 4084c486 5254 */
-	.short	0x3007	/* 4084c488 3007 */
-	.short	0x603a	/* 4084c48a 603a */
-	.short	0x3c07	/* 4084c48c 3c07 */
-	.short	0x49ec	/* 4084c48e 49ec */
-	.short	0x0048	/* 4084c490 0048 */
-	.short	0x3007	/* 4084c492 3007 */
-	.short	0x5247	/* 4084c494 5247 */
-	.short	0xba47	/* 4084c496 ba47 */
-	.short	0x6ed6	/* 4084c498 6ed6 */
-	.short	0x2078	/* 4084c49a 2078 */
-	.short	0x028a	/* 4084c49c 028a */
-	.short	0x48c6	/* 4084c49e 48c6 */
-	.short	0x2206	/* 4084c4a0 2206 */
-	.short	0x7048	/* 4084c4a2 7048 */
-	.short	0x4c00	/* 4084c4a4 4c00 */
-	.short	0x1800	/* 4084c4a6 1800 */
-	.short	0x2841	/* 4084c4a8 2841 */
-	.short	0xd9e8	/* 4084c4aa d9e8 */
-	.short	0x0024	/* 4084c4ac 0024 */
-	.short	0x204b	/* 4084c4ae 204b */
-	.short	0x224c	/* 4084c4b0 224c */
-	.short	0x5489	/* 4084c4b2 5489 */
-	.short	0x7046	/* 4084c4b4 7046 */
-	.short	0xa02e	/* 4084c4b6 a02e */
-	.short	0x38bc	/* 4084c4b8 38bc */
-	.short	0x0001	/* 4084c4ba 0001 */
-	.short	0x2078	/* 4084c4bc 2078 */
-	.short	0x028a	/* 4084c4be 028a */
-	.short	0x5268	/* 4084c4c0 5268 */
-	.short	0x0010	/* 4084c4c2 0010 */
-	.short	0x3006	/* 4084c4c4 3006 */
-	.short	0x4cee	/* 4084c4c6 4cee */
-	.short	0x18e0	/* 4084c4c8 18e0 */
-	.short	0xffec	/* 4084c4ca ffec */
-	.short	0x4e5e	/* 4084c4cc 4e5e */
+	moveml	%d5-%d7/%a3-%a4,%sp@-	/* 4084c454 48e7 0718 */
+	moveal	%fp@(8),%a3		/* 4084c458 266e 0008 */
+	moveal	0x28a,%a0		/* 4084c45c 2078 028a */
+	moveal	%a0@(36),%a4		/* 4084c460 2868 0024 */
+	moveal	0x28a,%a0		/* 4084c464 2078 028a */
+	movew	%a0@(18),%d5		/* 4084c468 3a28 0012 */
+	clrw	%d7			/* 4084c46c 4247 */
+	bras	loc_4084c496		/* 4084c46e 6026 */
+
+loc_4084c470:
+	tstw	%a4@(2)			/* 4084c470 4a6c 0002 */
+	beqs	loc_4084c48c		/* 4084c474 6716 */
+	movel	%a3,%sp@-		/* 4084c476 2f0b */
+	pea	%a4@(2)			/* 4084c478 486c 0002 */
+	jsr	%pc@(FSSpecEqual)	/* 4084c47c 4eba ffb2 */
+	tstb	%d0			/* 4084c480 4a00 */
+	addqw	#8,%sp			/* 4084c482 504f */
+	beqs	loc_4084c48e		/* 4084c484 6708 */
+	addqw	#1,%a4@			/* 4084c486 5254 */
+	movew	%d7,%d0			/* 4084c488 3007 */
+	bras	loc_4084c4c6		/* 4084c48a 603a */
+
+loc_4084c48c:
+	movew	%d7,%d6			/* 4084c48c 3c07 */
+
+loc_4084c48e:
+	lea	%a4@(72),%a4		/* 4084c48e 49ec 0048 */
+	movew	%d7,%d0			/* 4084c492 3007 */
+	addqw	#1,%d7			/* 4084c494 5247 */
+
+loc_4084c496:
+	cmpw	%d7,%d5			/* 4084c496 ba47 */
+	bgts	loc_4084c470		/* 4084c498 6ed6 */
+	moveal	0x28a,%a0		/* 4084c49a 2078 028a */
+	extl	%d6			/* 4084c49e 48c6 */
+	movel	%d6,%d1			/* 4084c4a0 2206 */
+	moveq	#72,%d0			/* 4084c4a2 7048 */
+	mulsl	%d0,%d1			/* 4084c4a4 4c00 1800 */
+	moveal	%d1,%a4			/* 4084c4a8 2841 */
+	addal	%a0@(36),%a4		/* 4084c4aa d9e8 0024 */
+	moveal	%a3,%a0			/* 4084c4ae 204b */
+	moveal	%a4,%a1			/* 4084c4b0 224c */
+	addql	#2,%a1			/* 4084c4b2 5489 */
+	moveq	#70,%d0			/* 4084c4b4 7046 */
+	.short	0xa02e			/* 4084c4b6 a02e */
+	movew	#1,%a4@			/* 4084c4b8 38bc 0001 */
+	moveal	0x28a,%a0		/* 4084c4bc 2078 028a */
+	addqw	#1,%a0@(16)		/* 4084c4c0 5268 0010 */
+	movew	%d6,%d0			/* 4084c4c4 3006 */
+
+loc_4084c4c6:
+	moveml	%fp@(-20),%d5-%d7/%a3-%a4	/* 4084c4c6 4cee 18e0 ffec */
+	unlk	%fp			/* 4084c4cc 4e5e */
 	rts				/* 4084c4ce 4e75 */
 
 AddComponentFSSpec:
