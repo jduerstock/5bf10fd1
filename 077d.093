@@ -777,22 +777,21 @@ SETDITEM:
 	.short	0xfd1e	/* 4085d686 fd1e */
 
 GETITEXT:
-	.short	0x7200	/* 4085d688 7200 */
-	.short	0x5301	/* 4085d68a 5301 */
-	.short	0x6100	/* 4085d68c 6100 */
-	.short	0xfd0a	/* 4085d68e fd0a */
-	.short	0x226e	/* 4085d690 226e */
-	.short	0x0008	/* 4085d692 0008 */
-	.short	0x206e	/* 4085d694 206e */
-	.short	0x000c	/* 4085d696 000c */
-	.short	0xa025	/* 4085d698 a025 */
-	.short	0xb081	/* 4085d69a b081 */
-	.short	0x6f02	/* 4085d69c 6f02 */
-	.short	0x2001	/* 4085d69e 2001 */
-	.short	0x12c0	/* 4085d6a0 12c0 */
-	.short	0x2050	/* 4085d6a2 2050 */
-	.short	0xa02e	/* 4085d6a4 a02e */
-	.short	0x6066	/* 4085d6a6 6066 */
+	moveq	#0,%d1			/* 4085d688 7200 */
+	subqb	#1,%d1			/* 4085d68a 5301 */
+	bsrw	sub_4085d398		/* 4085d68c 6100 fd0a */
+	moveal	%fp@(8),%a1		/* 4085d690 226e 0008 */
+	moveal	%fp@(12),%a0		/* 4085d694 206e 000c */
+	.short	0xa025			/* 4085d698 a025 */
+	cmpl	%d1,%d0			/* 4085d69a b081 */
+	bles	loc_4085d6a0		/* 4085d69c 6f02 */
+	movel	%d1,%d0			/* 4085d69e 2001 */
+
+loc_4085d6a0:
+	moveb	%d0,%a1@+		/* 4085d6a0 12c0 */
+	moveal	%a0@,%a0		/* 4085d6a2 2050 */
+	.short	0xa02e			/* 4085d6a4 a02e */
+	bras	loc_4085d70e		/* 4085d6a6 6066 */
 
 SETITEXT:
 	.short	0x6100	/* 4085d6a8 6100 */
