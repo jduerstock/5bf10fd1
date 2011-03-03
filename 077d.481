@@ -249,21 +249,17 @@ off_409e12b0:
 
 .L409e12d0:
 	moveq	#0,%d0			/* 409e12d0 7000 */
-	.short	0x3028	/* 409e12d2 3028 */
-	.short	0x0022	/* 409e12d4 0022 */
-	.short	0x0c40	/* 409e12d6 0c40 */
-	.short	0x001c	/* 409e12d8 001c */
-	.short	0x6304	/* 409e12da 6304 */
-	.short	0x303c	/* 409e12dc 303c */
-	.short	0x001c	/* 409e12de 001c */
-	.short	0x3140	/* 409e12e0 3140 */
-	.short	0x0024	/* 409e12e2 0024 */
-	.short	0x2243	/* 409e12e4 2243 */
-	.short	0x41ea	/* 409e12e6 41ea */
-	.short	0x033e	/* 409e12e8 033e */
-	.short	0xa02e	/* 409e12ea a02e */
-	.short	0x6000	/* 409e12ec 6000 */
-	.short	0x00f2	/* 409e12ee 00f2 */
+	movew	%a0@(34),%d0		/* 409e12d2 3028 0022 */
+	cmpiw	#28,%d0			/* 409e12d6 0c40 001c */
+	blss	loc_409e12e0		/* 409e12da 6304 */
+	movew	#28,%d0			/* 409e12dc 303c 001c */
+
+loc_409e12e0:
+	movew	%d0,%a0@(36)		/* 409e12e0 3140 0024 */
+	moveal	%d3,%a1			/* 409e12e4 2243 */
+	lea	%a2@(830),%a0		/* 409e12e6 41ea 033e */
+	.short	0xa02e			/* 409e12ea a02e */
+	braw	.L409e13e0		/* 409e12ec 6000 00f2 */
 
 .L409e12f0:
 	.short	0x202a	/* 409e12f0 202a */
