@@ -880,38 +880,34 @@ utaRemoveDocumentID:
 	.align	16
 
 __v__utaUpdateAppFlagInPSNTable:
-	.short	0x206f	/* 40889860 206f */
-	.short	0x0004	/* 40889862 0004 */
-	.short	0x2010	/* 40889864 2010 */
-	.short	0x2228	/* 40889866 2228 */
-	.short	0x0004	/* 40889868 0004 */
-	.short	0x6100	/* 4088986a 6100 */
-	.short	0x00d8	/* 4088986c 00d8 */
-	.short	0x672a	/* 4088986e 672a */
-	.short	0x242f	/* 40889870 242f */
-	.short	0x0008	/* 40889872 0008 */
-	.short	0x1342	/* 40889874 1342 */
-	.short	0x0008	/* 40889876 0008 */
-	.short	0x303c	/* 40889878 303c */
-	.short	0xffff	/* 4088987a ffff */
-	.short	0x4a69	/* 4088987c 4a69 */
-	.short	0x0008	/* 4088987e 0008 */
-	.short	0x6702	/* 40889880 6702 */
+	moveal	%sp@(4),%a0		/* 40889860 206f 0004 */
+	movel	%a0@,%d0		/* 40889864 2010 */
+	movel	%a0@(4),%d1		/* 40889866 2228 0004 */
+	bsrw	utaTSMAwareApplicationP		/* 4088986a 6100 00d8 */
+	beqs	loc_4088989a		/* 4088986e 672a */
+	movel	%sp@(8),%d2		/* 40889870 242f 0008 */
+	moveb	%d2,%a1@(8)		/* 40889874 1342 0008 */
+	movew	#-1,%d0			/* 40889878 303c ffff */
+	tstw	%a1@(8)			/* 4088987c 4a69 0008 */
+	beqs	loc_40889884		/* 40889880 6702 */
 	moveq	#0,%d0			/* 40889882 7000 */
-	.short	0x206f	/* 40889884 206f */
-	.short	0x0004	/* 40889886 0004 */
-	.short	0x4267	/* 40889888 4267 */
-	.short	0x2f08	/* 4088988a 2f08 */
-	.short	0x1f00	/* 4088988c 1f00 */
-	.short	0x3f3c	/* 4088988e 3f3c */
-	.short	0x004c	/* 40889890 004c */
-	.short	0xa88f	/* 40889892 a88f */
-	.short	0x544f	/* 40889894 544f */
+
+loc_40889884:
+	moveal	%sp@(4),%a0		/* 40889884 206f 0004 */
+	clrw	%sp@-			/* 40889888 4267 */
+	movel	%a0,%sp@-		/* 4088988a 2f08 */
+	moveb	%d0,%sp@-		/* 4088988c 1f00 */
+	movew	#76,%sp@-		/* 4088988e 3f3c 004c */
+	.short	0xa88f			/* 40889892 a88f */
+	addqw	#2,%sp			/* 40889894 544f */
 	moveq	#0,%d0			/* 40889896 7000 */
+
+loc_40889898:
 	rts				/* 40889898 4e75 */
-	.short	0x303c	/* 4088989a 303c */
-	.short	0xf638	/* 4088989c f638 */
-	.short	0x60f8	/* 4088989e 60f8 */
+
+loc_4088989a:
+	movew	#-2504,%d0		/* 4088989a 303c f638 */
+	bras	loc_40889898		/* 4088989e 60f8 */
 
 utaUpdateAppFlagInPSNTable:
 	CallVector	0x2078 5	/* 408898a0 2f30 81e2 2078 0014 */
@@ -920,35 +916,30 @@ utaUpdateAppFlagInPSNTable:
 	.align	16
 
 __v__utaUpdateDocFlagInPSNTable:
-	.short	0x206f	/* 408898b0 206f */
-	.short	0x0004	/* 408898b2 0004 */
-	.short	0x2050	/* 408898b4 2050 */
-	.short	0x2028	/* 408898b6 2028 */
-	.short	0x000a	/* 408898b8 000a */
-	.short	0x2228	/* 408898ba 2228 */
-	.short	0x000e	/* 408898bc 000e */
-	.short	0x1428	/* 408898be 1428 */
-	.short	0x0013	/* 408898c0 0013 */
-	.short	0x6100	/* 408898c2 6100 */
-	.short	0x0080	/* 408898c4 0080 */
-	.short	0x6722	/* 408898c6 6722 */
-	.short	0x1342	/* 408898c8 1342 */
-	.short	0x0009	/* 408898ca 0009 */
-	.short	0x303c	/* 408898cc 303c */
-	.short	0xffff	/* 408898ce ffff */
-	.short	0x4a69	/* 408898d0 4a69 */
-	.short	0x0008	/* 408898d2 0008 */
-	.short	0x6702	/* 408898d4 6702 */
+	moveal	%sp@(4),%a0		/* 408898b0 206f 0004 */
+	moveal	%a0@,%a0		/* 408898b4 2050 */
+	movel	%a0@(10),%d0		/* 408898b6 2028 000a */
+	movel	%a0@(14),%d1		/* 408898ba 2228 000e */
+	moveb	%a0@(19),%d2		/* 408898be 1428 0013 */
+	bsrw	utaTSMAwareApplicationP		/* 408898c2 6100 0080 */
+	beqs	loc_408898ea		/* 408898c6 6722 */
+	moveb	%d2,%a1@(9)		/* 408898c8 1342 0009 */
+	movew	#-1,%d0			/* 408898cc 303c ffff */
+	tstw	%a1@(8)			/* 408898d0 4a69 0008 */
+	beqs	loc_408898d8		/* 408898d4 6702 */
 	moveq	#0,%d0			/* 408898d6 7000 */
-	.short	0x41d1	/* 408898d8 41d1 */
-	.short	0x4267	/* 408898da 4267 */
-	.short	0x2f08	/* 408898dc 2f08 */
-	.short	0x1f00	/* 408898de 1f00 */
-	.short	0x3f3c	/* 408898e0 3f3c */
-	.short	0x004c	/* 408898e2 004c */
-	.short	0xa88f	/* 408898e4 a88f */
-	.short	0x544f	/* 408898e6 544f */
+
+loc_408898d8:
+	lea	%a1@,%a0		/* 408898d8 41d1 */
+	clrw	%sp@-			/* 408898da 4267 */
+	movel	%a0,%sp@-		/* 408898dc 2f08 */
+	moveb	%d0,%sp@-		/* 408898de 1f00 */
+	movew	#76,%sp@-		/* 408898e0 3f3c 004c */
+	.short	0xa88f			/* 408898e4 a88f */
+	addqw	#2,%sp			/* 408898e6 544f */
 	moveq	#0,%d0			/* 408898e8 7000 */
+
+loc_408898ea:
 	rts				/* 408898ea 4e75 */
 
 utaUpdateDocFlagInPSNTable:
