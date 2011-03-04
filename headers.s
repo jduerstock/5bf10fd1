@@ -806,6 +806,11 @@
 		.short	0xabf5
 	.endm
 
+	.macro	_DSPFIFOSetMessageMode
+		movew	#65,%d0	
+		.short	0xabf5
+	.endm
+
 	.macro	_DSPFIFOReset
 		movew	#66,%d0	
 		.short	0xabf5
