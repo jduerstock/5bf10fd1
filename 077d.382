@@ -310,7 +310,7 @@ loc_4097e29e:
 	movel	%a3,%a0@(12)		/* 4097e2d6 214b 000c */
 	movew	#-11,%a0@(24)		/* 4097e2da 317c fff5 0018 */
 	movew	#255,%a0@(26)		/* 4097e2e0 317c 00ff 001a */
-	.short	0xa404			/* 4097e2e6 a404 */
+	_PBControlAsync			/* 4097e2e6 a404 */
 	moveq	#0,%d0			/* 4097e2e8 7000 */
 	rts				/* 4097e2ea 4e75 */
 
@@ -503,7 +503,7 @@ loc_4097e494:
 	movel	%a1,%a0@(30)		/* 4097e4aa 2149 001e */
 	moveal	%a2@(816),%a1		/* 4097e4ae 226a 0330 */
 	movew	%a1@(24),%a0@(24)	/* 4097e4b2 3169 0018 0018 */
-	.short	0xa404			/* 4097e4b8 a404 */
+	_PBControlAsync			/* 4097e4b8 a404 */
 
 loc_4097e4ba:
 	rts				/* 4097e4ba 4e75 */
@@ -513,45 +513,45 @@ sub_4097e4bc:
 	rts				/* 4097e4c0 4e75 */
 
 sub_4097e4c2:
-	.short	0x202a	/* 4097e4c2 202a */
-	.short	0x033e	/* 4097e4c4 033e */
-	.short	0x0800	/* 4097e4c6 0800 */
-	.short	0x000b	/* 4097e4c8 000b */
-	.short	0x670c	/* 4097e4ca 670c */
-	.short	0x0800	/* 4097e4cc 0800 */
-	.short	0x0004	/* 4097e4ce 0004 */
-	.short	0x6624	/* 4097e4d0 6624 */
-	.short	0x0800	/* 4097e4d2 0800 */
-	.short	0x0005	/* 4097e4d4 0005 */
-	.short	0x661e	/* 4097e4d6 661e */
-	.short	0x0800	/* 4097e4d8 0800 */
-	.short	0x0007	/* 4097e4da 0007 */
-	.short	0x6730	/* 4097e4dc 6730 */
-	.short	0x0800	/* 4097e4de 0800 */
-	.short	0x0006	/* 4097e4e0 0006 */
-	.short	0x662a	/* 4097e4e2 662a */
-	.short	0x0800	/* 4097e4e4 0800 */
-	.short	0x001d	/* 4097e4e6 001d */
-	.short	0x6706	/* 4097e4e8 6706 */
-	.short	0x0800	/* 4097e4ea 0800 */
-	.short	0x000b	/* 4097e4ec 000b */
-	.short	0x671e	/* 4097e4ee 671e */
-	.short	0x7201	/* 4097e4f0 7201 */
-	.short	0x611c	/* 4097e4f2 611c */
-	.short	0x6018	/* 4097e4f4 6018 */
-	.short	0x0800	/* 4097e4f6 0800 */
-	.short	0x001c	/* 4097e4f8 001c */
-	.short	0x6612	/* 4097e4fa 6612 */
-	.short	0x7203	/* 4097e4fc 7203 */
-	.short	0x0800	/* 4097e4fe 0800 */
-	.short	0x0004	/* 4097e500 0004 */
-	.short	0x6602	/* 4097e502 6602 */
-	.short	0x7204	/* 4097e504 7204 */
-	.short	0x6108	/* 4097e506 6108 */
-	.short	0x08ea	/* 4097e508 08ea */
-	.short	0x001c	/* 4097e50a 001c */
-	.short	0x033e	/* 4097e50c 033e */
+	movel	%a2@(830),%d0		/* 4097e4c2 202a 033e */
+	btst	#11,%d0			/* 4097e4c6 0800 000b */
+	beqs	loc_4097e4d8		/* 4097e4ca 670c */
+	btst	#4,%d0			/* 4097e4cc 0800 0004 */
+	bnes	loc_4097e4f6		/* 4097e4d0 6624 */
+	btst	#5,%d0			/* 4097e4d2 0800 0005 */
+	bnes	loc_4097e4f6		/* 4097e4d6 661e */
+
+loc_4097e4d8:
+	btst	#7,%d0			/* 4097e4d8 0800 0007 */
+	beqs	loc_4097e50e		/* 4097e4dc 6730 */
+	btst	#6,%d0			/* 4097e4de 0800 0006 */
+	bnes	loc_4097e50e		/* 4097e4e2 662a */
+	btst	#29,%d0			/* 4097e4e4 0800 001d */
+	beqs	loc_4097e4f0		/* 4097e4e8 6706 */
+	btst	#11,%d0			/* 4097e4ea 0800 000b */
+	beqs	loc_4097e50e		/* 4097e4ee 671e */
+
+loc_4097e4f0:
+	moveq	#1,%d1			/* 4097e4f0 7201 */
+	bsrs	sub_4097e510		/* 4097e4f2 611c */
+	bras	loc_4097e50e		/* 4097e4f4 6018 */
+
+loc_4097e4f6:
+	btst	#28,%d0			/* 4097e4f6 0800 001c */
+	bnes	loc_4097e50e		/* 4097e4fa 6612 */
+	moveq	#3,%d1			/* 4097e4fc 7203 */
+	btst	#4,%d0			/* 4097e4fe 0800 0004 */
+	bnes	loc_4097e506		/* 4097e502 6602 */
+	moveq	#4,%d1			/* 4097e504 7204 */
+
+loc_4097e506:
+	bsrs	sub_4097e510		/* 4097e506 6108 */
+	bset	#28,%a2@(830)		/* 4097e508 08ea 001c 033e */
+
+loc_4097e50e:
 	rts				/* 4097e50e 4e75 */
+
+sub_4097e510:
 	.short	0x202a	/* 4097e510 202a */
 	.short	0x033e	/* 4097e512 033e */
 	.short	0x0800	/* 4097e514 0800 */
@@ -689,17 +689,16 @@ loc_4097e626:
 	rts				/* 4097e62a 4e75 */
 
 sub_4097e62c:
-	.short	0x2078	/* 4097e62c 2078 */
-	.short	0x011c	/* 4097e62e 011c */
-	.short	0x2030	/* 4097e630 2030 */
-	.short	0x0000	/* 4097e632 0000 */
-	.short	0x670a	/* 4097e634 670a */
-	.short	0x2040	/* 4097e636 2040 */
-	.short	0x2050	/* 4097e638 2050 */
-	.short	0x08e8	/* 4097e63a 08e8 */
-	.short	0x0000	/* 4097e63c 0000 */
-	.short	0x0005	/* 4097e63e 0005 */
+	moveal	0x11c,%a0		/* 4097e62c 2078 011c */
+	movel	%a0@(%d0:w),%d0		/* 4097e630 2030 0000 */
+	beqs	loc_4097e640		/* 4097e634 670a */
+	moveal	%d0,%a0			/* 4097e636 2040 */
+	moveal	%a0@,%a0		/* 4097e638 2050 */
+	bset	#0,%a0@(5)		/* 4097e63a 08e8 0000 0005 */
+
+loc_4097e640:
 	rts				/* 4097e640 4e75 */
+
 	.short	0x48e7	/* 4097e642 48e7 */
 	.short	0x9080	/* 4097e644 9080 */
 	.short	0x2f0a	/* 4097e646 2f0a */
