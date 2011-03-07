@@ -423,6 +423,10 @@
 		.short	0xa401
 	.endm
 
+	.macro	_PBControlAsync
+		.short	0xa404
+	.endm
+
 	.macro	_DisposeHandleSys
 		.short	0xa423
 	.endm
