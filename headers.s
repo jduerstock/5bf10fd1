@@ -714,6 +714,10 @@
 		.short	0xa99b
 	.endm
 
+	.macro	_CountResources
+		.short	0xa99c
+	.endm
+
 	.macro	_GetResource
 		.short	0xa9a0
 	.endm
