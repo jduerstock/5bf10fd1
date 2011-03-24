@@ -690,6 +690,10 @@
 		.short	0xa98f
 	.endm
 
+	.macro	_GetDialogItemText
+		.short	0xa990
+	.endm
+
 	.macro	_ModalDialog
 		.short	0xa991
 	.endm
