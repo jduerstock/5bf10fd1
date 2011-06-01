@@ -1576,54 +1576,39 @@ ciDebuggerPatch:
 	rts				/* 4081fdee 4e75 */
 
 CallCompRoutineGlue:
-	.short	0x40c0	/* 4081fdf0 40c0 */
-	.short	0x3200	/* 4081fdf2 3200 */
-	.short	0x0241	/* 4081fdf4 0241 */
-	.short	0x0700	/* 4081fdf6 0700 */
-	.short	0x673e	/* 4081fdf8 673e */
-	.short	0x4ab8	/* 4081fdfa 4ab8 */
-	.short	0x0b78	/* 4081fdfc 0b78 */
-	.short	0x6a38	/* 4081fdfe 6a38 */
-	.short	0x2278	/* 4081fe00 2278 */
-	.short	0x0c0c	/* 4081fe02 0c0c */
-	.short	0x2269	/* 4081fe04 2269 */
-	.short	0x01b4	/* 4081fe06 01b4 */
-	.short	0x4aa9	/* 4081fe08 4aa9 */
-	.short	0x0048	/* 4081fe0a 0048 */
-	.short	0x662a	/* 4081fe0c 662a */
-	.short	0x007c	/* 4081fe0e 007c */
-	.short	0x0700	/* 4081fe10 0700 */
-	.short	0x0838	/* 4081fe12 0838 */
-	.short	0x0006	/* 4081fe14 0006 */
-	.short	0x0d92	/* 4081fe16 0d92 */
-	.short	0x661c	/* 4081fe18 661c */
-	.short	0x2238	/* 4081fe1a 2238 */
-	.short	0x0d94	/* 4081fe1c 0d94 */
-	.short	0x6616	/* 4081fe1e 6616 */
-	.short	0x206f	/* 4081fe20 206f */
-	.short	0x0008	/* 4081fe22 0008 */
-	.short	0x216f	/* 4081fe24 216f */
-	.short	0x0004	/* 4081fe26 0004 */
-	.short	0x000c	/* 4081fe28 000c */
-	.short	0x3f00	/* 4081fe2a 3f00 */
-	.short	0x4eb0	/* 4081fe2c 4eb0 */
-	.short	0x81e1	/* 4081fe2e 81e1 */
-	.short	0x0d9c	/* 4081fe30 0d9c */
-	.short	0x46df	/* 4081fe32 46df */
+	movew	%sr,%d0			/* 4081fdf0 40c0 */
+	movew	%d0,%d1			/* 4081fdf2 3200 */
+	andiw	#1792,%d1		/* 4081fdf4 0241 0700 */
+	beqs	loc_4081fe38		/* 4081fdf8 673e */
+	tstl	0xb78			/* 4081fdfa 4ab8 0b78 */
+	bpls	loc_4081fe38		/* 4081fdfe 6a38 */
+	moveal	0xc0c,%a1		/* 4081fe00 2278 0c0c */
+	moveal	%a1@(436),%a1		/* 4081fe04 2269 01b4 */
+	tstl	%a1@(72)		/* 4081fe08 4aa9 0048 */
+	bnes	loc_4081fe38		/* 4081fe0c 662a */
+	oriw	#1792,%sr		/* 4081fe0e 007c 0700 */
+	btst	#6,0xd92		/* 4081fe12 0838 0006 0d92 */
+	bnes	loc_4081fe36		/* 4081fe18 661c */
+	movel	0xd94,%d1		/* 4081fe1a 2238 0d94 */
+	bnes	loc_4081fe36		/* 4081fe1e 6616 */
+	moveal	%sp@(8),%a0		/* 4081fe20 206f 0008 */
+	movel	%sp@(4),%a0@(12)	/* 4081fe24 216f 0004 000c */
+	movew	%d0,%sp@-		/* 4081fe2a 3f00 */
+	jsrind	0x0d9c			/* 4081fe2c 4eb0 81e1 0d9c */
+	movew	%sp@+,%sr		/* 4081fe32 46df */
 	rts				/* 4081fe34 4e75 */
-	.short	0x46c0	/* 4081fe36 46c0 */
-	.short	0x226f	/* 4081fe38 226f */
-	.short	0x0004	/* 4081fe3a 0004 */
-	.short	0x48e7	/* 4081fe3c 48e7 */
-	.short	0x1034	/* 4081fe3e 1034 */
-	.short	0x2f09	/* 4081fe40 2f09 */
-	.short	0x2a69	/* 4081fe42 2a69 */
-	.short	0x001c	/* 4081fe44 001c */
-	.short	0x2269	/* 4081fe46 2269 */
-	.short	0x0010	/* 4081fe48 0010 */
-	.short	0x4e91	/* 4081fe4a 4e91 */
-	.short	0x4cdf	/* 4081fe4c 4cdf */
-	.short	0x2c08	/* 4081fe4e 2c08 */
+
+loc_4081fe36:
+	movew	%d0,%sr			/* 4081fe36 46c0 */
+
+loc_4081fe38:
+	moveal	%sp@(4),%a1		/* 4081fe38 226f 0004 */
+	moveml	%d3/%a2-%a3/%a5,%sp@-	/* 4081fe3c 48e7 1034 */
+	movel	%a1,%sp@-		/* 4081fe40 2f09 */
+	moveal	%a1@(28),%a5		/* 4081fe42 2a69 001c */
+	moveal	%a1@(16),%a1		/* 4081fe46 2269 0010 */
+	jsr	%a1@			/* 4081fe4a 4e91 */
+	moveml	%sp@+,%d3/%a2-%a3/%a5	/* 4081fe4c 4cdf 2c08 */
 	rts				/* 4081fe50 4e75 */
 
 	.align	16
@@ -1793,9 +1778,9 @@ sub_4081ff6a:
 	.short	0xff36	/* 4081ff80 ff36 */
 
 sub_4081ff82:
-	.short	0x4e71	/* 4081ff82 4e71 */
-	.short	0x700e	/* 4081ff84 700e */
-	.short	0xa9c9	/* 4081ff86 a9c9 */
+	nop				/* 4081ff82 4e71 */
+	moveq	#14,%d0			/* 4081ff84 700e */
+	.short	0xa9c9			/* 4081ff86 a9c9 */
 	rts				/* 4081ff88 4e75 */
 
 __v__Init_SCSIXlate:
