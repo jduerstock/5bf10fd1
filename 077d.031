@@ -916,7 +916,7 @@ sub_4081f842:
 	rts				/* 4081f850 4e75 */
 
 __v__Wt4SCSIInt256mS:
-	braw	Wt4SCSIIntNoTimeout		/* 4081f852 6000 fb88 */
+	braw	Wt4SCSIIntNoTimeout	/* 4081f852 6000 fb88 */
 
 ReadInitiatorID:
 	clrb	%sp@-			/* 4081f856 4227 */
@@ -1067,44 +1067,38 @@ sub_4081f9bc:
 	rts				/* 4081f9ca 4e75 */
 
 sub_4081f9cc:
-	.short	0x0800	/* 4081f9cc 0800 */
-	.short	0x0007	/* 4081f9ce 0007 */
-	.short	0x6720	/* 4081f9d0 6720 */
-	.short	0x0240	/* 4081f9d2 0240 */
-	.short	0x0060	/* 4081f9d4 0060 */
-	.short	0x0c40	/* 4081f9d6 0c40 */
-	.short	0x0020	/* 4081f9d8 0020 */
-	.short	0x6604	/* 4081f9da 6604 */
-	.short	0x1281	/* 4081f9dc 1281 */
-	.short	0x6012	/* 4081f9de 6012 */
-	.short	0x0c40	/* 4081f9e0 0c40 */
-	.short	0x0040	/* 4081f9e2 0040 */
-	.short	0x6604	/* 4081f9e4 6604 */
-	.short	0x3281	/* 4081f9e6 3281 */
-	.short	0x6008	/* 4081f9e8 6008 */
-	.short	0x0c40	/* 4081f9ea 0c40 */
-	.short	0x0000	/* 4081f9ec 0000 */
-	.short	0x6602	/* 4081f9ee 6602 */
-	.short	0x2281	/* 4081f9f0 2281 */
+	btst	#7,%d0			/* 4081f9cc 0800 0007 */
+	beqs	loc_4081f9f2		/* 4081f9d0 6720 */
+	andiw	#96,%d0			/* 4081f9d2 0240 0060 */
+	cmpiw	#32,%d0			/* 4081f9d6 0c40 0020 */
+	bnes	loc_4081f9e0		/* 4081f9da 6604 */
+	moveb	%d1,%a1@		/* 4081f9dc 1281 */
+	bras	loc_4081f9f2		/* 4081f9de 6012 */
+
+loc_4081f9e0:
+	cmpiw	#64,%d0			/* 4081f9e0 0c40 0040 */
+	bnes	loc_4081f9ea		/* 4081f9e4 6604 */
+	movew	%d1,%a1@		/* 4081f9e6 3281 */
+	bras	loc_4081f9f2		/* 4081f9e8 6008 */
+
+loc_4081f9ea:
+	cmpiw	#0,%d0			/* 4081f9ea 0c40 0000 */
+	bnes	loc_4081f9f2		/* 4081f9ee 6602 */
+	movel	%d1,%a1@		/* 4081f9f0 2281 */
+
+loc_4081f9f2:
 	rts				/* 4081f9f2 4e75 */
 
 str_4081f9f4:
-	.short	0x0d42	/* 4081f9f4 0d42 */
-	.short	0x4548	/* 4081f9f6 4548 */
-	.short	0x2074	/* 4081f9f8 2074 */
-	.short	0x696d	/* 4081f9fa 696d */
-	.short	0x6564	/* 4081f9fc 6564 */
-	.short	0x206f	/* 4081f9fe 206f */
-	.short	0x7574	/* 4081fa00 7574 */
+	.byte	0x0d			/* 4081f9f4 0d */
+	.ascii	"BEH timed out"		/* 4081f9f6 42 4548 */
 
 str_4081fa02:
 	.byte	0x0e	/* 4081fa02 0e */
 	.string	"BEH @SCSIFault"
 
-	.short	0x2278	/* 4081fa12 2278 */
-	.short	0x205c	/* 4081fa14 205c */
-	.short	0x2269	/* 4081fa16 2269 */
-	.short	0x029c	/* 4081fa18 029c */
+	moveal	0x205c,%a1		/* 4081fa12 2278 205c */
+	moveal	%a1@(668),%a1		/* 4081fa16 2269 029c */
 	jmp	%a1@			/* 4081fa1a 4ed1 */
 
 BusErrHandler96:
@@ -1147,27 +1141,28 @@ GetReconnectInfo:
 	rts				/* 4081fa7e 4e75 */
 
 __v__EnqueueHead:
-	.short	0x206f	/* 4081fa80 206f */
-	.short	0x0004	/* 4081fa82 0004 */
-	.short	0x226f	/* 4081fa84 226f */
-	.short	0x0008	/* 4081fa86 0008 */
-	.short	0x40e7	/* 4081fa88 40e7 */
-	.short	0x5449	/* 4081fa8a 5449 */
-	.short	0x007c	/* 4081fa8c 007c */
-	.short	0x0700	/* 4081fa8e 0700 */
-	.short	0x4a99	/* 4081fa90 4a99 */
-	.short	0x6608	/* 4081fa92 6608 */
-	.short	0x2288	/* 4081fa94 2288 */
-	.short	0x2308	/* 4081fa96 2308 */
-	.short	0x4290	/* 4081fa98 4290 */
-	.short	0x600a	/* 4081fa9a 600a */
-	.short	0x2f0a	/* 4081fa9c 2f0a */
-	.short	0x2461	/* 4081fa9e 2461 */
-	.short	0x208a	/* 4081faa0 208a */
-	.short	0x2288	/* 4081faa2 2288 */
-	.short	0x245f	/* 4081faa4 245f */
-	.short	0x5549	/* 4081faa6 5549 */
-	.short	0x46df	/* 4081faa8 46df */
+	moveal	%sp@(4),%a0		/* 4081fa80 206f 0004 */
+	moveal	%sp@(8),%a1		/* 4081fa84 226f 0008 */
+	movew	%sr,%sp@-		/* 4081fa88 40e7 */
+	addqw	#2,%a1			/* 4081fa8a 5449 */
+	oriw	#1792,%sr		/* 4081fa8c 007c 0700 */
+	tstl	%a1@+			/* 4081fa90 4a99 */
+	bnes	loc_4081fa9c		/* 4081fa92 6608 */
+	movel	%a0,%a1@		/* 4081fa94 2288 */
+	movel	%a0,%a1@-		/* 4081fa96 2308 */
+	clrl	%a0@			/* 4081fa98 4290 */
+	bras	loc_4081faa6		/* 4081fa9a 600a */
+
+loc_4081fa9c:
+	movel	%a2,%sp@-		/* 4081fa9c 2f0a */
+	moveal	%a1@-,%a2		/* 4081fa9e 2461 */
+	movel	%a2,%a0@		/* 4081faa0 208a */
+	movel	%a0,%a1@		/* 4081faa2 2288 */
+	moveal	%sp@+,%a2		/* 4081faa4 245f */
+
+loc_4081faa6:
+	subqw	#2,%a1			/* 4081faa6 5549 */
+	movew	%sp@+,%sr		/* 4081faa8 46df */
 	rts				/* 4081faaa 4e75 */
 
 EnqueueHead:
