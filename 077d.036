@@ -105,7 +105,7 @@ XPTCallCompRoutine:
 loc_4082410a:
 	moveq	#0,%d0			/* 4082410a 7000 */
 	moveb	%a4@(13),%d0		/* 4082410c 102c 000d */
-	moveal	%a3@(0x0000,%d0:l:4),%a0	/* 40824110 2073 0c00 */
+	moveal	%a3@(%d0:l:4),%a0	/* 40824110 2073 0c00 */
 	tstb	%a0@(30)		/* 40824114 4a28 001e */
 	beqs	loc_4082412a		/* 40824118 6710 */
 	moveq	#0,%d0			/* 4082411a 7000 */
@@ -252,24 +252,17 @@ XPT_ISR6:
 
 XPT_ISR7:
 	linkw	%fp,#0			/* 408242a0 4e56 0000 */
-	.short	0x2f0c	/* 408242a4 2f0c */
-	.short	0x4eba	/* 408242a6 4eba */
-	.short	0xb98e	/* 408242a8 b98e */
-	.short	0x2078	/* 408242aa 2078 */
-	.short	0x0c0c	/* 408242ac 0c0c */
-	.short	0x2068	/* 408242ae 2068 */
-	.short	0x01b4	/* 408242b0 01b4 */
-	.short	0x2868	/* 408242b2 2868 */
-	.short	0x001c	/* 408242b4 001c */
-	.short	0x2f14	/* 408242b6 2f14 */
-	.short	0x206c	/* 408242b8 206c */
-	.short	0x0010	/* 408242ba 0010 */
-	.short	0x4e90	/* 408242bc 4e90 */
-	.short	0x4eba	/* 408242be 4eba */
-	.short	0xb944	/* 408242c0 b944 */
-	.short	0x286e	/* 408242c2 286e */
-	.short	0xfffc	/* 408242c4 fffc */
-	.short	0x4e5e	/* 408242c6 4e5e */
+	movel	%a4,%sp@-		/* 408242a4 2f0c */
+	jsr	%pc@(VMDisableUserCode)	/* 408242a6 4eba b98e */
+	moveal	0xc0c,%a0		/* 408242aa 2078 0c0c */
+	moveal	%a0@(436),%a0		/* 408242ae 2068 01b4 */
+	moveal	%a0@(28),%a4		/* 408242b2 2868 001c */
+	movel	%a4@,%sp@-		/* 408242b6 2f14 */
+	moveal	%a4@(16),%a0		/* 408242b8 206c 0010 */
+	jsr	%a0@			/* 408242bc 4e90 */
+	jsr	%pc@(VMEnableUserCode)	/* 408242be 4eba b944 */
+	moveal	%fp@(-4),%a4		/* 408242c2 286e fffc */
+	unlk	%fp			/* 408242c6 4e5e */
 	rts				/* 408242c8 4e75 */
 
 	.align	16
