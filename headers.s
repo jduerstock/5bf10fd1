@@ -369,6 +369,10 @@
 		.short	0xa091
 	.endm
 
+	.macro	_NewPtr
+		.short	0xa11e
+	.endm
+
 	.macro	_NewHandle
 		.short	0xa122
 	.endm
