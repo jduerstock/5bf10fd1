@@ -394,39 +394,31 @@ loc_4085b392:
 	rts				/* 4085b3a0 4e75 */
 
 DIRTYMENUSIZE:
-	.short	0x206f	/* 4085b3a2 206f */
-	.short	0x0004	/* 4085b3a4 0004 */
-	.short	0x2050	/* 4085b3a6 2050 */
-	.short	0x217c	/* 4085b3a8 217c */
-	.short	0xffff	/* 4085b3aa ffff */
-	.short	0xffff	/* 4085b3ac ffff */
-	.short	0x0002	/* 4085b3ae 0002 */
-	.short	0x2e9f	/* 4085b3b0 2e9f */
+	moveal	%sp@(4),%a0		/* 4085b3a2 206f 0004 */
+	moveal	%a0@,%a0		/* 4085b3a6 2050 */
+	movel	#-1,%a0@(2)		/* 4085b3a8 217c ffff ffff 0002 */
+	movel	%sp@+,%sp@		/* 4085b3b0 2e9f */
 	rts				/* 4085b3b2 4e75 */
 
 	.align	16
 
 CALCMENUSIZE:
-	.short	0x598f	/* 4085b3c0 598f */
-	.short	0x2f0f	/* 4085b3c2 2f0f */
-	.short	0xa874	/* 4085b3c4 a874 */
-	.short	0x2278	/* 4085b3c6 2278 */
-	.short	0x0d2c	/* 4085b3c8 0d2c */
-	.short	0x2f09	/* 4085b3ca 2f09 */
-	.short	0xa873	/* 4085b3cc a873 */
-	.short	0x3f3c	/* 4085b3ce 3f3c */
-	.short	0x0002	/* 4085b3d0 0002 */
-	.short	0x206f	/* 4085b3d2 206f */
-	.short	0x000a	/* 4085b3d4 000a */
-	.short	0x2f08	/* 4085b3d6 2f08 */
-	.short	0x42a7	/* 4085b3d8 42a7 */
-	.short	0x42a7	/* 4085b3da 42a7 */
-	.short	0x42a7	/* 4085b3dc 42a7 */
-	.short	0x2050	/* 4085b3de 2050 */
-	.short	0x6100	/* 4085b3e0 6100 */
-	.short	0x03ee	/* 4085b3e2 03ee */
-	.short	0xa873	/* 4085b3e4 a873 */
-	.short	0x2e9f	/* 4085b3e6 2e9f */
+	subql	#4,%sp			/* 4085b3c0 598f */
+	movel	%sp,%sp@-		/* 4085b3c2 2f0f */
+	_GetPort			/* 4085b3c4 a874 */
+	moveal	0xd2c,%a1		/* 4085b3c6 2278 0d2c */
+	movel	%a1,%sp@-		/* 4085b3ca 2f09 */
+	.short	0xa873			/* 4085b3cc a873 */
+	movew	#2,%sp@-		/* 4085b3ce 3f3c 0002 */
+	moveal	%sp@(10),%a0		/* 4085b3d2 206f 000a */
+	movel	%a0,%sp@-		/* 4085b3d6 2f08 */
+	clrl	%sp@-			/* 4085b3d8 42a7 */
+	clrl	%sp@-			/* 4085b3da 42a7 */
+	clrl	%sp@-			/* 4085b3dc 42a7 */
+	moveal	%a0@,%a0		/* 4085b3de 2050 */
+	bsrw	CALLMDEFPROC		/* 4085b3e0 6100 03ee */
+	.short	0xa873			/* 4085b3e4 a873 */
+	movel	%sp@+,%sp@		/* 4085b3e6 2e9f */
 	rts				/* 4085b3e8 4e75 */
 
 	.align	16
@@ -917,6 +909,7 @@ DRAWFIRSTMENU:
 
 	.align	16
 
+CALLMDEFPROC:
 	moveml	%d3/%a5,%sp@-		/* 4085b7d0 48e7 1004 */
 	movel	%a0@(6),%d3		/* 4085b7d4 2628 0006 */
 	beqs	loc_4085b80a		/* 4085b7d8 6730 */
