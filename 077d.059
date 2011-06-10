@@ -1212,7 +1212,7 @@ loc_4083b8e8:
 	bnew	loc_4083b962		/* 4083b8f6 6600 006a */
 	subqw	#4,%sp			/* 4083b8fa 594f */
 	movel	%sp,%sp@-		/* 4083b8fc 2f0f */
-	.short	0xa874			/* 4083b8fe a874 */
+	_GetPort			/* 4083b8fe a874 */
 	clrl	%sp@-			/* 4083b900 42a7 */
 	.short	0xa924			/* 4083b902 a924 */
 	movel	%sp@+,%d0		/* 4083b904 201f */
@@ -1341,29 +1341,24 @@ SYSTEMMENU:
 	rts				/* 4083ba04 4e75 */
 
 SYSTEMEDIT:
-	.short	0x426f	/* 4083ba06 426f */
-	.short	0x0006	/* 4083ba08 0006 */
-	.short	0x514f	/* 4083ba0a 514f */
-	.short	0x486f	/* 4083ba0c 486f */
-	.short	0x0004	/* 4083ba0e 0004 */
-	.short	0xa874	/* 4083ba10 a874 */
-	.short	0xa924	/* 4083ba12 a924 */
-	.short	0x201f	/* 4083ba14 201f */
-	.short	0x6718	/* 4083ba16 6718 */
-	.short	0x2040	/* 4083ba18 2040 */
-	.short	0x6100	/* 4083ba1a 6100 */
-	.short	0xfd68	/* 4083ba1c fd68 */
-	.short	0x6610	/* 4083ba1e 6610 */
-	.short	0x302f	/* 4083ba20 302f */
-	.short	0x0008	/* 4083ba22 0008 */
-	.short	0x0640	/* 4083ba24 0640 */
-	.short	0x0044	/* 4083ba26 0044 */
-	.short	0x6100	/* 4083ba28 6100 */
-	.short	0xfd78	/* 4083ba2a fd78 */
-	.short	0x522f	/* 4083ba2c 522f */
-	.short	0x000a	/* 4083ba2e 000a */
-	.short	0xa873	/* 4083ba30 a873 */
-	.short	0x6062	/* 4083ba32 6062 */
+	clrw	%sp@(6)			/* 4083ba06 426f 0006 */
+	subqw	#8,%sp			/* 4083ba0a 514f */
+	pea	%sp@(4)			/* 4083ba0c 486f 0004 */
+	_GetPort			/* 4083ba10 a874 */
+	.short	0xa924			/* 4083ba12 a924 */
+	movel	%sp@+,%d0		/* 4083ba14 201f */
+	beqs	loc_4083ba30		/* 4083ba16 6718 */
+	moveal	%d0,%a0			/* 4083ba18 2040 */
+	bsrw	sub_4083b784		/* 4083ba1a 6100 fd68 */
+	bnes	loc_4083ba30		/* 4083ba1e 6610 */
+	movew	%sp@(8),%d0		/* 4083ba20 302f 0008 */
+	addiw	#68,%d0			/* 4083ba24 0640 0044 */
+	bsrw	sub_4083b7a2		/* 4083ba28 6100 fd78 */
+	addqb	#1,%sp@(10)		/* 4083ba2c 522f 000a */
+
+loc_4083ba30:
+	.short	0xa873			/* 4083ba30 a873 */
+	bras	loc_4083ba96		/* 4083ba32 6062 */
 
 OPENDESKACC:
 	.short	0x426f	/* 4083ba34 426f */
@@ -1417,6 +1412,8 @@ CLOSEDESKACC:
 	.short	0xa001	/* 4083ba90 a001 */
 	.short	0x4fef	/* 4083ba92 4fef */
 	.short	0x001e	/* 4083ba94 001e */
+
+loc_4083ba96:
 	.short	0x205f	/* 4083ba96 205f */
 	.short	0x544f	/* 4083ba98 544f */
 	.short	0x4ed0	/* 4083ba9a 4ed0 */
