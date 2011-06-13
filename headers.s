@@ -593,6 +593,10 @@
 		.short	0xa8a8
 	.endm
 
+	.macro	_InsetRect
+		.short	0xa8a9
+	.endm
+
 	.macro	_UnionRect
 		.short	0xa8ab
 	.endm
