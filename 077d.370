@@ -288,18 +288,17 @@ loc_409722d2:
 	rts				/* 409722dc 4e75 */
 
 sub_409722de:
-	.short	0x4e56	/* 409722de 4e56 */
-	.short	0x0000	/* 409722e0 0000 */
-	.short	0x2f0c	/* 409722e2 2f0c */
-	.short	0x286e	/* 409722e4 286e */
-	.short	0x0008	/* 409722e6 0008 */
-	.short	0x200c	/* 409722e8 200c */
-	.short	0x6704	/* 409722ea 6704 */
-	.short	0x204c	/* 409722ec 204c */
-	.short	0xa01f	/* 409722ee a01f */
-	.short	0x286e	/* 409722f0 286e */
-	.short	0xfffc	/* 409722f2 fffc */
-	.short	0x4e5e	/* 409722f4 4e5e */
+	linkw	%fp,#0			/* 409722de 4e56 0000 */
+	movel	%a4,%sp@-		/* 409722e2 2f0c */
+	moveal	%fp@(8),%a4		/* 409722e4 286e 0008 */
+	movel	%a4,%d0			/* 409722e8 200c */
+	beqs	.L409722f0		/* 409722ea 6704 */
+	moveal	%a4,%a0			/* 409722ec 204c */
+	_DisposePtr			/* 409722ee a01f */
+
+.L409722f0:
+	moveal	%fp@(-4),%a4		/* 409722f0 286e fffc */
+	unlk	%fp			/* 409722f4 4e5e */
 	rts				/* 409722f6 4e75 */
 
 sub_409722f8:
