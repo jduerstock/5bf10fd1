@@ -627,7 +627,7 @@ loc_408285a6:
 	moveal	0x34e,%a1		/* 408285ae 2278 034e */
 	moveal	%a1@(0x0014,%d1:w),%a2	/* 408285b2 2471 1014 */
 	bsrs	sub_4082853c		/* 408285b6 6184 */
-	movel	%a1@(0x0000,%d1:w),%d3	/* 408285b8 2631 1000 */
+	movel	%a1@(%d1:w),%d3		/* 408285b8 2631 1000 */
 	btst	#1,%a1@(0x0004,%d1:w)	/* 408285bc 0831 0001 1004 */
 	sne	%d6			/* 408285c2 56c6 */
 
@@ -706,9 +706,9 @@ VGETBLOCK:
 	movew	%d0,%d1			/* 40828654 3200 */
 	bltw	loc_408286f6		/* 40828656 6d00 009e */
 	moveal	0x34e,%a1		/* 4082865a 2278 034e */
-	moveal	%a1@(0x0014,%d1:w),%a2	/* 4082865e 2471 1014 */
-	movel	%a1@(0x0000,%d1:w),%d7	/* 40828662 2e31 1000 */
-	btst	#1,%a1@(0x0004,%d1:w)	/* 40828666 0831 0001 1004 */
+	moveal	%a1@(20,%d1:w),%a2	/* 4082865e 2471 1014 */
+	movel	%a1@(%d1:w),%d7		/* 40828662 2e31 1000 */
+	btst	#1,%a1@(4,%d1:w)	/* 40828666 0831 0001 1004 */
 	sne	%d4			/* 4082866c 56c4 */
 	moveal	%a3,%a4			/* 4082866e 284b */
 
@@ -729,7 +729,7 @@ loc_40828670:
 	bras	loc_40828670		/* 40828698 60d6 */
 
 loc_4082869a:
-	bsrw	CACHE		/* 4082869a 6100 fe94 */
+	bsrw	CACHE			/* 4082869a 6100 fe94 */
 	beqs	loc_408286b0		/* 4082869e 6710 */
 	btst	#5,%a4@(26)		/* 408286a0 082c 0005 001a */
 	bnes	loc_408286b0		/* 408286a6 6608 */
@@ -743,7 +743,7 @@ loc_408286b0:
 	movel	%d2,%d5			/* 408286ba 2a02 */
 	lsll	#8,%d5			/* 408286bc e18d */
 	addl	%d5,%d5			/* 408286be da85 */
-	jsr	%pc@(LG2PHYS)	/* 408286c0 4eba 3d32 */
+	jsr	%pc@(LG2PHYS)		/* 408286c0 4eba 3d32 */
 	movel	%d2,%d6			/* 408286c4 2c02 */
 	movel	%d3,%d2			/* 408286c6 2403 */
 	moveml	%fp@+,%d3-%d4		/* 408286c8 4cde 0018 */
@@ -854,9 +854,9 @@ loc_4082879a:
 
 loc_408287ca:
 	clrl	0x304			/* 408287ca 42b8 0304 */
-	jsr	%pc@(READBLOCK)	/* 408287ce 4eba 4508 */
+	jsr	%pc@(READBLOCK)		/* 408287ce 4eba 4508 */
 	bnes	loc_408287ea		/* 408287d2 6616 */
-	jsr	%pc@(TFSVCBTST)	/* 408287d4 4eba 3c14 */
+	jsr	%pc@(TFSVCBTST)		/* 408287d4 4eba 3c14 */
 	bnes	loc_40828806		/* 408287d8 662c */
 	movel	0x304,%d0		/* 408287da 2038 0304 */
 	cmpl	%a2@(100),%d0		/* 408287de b0aa 0064 */
@@ -1034,11 +1034,11 @@ loc_4082893c:
 	movew	%d0,%d1			/* 4082893e 3200 */
 	bles	loc_408289b6		/* 40828940 6f74 */
 	moveal	0x34e,%a1		/* 40828942 2278 034e */
-	moveal	%a1@(0x0014,%d1:w),%a2	/* 40828946 2471 1014 */
-	movel	%a1@(0x0000,%d1:w),%d3	/* 4082894a 2631 1000 */
-	btst	#1,%a1@(0x0004,%d1:w)	/* 4082894e 0831 0001 1004 */
+	moveal	%a1@(20,%d1:w),%a2	/* 40828946 2471 1014 */
+	movel	%a1@(%d1:w),%d3		/* 4082894a 2631 1000 */
+	btst	#1,%a1@(4,%d1:w)	/* 4082894e 0831 0001 1004 */
 	sne	%d6			/* 40828954 56c6 */
-	bsrw	CACHE		/* 40828956 6100 fbd8 */
+	bsrw	CACHE			/* 40828956 6100 fbd8 */
 	beqs	loc_40828974		/* 4082895a 6718 */
 	btst	#5,%a4@(26)		/* 4082895c 082c 0005 001a */
 	bnes	loc_40828974		/* 40828962 6610 */
@@ -1099,9 +1099,9 @@ VCACHERDIP:
 	bsrw	FLUSHCACHE		/* 408289d2 6100 fb86 */
 	moveml	%fp@+,%d1/%a1		/* 408289d6 4cde 0202 */
 	bnes	loc_408289e6		/* 408289da 660a */
-	jsr	%pc@(LG2PHYS)	/* 408289dc 4eba 3a16 */
+	jsr	%pc@(LG2PHYS)		/* 408289dc 4eba 3a16 */
 	bnes	loc_408289e6		/* 408289e0 6604 */
-	jsr	%pc@(RDBLOCKS)	/* 408289e2 4eba 4222 */
+	jsr	%pc@(RDBLOCKS)		/* 408289e2 4eba 4222 */
 
 loc_408289e6:
 	bras	loc_40828a0e		/* 408289e6 6026 */
@@ -1113,15 +1113,15 @@ CACHEWRIP:
 VCACHEWRIP:
 	movel	%sp@+,%fp@-		/* 408289ee 2d1f */
 	movel	%d3,%fp@-		/* 408289f0 2d03 */
-	jsr	%pc@(LG2PHYS)	/* 408289f2 4eba 3a00 */
+	jsr	%pc@(LG2PHYS)		/* 408289f2 4eba 3a00 */
 	bnes	loc_40828a0e		/* 408289f6 6616 */
 	moveml	%d1-%d2,%fp@-		/* 408289f8 48e6 6000 */
 	movew	%d1,%d0			/* 408289fc 3001 */
 	movel	%d5,%d1			/* 408289fe 2205 */
 	movel	%d6,%d2			/* 40828a00 2406 */
-	bsrw	__v__TRASHBLOCKS		/* 40828a02 6100 ff22 */
+	bsrw	__v__TRASHBLOCKS	/* 40828a02 6100 ff22 */
 	moveml	%fp@+,%d1-%d2		/* 40828a06 4cde 0006 */
-	jsr	%pc@(WRBLOCKS)	/* 40828a0a 4eba 4248 */
+	jsr	%pc@(WRBLOCKS)		/* 40828a0a 4eba 4248 */
 
 loc_40828a0e:
 	movel	%fp@+,%d3		/* 40828a0e 261e */
@@ -1308,7 +1308,7 @@ loc_40828c78:
 
 VOLUMECALL:
 	jsr	%pc@(__v__FSQUEUE)	/* 40828c80 4eba 00c6 */
-	jsr	%pc@(DTRMV3)	/* 40828c84 4eba 12a4 */
+	jsr	%pc@(DTRMV3)		/* 40828c84 4eba 12a4 */
 	bnew	__v__CMDDONE		/* 40828c88 6600 0172 */
 	movel	%a2,0x3ee		/* 40828c8c 21ca 03ee */
 	tstw	%a2@(76)		/* 40828c90 4a6a 004c */
@@ -1330,7 +1330,7 @@ REFNUMCALL:
 
 OPENCALL:
 	jsr	%pc@(__v__FSQUEUE)	/* 40828cc0 4eba 0086 */
-	jsr	%pc@(DTRMV3)	/* 40828cc4 4eba 1264 */
+	jsr	%pc@(DTRMV3)		/* 40828cc4 4eba 1264 */
 	bnew	__v__CMDDONE		/* 40828cc8 6600 0132 */
 	movel	%a2,0x3ee		/* 40828ccc 21ca 03ee */
 	tstw	%a2@(76)		/* 40828cd0 4a6a 004c */
