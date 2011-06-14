@@ -778,6 +778,15 @@
 		.short	0xaa2f
 	.endm
 
+	.macro	_FSpOpenResFile	
+		moveq	#13,%d0
+		.short	0xaa52
+	.endm
+
+	.macro	_SetMCInfo
+		.short	0xaa62
+	.endm
+
 	.macro	_SaveFore
 		movew	#0x040d,%d0
 		.short	0xaaa2
