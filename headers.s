@@ -539,6 +539,10 @@
 		.short	0xa86f
 	.endm
 
+	.macro	_LocalToGlobal
+		.short	0xa870
+	.endm
+
 	.macro	_GlobalToLocal
 		.short	0xa871
 	.endm
