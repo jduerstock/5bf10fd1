@@ -535,6 +535,10 @@
 		.short	0xa86e
 	.endm
 
+	.macro	_OpenPort
+		.short	0xa86f
+	.endm
+
 	.macro	_GlobalToLocal
 		.short	0xa871
 	.endm
