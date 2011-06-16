@@ -1060,7 +1060,7 @@ loc_4085888e:
 	pea	%sp@			/* 40858898 4857 */
 	_GetPort			/* 4085889a a874 */
 	movel	%a2,%sp@-		/* 4085889c 2f0a */
-	.short	0xa873			/* 4085889e a873 */
+	_SetPort			/* 4085889e a873 */
 	moveal	%sp@(16),%a0		/* 408588a0 206f 0010 */
 	moveal	%a0@,%a0		/* 408588a4 2050 */
 	movew	%a0@(6),%d1		/* 408588a6 3228 0006 */
@@ -1076,7 +1076,7 @@ loc_408588ae:
 loc_408588bc:
 	pea	%a0@(0x000a,%d1:w)	/* 408588bc 4870 100a */
 	.short	0xaa15			/* 408588c0 aa15 */
-	.short	0xa873			/* 408588c2 a873 */
+	_SetPort			/* 408588c2 a873 */
 
 loc_408588c4:
 	tstb	%a2@(110)		/* 408588c4 4a2a 006e */
@@ -1853,7 +1853,7 @@ __v__GetNewStructRect:
 	pea	%fp@(-4)		/* 40858ef0 486e fffc */
 	_GetPort			/* 40858ef4 a874 */
 	movel	%a4,%sp@-		/* 40858ef6 2f0c */
-	.short	0xa873			/* 40858ef8 a873 */
+	_SetPort			/* 40858ef8 a873 */
 	moveb	%a4@(110),%d7		/* 40858efa 1e2c 006e */
 	moveb	#1,%a4@(110)		/* 40858efe 197c 0001 006e */
 	lea	%fp@(-20),%a0		/* 40858f04 41ee ffec */
@@ -1893,7 +1893,7 @@ __v__GetNewStructRect:
 	.short	0xa876			/* 40858f70 a876 */
 	moveb	%d7,%a4@(110)		/* 40858f72 1947 006e */
 	movel	%fp@(-4),%sp@-		/* 40858f76 2f2e fffc */
-	.short	0xa873			/* 40858f7a a873 */
+	_SetPort			/* 40858f7a a873 */
 	movel	%a4,%sp@-		/* 40858f7c 2f0c */
 	jsr	%pc@(CALLWINDOWCALCGLUE)	/* 40858f7e 4eba fb62 */
 	moveml	%fp@(-32),%d7/%a3-%a4	/* 40858f82 4cee 1880 ffe0 */
@@ -1909,29 +1909,22 @@ GetNewStructRect:
 
 __v__CreateCheckRect:
 	linkw	%fp,#0			/* 40858fa0 4e56 0000 */
-	.short	0x2f0c	/* 40858fa4 2f0c */
-	.short	0x286e	/* 40858fa6 286e */
-	.short	0x0008	/* 40858fa8 0008 */
-	.short	0x28ae	/* 40858faa 28ae */
-	.short	0x000c	/* 40858fac 000c */
-	.short	0x296e	/* 40858fae 296e */
-	.short	0x000c	/* 40858fb0 000c */
-	.short	0x0004	/* 40858fb2 0004 */
-	.short	0x2f0c	/* 40858fb4 2f0c */
-	.short	0x70fd	/* 40858fb6 70fd */
-	.short	0x3f00	/* 40858fb8 3f00 */
-	.short	0x3f00	/* 40858fba 3f00 */
-	.short	0xa8a9	/* 40858fbc a8a9 */
-	.short	0x286e	/* 40858fbe 286e */
-	.short	0xfffc	/* 40858fc0 fffc */
-	.short	0x4e5e	/* 40858fc2 4e5e */
+	movel	%a4,%sp@-		/* 40858fa4 2f0c */
+	moveal	%fp@(8),%a4		/* 40858fa6 286e 0008 */
+	movel	%fp@(12),%a4@		/* 40858faa 28ae 000c */
+	movel	%fp@(12),%a4@(4)	/* 40858fae 296e 000c 0004 */
+	movel	%a4,%sp@-		/* 40858fb4 2f0c */
+	moveq	#-3,%d0			/* 40858fb6 70fd */
+	movew	%d0,%sp@-		/* 40858fb8 3f00 */
+	movew	%d0,%sp@-		/* 40858fba 3f00 */
+	.short	0xa8a9			/* 40858fbc a8a9 */
+	moveal	%fp@(-4),%a4		/* 40858fbe 286e fffc */
+	unlk	%fp			/* 40858fc2 4e5e */
 	rts				/* 40858fc4 4e75 */
 
 CreateCheckRect:
-	.short	0x2278	/* 40858fc6 2278 */
-	.short	0x2084	/* 40858fc8 2084 */
-	.short	0x2269	/* 40858fca 2269 */
-	.short	0x0014	/* 40858fcc 0014 */
+	moveal	0x2084,%a1		/* 40858fc6 2278 2084 */
+	moveal	%a1@(20),%a1		/* 40858fca 2269 0014 */
 	jmp	%a1@			/* 40858fce 4ed1 */
 
 __v__WindowAtPos:
