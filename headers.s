@@ -531,6 +531,10 @@
 		.short	0xa869
 	.endm
 
+	.macro	_InitGraf
+		.short	0xa86e
+	.endm
+
 	.macro	_GlobalToLocal
 		.short	0xa871
 	.endm
