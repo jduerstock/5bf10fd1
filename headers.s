@@ -625,6 +625,10 @@
 		.short	0xa8b5
 	.endm
 
+	.macro	_NewRgn
+		.short	0xa8d8
+	.endm
+
 	.macro	_DisposeRgn
 		.short	0xa8d9
 	.endm
@@ -760,6 +764,10 @@
 
 	.macro	_SysError
 		.short	0xa9c9
+	.endm
+
+	.macro	_Munger
+		.short	0xa9e0
 	.endm
 
 	.macro	_InitPack
