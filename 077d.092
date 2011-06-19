@@ -576,7 +576,7 @@ loc_4085c456:
 	unlk	%fp			/* 4085c46a 4e5e */
 	rts				/* 4085c46c 4e75 */
 
-sub_4085c46e:
+FindInsertIPt:
 	moveal	0x2044,%a1		/* 4085c46e 2278 2044 */
 	moveal	%a1@(48),%a1		/* 4085c472 2269 0030 */
 	jmp	%a1@			/* 4085c476 4ed1 */
@@ -603,7 +603,7 @@ __v__IDToScriptCode:
 	.short	0x4e5e	/* 4085c4a2 4e5e */
 	rts				/* 4085c4a4 4e75 */
 
-sub_4085c4a6:
+IDToScriptCode:
 	.short	0x2278	/* 4085c4a6 2278 */
 	.short	0x2044	/* 4085c4a8 2044 */
 	.short	0x2269	/* 4085c4aa 2269 */
@@ -716,7 +716,7 @@ loc_4085c5bc:
 	movew	%fp@(-274),%d0		/* 4085c5bc 302e feee */
 	extl	%d0			/* 4085c5c0 48c0 */
 	movel	%d0,%sp@-		/* 4085c5c2 2f00 */
-	jsr	%pc@(sub_4085c4a6)	/* 4085c5c4 4eba fee0 */
+	jsr	%pc@(IDToScriptCode)	/* 4085c5c4 4eba fee0 */
 	addqw	#4,%sp			/* 4085c5c8 584f */
 
 loc_4085c5ca:
@@ -744,7 +744,7 @@ loc_4085c5e8:
 	extl	%d7			/* 4085c5fa 48c7 */
 	movel	%d7,%sp@-		/* 4085c5fc 2f07 */
 	movel	%a3,%sp@-		/* 4085c5fe 2f0b */
-	jsr	%pc@(sub_4085c46e)	/* 4085c600 4eba fe6c */
+	jsr	%pc@(FindInsertIPt)	/* 4085c600 4eba fe6c */
 	movew	%d0,%d6			/* 4085c604 3c00 */
 	lea	%sp@(20),%sp		/* 4085c606 4fef 0014 */
 	blts	loc_4085c64a		/* 4085c60a 6d3e */
@@ -992,7 +992,7 @@ __v__SAVEBITS:
 	.short	0x301f	/* 4085c7f2 301f */
 	rts				/* 4085c7f4 4e75 */
 
-sub_4085c7f6:
+CALCULATEOFFSCREENRECT:
 	.short	0x4290	/* 4085c7f6 4290 */
 	.short	0x3029	/* 4085c7f8 3029 */
 	.short	0x0004	/* 4085c7fa 0004 */
@@ -1022,7 +1022,7 @@ __v__SETUPFGBGTOBW:
 	CallVector	0x2044 18	/* 4085c826 2f30 81e2 2044 0048 */
 	rts				/* 4085c82e 4e75 */
 
-sub_4085c830:
+SETUPFGBGTOBW:
 	CallVector	0x2044 19	/* 4085c830 2f30 81e2 2044 004c */
 	rts				/* 4085c838 4e75 */
 
@@ -1039,7 +1039,7 @@ __v__RESTOREBITS:
 	.short	0xa910			/* 4085c852 a910 */
 	moveal	%sp@,%a2		/* 4085c854 2457 */
 	_SetPort			/* 4085c856 a873 */
-	jsr	%pc@(sub_4085c830)	/* 4085c858 4eba ffd6 */
+	jsr	%pc@(SETUPFGBGTOBW)	/* 4085c858 4eba ffd6 */
 	movel	%fp@(8),%d3		/* 4085c85c 262e 0008 */
 	beqs	loc_4085c8b8		/* 4085c860 6756 */
 	moveal	%d3,%a0			/* 4085c862 2043 */
@@ -1065,7 +1065,7 @@ __v__RESTOREBITS:
 	pea	%a2@(2)			/* 4085c89c 486a 0002 */
 	lea	%fp@(-16),%a0		/* 4085c8a0 41ee fff0 */
 	lea	%fp@(-8),%a1		/* 4085c8a4 43ee fff8 */
-	jsr	%pc@(sub_4085c7f6)	/* 4085c8a8 4eba ff4c */
+	jsr	%pc@(CALCULATEOFFSCREENRECT)	/* 4085c8a8 4eba ff4c */
 	movel	%a0,%sp@-		/* 4085c8ac 2f08 */
 	movel	%a1,%sp@-		/* 4085c8ae 2f09 */
 	clrw	%sp@-			/* 4085c8b0 4267 */
@@ -1378,7 +1378,7 @@ loc_4085cb82:
 	.short	0xaa31			/* 4085cb8c aa31 */
 
 loc_4085cb8e:
-	jsr	%pc@(sub_4085c830)	/* 4085cb8e 4eba fca0 */
+	jsr	%pc@(SETUPFGBGTOBW)	/* 4085cb8e 4eba fca0 */
 	moveal	%a3@,%a0		/* 4085cb92 2053 */
 	clrl	%a0@(16)		/* 4085cb94 42a8 0010 */
 	movel	%a4@,%sp@-		/* 4085cb98 2f14 */
@@ -1626,9 +1626,11 @@ __v__FIND6BOFROMID:
 	CallVector	0x2044 29	/* 4085cd90 2f30 81e2 2044 0074 */
 	rts				/* 4085cd98 4e75 */
 
+FIND6BOFROMID:
 	CallVector	0x2044 31	/* 4085cd9a 2f30 81e2 2044 007c */
 	rts				/* 4085cda2 4e75 */
 
+FINDFIRSTSYSTEMMENU6BO:
 	CallVector	0x2044 30	/* 4085cda4 2f30 81e2 2044 0078 */
 	rts				/* 4085cdac 4e75 */
 
