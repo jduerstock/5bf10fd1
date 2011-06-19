@@ -499,6 +499,10 @@
 		.short	0xa805
 	.endm
 
+	.macro	_TEPinScroll
+		.short	0xa812
+	.endm
+
 	.macro	_Long2Fix
 		.short	0xa83f
 	.endm
