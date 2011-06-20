@@ -629,6 +629,11 @@
 		.short	0xa8b5
 	.endm
 
+	.macro	_Char2Pixel
+		movel	#0x820c0016,%sp@-
+		_ScriptUtil
+	.endm
+
 	.macro	_NewRgn
 		.short	0xa8d8
 	.endm
