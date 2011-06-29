@@ -1026,28 +1026,29 @@ loc_409aea08:
 	.short	0x0000			/* 409aea12 0000 */
 
 sub_409aea14:
-	.short	0x202f	/* 409aea14 202f */
-	.short	0x0004	/* 409aea16 0004 */
-	.short	0x671c	/* 409aea18 671c */
-	.short	0x2040	/* 409aea1a 2040 */
-	.short	0x2240	/* 409aea1c 2240 */
-	.short	0x343c	/* 409aea1e 343c */
-	.short	0x00ff	/* 409aea20 00ff */
-	.short	0x1210	/* 409aea22 1210 */
-	.short	0x10c0	/* 409aea24 10c0 */
-	.short	0x1001	/* 409aea26 1001 */
-	.short	0x57ca	/* 409aea28 57ca */
-	.short	0xfff8	/* 409aea2a fff8 */
-	.short	0x2208	/* 409aea2c 2208 */
-	.short	0x2009	/* 409aea2e 2009 */
-	.short	0x9280	/* 409aea30 9280 */
-	.short	0x5301	/* 409aea32 5301 */
-	.short	0x1281	/* 409aea34 1281 */
+	movel	%sp@(4),%d0		/* 409aea14 202f 0004 */
+	beqs	.L409aea36		/* 409aea18 671c */
+	moveal	%d0,%a0			/* 409aea1a 2040 */
+	moveal	%d0,%a1			/* 409aea1c 2240 */
+	movew	#255,%d2		/* 409aea1e 343c 00ff */
+
+.L409aea22:
+	moveb	%a0@,%d1		/* 409aea22 1210 */
+	moveb	%d0,%a0@+		/* 409aea24 10c0 */
+	moveb	%d1,%d0			/* 409aea26 1001 */
+	dbeq	%d2,.L409aea22		/* 409aea28 57ca fff8 */
+	movel	%a0,%d1			/* 409aea2c 2208 */
+	movel	%a1,%d0			/* 409aea2e 2009 */
+	subl	%d0,%d1			/* 409aea30 9280 */
+	subqb	#1,%d1			/* 409aea32 5301 */
+	moveb	%d1,%a1@		/* 409aea34 1281 */
+
+.L409aea36:
 	rts				/* 409aea36 4e75 */
-	.short	0x8663	/* 409aea38 8663 */
-	.short	0x3270	/* 409aea3a 3270 */
-	.short	0x7374	/* 409aea3c 7374 */
-	.short	0x7200	/* 409aea3e 7200 */
+
+	.byte	0x86			/* 409aea38 86 */
+	.ascii	"c2pstr"		/* 409aea3a 63 3270 */
+	.byte	0x00			/* 409aea3f 00 */
 	.short	0x0000	/* 409aea40 0000 */
 	.short	0x6b63	/* 409aea42 6b63 */
 	.short	0x6b63	/* 409aea44 6b63 */
@@ -1060,12 +1061,9 @@ sub_409aea14:
 	.short	0x0000	/* 409aea52 0000 */
 	.short	0x0000	/* 409aea54 0000 */
 	.short	0x0000	/* 409aea56 0000 */
-	.short	0x001a	/* 409aea58 001a */
-	.short	0xcd40	/* 409aea5a cd40 */
-	.short	0x001a	/* 409aea5c 001a */
-	.short	0xcd70	/* 409aea5e cd70 */
-	.short	0x656e	/* 409aea60 656e */
-	.short	0x6574	/* 409aea62 6574 */
+	.long	0x001acd40		/* 409aea58 001a cd40 */
+	.long	0x001acd70		/* 409aea5c 001a cd70 */
+	.ascii	"enet"			/* 409aea60 656e 6574 */
 	.short	0x002e	/* 409aea64 002e */
 	.short	0x5800	/* 409aea66 5800 */
 	.short	0x6b63	/* 409aea68 6b63 */
