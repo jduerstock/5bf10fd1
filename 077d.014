@@ -619,9 +619,11 @@ SENDEGRETCMD:
 	CallVector	0x2010 18	/* 4080e5c2 2f30 81e2 2010 0048 */
 	rts				/* 4080e5ca 4e75 */
 
+sub_4080e5cc:
 	CallVector	0x2010 17	/* 4080e5cc 2f30 81e2 2010 0044 */
 	rts				/* 4080e5d4 4e75 */
 
+sub_4080e5d6:
 	CallVector	0x2010 15	/* 4080e5d6 2f30 81e2 2010 003c */
 	rts				/* 4080e5de 4e75 */
 
@@ -797,6 +799,7 @@ sub_4080e776:
 .L4080e798:
 	rts				/* 4080e798 4e75 */
 
+sub_4080e79a:
 	movel	#117440512,%d0		/* 4080e79a 203c 0700 0000 */
 	andl	0xdd4,%d0		/* 4080e7a0 c0b8 0dd4 */
 	subil	#16777216,%d0		/* 4080e7a4 0480 0100 0000 */
@@ -807,43 +810,34 @@ loc_4080e7b2:
 	rts				/* 4080e7b2 4e75 */
 
 sub_4080e7b4:
-	.short	0x48e7	/* 4080e7b4 48e7 */
-	.short	0xe020	/* 4080e7b6 e020 */
-	.short	0x61e0	/* 4080e7b8 61e0 */
-	.short	0x6616	/* 4080e7ba 6616 */
-	.short	0x41fa	/* 4080e7bc 41fa */
-	.short	0xf690	/* 4080e7be f690 */
-	.short	0x203c	/* 4080e7c0 203c */
-	.short	0x0000	/* 4080e7c2 0000 */
-	.short	0x0092	/* 4080e7c4 0092 */
-	.short	0xa247	/* 4080e7c6 a247 */
-	.short	0x41fa	/* 4080e7c8 41fa */
-	.short	0xfe0c	/* 4080e7ca fe0c */
-	.short	0x43fa	/* 4080e7cc 43fa */
-	.short	0xfdfe	/* 4080e7ce fdfe */
-	.short	0x6026	/* 4080e7d0 6026 */
-	.short	0x41f9	/* 4080e7d2 41f9 */
-	.short	0xffff	/* 4080e7d4 ffff */
-	.short	0xe308	/* 4080e7d6 e308 */
-	.short	0x41fb	/* 4080e7d8 41fb */
-	.short	0x88f8	/* 4080e7da 88f8 */
-	.short	0x203c	/* 4080e7dc 203c */
-	.short	0x0000	/* 4080e7de 0000 */
-	.short	0x0092	/* 4080e7e0 0092 */
-	.short	0xa247	/* 4080e7e2 a247 */
-	.short	0x41f9	/* 4080e7e4 41f9 */
-	.short	0xffff	/* 4080e7e6 ffff */
-	.short	0xe2e2	/* 4080e7e8 e2e2 */
-	.short	0x41fb	/* 4080e7ea 41fb */
-	.short	0x88f8	/* 4080e7ec 88f8 */
-	.short	0x43f9	/* 4080e7ee 43f9 */
-	.short	0xffff	/* 4080e7f0 ffff */
-	.short	0xe2e2	/* 4080e7f2 e2e2 */
-	.short	0x43fb	/* 4080e7f4 43fb */
-	.short	0x98f8	/* 4080e7f6 98f8 */
-	.short	0x4cdf	/* 4080e7f8 4cdf */
-	.short	0x0407	/* 4080e7fa 0407 */
+	moveml	%d0-%d2/%a2,%sp@-	/* 4080e7b4 48e7 e020 */
+	bsrs	sub_4080e79a		/* 4080e7b8 61e0 */
+	bnes	.L4080e7d2		/* 4080e7ba 6616 */
+	lea	%pc@(EGRETDISPATCH),%a0	/* 4080e7bc 41fa f690 */
+	movel	#0x92,%d0		/* 4080e7c0 203c 0000 0092 */
+	.short	0xa247			/* 4080e7c6 a247 */
+	lea	%pc@(sub_4080e5d6),%a0	/* 4080e7c8 41fa fe0c */
+	lea	%pc@(sub_4080e5cc),%a1	/* 4080e7cc 43fa fdfe */
+	bras	loc_4080e7f8		/* 4080e7d0 6026 */
+
+.L4080e7d2:
+	lea	CUDADISPATCH-.L4080e7d2,%a0	/* 4080e7d2 41f9 ffff e308 */
+	lea	%pc@(.L4080e7d2,%a0:l),%a0	/* 4080e7d8 41fb 88f8 */
+	movel	#0x92,%d0		/* 4080e7dc 203c 0000 0092 */
+	.short	0xa247			/* 4080e7e2 a247 */
+
+.L4080e7e4:
+	lea	CUDASHIFTREGIRQ-.L4080e7e4,%a0	/* 4080e7e4 41f9 ffff e2e2 */
+	lea	%pc@(.L4080e7e4,%a0:l),%a0	/* 4080e7ea 41fb 88f8 */
+
+.L4080e7ee:
+	lea	CUDATICKHANDLER-.L4080e7ee,%a1	/* 4080e7ee 43f9 ffff e2e2 */
+	lea	%pc@(.L4080e7ee,%a1:l),%a1	/* 4080e7f4 43fb 98f8 */
+
+loc_4080e7f8:
+	moveml	%sp@+,%d0-%d2/%a2	/* 4080e7f8 4cdf 0407 */
 	rts				/* 4080e7fc 4e75 */
+
 	.short	0x264d	/* 4080e7fe 264d */
 	.short	0x284e	/* 4080e800 284e */
 	.short	0x4dfa	/* 4080e802 4dfa */
