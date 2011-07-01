@@ -619,11 +619,11 @@ SENDEGRETCMD:
 	CallVector	0x2010 18	/* 4080e5c2 2f30 81e2 2010 0048 */
 	rts				/* 4080e5ca 4e75 */
 
-sub_4080e5cc:
+TICKHANDLER:
 	CallVector	0x2010 17	/* 4080e5cc 2f30 81e2 2010 0044 */
 	rts				/* 4080e5d4 4e75 */
 
-sub_4080e5d6:
+SHIFTREGIRQ:
 	CallVector	0x2010 15	/* 4080e5d6 2f30 81e2 2010 003c */
 	rts				/* 4080e5de 4e75 */
 
@@ -816,8 +816,8 @@ sub_4080e7b4:
 	lea	%pc@(EGRETDISPATCH),%a0	/* 4080e7bc 41fa f690 */
 	movel	#0x92,%d0		/* 4080e7c0 203c 0000 0092 */
 	.short	0xa247			/* 4080e7c6 a247 */
-	lea	%pc@(sub_4080e5d6),%a0	/* 4080e7c8 41fa fe0c */
-	lea	%pc@(sub_4080e5cc),%a1	/* 4080e7cc 43fa fdfe */
+	lea	%pc@(SHIFTREGIRQ),%a0	/* 4080e7c8 41fa fe0c */
+	lea	%pc@(TICKHANDLER),%a1	/* 4080e7cc 43fa fdfe */
 	bras	loc_4080e7f8		/* 4080e7d0 6026 */
 
 .L4080e7d2:
@@ -838,38 +838,29 @@ loc_4080e7f8:
 	moveml	%sp@+,%d0-%d2/%a2	/* 4080e7f8 4cdf 0407 */
 	rts				/* 4080e7fc 4e75 */
 
-	.short	0x264d	/* 4080e7fe 264d */
-	.short	0x284e	/* 4080e800 284e */
-	.short	0x4dfa	/* 4080e802 4dfa */
-	.short	0x0008	/* 4080e804 0008 */
-	.short	0x60ff	/* 4080e806 60ff */
-	.short	0x0000	/* 4080e808 0000 */
-	.short	0x0e92	/* 4080e80a 0e92 */
-	.short	0x2c4c	/* 4080e80c 2c4c */
-	.short	0x2a4b	/* 4080e80e 2a4b */
-	.short	0x700e	/* 4080e810 700e */
-	.short	0xc081	/* 4080e812 c081 */
-	.short	0x5d80	/* 4080e814 5d80 */
-	.short	0x0284	/* 4080e816 0284 */
-	.short	0x0700	/* 4080e818 0700 */
-	.short	0x0000	/* 4080e81a 0000 */
-	.short	0x0484	/* 4080e81c 0484 */
-	.short	0x0100	/* 4080e81e 0100 */
-	.short	0x0000	/* 4080e820 0000 */
-	.short	0x670e	/* 4080e822 670e */
-	.short	0x0481	/* 4080e824 0481 */
-	.short	0x0100	/* 4080e826 0100 */
-	.short	0x0000	/* 4080e828 0000 */
-	.short	0x6706	/* 4080e82a 6706 */
-	.short	0x60ff	/* 4080e82c 60ff */
-	.short	0xffff	/* 4080e82e ffff */
-	.short	0xe0bc	/* 4080e830 e0bc */
-	.short	0x2268	/* 4080e832 2268 */
-	.short	0x0008	/* 4080e834 0008 */
-	.short	0x283c	/* 4080e836 283c */
-	.short	0x2000	/* 4080e838 2000 */
-	.short	0x0100	/* 4080e83a 0100 */
-	.short	0x4ed5	/* 4080e83c 4ed5 */
+	moveal	%a5,%a3			/* 4080e7fe 264d */
+	moveal	%fp,%a4			/* 4080e800 284e */
+	lea	%pc@(.L4080e80c),%fp	/* 4080e802 4dfa 0008 */
+	bral	GETHARDWAREINFO		/* 4080e806 60ff 0000 0e92 */
+
+.L4080e80c:
+	moveal	%a4,%fp			/* 4080e80c 2c4c */
+	moveal	%a3,%a5			/* 4080e80e 2a4b */
+	moveq	#14,%d0			/* 4080e810 700e */
+	andl	%d1,%d0			/* 4080e812 c081 */
+	subql	#6,%d0			/* 4080e814 5d80 */
+	andil	#117440512,%d4		/* 4080e816 0284 0700 0000 */
+	subil	#16777216,%d4		/* 4080e81c 0484 0100 0000 */
+	beqs	loc_4080e832		/* 4080e822 670e */
+	subil	#16777216,%d1		/* 4080e824 0481 0100 0000 */
+	beqs	loc_4080e832		/* 4080e82a 6706 */
+	bral	.L4080c8ea		/* 4080e82c 60ff ffff e0bc */
+
+loc_4080e832:
+	moveal	%a0@(8),%a1		/* 4080e832 2268 0008 */
+	movel	#536871168,%d4		/* 4080e836 283c 2000 0100 */
+	jmp	%a5@			/* 4080e83c 4ed5 */
+
 	.short	0x264d	/* 4080e83e 264d */
 	.short	0x284e	/* 4080e840 284e */
 	.short	0x4dfa	/* 4080e842 4dfa */
