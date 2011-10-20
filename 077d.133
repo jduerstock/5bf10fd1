@@ -43,68 +43,58 @@ loc_40885060:
 	movel	%a1,%fp@(-30)		/* 40885066 2d49 ffe2 */
 	braw	loc_40884f86		/* 4088506a 6000 ff1a */
 
-	.short	0x2250	/* 4088506e 2250 */
-	.short	0x2251	/* 40885070 2251 */
-	.short	0x0c51	/* 40885072 0c51 */
-	.short	0x000a	/* 40885074 000a */
-	.short	0x6638	/* 40885076 6638 */
-	.short	0x208a	/* 40885078 208a */
-	.short	0x41ea	/* 4088507a 41ea */
-	.short	0xfffa	/* 4088507c fffa */
-	.short	0x24c8	/* 4088507e 24c8 */
-	.short	0x24e9	/* 40885080 24e9 */
-	.short	0x0002	/* 40885082 0002 */
-	.short	0x34a9	/* 40885084 34a9 */
-	.short	0x0008	/* 40885086 0008 */
-	.short	0x303c	/* 40885088 303c */
-	.short	0x7fff	/* 4088508a 7fff */
-	.short	0xb05a	/* 4088508c b05a */
-	.short	0x6604	/* 4088508e 6604 */
-	.short	0x536a	/* 40885090 536a */
-	.short	0xfffe	/* 40885092 fffe */
-	.short	0x34c0	/* 40885094 34c0 */
-	.short	0x34a9	/* 40885096 34a9 */
-	.short	0x0006	/* 40885098 0006 */
-	.short	0xb05a	/* 4088509a b05a */
-	.short	0x6604	/* 4088509c 6604 */
-	.short	0x536a	/* 4088509e 536a */
-	.short	0xfffe	/* 408850a0 fffe */
-	.short	0x34e9	/* 408850a2 34e9 */
-	.short	0x0004	/* 408850a4 0004 */
-	.short	0x34e9	/* 408850a6 34e9 */
-	.short	0x0008	/* 408850a8 0008 */
-	.short	0x34c0	/* 408850aa 34c0 */
-	.short	0x34c0	/* 408850ac 34c0 */
-	.short	0x2248	/* 408850ae 2248 */
-	.short	0x41e9	/* 408850b0 41e9 */
-	.short	0x000a	/* 408850b2 000a */
+	moveal	%a0@,%a1		/* 4088506e 2250 */
+	moveal	%a1@,%a1		/* 40885070 2251 */
+	cmpiw	#10,%a1@		/* 40885072 0c51 000a */
+	bnes	loc_408850b0		/* 40885076 6638 */
+	movel	%a2,%a0@		/* 40885078 208a */
+	lea	%a2@(-6),%a0		/* 4088507a 41ea fffa */
+	movel	%a0,%a2@+		/* 4088507e 24c8 */
+	movel	%a1@(2),%a2@+		/* 40885080 24e9 0002 */
+	movew	%a1@(8),%a2@		/* 40885084 34a9 0008 */
+	movew	#32767,%d0		/* 40885088 303c 7fff */
+	cmpw	%a2@+,%d0		/* 4088508c b05a */
+	bnes	loc_40885094		/* 4088508e 6604 */
+	subqw	#1,%a2@(-2)		/* 40885090 536a fffe */
+
+loc_40885094:
+	movew	%d0,%a2@+		/* 40885094 34c0 */
+	movew	%a1@(6),%a2@		/* 40885096 34a9 0006 */
+	cmpw	%a2@+,%d0		/* 4088509a b05a */
+	bnes	loc_408850a2		/* 4088509c 6604 */
+	subqw	#1,%a2@(-2)		/* 4088509e 536a fffe */
+
+loc_408850a2:
+	movew	%a1@(4),%a2@+		/* 408850a2 34e9 0004 */
+	movew	%a1@(8),%a2@+		/* 408850a6 34e9 0008 */
+	movew	%d0,%a2@+		/* 408850aa 34c0 */
+	movew	%d0,%a2@+		/* 408850ac 34c0 */
+	moveal	%a0,%a1			/* 408850ae 2248 */
+
+loc_408850b0:
+	lea	%a1@(10),%a0		/* 408850b0 41e9 000a */
 	rts				/* 408850b4 4e75 */
 
 loc_408850b6:
-	.short	0x2d49	/* 408850b6 2d49 */
-	.short	0xffe2	/* 408850b8 ffe2 */
-	.short	0x202e	/* 408850ba 202e */
-	.short	0xffe2	/* 408850bc ffe2 */
-	.short	0x206e	/* 408850be 206e */
-	.short	0x0010	/* 408850c0 0010 */
-	.short	0x9090	/* 408850c2 9090 */
-	.short	0xe448	/* 408850c4 e448 */
-	.short	0x3d40	/* 408850c6 3d40 */
-	.short	0x001c	/* 408850c8 001c */
-	.short	0x2e6e	/* 408850ca 2e6e */
-	.short	0xffaa	/* 408850cc ffaa */
-	.short	0x4cdf	/* 408850ce 4cdf */
-	.short	0x1cf8	/* 408850d0 1cf8 */
-	.short	0x4e5e	/* 408850d2 4e5e */
-	.short	0x4e74	/* 408850d4 4e74 */
-	.short	0x0014	/* 408850d6 0014 */
+	movel	%a1,%fp@(-30)		/* 408850b6 2d49 ffe2 */
+
+loc_408850ba:
+	movel	%fp@(-30),%d0		/* 408850ba 202e ffe2 */
+	moveal	%fp@(16),%a0		/* 408850be 206e 0010 */
+	subl	%a0@,%d0		/* 408850c2 9090 */
+	lsrw	#2,%d0			/* 408850c4 e448 */
+	movew	%d0,%fp@(28)		/* 408850c6 3d40 001c */
+	moveal	%fp@(-86),%sp		/* 408850ca 2e6e ffaa */
+	moveml	%sp@+,%d3-%d7/%a2-%a4	/* 408850ce 4cdf 1cf8 */
+	unlk	%fp			/* 408850d2 4e5e */
+	rtd	#20			/* 408850d4 4e74 0014 */
 
 	.align	16
 
 __v__SECTSCAN:
-	.short	0x4242	/* 408850e0 4242 */
-	.short	0x4243	/* 408850e2 4243 */
-	.short	0x6008	/* 408850e4 6008 */
+	clrw	%d2			/* 408850e0 4242 */
+	clrw	%d3			/* 408850e2 4243 */
+	bras	loc_408850ee		/* 408850e4 6008 */
 
 __v__DIFFSCAN:
 	.short	0x4242	/* 408850e6 4242 */
@@ -113,6 +103,8 @@ __v__DIFFSCAN:
 __v__UNIONSCAN:
 	.short	0x74ff	/* 408850ea 74ff */
 	.short	0x76ff	/* 408850ec 76ff */
+
+loc_408850ee:
 	.short	0x3018	/* 408850ee 3018 */
 	.short	0x3219	/* 408850f0 3219 */
 	.short	0xb041	/* 408850f2 b041 */
