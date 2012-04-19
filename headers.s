@@ -930,6 +930,7 @@
 
 	.equ	ExpandMem, 0x02b6
 	.equ	TopMapHndl, 0xa50
+	.equ	SysMap, 0xa58
 	.equ	HSCHandle, 0x0b84
 	.equ	ResOneDeep, 0x0b9a
 	.equ	JVBLTask, 0x0d28
