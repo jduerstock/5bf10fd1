@@ -924,9 +924,10 @@
 	.endm
 
 	.equ	__FCL_1_2A_, 0x312e3241		/* "1.2A" */
-	.equ	__FCL_DSAT_, 0x44534154
-	.equ	__FCL_mach_, 0x6d616368
-	.equ	__FCL_vm___, 0x766d2020
+	.equ	__FCL_DSAT_, 0x44534154		/* "DSAT" */
+	.equ	__FCL_PAT__, 0x50415420		/* "PAT " */
+	.equ	__FCL_mach_, 0x6d616368		/* "mach" */
+	.equ	__FCL_vm___, 0x766d2020		/* "vm  " */
 
 	.equ	ExpandMem, 0x02b6
 	.equ	TopMapHndl, 0xa50

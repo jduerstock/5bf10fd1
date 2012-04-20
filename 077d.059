@@ -1442,22 +1442,19 @@ sub_4083bac0:
 	.align	16
 
 GETPATTERN:
-	.short	0x203c	/* 4083baf0 203c */
-	.short	0x5041	/* 4083baf2 5041 */
-	.short	0x5420	/* 4083baf4 5420 */
-	.short	0x31fc	/* 4083baf6 31fc */
-	.short	0xffff	/* 4083baf8 ffff */
-	.short	0x0b9e	/* 4083bafa 0b9e */
-	.short	0x594f	/* 4083bafc 594f */
-	.short	0x2f00	/* 4083bafe 2f00 */
-	.short	0x3f2f	/* 4083bb00 3f2f */
-	.short	0x000c	/* 4083bb02 000c */
-	.short	0xa9a0	/* 4083bb04 a9a0 */
-	.short	0x201f	/* 4083bb06 201f */
-	.short	0x205f	/* 4083bb08 205f */
-	.short	0x544f	/* 4083bb0a 544f */
-	.short	0x2e80	/* 4083bb0c 2e80 */
-	.short	0x4ed0	/* 4083bb0e 4ed0 */
+	movel	#__FCL_PAT__,%d0	/* 4083bb10 203c 5041 5420 */
+	movew	#-1,RomMapInsert	/* 4083baf6 31fc ffff 0b9e */
+
+.L4083bafc:
+	subqw	#4,%sp			/* 4083bafc 594f */
+	movel	%d0,%sp@-		/* 4083bafe 2f00 */
+	movew	%sp@(12),%sp@-		/* 4083bb00 3f2f 000c */
+	.short	0xa9a0			/* 4083bb04 a9a0 */
+	movel	%sp@+,%d0		/* 4083bb06 201f */
+	moveal	%sp@+,%a0		/* 4083bb08 205f */
+	addqw	#2,%sp			/* 4083bb0a 544f */
+	movel	%d0,%sp@		/* 4083bb0c 2e80 */
+	jmp	%a0@			/* 4083bb0e 4ed0 */
 
 GETCURSOR:
 	.short	0x203c	/* 4083bb10 203c */
