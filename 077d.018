@@ -1525,29 +1525,24 @@ sub_40812e80:
 	rts				/* 40812ea4 4e75 */
 
 sub_40812ea6:
-	.short	0x31fc	/* 40812ea6 31fc */
-	.short	0xffff	/* 40812ea8 ffff */
-	.short	0x0b9e	/* 40812eaa 0b9e */
-	.short	0x594f	/* 40812eac 594f */
-	.short	0x4879	/* 40812eae 4879 */
-	.short	0x6c6d	/* 40812eb0 6c6d */
-	.short	0x6772	/* 40812eb2 6772 */
-	.short	0x4267	/* 40812eb4 4267 */
-	.short	0xa9a0	/* 40812eb6 a9a0 */
-	.short	0x201f	/* 40812eb8 201f */
-	.short	0x6718	/* 40812eba 6718 */
-	.short	0x2040	/* 40812ebc 2040 */
-	.short	0x2f08	/* 40812ebe 2f08 */
-	.short	0x42a7	/* 40812ec0 42a7 */
-	.short	0x42a7	/* 40812ec2 42a7 */
-	.short	0x4878	/* 40812ec4 4878 */
-	.short	0x0006	/* 40812ec6 0006 */
-	.short	0x2050	/* 40812ec8 2050 */
-	.short	0x4ea8	/* 40812eca 4ea8 */
-	.short	0x0002	/* 40812ecc 0002 */
-	.short	0x4fef	/* 40812ece 4fef */
-	.short	0x000c	/* 40812ed0 000c */
-	.short	0xa9a3	/* 40812ed2 a9a3 */
+	movew	#-1,RomMapInsert	/* 40812ea6 31fc ffff 0b9e */
+	subqw	#4,%sp			/* 40812eac 594f */
+	pea	0x6c6d6772		/* 40812eae 4879 6c6d 6772 */
+	clrw	%sp@-			/* 40812eb4 4267 */
+	.short	0xa9a0			/* 40812eb6 a9a0 */
+	movel	%sp@+,%d0		/* 40812eb8 201f */
+	beqs	.L40812ed4		/* 40812eba 6718 */
+	moveal	%d0,%a0			/* 40812ebc 2040 */
+	movel	%a0,%sp@-		/* 40812ebe 2f08 */
+	clrl	%sp@-			/* 40812ec0 42a7 */
+	clrl	%sp@-			/* 40812ec2 42a7 */
+	pea	0x6			/* 40812ec4 4878 0006 */
+	moveal	%a0@,%a0		/* 40812ec8 2050 */
+	jsr	%a0@(2)			/* 40812eca 4ea8 0002 */
+	lea	%sp@(12),%sp		/* 40812ece 4fef 000c */
+	.short	0xa9a3			/* 40812ed2 a9a3 */
+
+.L40812ed4:
 	rts				/* 40812ed4 4e75 */
 
 sub_40812ed6:
