@@ -305,7 +305,7 @@ loc_4080033c:
 	bsrw	sub_408007d0		/* 4080033c 6100 0492 */
 	bsrl	INITMEMMGR		/* 40800340 61ff 0004 191e */
 	bsrl	INSTALLPRIVTRAP		/* 40800346 61ff 0004 113e */
-	btst	#0,0x1efc		/* 4080034c 0838 0000 1efc */
+	btst	#0,MMFlags		/* 4080034c 0838 0000 1efc */
 	beqs	loc_4080035c		/* 40800352 6708 */
 	lea	%pc@(sub_4080067c),%a0	/* 40800354 41fa 0326 */
 	movel	%a0,0x644		/* 40800358 21c8 0644 */
@@ -352,18 +352,18 @@ loc_408003b4:
 	bsrw	sub_40800698		/* 408003e8 6100 02ae */
 	moveal	%a0,%sp			/* 408003ec 2e48 */
 	subaw	#8192,%a0		/* 408003ee 90fc 2000 */
-	moveb	0x1efc,%sp@-		/* 408003f2 1f38 1efc */
-	btst	#2,0x1efc		/* 408003f6 0838 0002 1efc */
+	moveb	MMFlags,%sp@-		/* 408003f2 1f38 1efc */
+	btst	#2,MMFlags		/* 408003f6 0838 0002 1efc */
 	beqs	loc_40800406		/* 408003fc 6708 */
-	bset	#0,0x1efc		/* 408003fe 08f8 0000 1efc */
+	bset	#0,MMFlags		/* 408003fe 08f8 0000 1efc */
 	bras	loc_4080040c		/* 40800404 6006 */
 
 loc_40800406:
-	bclr	#0,0x1efc		/* 40800406 08b8 0000 1efc */
+	bclr	#0,MMFlags		/* 40800406 08b8 0000 1efc */
 
 loc_4080040c:
 	_SetApplLimit			/* 4080040c a02d */
-	moveb	%sp@+,0x1efc		/* 4080040e 11df 1efc */
+	moveb	%sp@+,MMFlags		/* 4080040e 11df 1efc */
 	moveb	#1,%d0			/* 40800412 103c 0001 */
 	.short	0xa05d			/* 40800416 a05d */
 	.short	0x2230,0x81e2,0x0ddc,0xffba	/* movel	@(0xddc)@(-0x46),%d1	/* 40800418 2230 81e2 0ddc ffba */
@@ -665,17 +665,17 @@ sub_408006b0:
 
 sub_40800700:
 	lea	%pc@(word_4080075c),%a0	/* 40800700 41fa 005a */
-	moveb	0x1efc,%sp@-		/* 40800704 1f38 1efc */
-	btst	#2,0x1efc		/* 40800708 0838 0002 1efc */
+	moveb	MMFlags,%sp@-		/* 40800704 1f38 1efc */
+	btst	#2,MMFlags		/* 40800708 0838 0002 1efc */
 	beqs	.L40800724		/* 4080070e 6714 */
-	bset	#0,0x1efc		/* 40800710 08f8 0000 1efc */
-	btst	#4,0x1efc		/* 40800716 0838 0004 1efc */
+	bset	#0,MMFlags		/* 40800710 08f8 0000 1efc */
+	btst	#4,MMFlags		/* 40800716 0838 0004 1efc */
 	beqs	.L4080072a		/* 4080071c 670c */
 	lea	%pc@(word_4080076a),%a0	/* 4080071e 41fa 004a */
 	bras	.L4080072a		/* 40800722 6006 */
 
 .L40800724:
-	bclr	#0,0x1efc		/* 40800724 08b8 0000 1efc */
+	bclr	#0,MMFlags		/* 40800724 08b8 0000 1efc */
 
 .L4080072a:
 	.short	0xa019			/* 4080072a a019 */
@@ -693,7 +693,7 @@ sub_40800700:
 loc_40800750:
 	subaw	#8192,%a0		/* 40800750 90fc 2000 */
 	.short	0xa02d			/* 40800754 a02d */
-	moveb	%sp@+,0x1efc		/* 40800756 11df 1efc */
+	moveb	%sp@+,MMFlags		/* 40800756 11df 1efc */
 	rts				/* 4080075a 4e75 */
 
 word_4080075c:

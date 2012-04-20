@@ -931,10 +931,12 @@
 	.equ	ExpandMem, 0x02b6
 	.equ	TopMapHndl, 0xa50
 	.equ	SysMap, 0xa58
+	.equ	CurMap, 0xa5a
 	.equ	HSCHandle, 0x0b84
 	.equ	ResOneDeep, 0x0b9a
 	.equ	JVBLTask, 0x0d28
 	.equ	JSwapMMU, 0x0dbc
 	.equ	LaunchFlag, 0x0902
 	.equ	SInfoPtr, 0x0cbc
+	.equ	MMFlags, 0x1efc
 	.equ	DockingGlobals, 0x1ff8
