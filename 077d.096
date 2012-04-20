@@ -99,7 +99,7 @@ GetTopMap:
 	rts				/* 408600ca 4e75 */
 
 GetCurMap:
-	movew	0xa5a,%d6		/* 408600cc 3c38 0a5a */
+	movew	CurMap,%d6		/* 408600cc 3c38 0a5a */
 
 sub_408600d0:
 	tstw	%d6			/* 408600d0 4a46 */
@@ -248,12 +248,12 @@ VRMGRSTDENTRY:
 	movel	%a0,%sp@-		/* 408601c8 2f08 */
 	lea	%fp@(8),%a0		/* 408601ca 41ee 0008 */
 	moveml	%d0-%d5/%a0-%a5,%sp@-	/* 408601ce 48e7 fcfc */
-	movew	0xa5a,%fp@(-54)		/* 408601d2 3d78 0a5a ffca */
+	movew	CurMap,%fp@(-54)	/* 408601d2 3d78 0a5a ffca */
 	clrw	%fp@(-66)		/* 408601d8 426e ffbe */
 	clrw	%fp@(-56)		/* 408601dc 426e ffc8 */
 	movel	0xa54,%fp@(-60)		/* 408601e0 2d78 0a54 ffc4 */
 	movew	SysMap,%fp@(-64)	/* 408601e6 3d78 0a58 ffc0 */
-	tstw	0xa5a			/* 408601ec 4a78 0a5a */
+	tstw	CurMap			/* 408601ec 4a78 0a5a */
 	bmiw	.L40860274		/* 408601f0 6b00 0082 */
 	moveal	ExpandMem,%a0		/* 408601f4 2078 02b6 */
 	tstb	%a0@(474)		/* 408601f8 4a28 01da */
@@ -265,7 +265,7 @@ VRMGRSTDENTRY:
 	moveal	ExpandMem,%a0		/* 4086020c 2078 02b6 */
 	movew	%a0@(470),%d0		/* 40860210 3028 01d6 */
 	beqs	.L4086021c		/* 40860214 6706 */
-	cmpw	0xa5a,%d0		/* 40860216 b078 0a5a */
+	cmpw	CurMap,%d0		/* 40860216 b078 0a5a */
 	beqs	.L40860242		/* 4086021a 6726 */
 
 .L4086021c:
@@ -281,12 +281,12 @@ VRMGRSTDENTRY:
 	moveal	%a1@,%a0		/* 4086022e 2051 */
 	movew	%a0@(20),%d0		/* 40860230 3028 0014 */
 	moveal	ExpandMem,%a0		/* 40860234 2078 02b6 */
-	movew	0xa5a,%a0@(470)		/* 40860238 3178 0a5a 01d6 */
+	movew	CurMap,%a0@(470)	/* 40860238 3178 0a5a 01d6 */
 	movew	%d0,%a0@(472)		/* 4086023e 3140 01d8 */
 
 .L40860242:
 	movew	%a0@(472),%d0		/* 40860242 3028 01d8 */
-	movew	%d0,0xa5a		/* 40860246 31c0 0a5a */
+	movew	%d0,CurMap		/* 40860246 31c0 0a5a */
 	movew	%d0,%fp@(-56)		/* 4086024a 3d40 ffc8 */
 
 .L4086024e:
@@ -325,10 +325,10 @@ sub_40860284:
 	beqw	.L40860324		/* 40860296 6700 008c */
 	tstl	%d1			/* 4086029a 4a81 */
 	bnes	.L408602de		/* 4086029c 6640 */
-	movew	0xa5a,%d0		/* 4086029e 3038 0a5a */
+	movew	CurMap,%d0		/* 4086029e 3038 0a5a */
 	cmpw	%fp@(-64),%d0		/* 408602a2 b06e ffc0 */
 	bnes	.L408602ae		/* 408602a6 6606 */
-	movew	#1,0xa5a		/* 408602a8 31fc 0001 0a5a */
+	movew	#1,CurMap		/* 408602a8 31fc 0001 0a5a */
 
 .L408602ae:
 	moveal	TopMapHndl,%a0		/* 408602ae 2078 0a50 */
@@ -358,10 +358,10 @@ sub_40860284:
 	bras	.L40860316		/* 408602dc 6038 */
 
 .L408602de:
-	movew	0xa5a,%d0		/* 408602de 3038 0a5a */
+	movew	CurMap,%d0		/* 408602de 3038 0a5a */
 	cmpiw	#1,%d0			/* 408602e2 0c40 0001 */
 	bnes	.L408602ee		/* 408602e6 6606 */
-	movew	%fp@(-64),0xa5a		/* 408602e8 31ee ffc0 0a5a */
+	movew	%fp@(-64),CurMap	/* 408602e8 31ee ffc0 0a5a */
 
 .L408602ee:
 	moveal	TopMapHndl,%a0		/* 408602ee 2078 0a50 */
@@ -430,9 +430,9 @@ VRMGRSTDEXIT:
 	beqs	.L40860362		/* 4086034e 6712 */
 	movew	%fp@(-56),%d1		/* 40860350 322e ffc8 */
 	beqs	.L40860362		/* 40860354 670c */
-	cmpw	0xa5a,%d1		/* 40860356 b278 0a5a */
+	cmpw	CurMap,%d1		/* 40860356 b278 0a5a */
 	bnes	.L40860362		/* 4086035a 6606 */
-	movew	%fp@(-54),0xa5a		/* 4086035c 31ee ffca 0a5a */
+	movew	%fp@(-54),CurMap		/* 4086035c 31ee ffca 0a5a */
 
 .L40860362:
 	tstb	0xb9e			/* 40860362 4a38 0b9e */
@@ -653,11 +653,11 @@ VCHECKLOAD:
 	moveal	%a1@,%a0		/* 4086055c 2051 */
 	btst	#0,%a0@(23)		/* 4086055e 0828 0000 0017 */
 	beqs	.L408605b6		/* 40860564 6750 */
-	movew	0xa5a,%sp@-		/* 40860566 3f38 0a5a */
+	movew	CurMap,%sp@-		/* 40860566 3f38 0a5a */
 	moveb	ResOneDeep,%sp@-	/* 4086056a 1f38 0b9a */
 	movew	0xb9e,%sp@-		/* 4086056e 3f38 0b9e */
 	movel	0xaf2,%sp@-		/* 40860572 2f38 0af2 */
-	movew	%a0@(20),0xa5a		/* 40860576 31e8 0014 0a5a */
+	movew	%a0@(20),CurMap		/* 40860576 31e8 0014 0a5a */
 	clrw	0xb9e			/* 4086057c 4278 0b9e */
 	clrl	0xaf2			/* 40860580 42b8 0af2 */
 	subqw	#4,%sp			/* 40860584 594f */
@@ -668,7 +668,7 @@ VCHECKLOAD:
 	movel	%sp@+,0xaf2		/* 40860592 21df 0af2 */
 	movew	%sp@+,0xb9e		/* 40860596 31df 0b9e */
 	moveb	%sp@+,ResOneDeep	/* 4086059a 11df 0b9a */
-	movew	%sp@+,0xa5a		/* 4086059e 31df 0a5a */
+	movew	%sp@+,CurMap		/* 4086059e 31df 0a5a */
 	movel	%a0,%d0			/* 408605a2 2008 */
 	bnew	.L408605be		/* 408605a4 6600 0018 */
 	movew	0xa60,%d0		/* 408605a8 3038 0a60 */
@@ -1469,7 +1469,7 @@ SETRESLOAD:
 	bras	.L40860c02		/* 40860c14 60ec */
 
 CURRESFILE:
-	movew	0xa5a,%sp@(4)		/* 40860c16 3f78 0a5a 0004 */
+	movew	CurMap,%sp@(4)		/* 40860c16 3f78 0a5a 0004 */
 	bras	.L40860c02		/* 40860c1c 60e4 */
 
 RESERROR:
@@ -1695,14 +1695,14 @@ RMVERESOURCE:
 	bsrw	sub_408612c8		/* 40860e2c 6100 049a */
 	btst	#3,%a2@(4)		/* 40860e30 082a 0003 0004 */
 	bnew	.L40860ef8		/* 40860e36 6600 00c0 */
-	cmpw	0xa5a,%d6		/* 40860e3a bc78 0a5a */
+	cmpw	CurMap,%d6		/* 40860e3a bc78 0a5a */
 	beqs	.L40860e7c		/* 40860e3e 673c */
 	subqw	#4,%sp			/* 40860e40 594f */
 	movel	%a4,%sp@-		/* 40860e42 2f0c */
 	moveq	#6,%d0			/* 40860e44 7006 */
 	.short	0xa822			/* 40860e46 a822 */
 	moveal	%sp@+,%a3		/* 40860e48 265f */
-	movew	0xa5a,%d1		/* 40860e4a 3238 0a5a */
+	movew	CurMap,%d1		/* 40860e4a 3238 0a5a */
 	moveal	%a3@,%a3		/* 40860e4e 2653 */
 	cmpw	%a3@(20),%d1		/* 40860e50 b26b 0014 */
 	beqs	.L40860e7c		/* 40860e54 6726 */
@@ -1711,7 +1711,7 @@ RMVERESOURCE:
 	moveq	#6,%d0			/* 40860e5c 7006 */
 	.short	0xa822			/* 40860e5e a822 */
 	moveal	%sp@+,%a3		/* 40860e60 265f */
-	movew	0xa5a,%d1		/* 40860e62 3238 0a5a */
+	movew	CurMap,%d1		/* 40860e62 3238 0a5a */
 	moveal	%a3@,%a3		/* 40860e66 2653 */
 	cmpw	%a3@(20),%d1		/* 40860e68 b26b 0014 */
 	bnew	.L40860ef8		/* 40860e6c 6600 008a */
