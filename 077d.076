@@ -21,7 +21,7 @@ loc_4084c038:
 	moveq	#1,%d0			/* 4084c03c 7001 */
 	moveb	%d0,%sp@-		/* 4084c03e 1f00 */
 	_SetResLoad			/* 4084c040 a99b */
-	moveb	#-1,0xb9e		/* 4084c042 11fc ffff 0b9e */
+	moveb	#-1,RomMapInsert	/* 4084c042 11fc ffff 0b9e */
 	subql	#2,%sp			/* 4084c048 558f */
 	movel	#1953001063,%sp@-	/* 4084c04a 2f3c 7468 6e67 */
 	.short	0xa80d			/* 4084c050 a80d */
@@ -31,7 +31,7 @@ loc_4084c038:
 	bras	loc_4084c084		/* 4084c058 602a */
 
 loc_4084c05a:
-	moveb	#-1,0xb9e		/* 4084c05a 11fc ffff 0b9e */
+	moveb	#-1,RomMapInsert	/* 4084c05a 11fc ffff 0b9e */
 	subql	#4,%sp			/* 4084c060 598f */
 	movel	#1953001063,%sp@-	/* 4084c062 2f3c 7468 6e67 */
 	movew	%d7,%sp@-		/* 4084c068 3f07 */
@@ -791,54 +791,50 @@ PACK14ENTRY:
 	.short	0x2f38	/* 4084c718 2f38 */
 	.short	0x0668	/* 4084c71a 0668 */
 	rts				/* 4084c71c 4e75 */
-	.short	0x4efa	/* 4084c71e 4efa */
-	.short	0x0166	/* 4084c720 0166 */
-	.short	0x48e7	/* 4084c722 48e7 */
-	.short	0x0018	/* 4084c724 0018 */
-	.short	0x594f	/* 4084c726 594f */
-	.short	0x2f3c	/* 4084c728 2f3c */
-	.short	0x5041	/* 4084c72a 5041 */
-	.short	0x434b	/* 4084c72c 434b */
-	.short	0x3f3c	/* 4084c72e 3f3c */
-	.short	0x000e	/* 4084c730 000e */
-	.short	0x31fc	/* 4084c732 31fc */
-	.short	0xffff	/* 4084c734 ffff */
-	.short	0x0b9e	/* 4084c736 0b9e */
-	.short	0xa9a0	/* 4084c738 a9a0 */
-	.short	0x201f	/* 4084c73a 201f */
-	.short	0x673a	/* 4084c73c 673a */
-	.short	0x2f00	/* 4084c73e 2f00 */
-	.short	0xa9a3	/* 4084c740 a9a3 */
-	.short	0x594f	/* 4084c742 594f */
-	.short	0x3f3c	/* 4084c744 3f3c */
-	.short	0xbf96	/* 4084c746 bf96 */
-	.short	0xa9bf	/* 4084c748 a9bf */
-	.short	0x201f	/* 4084c74a 201f */
-	.short	0x672a	/* 4084c74c 672a */
-	.short	0x2640	/* 4084c74e 2640 */
-	.short	0x5d4f	/* 4084c750 5d4f */
-	.short	0x486f	/* 4084c752 486f */
-	.short	0x0002	/* 4084c754 0002 */
-	.short	0x3f3c	/* 4084c756 3f3c */
-	.short	0xbf96	/* 4084c758 bf96 */
-	.short	0x2f3c	/* 4084c75a 2f3c */
-	.short	0x0000	/* 4084c75c 0000 */
-	.short	0xff00	/* 4084c75e ff00 */
-	.short	0x303c	/* 4084c760 303c */
-	.short	0x0501	/* 4084c762 0501 */
-	.short	0xabc9	/* 4084c764 abc9 */
-	.short	0x301f	/* 4084c766 301f */
-	.short	0x285f	/* 4084c768 285f */
-	.short	0x660c	/* 4084c76a 660c */
-	.short	0x200c	/* 4084c76c 200c */
-	.short	0x6708	/* 4084c76e 6708 */
-	.short	0x610c	/* 4084c770 610c */
-	.short	0x2f0b	/* 4084c772 2f0b */
-	.short	0x4267	/* 4084c774 4267 */
-	.short	0xa935	/* 4084c776 a935 */
-	.short	0x4cdf	/* 4084c778 4cdf */
-	.short	0x1800	/* 4084c77a 1800 */
+
+	jmp	%pc@(PTCHHMPASCALGETBALLOONS)	/* 4084c71e 4efa 0166 */
+
+	moveml	%a3-%a4,%sp@-		/* 4084c722 48e7 0018 */
+	subqw	#4,%sp			/* 4084c726 594f */
+	movel	#1346454347,%sp@-	/* 4084c728 2f3c 5041 434b */
+	movew	#14,%sp@-		/* 4084c72e 3f3c 000e */
+	movew	#-1,0xb9e		/* 4084c732 31fc ffff 0b9e */
+	.short	0xa9a0			/* 4084c738 a9a0 */
+	movel	%sp@+,%d0		/* 4084c73a 201f */
+	beqs	loc_4084c778		/* 4084c73c 673a */
+	movel	%d0,%sp@-		/* 4084c73e 2f00 */
+	.short	0xa9a3			/* 4084c740 a9a3 */
+	subqw	#4,%sp			/* 4084c742 594f */
+	movew	#-16490,%sp@-		/* 4084c744 3f3c bf96 */
+	.short	0xa9bf			/* 4084c748 a9bf */
+
+loc_4084c74a:
+	movel	%sp@+,%d0		/* 4084c74a 201f */
+	beqs	loc_4084c778		/* 4084c74c 672a */
+	moveal	%d0,%a3			/* 4084c74e 2640 */
+	subqw	#6,%sp			/* 4084c750 5d4f */
+	pea	%sp@(2)			/* 4084c752 486f 0002 */
+	movew	#-16490,%sp@-		/* 4084c756 3f3c bf96 */
+	movel	#65280,%sp@-		/* 4084c75a 2f3c 0000 ff00 */
+	movew	#1281,%d0		/* 4084c760 303c 0501 */
+	.short	0xabc9			/* 4084c764 abc9 */
+
+loc_4084c766:
+	movew	%sp@+,%d0		/* 4084c766 301f */
+	moveal	%sp@+,%a4		/* 4084c768 285f */
+	bnes	loc_4084c778		/* 4084c76a 660c */
+	movel	%a4,%d0			/* 4084c76c 200c */
+	beqs	loc_4084c778		/* 4084c76e 6708 */
+	bsrs	sub_4084c77e		/* 4084c770 610c */
+	movel	%a3,%sp@-		/* 4084c772 2f0b */
+	clrw	%sp@-			/* 4084c774 4267 */
+	.short	0xa935			/* 4084c776 a935 */
+
+loc_4084c778:
+	moveml	%sp@+,%a3-%a4		/* 4084c778 4cdf 1800 */
 	rts				/* 4084c77c 4e75 */
+
+sub_4084c77e:
 	.short	0x2053	/* 4084c77e 2053 */
 	.short	0x41e8	/* 4084c780 41e8 */
 	.short	0x000e	/* 4084c782 000e */
@@ -961,6 +957,8 @@ __v__PTCHHMPASCALGETBALLOONS:
 	.short	0x0008	/* 4084c880 0008 */
 	.short	0x4e5e	/* 4084c882 4e5e */
 	rts				/* 4084c884 4e75 */
+
+PTCHHMPASCALGETBALLOONS:
 	.short	0x2278	/* 4084c886 2278 */
 	.short	0x2034	/* 4084c888 2034 */
 	.short	0x2269	/* 4084c88a 2269 */
