@@ -1021,7 +1021,7 @@ loc_4083b760:
 	movel	%sp@+,%d0		/* 4083b76c 201f */
 	beqs	loc_4083b760		/* 4083b76e 67f0 */
 	moveal	%d0,%a0			/* 4083b770 2040 */
-	bsrs	sub_4083b784		/* 4083b772 6110 */
+	bsrs	SearchWindow		/* 4083b772 6110 */
 	bnes	loc_4083b760		/* 4083b774 66ea */
 	movew	%a3@,%d0		/* 4083b776 3013 */
 	movew	%a1@(36),%d1		/* 4083b778 3229 0024 */
@@ -1030,7 +1030,7 @@ loc_4083b760:
 	bsrs	sub_4083b7a0		/* 4083b780 611e */
 	bras	loc_4083b75c		/* 4083b782 60d8 */
 
-sub_4083b784:
+SearchWindow:
 	movew	%a0@(108),%d0		/* 4083b784 3028 006c */
 	bpls	loc_4083b79c		/* 4083b788 6a12 */
 	notw	%d0			/* 4083b78a 4640 */
@@ -1103,7 +1103,7 @@ SYSTEMCLICK:
 	movel	%a4,%d0			/* 4083b810 200c */
 	beqw	loc_4083b876		/* 4083b812 6700 0062 */
 	moveal	%a4,%a0			/* 4083b816 204c */
-	bsrw	sub_4083b784		/* 4083b818 6100 ff6a */
+	bsrw	SearchWindow		/* 4083b818 6100 ff6a */
 	bnes	loc_4083b86a		/* 4083b81c 664c */
 	movel	%a0,%d3			/* 4083b81e 2608 */
 	moveq	#0,%d0			/* 4083b820 7000 */
@@ -1199,25 +1199,25 @@ loc_4083b8d2:
 
 SYSTEMTASK:
 	jsr	%pc@(j_PTCHHMGETBALLOONS)	/* 4083b8d8 4eba 01d6 */
-	beqs	loc_4083b8e8		/* 4083b8dc 670a */
+	beqs	.L4083b8e8		/* 4083b8dc 670a */
 	subqw	#2,%sp			/* 4083b8de 554f */
 	_HMBalloonBulk			/* 4083b8e0 303c 00fc a830 */
 	addqw	#2,%sp			/* 4083b8e6 544f */
 
-loc_4083b8e8:
+.L4083b8e8:
 	jsr	%pc@(j_NMTASK)		/* 4083b8e8 4eba 01d6 */
 	moveml	%d3/%a3,%sp@-		/* 4083b8ec 48e7 1010 */
-	bset	#7,0xa62		/* 4083b8f0 08f8 0007 0a62 */
-	bnew	loc_4083b962		/* 4083b8f6 6600 006a */
+	bset	#7,TaskLock		/* 4083b8f0 08f8 0007 0a62 */
+	bnew	.L4083b962		/* 4083b8f6 6600 006a */
 	subqw	#4,%sp			/* 4083b8fa 594f */
 	movel	%sp,%sp@-		/* 4083b8fc 2f0f */
 	_GetPort			/* 4083b8fe a874 */
 	clrl	%sp@-			/* 4083b900 42a7 */
-	.short	0xa924			/* 4083b902 a924 */
+	_FrontWindow			/* 4083b902 a924 */
 	movel	%sp@+,%d0		/* 4083b904 201f */
 	beqs	loc_4083b91e		/* 4083b906 6716 */
 	moveal	%d0,%a0			/* 4083b908 2040 */
-	bsrw	sub_4083b784		/* 4083b90a 6100 fe78 */
+	bsrw	SearchWindow		/* 4083b90a 6100 fe78 */
 	bnes	loc_4083b91e		/* 4083b90e 660e */
 	btst	#7,%a1@(5)		/* 4083b910 0829 0007 0005 */
 	bnes	loc_4083b91e		/* 4083b916 6606 */
@@ -1252,9 +1252,9 @@ loc_4083b958:
 	subqw	#1,%d3			/* 4083b958 5343 */
 	bgts	loc_4083b926		/* 4083b95a 6eca */
 	_SetPort			/* 4083b95c a873 */
-	clrb	0xa62			/* 4083b95e 4238 0a62 */
+	clrb	TaskLock		/* 4083b95e 4238 0a62 */
 
-loc_4083b962:
+.L4083b962:
 	moveml	%sp@+,%d3/%a3		/* 4083b962 4cdf 0808 */
 	rts				/* 4083b966 4e75 */
 
@@ -1348,7 +1348,7 @@ SYSTEMEDIT:
 	movel	%sp@+,%d0		/* 4083ba14 201f */
 	beqs	loc_4083ba30		/* 4083ba16 6718 */
 	moveal	%d0,%a0			/* 4083ba18 2040 */
-	bsrw	sub_4083b784		/* 4083ba1a 6100 fd68 */
+	bsrw	SearchWindow		/* 4083ba1a 6100 fd68 */
 	bnes	loc_4083ba30		/* 4083ba1e 6610 */
 	movew	%sp@(8),%d0		/* 4083ba20 302f 0008 */
 	addiw	#68,%d0			/* 4083ba24 0640 0044 */

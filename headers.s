@@ -940,6 +940,7 @@
 	.equ	TopMapHndl, 0xa50
 	.equ	SysMap, 0xa58
 	.equ	CurMap, 0xa5a
+	.equ	TaskLock, 0xa62
 	.equ	RomMapInsert, 0xb9e
 	.equ	HSCHandle, 0x0b84
 	.equ	ResOneDeep, 0x0b9a
