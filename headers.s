@@ -507,6 +507,11 @@
 		.short	0xa812
 	.endm
 
+	.macro	_HMBalloonBulk
+		movew	#252,%d0
+		.short	0xa830
+	.endm
+
 	.macro	_Long2Fix
 		.short	0xa83f
 	.endm
