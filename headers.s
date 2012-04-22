@@ -664,6 +664,10 @@
 		.short	0xa924
 	.endm
 
+	.macro	_HiliteMenu
+		.short	0xa938
+	.endm
+
 	.macro	_GetItemMark
 		.short	0xa943
 	.endm
