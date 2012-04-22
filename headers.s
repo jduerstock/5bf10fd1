@@ -936,7 +936,9 @@
 	.equ	__FCL_mach_, 0x6d616368		/* "mach" */
 	.equ	__FCL_vm___, 0x766d2020		/* "vm  " */
 
-	.equ	ExpandMem, 0x02b6
+	.equ	UTableBase, 0x11c
+	.equ	UnitNtryCnt, 0x1d2
+	.equ	ExpandMem, 0x2b6
 	.equ	TopMapHndl, 0xa50
 	.equ	SysMap, 0xa58
 	.equ	CurMap, 0xa5a
