@@ -56,6 +56,7 @@ loc_4083305a:
 	unlk	%fp			/* 40833062 4e5e */
 	rts				/* 40833064 4e75 */
 
+KillUserSession:
 	moveal	0x2050,%a1		/* 40833066 2278 2050 */
 	moveal	%a1@(296),%a1		/* 4083306a 2269 0128 */
 	jmp	%a1@			/* 4083306e 4ed1 */
@@ -69,38 +70,31 @@ __v__PPCCloseUserSessions:
 	linkw	%fp,#0			/* 40833080 4e56 0000 */
 	moveml	%d7/%a4,%sp@-		/* 40833084 48e7 0108 */
 	jsr	%pc@(getGlobal)		/* 40833088 4eba 04d6 */
-	.short	0x2840	/* 4083308c 2840 */
-	.short	0x200c	/* 4083308e 200c */
-	.short	0x6606	/* 40833090 6606 */
-	.short	0x303c	/* 40833092 303c */
-	.short	0xfc78	/* 40833094 fc78 */
-	.short	0x602c	/* 40833096 602c */
-	.short	0x4878	/* 40833098 4878 */
-	.short	0x2500	/* 4083309a 2500 */
-	.short	0x40c0	/* 4083309c 40c0 */
-	.short	0x46ef	/* 4083309e 46ef */
-	.short	0x0002	/* 408330a0 0002 */
-	.short	0x3e00	/* 408330a2 3e00 */
-	.short	0x487a	/* 408330a4 487a */
-	.short	0xffc0	/* 408330a6 ffc0 */
-	.short	0x2f2e	/* 408330a8 2f2e */
-	.short	0x0008	/* 408330aa 0008 */
-	.short	0x486c	/* 408330ac 486c */
-	.short	0x0078	/* 408330ae 0078 */
-	.short	0x4eba	/* 408330b0 4eba */
-	.short	0xf4ce	/* 408330b2 f4ce */
-	.short	0x48c7	/* 408330b4 48c7 */
-	.short	0x2f07	/* 408330b6 2f07 */
-	.short	0x40c0	/* 408330b8 40c0 */
-	.short	0x46ef	/* 408330ba 46ef */
-	.short	0x0002	/* 408330bc 0002 */
+	moveal	%d0,%a4			/* 4083308c 2840 */
+	movel	%a4,%d0			/* 4083308e 200c */
+	bnes	loc_40833098		/* 40833090 6606 */
+	movew	#-904,%d0		/* 40833092 303c fc78 */
+	bras	loc_408330c4		/* 40833096 602c */
+
+loc_40833098:
+	pea	0x2500			/* 40833098 4878 2500 */
+	movew	%sr,%d0			/* 4083309c 40c0 */
+	movew	%sp@(2),%sr		/* 4083309e 46ef 0002 */
+	movew	%d0,%d7			/* 408330a2 3e00 */
+	pea	%pc@(KillUserSession)	/* 408330a4 487a ffc0 */
+	movel	%fp@(8),%sp@-		/* 408330a8 2f2e 0008 */
+	pea	%a4@(120)		/* 408330ac 486c 0078 */
+	jsr	%pc@(DeleteMultiple)	/* 408330b0 4eba f4ce */
+	extl	%d7			/* 408330b4 48c7 */
+	movel	%d7,%sp@-		/* 408330b6 2f07 */
+	movew	%sr,%d0			/* 408330b8 40c0 */
+	movew	%sp@(2),%sr		/* 408330ba 46ef 0002 */
 	moveq	#0,%d0			/* 408330be 7000 */
-	.short	0x4fef	/* 408330c0 4fef */
-	.short	0x0014	/* 408330c2 0014 */
-	.short	0x4cee	/* 408330c4 4cee */
-	.short	0x1080	/* 408330c6 1080 */
-	.short	0xfff8	/* 408330c8 fff8 */
-	.short	0x4e5e	/* 408330ca 4e5e */
+	lea	%sp@(20),%sp		/* 408330c0 4fef 0014 */
+
+loc_408330c4:
+	moveml	%fp@(-8),%d7/%a4	/* 408330c4 4cee 1080 fff8 */
+	unlk	%fp			/* 408330ca 4e5e */
 	rts				/* 408330cc 4e75 */
 
 PPCCloseUserSessions:
