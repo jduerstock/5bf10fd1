@@ -656,6 +656,10 @@
 		.short	0xa8fd
 	.endm
 
+	.macro	_NewWindow
+		.short	0xa913
+	.endm
+
 	.macro	_ShowWindow
 		.short	0xa915
 	.endm
