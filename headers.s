@@ -365,6 +365,10 @@
 		.short	0xa087
 	.endm
 
+	.macro	_DeferUserFn
+		.short	0xa08f
+	.endm
+
 	.macro	_Translate24To32
 		.short	0xa091
 	.endm
