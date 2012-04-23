@@ -1322,6 +1322,8 @@ sub_409859f4:
 	.short	0x1454	/* 40985b0a 1454 */
 	.short	0x0000	/* 40985b0c 0000 */
 	.short	0x04c4	/* 40985b0e 04c4 */
+
+byte_40985b10:
 	.short	0x6046	/* 40985b10 6046 */
 	.short	0x600a	/* 40985b12 600a */
 	.short	0x0008	/* 40985b14 0008 */
@@ -1468,17 +1470,16 @@ str_40985c1c:
 	.short	0x342d	/* 40985c52 342d */
 	.short	0x3139	/* 40985c54 3139 */
 	.short	0x3933	/* 40985c56 3933 */
-	.short	0x48e7	/* 40985c58 48e7 */
-	.short	0x4800	/* 40985c5a 4800 */
-	.short	0x41fa	/* 40985c5c 41fa */
-	.short	0xfeb2	/* 40985c5e feb2 */
-	.short	0xa128	/* 40985c60 a128 */
-	.short	0x2f08	/* 40985c62 2f08 */
-	.short	0xa992	/* 40985c64 a992 */
-	.short	0x4cdf	/* 40985c66 4cdf */
-	.short	0x0012	/* 40985c68 0012 */
-	.short	0x4240	/* 40985c6a 4240 */
+
+	moveml	%d1/%d4,%sp@-		/* 40985c58 48e7 4800 */
+	lea	%pc@(byte_40985b10),%a0	/* 40985c5c 41fa feb2 */
+	.short	0xa128			/* 40985c60 a128 */
+	movel	%a0,%sp@-		/* 40985c62 2f08 */
+	.short	0xa992			/* 40985c64 a992 */
+	moveml	%sp@+,%d1/%d4		/* 40985c66 4cdf 0012 */
+	clrw	%d0			/* 40985c6a 4240 */
 	rts				/* 40985c6c 4e75 */
+
 	.short	0x2478	/* 40985c6e 2478 */
 	.short	0x02b6	/* 40985c70 02b6 */
 	.short	0x246a	/* 40985c72 246a */
