@@ -963,4 +963,5 @@
 	.equ	LaunchFlag, 0x0902
 	.equ	SInfoPtr, 0x0cbc
 	.equ	MMFlags, 0x1efc
+	.equ	vMMRHPrologue, 0x1fe0
 	.equ	DockingGlobals, 0x1ff8
