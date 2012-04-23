@@ -608,25 +608,19 @@ sub_409e0454:
 	.short	0x4cdf	/* 409e0578 4cdf */
 	.short	0x0003	/* 409e057a 0003 */
 	rts				/* 409e057c 4e75 */
-	.short	0x4a2e	/* 409e057e 4a2e */
-	.short	0xffaa	/* 409e0580 ffaa */
-	.short	0x6720	/* 409e0582 6720 */
-	.short	0x0000	/* 409e0584 0000 */
-	.short	0x0057	/* 409e0586 0057 */
-	.short	0x41ee	/* 409e0588 41ee */
-	.short	0xffac	/* 409e058a ffac */
-	.short	0x30bc	/* 409e058c 30bc */
-	.short	0x010e	/* 409e058e 010e */
-	.short	0x2140	/* 409e0590 2140 */
-	.short	0x0002	/* 409e0592 0002 */
-	.short	0x317c	/* 409e0594 317c */
-	.short	0x0004	/* 409e0596 0004 */
-	.short	0x0006	/* 409e0598 0006 */
-	.short	0x4268	/* 409e059a 4268 */
-	.short	0x000e	/* 409e059c 000e */
-	.short	0x42a8	/* 409e059e 42a8 */
-	.short	0x0010	/* 409e05a0 0010 */
-	.short	0xa092	/* 409e05a2 a092 */
+
+	tstb	%fp@(-86)		/* 409e057e 4a2e ffaa */
+	beqs	.L409e05a4		/* 409e0582 6720 */
+	orib	#87,%d0			/* 409e0584 0000 0057 */
+	lea	%fp@(-84),%a0		/* 409e0588 41ee ffac */
+	movew	#270,%a0@		/* 409e058c 30bc 010e */
+	movel	%d0,%a0@(2)		/* 409e0590 2140 0002 */
+	movew	#4,%a0@(6)		/* 409e0594 317c 0004 0006 */
+	clrw	%a0@(14)		/* 409e059a 4268 000e */
+	clrl	%a0@(16)		/* 409e059e 42a8 0010 */
+	_EgretDispatch			/* 409e05a2 a092 */
+
+.L409e05a4:
 	rts				/* 409e05a4 4e75 */
 
 	linkw	%fp,#-104		/* 409e05a6 4e56 ff98 */
