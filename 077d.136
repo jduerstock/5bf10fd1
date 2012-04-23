@@ -323,7 +323,7 @@ __v__DISPOSEGWORLD:
 	beqs	loc_4088839c		/* 40888392 6708 */
 	cmpiw	#1,%d0			/* 40888394 0c40 0001 */
 	bnes	loc_4088839e		/* 40888398 6604 */
-	.short	0xa128			/* 4088839a a128 */
+	_RecoverHandle			/* 4088839a a128 */
 
 loc_4088839c:
 	_DisposeHandle			/* 4088839c a023 */
@@ -346,7 +346,7 @@ loc_408883c6:
 	movel	%sp@(4),%sp@-		/* 408883c6 2f2f 0004 */
 	tsjsr	0xa87d			/* 408883ca 4eb0 81e1 0ff4 */
 	moveal	%sp@(4),%a0		/* 408883d0 206f 0004 */
-	.short	0xa128			/* 408883d4 a128 */
+	_RecoverHandle			/* 408883d4 a128 */
 	_DisposeHandle			/* 408883d6 a023 */
 
 loc_408883d8:
@@ -1273,7 +1273,7 @@ __v__UNLOCKPIXELS:
 	cmpiw	#1,%d0			/* 40888f4a 0c40 0001 */
 	bnes	.L40888f64		/* 40888f4e 6614 */
 	moveal	%a1@,%a0		/* 40888f50 2051 */
-	.short	0xa128			/* 40888f52 a128 */
+	_RecoverHandle			/* 40888f52 a128 */
 	_HUnlock			/* 40888f54 a02a */
 	.short	0x2277,0x8161,0x0004	/* moveal ([4,%sp]),%a1	/* 40888f56 2277 8161 0004 */
 	movel	%a0,%a1@		/* 40888f5c 2288 */
@@ -1337,19 +1337,17 @@ __v__GDEVICECHANGED:
 	.align	16
 
 __v__ALLOWPURGEPIXELS:
-	.short	0x2277	/* 40888fe0 2277 */
-	.short	0x8161	/* 40888fe2 8161 */
-	.short	0x0004	/* 40888fe4 0004 */
-	.short	0x2051	/* 40888fe6 2051 */
-	.short	0x3029	/* 40888fe8 3029 */
-	.short	0x000e	/* 40888fea 000e */
-	.short	0x0c40	/* 40888fec 0c40 */
-	.short	0x0002	/* 40888fee 0002 */
-	.short	0x6708	/* 40888ff0 6708 */
-	.short	0x0c40	/* 40888ff2 0c40 */
-	.short	0x0001	/* 40888ff4 0001 */
-	.short	0x6604	/* 40888ff6 6604 */
-	.short	0xa128	/* 40888ff8 a128 */
-	.short	0xa049	/* 40888ffa a049 */
-	.short	0x4e74	/* 40888ffc 4e74 */
-	.short	0x0004	/* 40888ffe 0004 */
+	.short	0x2277,0x8161,0x0004	/* moveal ([4,%sp]),%a1 /* 40888fe0 2277 8161 0004 */
+	moveal	%a1@,%a0		/* 40888fe6 2051 */
+	movew	%a1@(14),%d0		/* 40888fe8 3029 000e */
+	cmpiw	#2,%d0			/* 40888fec 0c40 0002 */
+	beqs	loc_40888ffa		/* 40888ff0 6708 */
+	cmpiw	#1,%d0			/* 40888ff2 0c40 0001 */
+	bnes	loc_40888ffc		/* 40888ff6 6604 */
+	_RecoverHandle			/* 40888ff8 a128 */
+
+loc_40888ffa:
+	.short	0xa049			/* 40888ffa a049 */
+
+loc_40888ffc:
+	rtd	#4			/* 40888ffc 4e74 0004 */
