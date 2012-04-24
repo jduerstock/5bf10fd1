@@ -205,6 +205,10 @@
 		.short	0xa06a
 	.endm
 
+	.macro	_InitFS
+		.short	0xa06c
+	.endm
+
 	.macro	_SReadWord
 		moveq	#1,%d0
 		.short	0xa06e
