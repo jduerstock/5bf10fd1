@@ -2031,52 +2031,54 @@ loc_40843f86:
 	bras	loc_40843f7c		/* 40843f8a 60f0 */
 
 __v__ADJUSTFREE:
-	.short	0xd1ae	/* 40843f8c d1ae */
-	.short	0x000c	/* 40843f8e 000c */
-	.short	0x6502	/* 40843f90 6502 */
+	addl	%d0,%fp@(12)		/* 40843f8c d1ae 000c */
+	bcss	loc_40843f94		/* 40843f90 6502 */
 	rts				/* 40843f92 4e75 */
-	.short	0x7021	/* 40843f94 7021 */
-	.short	0xa9c9	/* 40843f96 a9c9 */
+
+loc_40843f94:
+	moveq	#33,%d0			/* 40843f94 7021 */
+	_SysError			/* 40843f96 a9c9 */
 	rts				/* 40843f98 4e75 */
 
 sub_40843f9a:
-	.short	0x91ae	/* 40843f9a 91ae */
-	.short	0x000c	/* 40843f9c 000c */
-	.short	0x6502	/* 40843f9e 6502 */
+	subl	%d0,%fp@(12)		/* 40843f9a 91ae 000c */
+	bcss	loc_40843fa2		/* 40843f9e 6502 */
 	rts				/* 40843fa0 4e75 */
-	.short	0x7021	/* 40843fa2 7021 */
-	.short	0xa9c9	/* 40843fa4 a9c9 */
+
+loc_40843fa2:
+	moveq	#33,%d0			/* 40843fa2 7021 */
+	_SysError			/* 40843fa4 a9c9 */
 
 __v__A24NEXTMASTER:
-	.short	0x48e7	/* 40843fa6 48e7 */
-	.short	0x8080	/* 40843fa8 8080 */
-	.short	0x226e	/* 40843faa 226e */
-	.short	0x0008	/* 40843fac 0008 */
-	.short	0x2009	/* 40843fae 2009 */
-	.short	0x6604	/* 40843fb0 6604 */
-	.short	0x612a	/* 40843fb2 612a */
-	.short	0x6706	/* 40843fb4 6706 */
-	.short	0x2d51	/* 40843fb6 2d51 */
-	.short	0x0008	/* 40843fb8 0008 */
-	.short	0x2009	/* 40843fba 2009 */
-	.short	0x4cdf	/* 40843fbc 4cdf */
-	.short	0x0101	/* 40843fbe 0101 */
+	moveml	%d0/%a0,%sp@-		/* 40843fa6 48e7 8080 */
+	moveal	%fp@(8),%a1		/* 40843faa 226e 0008 */
+	movel	%a1,%d0			/* 40843fae 2009 */
+	bnes	loc_40843fb6		/* 40843fb0 6604 */
+	bsrs	__v__A24HMAKEMOREMASTERS		/* 40843fb2 612a */
+	beqs	loc_40843fbc		/* 40843fb4 6706 */
+
+loc_40843fb6:
+	movel	%a1@,%fp@(8)		/* 40843fb6 2d51 0008 */
+	movel	%a1,%d0			/* 40843fba 2009 */
+
+loc_40843fbc:
+	moveml	%sp@+,%d0/%a0		/* 40843fbc 4cdf 0101 */
 	rts				/* 40843fc0 4e75 */
 
 __v__A32NEXTMASTER:
-	.short	0x48e7	/* 40843fc2 48e7 */
-	.short	0x8080	/* 40843fc4 8080 */
-	.short	0x226e	/* 40843fc6 226e */
-	.short	0x0008	/* 40843fc8 0008 */
-	.short	0x2009	/* 40843fca 2009 */
-	.short	0x6604	/* 40843fcc 6604 */
-	.short	0x613e	/* 40843fce 613e */
-	.short	0x6706	/* 40843fd0 6706 */
-	.short	0x2d51	/* 40843fd2 2d51 */
-	.short	0x0008	/* 40843fd4 0008 */
-	.short	0x2009	/* 40843fd6 2009 */
-	.short	0x4cdf	/* 40843fd8 4cdf */
-	.short	0x0101	/* 40843fda 0101 */
+	moveml	%d0/%a0,%sp@-		/* 40843fc2 48e7 8080 */
+	moveal	%fp@(8),%a1		/* 40843fc6 226e 0008 */
+	movel	%a1,%d0			/* 40843fca 2009 */
+	bnes	loc_40843fd2		/* 40843fcc 6604 */
+	bsrs	__v__A32HMAKEMOREMASTERS		/* 40843fce 613e */
+	beqs	loc_40843fd8		/* 40843fd0 6706 */
+
+loc_40843fd2:
+	movel	%a1@,%fp@(8)		/* 40843fd2 2d51 0008 */
+	movel	%a1,%d0			/* 40843fd6 2009 */
+
+loc_40843fd8:
+	moveml	%sp@+,%d0/%a0		/* 40843fd8 4cdf 0101 */
 	rts				/* 40843fdc 4e75 */
 
 __v__A24HMAKEMOREMASTERS:
