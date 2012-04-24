@@ -953,6 +953,7 @@
 	.equ	__FCL_vm___, 0x766d2020		/* "vm  " */
 
 	.equ	UTableBase, 0x11c
+	.equ	CPUFlag, 0x12f
 	.equ	UnitNtryCnt, 0x1d2
 	.equ	ExpandMem, 0x2b6
 	.equ	TopMapHndl, 0xa50
