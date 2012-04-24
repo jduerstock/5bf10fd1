@@ -2124,21 +2124,20 @@ __v__A32NEXTMASTER:
 	rts				/* 40843fdc 4e75 */
 
 __v__A24HMAKEMOREMASTERS:
-	.short	0x48e7	/* 40843fde 48e7 */
-	.short	0xc080	/* 40843fe0 c080 */
-	.short	0x302e	/* 40843fe2 302e */
-	.short	0x0014	/* 40843fe4 0014 */
-	.short	0x48c0	/* 40843fe6 48c0 */
-	.short	0x6e02	/* 40843fe8 6e02 */
-	.short	0x7020	/* 40843fea 7020 */
-	.short	0x2200	/* 40843fec 2200 */
-	.short	0xe580	/* 40843fee e580 */
-	.short	0x6158	/* 40843ff0 6158 */
-	.short	0x93c9	/* 40843ff2 93c9 */
-	.short	0x6100	/* 40843ff4 6100 */
-	.short	0xf758	/* 40843ff6 f758 */
-	.short	0x670c	/* 40843ff8 670c */
-	.short	0x2248	/* 40843ffa 2248 */
+	moveml	%d0-%d1/%a0,%sp@-	/* 40843fde 48e7 c080 */
+	movew	%fp@(20),%d0		/* 40843fe2 302e 0014 */
+	extl	%d0			/* 40843fe6 48c0 */
+	bgts	loc_40843fec		/* 40843fe8 6e02 */
+	moveq	#32,%d0			/* 40843fea 7020 */
+
+loc_40843fec:
+	movel	%d0,%d1			/* 40843fec 2200 */
+	asll	#2,%d0			/* 40843fee e580 */
+	bsrs	__v__A24MAKEPTRSPC		/* 40843ff0 6158 */
+	subal	%a1,%a1			/* 40843ff2 93c9 */
+	bsrw	__v__A24ALLOCBK		/* 40843ff4 6100 f758 */
+	beqs	loc_40844006		/* 40843ff8 670c */
+	moveal	%a0,%a1			/* 40843ffa 2248 */
 
 loc_40843ffc:
 	bsrs	__v__RELEASEMP		/* 40843ffc 6142 */
