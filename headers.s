@@ -48,6 +48,12 @@
 		.short	\addr
 	.endm
 
+	.macro	bsr6 addr
+		lea	1f,%fp
+		bral	\addr
+		1:
+	.endm
+
 	.macro	_PBOpenSync
 		.short	0xa000
 	.endm
