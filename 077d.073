@@ -914,24 +914,25 @@ str_40849888:
 	.short	0x6765	/* 40849896 6765 */
 	.short	0x204d	/* 40849898 204d */
 	.short	0x6170	/* 4084989a 6170 */
-	.short	0x0000	/* 4084989c 0000 */
-	.short	0x0000	/* 4084989e 0000 */
+
+	.align	16
 
 __v__InitFolderManager:
-	.short	0x7008	/* 408498a0 7008 */
-	.short	0xa71e	/* 408498a2 a71e */
-	.short	0x2278	/* 408498a4 2278 */
-	.short	0x02b6	/* 408498a6 02b6 */
-	.short	0x2348	/* 408498a8 2348 */
-	.short	0x008c	/* 408498aa 008c */
-	.short	0x2248	/* 408498ac 2248 */
-	.short	0xa566	/* 408498ae a566 */
-	.short	0x2288	/* 408498b0 2288 */
-	.short	0x7028	/* 408498b2 7028 */
-	.short	0xa722	/* 408498b4 a722 */
-	.short	0x6604	/* 408498b6 6604 */
-	.short	0x2348	/* 408498b8 2348 */
-	.short	0x0004	/* 408498ba 0004 */
+	moveq	#8,%d0			/* 408498a0 7008 */
+	_NewPtrSysClear			/* 408498a2 a71e */
+	moveal	0x2b6,%a1		/* 408498a4 2278 02b6 */
+	movel	%a0,%a1@(140)		/* 408498a8 2348 008c */
+	moveal	%a0,%a1			/* 408498ac 2248 */
+	_NewEmptyHandleSys		/* 408498ae a566 */
+	movel	%a0,%a1@		/* 408498b0 2288 */
+	moveq	#40,%d0			/* 408498b2 7028 */
+	.short	0xa722			/* 408498b4 a722 */
+	bnes	loc_408498bc		/* 408498b6 6604 */
+
+loc_408498b8:
+	movel	%a0,%a1@(4)		/* 408498b8 2348 0004 */
+
+loc_408498bc:
 	rts				/* 408498bc 4e75 */
 
 InitFolderManager:

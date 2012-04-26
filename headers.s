@@ -471,6 +471,10 @@
 		.short	0xa528
 	.endm
 
+	.macro	_NewEmptyHandleSys
+		.short	0xa566
+	.endm
+
 	.macro	_PBHDeleteAsync
 		.short	0xa609
 	.endm
