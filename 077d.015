@@ -202,9 +202,9 @@ SLOTBLOCKXFERCTL:
 	rts				/* 4080f1ce 4e75 */
 
 JUMPINTOROM:
-	moveaw	#9728,%sp		/* 4080f1d0 3e7c 2600 */
+	moveaw	#0x2600,%sp		/* 4080f1d0 3e7c 2600 */
 	moveal	%fp,%a4			/* 4080f1d4 284e */
-	lea	%pc@(.L4080f584),%a0	/* 4080f1d6 41fa 03ac */
+	lea	%pc@(GotBusError),%a0	/* 4080f1d6 41fa 03ac */
 	movel	%a0,%d0			/* 4080f1da 2008 */
 
 .L4080f1dc:
@@ -237,7 +237,7 @@ JUMPINTOROM:
 
 .L4080f21a:
 	addal	%d3,%sp			/* 4080f21a dfc3 */
-	lea	%pc@(.L4080f584),%a0	/* 4080f21c 41fa 0366 */
+	lea	%pc@(GotBusError),%a0	/* 4080f21c 41fa 0366 */
 	movel	%a0,%d0			/* 4080f220 2008 */
 
 .L4080f222:
@@ -528,15 +528,15 @@ word_4080f554:
 	.short	0x0000	/* 4080f566 0000 */
 	.short	0x0000	/* 4080f568 0000 */
 	.short	0x0000	/* 4080f56a 0000 */
-	.short	0x0000	/* 4080f56c 0000 */
-	.short	0x0000	/* 4080f56e 0000 */
+
+	.long	0x00000000		/* 4080f56c 0000 0000 */
 	.long	0x40a0f584		/* 4080f570 40a0 f584 */
 	.long	0x00a0f584		/* 4080f574 00a0 f584 */
 	.long	0x4000f584		/* 4080f578 4000 f584 */
 	.long	0x4080f584		/* 4080f57c 4080 f584 */
 	.long	0x0000f584		/* 4080f580 0000 f584 */
 
-.L4080f584:
+GotBusError:
 	btst	#27,%d7			/* 4080f584 0807 001b */
 	moveal	%a5,%sp			/* 4080f588 2e4d */
 	jmp	%fp@			/* 4080f58a 4ed6 */
