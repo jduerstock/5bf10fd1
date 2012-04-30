@@ -1534,33 +1534,28 @@ __v__INITSPRAM:
 	rts				/* 40815d18 4e75 */
 
 __v__INITPRIMARY:
-	.short	0x48e7	/* 40815d1a 48e7 */
-	.short	0x7070	/* 40815d1c 7070 */
-	.short	0x9efc	/* 40815d1e 9efc */
-	.short	0x0018	/* 40815d20 0018 */
-	.short	0x244f	/* 40815d22 244f */
-	.short	0x214a	/* 40815d24 214a */
-	.short	0x0014	/* 40815d26 0014 */
-	.short	0x157c	/* 40815d28 157c */
-	.short	0x0020	/* 40815d2a 0020 */
-	.short	0x0001	/* 40815d2c 0001 */
+	moveml	%d1-%d3/%a1-%a3,%sp@-	/* 40815d1a 48e7 7070 */
+	subaw	#24,%sp			/* 40815d1e 9efc 0018 */
+	moveal	%sp,%a2			/* 40815d22 244f */
+	movel	%a2,%a0@(20)		/* 40815d24 214a 0014 */
+	moveb	#32,%a2@(1)		/* 40815d28 157c 0020 0001 */
 	moveq	#0,%d0			/* 40815d2e 7000 */
-	.short	0xa05d	/* 40815d30 a05d */
-	.short	0x1f00	/* 40815d32 1f00 */
-	.short	0x610e	/* 40815d34 610e */
-	.short	0x101f	/* 40815d36 101f */
-	.short	0xa05d	/* 40815d38 a05d */
-	.short	0x4fef	/* 40815d3a 4fef */
-	.short	0x0018	/* 40815d3c 0018 */
-	.short	0x4cdf	/* 40815d3e 4cdf */
-	.short	0x0e0e	/* 40815d40 0e0e */
+	.short	0xa05d			/* 40815d30 a05d */
+	moveb	%d0,%sp@-		/* 40815d32 1f00 */
+	bsrs	sub_40815d44		/* 40815d34 610e */
+	moveb	%sp@+,%d0		/* 40815d36 101f */
+	.short	0xa05d			/* 40815d38 a05d */
+	lea	%sp@(24),%sp		/* 40815d3a 4fef 0018 */
+	moveml	%sp@+,%d1-%d3/%a1-%a3	/* 40815d3e 4cdf 0e0e */
 	rts				/* 40815d42 4e75 */
-	.short	0x4228	/* 40815d44 4228 */
-	.short	0x0032	/* 40815d46 0032 */
-	.short	0x487a	/* 40815d48 487a */
-	.short	0x000c	/* 40815d4a 000c */
+
+sub_40815d44:
+	clrb	%a0@(50)		/* 40815d44 4228 0032 */
+	pea	%pc@(sub_40815d56)	/* 40815d48 487a 000c */
 	CallVector	0x0db8 56	/* 40815d4c 2f30 81e2 0db8 00e0 */
 	rts				/* 40815d54 4e75 */
+
+sub_40815d56:
 	.short	0x6600	/* 40815d56 6600 */
 	.short	0x004e	/* 40815d58 004e */
 	.short	0x2668	/* 40815d5a 2668 */
