@@ -191,6 +191,7 @@
 		.short	0xa05c
 	.endm
 
+	.equ	SwapMMUMode, 0xa05d
 	.macro	_SwapMMUMode
 		.short	0xa05d
 	.endm
