@@ -187,6 +187,11 @@
 		.short	MemoryDispatch
 	.endm
 
+	.macro	_VMFinishInstall
+		moveq	#-1,%d0
+		.short	0xa05c
+	.endm
+
 	.macro	_LockMemoryContiguous
 		moveq	#4,%d0
 		.short	0xa05c
