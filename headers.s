@@ -823,6 +823,10 @@
 		.short	0xa9a8
 	.endm
 
+	.macro	_GetString
+		.short	0xa9ba
+	.endm
+
 	.macro	_SysBeep
 		.short	0xa9c8
 	.endm
