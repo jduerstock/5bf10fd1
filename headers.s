@@ -182,7 +182,13 @@
 		.short	0xa059
 	.endm
 
+	.equ	MemoryDispatch, 0xa05c
 	.macro	_MemoryDispatch
+		.short	MemoryDispatch
+	.endm
+
+	.macro	_LockMemoryContiguous
+		moveq	#4,%d0
 		.short	0xa05c
 	.endm
 
