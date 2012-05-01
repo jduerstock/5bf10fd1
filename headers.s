@@ -192,6 +192,11 @@
 		.short	0xa05c
 	.endm
 
+	.macro	_UnlockMemory
+		moveq	#3,%d0
+		.short	0xa05c
+	.endm
+
 	.macro	_LockMemoryContiguous
 		moveq	#4,%d0
 		.short	0xa05c
