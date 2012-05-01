@@ -189,7 +189,7 @@ loc_408af1a2:
 	moveal	%a3@(24),%a0		/* 408af1d6 206b 0018 */
 	addal	#2097668,%a0		/* 408af1da d1fc 0020 0204 */
 	moveq	#1,%d0			/* 408af1e0 7001 */
-	.short	0xa05d			/* 408af1e2 a05d */
+	_SwapMMUMode			/* 408af1e2 a05d */
 	movew	%d0,%sp@-		/* 408af1e4 3f00 */
 	movew	%sr,%sp@-		/* 408af1e6 40e7 */
 	moveq	#7,%d0			/* 408af1e8 7007 */
@@ -211,7 +211,7 @@ loc_408af1f8:
 	dbf	%d2,.L408af204		/* 408af20a 51ca fff8 */
 	movew	%sp@+,%sr		/* 408af20e 46df */
 	movew	%sp@+,%d0		/* 408af210 301f */
-	.short	0xa05d			/* 408af212 a05d */
+	_SwapMMUMode			/* 408af212 a05d */
 	bsrw	sub_408af9e8		/* 408af214 6100 07d2 */
 
 loc_408af218:
@@ -283,7 +283,7 @@ loc_408af29e:
 	.short	0xa055			/* 408af2c4 a055 */
 	moveal	%d0,%a3			/* 408af2c6 2640 */
 	moveq	#1,%d0			/* 408af2c8 7001 */
-	.short	0xa05d			/* 408af2ca a05d */
+	_SwapMMUMode			/* 408af2ca a05d */
 	movew	%d0,%d1			/* 408af2cc 3200 */
 	movew	%sr,%d6			/* 408af2ce 40c6 */
 	moveq	#7,%d0			/* 408af2d0 7007 */
@@ -349,7 +349,7 @@ loc_408af33e:
 
 loc_408af342:
 	movew	%d1,%d0			/* 408af342 3001 */
-	.short	0xa05d			/* 408af344 a05d */
+	_SwapMMUMode			/* 408af344 a05d */
 	movew	%d6,%sr			/* 408af346 46c6 */
 	moveal	%sp@+,%sp		/* 408af348 2e5f */
 	moveml	%sp@+,%d4-%d7/%a4-%fp	/* 408af34a 4cdf 70f0 */
@@ -360,47 +360,41 @@ loc_408af352:
 	braw	loc_408af170		/* 408af356 6000 fe18 */
 
 sub_408af35a:
-	.short	0x2f03	/* 408af35a 2f03 */
-	.short	0x361b	/* 408af35c 361b */
-	.short	0x301b	/* 408af35e 301b */
-	.short	0x321b	/* 408af360 321b */
-	.short	0x341b	/* 408af362 341b */
-	.short	0x4a45	/* 408af364 4a45 */
-	.short	0x6a20	/* 408af366 6a20 */
-	.short	0x0805	/* 408af368 0805 */
-	.short	0x000a	/* 408af36a 000a */
-	.short	0x661a	/* 408af36c 661a */
-	.short	0xc0fc	/* 408af36e c0fc */
-	.short	0x4ccc	/* 408af370 4ccc */
-	.short	0xc2fc	/* 408af372 c2fc */
-	.short	0x970a	/* 408af374 970a */
-	.short	0xc4fc	/* 408af376 c4fc */
-	.short	0x1c29	/* 408af378 1c29 */
-	.short	0xd081	/* 408af37a d081 */
-	.short	0xd082	/* 408af37c d082 */
-	.short	0xe9c0	/* 408af37e e9c0 */
-	.short	0x1027	/* 408af380 1027 */
-	.short	0x3001	/* 408af382 3001 */
-	.short	0x3401	/* 408af384 3401 */
-	.short	0x600c	/* 408af386 600c */
-	.short	0xe9c0	/* 408af388 e9c0 */
-	.short	0x0427	/* 408af38a 0427 */
-	.short	0xe9c1	/* 408af38c e9c1 */
-	.short	0x1427	/* 408af38e 1427 */
-	.short	0xe9c2	/* 408af390 e9c2 */
-	.short	0x2427	/* 408af392 2427 */
-	.short	0x1436	/* 408af394 1436 */
-	.short	0x2000	/* 408af396 2000 */
-	.short	0xe18a	/* 408af398 e18a */
-	.short	0x1435	/* 408af39a 1435 */
-	.short	0x1000	/* 408af39c 1000 */
-	.short	0xe18a	/* 408af39e e18a */
-	.short	0x1434	/* 408af3a0 1434 */
-	.short	0x0000	/* 408af3a2 0000 */
-	.short	0xe18a	/* 408af3a4 e18a */
-	.short	0x1403	/* 408af3a6 1403 */
-	.short	0x261f	/* 408af3a8 261f */
+	movel	%d3,%sp@-		/* 408af35a 2f03 */
+	movew	%a3@+,%d3		/* 408af35c 361b */
+	movew	%a3@+,%d0		/* 408af35e 301b */
+	movew	%a3@+,%d1		/* 408af360 321b */
+	movew	%a3@+,%d2		/* 408af362 341b */
+	tstw	%d5			/* 408af364 4a45 */
+	bpls	loc_408af388		/* 408af366 6a20 */
+	btst	#10,%d5			/* 408af368 0805 000a */
+	bnes	loc_408af388		/* 408af36c 661a */
+	muluw	#19660,%d0		/* 408af36e c0fc 4ccc */
+	muluw	#-26870,%d1		/* 408af372 c2fc 970a */
+	muluw	#7209,%d2		/* 408af376 c4fc 1c29 */
+	addl	%d1,%d0			/* 408af37a d081 */
+	addl	%d2,%d0			/* 408af37c d082 */
+	bfextu	%d0,0,%d7,%d1		/* 408af37e e9c0 1027 */
+	movew	%d1,%d0			/* 408af382 3001 */
+	movew	%d1,%d2			/* 408af384 3401 */
+	bras	loc_408af394		/* 408af386 600c */
+
+loc_408af388:
+	bfextu	%d0,16,%d7,%d0		/* 408af388 e9c0 0427 */
+	bfextu	%d1,16,%d7,%d1		/* 408af38c e9c1 1427 */
+	bfextu	%d2,16,%d7,%d2		/* 408af390 e9c2 2427 */
+
+loc_408af394:
+	moveb	%fp@(%d2:w),%d2		/* 408af394 1436 2000 */
+	lsll	#8,%d2			/* 408af398 e18a */
+	moveb	%a5@(%d1:w),%d2		/* 408af39a 1435 1000 */
+	lsll	#8,%d2			/* 408af39e e18a */
+	moveb	%a4@(%d0:w),%d2		/* 408af3a0 1434 0000 */
+	lsll	#8,%d2			/* 408af3a4 e18a */
+	moveb	%d3,%d2			/* 408af3a6 1403 */
+	movel	%sp@+,%d3		/* 408af3a8 261f */
 	rts				/* 408af3aa 4e75 */
+
 	.short	0x2012	/* 408af3ac 2012 */
 	.short	0x6700	/* 408af3ae 6700 */
 	.short	0x00ac	/* 408af3b0 00ac */
