@@ -707,6 +707,10 @@
 		.short	0xa924
 	.endm
 
+	.macro	_NewMenu
+		.short	0xa931
+	.endm
+
 	.macro	_HiliteMenu
 		.short	0xa938
 	.endm
