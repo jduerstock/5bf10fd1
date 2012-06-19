@@ -11,25 +11,17 @@
 	.ascii	"ROM Version "
 
 	.byte	0x00,0x00		/* 408aa044 0000 */
-	.short	0x264e	/* 408aa046 264e */
-	.short	0x7400	/* 408aa048 7400 */
-	.short	0x4dfa	/* 408aa04a 4dfa */
-	.short	0x0008	/* 408aa04c 0008 */
-	bral	loc_408a55fa		/* 408aa04e 60ff ffff b5aa */
-	.short	0x2468	/* 408aa054 2468 */
-	.short	0x0008	/* 408aa056 0008 */
-	.short	0x422a	/* 408aa058 422a */
-	.short	0x1600	/* 408aa05a 1600 */
-	.short	0x157c	/* 408aa05c 157c */
-	.short	0x0020	/* 408aa05e 0020 */
-	.short	0x1c00	/* 408aa060 1c00 */
-	.short	0x157c	/* 408aa062 157c */
-	.short	0x00ff	/* 408aa064 00ff */
-	.short	0x1000	/* 408aa066 1000 */
-	.short	0x157c	/* 408aa068 157c */
-	.short	0x00ff	/* 408aa06a 00ff */
-	.short	0x1200	/* 408aa06c 1200 */
-	.short	0x4ed3	/* 408aa06e 4ed3 */
+
+	moveal	%fp,%a3			/* 408aa046 264e */
+	moveq	#0,%d2			/* 408aa048 7400 */
+	bsr6	JGETHARDWAREINFO	/* 408aa04a 4dfa 0008 60ff ffff b5aa */
+	moveal	%a0@(8),%a2		/* 408aa054 2468 0008 */
+	clrb	%a2@(5632)		/* 408aa058 422a 1600 */
+	moveb	#32,%a2@(7168)		/* 408aa05c 157c 0020 1c00 */
+	moveb	#0xff,%a2@(4096)	/* 408aa062 157c 00ff 1000 */
+	moveb	#0xff,%a2@(4608)	/* 408aa068 157c 00ff 1200 */
+	jmp	%a3@			/* 408aa06e 4ed3 */
+
 	.short	0x2a4e	/* 408aa070 2a4e */
 	.short	0x0880	/* 408aa072 0880 */
 	.short	0x000f	/* 408aa074 000f */
@@ -1243,7 +1235,7 @@ loc_408aa9e6:
 	bnew	loc_408aaade		/* 408aa9ea 6600 00f2 */
 	moveq	#0,%d2			/* 408aa9ee 7400 */
 	lea	%pc@(loc_408aa9fa),%fp	/* 408aa9f0 4dfa 0008 */
-	bral	loc_408a55fa		/* 408aa9f4 60ff ffff ac04 */
+	bral	JGETHARDWAREINFO	/* 408aa9f4 60ff ffff ac04 */
 
 loc_408aa9fa:
 	moveal	%a0@(8),%a2		/* 408aa9fa 2468 0008 */
@@ -1281,7 +1273,7 @@ loc_408aaa34:
 	movel	%a5,%sp@-		/* 408aaa58 2f0d */
 	moveq	#0,%d2			/* 408aaa5a 7400 */
 	lea	%pc@(loc_408aaa66),%fp	/* 408aaa5c 4dfa 0008 */
-	bral	loc_408a55fa		/* 408aaa60 60ff ffff ab98 */
+	bral	JGETHARDWAREINFO	/* 408aaa60 60ff ffff ab98 */
 
 loc_408aaa66:
 	.short	0x2468	/* 408aaa66 2468 */
