@@ -998,6 +998,7 @@
 	.equ	TopMapHndl, 0xa50
 	.equ	SysMap, 0xa58
 	.equ	CurMap, 0xa5a
+	.equ	ResLoad, 0xa5e
 	.equ	TaskLock, 0xa62
 	.equ	HWCWFlags, 0xb22
 	.equ	RomMapInsert, 0xb9e
