@@ -632,10 +632,7 @@ GETHARDWAREINFO:
 	bset	#27,%d7			/* 4080f69a 08c7 001b */
 	moveal	%sp,%a5			/* 4080f69e 2a4f */
 	moveal	%fp,%a1			/* 4080f6a0 224e */
-	lea	%pc@(.L4080f6ac),%fp	/* 4080f6a2 4dfa 0008 */
-	bral	.L4080fda0		/* 4080f6a6 60ff 0000 06f8 */
-
-.L4080f6ac:
+	bsr6	GetCPUIDReg		/* 4080f6a2 4dfa 0008 60ff 0000 06f8 */
 	moveal	%a1,%fp			/* 4080f6ac 2c49 */
 	beqs	.L4080f6b4		/* 4080f6ae 6704 */
 	braw	.L4080f764		/* 4080f6b0 6000 00b2 */
@@ -695,10 +692,7 @@ GETHARDWAREINFO:
 	beqs	.L4080f760		/* 4080f748 6716 */
 	moveal	%a2,%a3			/* 4080f74a 264a */
 	moveal	%fp,%a1			/* 4080f74c 224e */
-	lea	%pc@(.L4080f758),%fp	/* 4080f74e 4dfa 0008 */
-	bral	.L4080fda0		/* 4080f752 60ff 0000 064c */
-
-.L4080f758:
+	bsr6	GetCPUIDReg		/* 4080f74e 4dfa 0008 60ff 0000 064c */
 	moveal	%a1,%fp			/* 4080f758 2c49 */
 	moveal	%a3,%a2			/* 4080f75a 244b */
 	braw	.L4080f6be		/* 4080f75c 6000 ff60 */
@@ -1360,11 +1354,11 @@ CHECKFORUNKNOWN:
 	tstb	%a1@			/* 4080fd8e 4a11 */
 	moveal	%a1@(4),%a1		/* 4080fd90 2269 0004 */
 	exg	%d1,%a1			/* 4080fd94 c389 */
-	cmpil	#1919905136,%d1		/* 4080fd96 0c81 726f 6d70 */
+	cmpil	#0x726f6d70,%d1		/* 4080fd96 0c81 726f 6d70 */ /* 'romp' */
 	exg	%d1,%a1			/* 4080fd9c c389 */
 	jmp	%fp@			/* 4080fd9e 4ed6 */
 
-.L4080fda0:
+GetCPUIDReg:
 	lea	0x5ffffffc,%a2		/* 4080fda0 45f9 5fff fffc */
 	movel	%a2@,%d0		/* 4080fda6 2012 */
 	moveq	#0,%d1			/* 4080fda8 7200 */
