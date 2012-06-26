@@ -1199,14 +1199,15 @@ loc_408aa9b0:
 	rts				/* 408aa9b6 4e75 */
 
 sub_408aa9b8:
-	.short	0x0c00	/* 408aa9b8 0c00 */
-	.short	0x000a	/* 408aa9ba 000a */
-	.short	0x6d06	/* 408aa9bc 6d06 */
-	.short	0x0600	/* 408aa9be 0600 */
-	.short	0x0037	/* 408aa9c0 0037 */
-	.short	0x6004	/* 408aa9c2 6004 */
-	.short	0x0600	/* 408aa9c4 0600 */
-	.short	0x0030	/* 408aa9c6 0030 */
+	cmpib	#10,%d0			/* 408aa9b8 0c00 000a */
+	blts	.L408aa9c4		/* 408aa9bc 6d06 */
+	addib	#55,%d0			/* 408aa9be 0600 0037 */
+	bras	.L408aa9c8		/* 408aa9c2 6004 */
+
+.L408aa9c4:
+	addib	#48,%d0			/* 408aa9c4 0600 0030 */
+
+.L408aa9c8:
 	rts				/* 408aa9c8 4e75 */
 
 sub_408aa9ca:
@@ -1310,28 +1311,18 @@ loc_408aaa34:
 	bral	.L408aabc0		/* 408aaad8 60ff 0000 00e6 */
 
 loc_408aaade:
-	.short	0x284f	/* 408aaade 284f */
-	.short	0x2807	/* 408aaae0 2807 */
-	.short	0x0284	/* 408aaae2 0284 */
-	.short	0x000f	/* 408aaae4 000f */
-	.short	0x0000	/* 408aaae6 0000 */
-	.short	0x0c84	/* 408aaae8 0c84 */
-	.short	0x0002	/* 408aaaea 0002 */
-	.short	0x0000	/* 408aaaec 0000 */
-	.short	0x66ff	/* 408aaaee 66ff */
-	.short	0x0000	/* 408aaaf0 0000 */
-	.short	0x011a	/* 408aaaf2 011a */
-	.short	0x2807	/* 408aaaf4 2807 */
-	.short	0x0284	/* 408aaaf6 0284 */
-	.short	0x0000	/* 408aaaf8 0000 */
-	.short	0x00ff	/* 408aaafa 00ff */
-	.short	0x4bfa	/* 408aaafc 4bfa */
-	.short	0x0146	/* 408aaafe 0146 */
-	.short	0xe54c	/* 408aab00 e54c */
-	.short	0x2835	/* 408aab02 2835 */
-	.short	0x4000	/* 408aab04 4000 */
-	.short	0x4ef5	/* 408aab06 4ef5 */
-	.short	0x4000	/* 408aab08 4000 */
+	moveal	%sp,%a4			/* 408aaade 284f */
+	movel	%d7,%d4			/* 408aaae0 2807 */
+	andil	#983040,%d4		/* 408aaae2 0284 000f 0000 */
+	cmpil	#131072,%d4		/* 408aaae8 0c84 0002 0000 */
+	bnel	.L408aac0a		/* 408aaaee 66ff 0000 011a */
+	movel	%d7,%d4			/* 408aaaf4 2807 */
+	andil	#255,%d4		/* 408aaaf6 0284 0000 00ff */
+	lea	%pc@(off_408aac44),%a5	/* 408aaafc 4bfa 0146 */
+	lslw	#2,%d4			/* 408aab00 e54c */
+	movel	%a5@(%d4:w),%d4		/* 408aab02 2835 4000 */
+	jmp	%a5@(%d4:w)		/* 408aab06 4ef5 4000 */
+
 	.short	0x4e71	/* 408aab0a 4e71 */
 	.short	0x4e71	/* 408aab0c 4e71 */
 	.short	0x4e71	/* 408aab0e 4e71 */
@@ -1462,6 +1453,8 @@ loc_408aaade:
 	.short	0x47fa	/* 408aac04 47fa */
 	.short	0xfde2	/* 408aac06 fde2 */
 	.short	0x4ed6	/* 408aac08 4ed6 */
+
+.L408aac0a:
 	.short	0x2007	/* 408aac0a 2007 */
 	.short	0x41fa	/* 408aac0c 41fa */
 	.short	0x0052	/* 408aac0e 0052 */
@@ -1491,6 +1484,8 @@ loc_408aaade:
 	.short	0x47fa	/* 408aac3e 47fa */
 	.short	0xfda8	/* 408aac40 fda8 */
 	.short	0x4ed0	/* 408aac42 4ed0 */
+
+off_408aac44:
 	.short	0xffff	/* 408aac44 ffff */
 	.short	0xfece	/* 408aac46 fece */
 	.short	0xffff	/* 408aac48 ffff */
