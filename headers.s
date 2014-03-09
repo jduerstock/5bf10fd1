@@ -699,6 +699,10 @@
 		.short	0xa8d9
 	.endm
 
+	.macro	_OffsetRgn
+		.short	0xa8e0
+	.endm
+
 	.macro	_PrDrvrOpen
 		movel	#0x80000000,%sp@-
 		.short	0xa8fd
