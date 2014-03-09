@@ -115,16 +115,17 @@
 .L408af12c:
 	moveq	#-23,%d0
 	bras	.L408af120
+
 	movel	%a0,%sp@-
 	movel	%a1,%d0	
-	.short	0xa055
+	_StripAddress
 	moveal	%d0,%a1	
 	moveal	%a1@(20),%a3
 	movel	%a3@,%d0
-	.short	0xa055
+	_StripAddress
 	moveal	%d0,%a3	
 	movel	%a0@(28),%d0
-	.short	0xa055
+	_StripAddress
 	moveal	%d0,%a2
 	movew	%a0@(26),%d0
 	cmpiw	#9,%d0
@@ -272,7 +273,7 @@ off_408af15c:
 	subaw	%d4,%sp			/* 408af2a6 9ec4 */
 	moveal	%sp,%a0			/* 408af2a8 204f */
 	movel	%a2@,%d0		/* 408af2aa 2012 */
-	.short	0xa055			/* 408af2ac a055 */
+	_StripAddress
 	moveal	%d0,%a3			/* 408af2ae 2640 */
 
 .L408af2b0:
@@ -282,7 +283,7 @@ off_408af15c:
 	movew	%a2@(6),%d3		/* 408af2ba 362a 0006 */
 	moveal	%a1@(20),%a3		/* 408af2be 2669 0014 */
 	movel	%a3@,%d0		/* 408af2c2 2013 */
-	.short	0xa055			/* 408af2c4 a055 */
+	_StripAddress
 	moveal	%d0,%a3			/* 408af2c6 2640 */
 	moveq	#1,%d0			/* 408af2c8 7001 */
 	_SwapMMUMode			/* 408af2ca a05d */
@@ -718,7 +719,7 @@ sub_408af620:
 	moveal	%a3@(8),%a0		/* 408af620 206b 0008 */
 	lea	%pc@(sub_408afd2c),%a2	/* 408af624 45fa 0706 */
 	movel	%a2,%d0			/* 408af628 200a */
-	.short	0xa055			/* 408af62a a055 */
+	_StripAddress
 	moveal	%d0,%a2			/* 408af62c 2440 */
 	movew	#6,%a0@(4)		/* 408af62e 317c 0006 0004 */
 	movel	%a2,%a0@(8)		/* 408af634 214a 0008 */
@@ -763,11 +764,11 @@ sub_408af620:
 	braw	.L408af174		/* 408af6a4 6000 face */
 
 	movel	%a1,%d0			/* 408af6a8 2009 */
-	.short	0xa055			/* 408af6aa a055 */
+	_StripAddress
 	moveal	%d0,%a1			/* 408af6ac 2240 */
 	moveal	%a1@(20),%a3		/* 408af6ae 2669 0014 */
 	movel	%a3@,%d0		/* 408af6b2 2013 */
-	.short	0xa055			/* 408af6b4 a055 */
+	_StripAddress
 	moveal	%d0,%a3			/* 408af6b6 2640 */
 	bsrw	sub_408af5e4		/* 408af6b8 6100 ff2a */
 	moveal	%a3@(32),%a0		/* 408af6bc 206b 0020 */
@@ -779,24 +780,21 @@ sub_408af620:
 	moveq	#0,%d0			/* 408af6ce 7000 */
 	rts				/* 408af6d0 4e75 */
 
-	.short	0x2f08	/* 408af6d2 2f08 */
-	.short	0x2669	/* 408af6d4 2669 */
-	.short	0x0014	/* 408af6d6 0014 */
-	.short	0x2013	/* 408af6d8 2013 */
-	.short	0xa055	/* 408af6da a055 */
-	.short	0x2640	/* 408af6dc 2640 */
-	.short	0x3028	/* 408af6de 3028 */
-	.short	0x001a	/* 408af6e0 001a */
-	.short	0x2468	/* 408af6e2 2468 */
-	.short	0x001c	/* 408af6e4 001c */
-	.short	0x0c40	/* 408af6e6 0c40 */
-	.short	0x0009	/* 408af6e8 0009 */
-	.short	0x621e	/* 408af6ea 621e */
-	.short	0xe348	/* 408af6ec e348 */
-	.short	0x303b	/* 408af6ee 303b */
-	.short	0x0006	/* 408af6f0 0006 */
-	.short	0x4efb	/* 408af6f2 4efb */
-	.short	0x0002	/* 408af6f4 0002 */
+sub_408af6d2:
+	movel	%a0,%sp@-
+	moveal	%a1@(20),%a3
+	movel	%a3@,%d0
+	_StripAddress
+	moveal	%d0,%a3
+	movew	%a0@(26),%d0
+	moveal	%a0@(28),%a2
+	cmpiw	#9,%d0
+	bhis	.L408af70a
+	lslw	#1,%d0
+	movew	%pc@(off_408af6f6,%d0:w),%d0
+	jmp	%pc@(off_408af6f6,%d0:w)
+
+off_408af6f6:
 	.short	0x0014	/* 408af6f6 0014 */
 	.short	0x0014	/* 408af6f8 0014 */
 	.short	0x0020	/* 408af6fa 0020 */
@@ -807,6 +805,8 @@ sub_408af620:
 	.short	0x0146	/* 408af704 0146 */
 	.short	0x014a	/* 408af706 014a */
 	.short	0x0152	/* 408af708 0152 */
+
+.L408af70a:
 	.short	0x70ee	/* 408af70a 70ee */
 	.short	0x6002	/* 408af70c 6002 */
 	moveq	#0,%d0			/* 408af70e 7000 */
