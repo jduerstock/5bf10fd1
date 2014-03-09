@@ -397,6 +397,8 @@ DRAGTHERGN:
 	.short	0xa8e8
 	tstb	%sp@+
 	beqw	.L4085849e
+
+.L408583ba:
 	movel	%d4,%d1
 	swap	%d1
 	cmpl	%d4,%d3
@@ -507,39 +509,42 @@ __v__CALLDRAGHOOK:
 	movel	0x9f6,%d0
 
 sub_40858496:
-	.short	0x6704	/* 40858496 6704 */
-	.short	0x2040	/* 40858498 2040 */
-	.short	0x4e90	/* 4085849a 4e90 */
-	rts				/* 4085849c 4e75 */
+	beqs	.L4085849c
+	moveal	%d0,%a0
+	jsr	%a0@
+
+.L4085849c:
+	rts
 
 .L4085849e:
-	.short	0x554f	/* 4085849e 554f */
-	.short	0x2f04	/* 408584a0 2f04 */
-	.short	0x2f07	/* 408584a2 2f07 */
-	.short	0xa8e8	/* 408584a4 a8e8 */
-	.short	0x4a1f	/* 408584a6 4a1f */
-	.short	0x6612	/* 408584a8 6612 */
-	.short	0x4a45	/* 408584aa 4a45 */
-	.short	0x6700	/* 408584ac 6700 */
-	.short	0xff60	/* 408584ae ff60 */
-	.short	0x7a00	/* 408584b0 7a00 */
-	.short	0x2f0b	/* 408584b2 2f0b */
-	.short	0x6100	/* 408584b4 6100 */
-	.short	0x001e	/* 408584b6 001e */
-	.short	0x6000	/* 408584b8 6000 */
-	.short	0xff54	/* 408584ba ff54 */
-	.short	0x4a45	/* 408584bc 4a45 */
-	.short	0x6604	/* 408584be 6604 */
-	.short	0x7a01	/* 408584c0 7a01 */
-	.short	0x60ee	/* 408584c2 60ee */
-	.short	0x594f	/* 408584c4 594f */
-	.short	0x2f2e	/* 408584c6 2f2e */
-	.short	0x0012	/* 408584c8 0012 */
-	.short	0x2f04	/* 408584ca 2f04 */
-	.short	0xa94e	/* 408584cc a94e */
-	.short	0x281f	/* 408584ce 281f */
-	.short	0x6000	/* 408584d0 6000 */
-	.short	0xfee8	/* 408584d2 fee8 */
+	subqw	#2,%sp
+	movel	%d4,%sp@-
+	movel	%d7,%sp@-
+	.short	0xa8e8
+	tstb	%sp@+
+	bnes	.L408584bc
+	tstw	%d5
+	beqw	.L4085840e
+	moveq	#0,%d5
+
+.L408584b2:
+	movel	%a3,%sp@-
+	bsrw	sub_408584d4
+	braw	.L4085840e
+
+.L408584bc:
+	tstw	%d5
+	bnes	.L408584c4
+	moveq	#1,%d5
+	bras	.L408584b2
+
+.L408584c4:
+	subqw	#4,%sp
+	movel	%fp@(18),%sp@-
+	movel	%d4,%sp@-
+	.short	0xa94e
+	movel	%sp@+,%d4
+	braw	.L408583ba
 
 sub_408584d4:
 	.short	0x4a78	/* 408584d4 4a78 */
