@@ -546,6 +546,10 @@
 		.short	0xa812
 	.endm
 
+	.macro	_AliasDispatch
+		.short	0xa823
+	.endm
+
 	.macro	_HMBalloonBulk
 		movew	#252,%d0
 		.short	0xa830
@@ -679,6 +683,11 @@
 
 	.macro	_Char2Pixel
 		movel	#0x820c0016,%sp@-
+		_ScriptUtil
+	.endm
+
+	.macro	_CharByte
+		movel	#0x82060010,%sp@-
 		_ScriptUtil
 	.endm
 
