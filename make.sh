@@ -7,5 +7,6 @@ sha1sum -c 5bf10fd1.sha1 || exit
 #csplit -s -n 3 -f 077d. tmp9 "/SPLIT HERE/" "{*}"
 git diff
 git add 077d.???
-git commit -m "$(date) $(./complete.sh)"
+git commit -a -m "$(date)"
+#git commit -a -m "$(date) $(./complete.sh)"
 #rm 077d.[0-9]??
