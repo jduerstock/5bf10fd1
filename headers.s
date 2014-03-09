@@ -703,6 +703,14 @@
 		.short	0xa8e0
 	.endm
 
+	.macro	_UnionRgn
+		.short	0xa8e5
+	.endm
+
+	.macro	_DiffRgn
+		.short	0xa8e6
+	.endm
+
 	.macro	_PrDrvrOpen
 		movel	#0x80000000,%sp@-
 		.short	0xa8fd
