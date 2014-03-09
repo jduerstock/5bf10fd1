@@ -703,6 +703,10 @@
 		.short	0xa8e0
 	.endm
 
+	.macro	_SectRgn
+		.short	0xa8e4
+	.endm
+
 	.macro	_UnionRgn
 		.short	0xa8e5
 	.endm
@@ -714,6 +718,10 @@
 	.macro	_PrDrvrOpen
 		movel	#0x80000000,%sp@-
 		.short	0xa8fd
+	.endm
+
+	.macro	_PaintOne
+		.short	0xa90c
 	.endm
 
 	.macro	_NewWindow
