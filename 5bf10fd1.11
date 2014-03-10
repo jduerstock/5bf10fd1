@@ -45,7 +45,7 @@
 	bsrw	RESTOREPORT
 	moveml	%sp@+,%d3-%d6/%a2-%a4
 	movel	%sp@+,%sp@
-	rts	
+	rts
 
 	CallVector	0x2084 95	/* 40858068 2f30 81e2 2084 017c */
 	rts				/* 40858070 4e75 */
@@ -547,96 +547,88 @@ sub_40858496:
 	braw	.L408583ba
 
 sub_408584d4:
-	.short	0x4a78	/* 408584d4 4a78 */
-	.short	0x0a44	/* 408584d6 0a44 */
-	.short	0x660a	/* 408584d8 660a */
-	.short	0x2f2f	/* 408584da 2f2f */
-	.short	0x0004	/* 408584dc 0004 */
-	.short	0xa8d3	/* 408584de a8d3 */
-	.short	0x2e9f	/* 408584e0 2e9f */
-	rts				/* 408584e2 4e75 */
-	.short	0x2078	/* 408584e4 2078 */
-	.short	0x02b6	/* 408584e6 02b6 */
-	.short	0x2228	/* 408584e8 2228 */
-	.short	0x022c	/* 408584ea 022c */
-	.short	0x67ec	/* 408584ec 67ec */
-	.short	0x2041	/* 408584ee 2041 */
-	.short	0x2050	/* 408584f0 2050 */
-	.short	0x2028	/* 408584f2 2028 */
-	.short	0x0018	/* 408584f4 0018 */
-	.short	0xa055	/* 408584f6 a055 */
-	.short	0x2040	/* 408584f8 2040 */
-	.short	0x2050	/* 408584fa 2050 */
-	.short	0x0ca8	/* 408584fc 0ca8 */
-	.short	0x4344	/* 408584fe 4344 */
-	.short	0x4546	/* 40858500 4546 */
-	.short	0x0004	/* 40858502 0004 */
-	.short	0x66d4	/* 40858504 66d4 */
-	.short	0x0828	/* 40858506 0828 */
-	.short	0x0000	/* 40858508 0000 */
-	.short	0x0003	/* 4085850a 0003 */
-	.short	0x67cc	/* 4085850c 67cc */
-	.short	0x202f	/* 4085850e 202f */
-	.short	0x0004	/* 40858510 0004 */
-	.short	0x42a7	/* 40858512 42a7 */
-	.short	0x4267	/* 40858514 4267 */
-	.short	0x2f01	/* 40858516 2f01 */
-	.short	0x3f3c	/* 40858518 3f3c */
-	.short	0x000c	/* 4085851a 000c */
-	.short	0x2f00	/* 4085851c 2f00 */
-	.short	0x4e90	/* 4085851e 4e90 */
-	.short	0x584f	/* 40858520 584f */
-	.short	0x2e9f	/* 40858522 2e9f */
-	rts				/* 40858524 4e75 */
+	tstw	0xa44
+	bnes	.L408584e4
+
+.L408584da:
+	movel	%sp@(4),%sp@-
+	.short	0xa8d3
+	movel	%sp@+,%sp@
+	rts
+
+.L408584e4:
+	moveal	0x2b6,%a0
+	movel	%a0@(556),%d1
+	beqs	.L408584da
+	moveal	%d1,%a0
+	moveal	%a0@,%a0
+	movel	%a0@(24),%d0
+	.short	0xa055
+	moveal	%d0,%a0
+	moveal	%a0@,%a0
+	cmpil	#0x43444546,%a0@(4)
+	bnes	.L408584da
+	btst	#0,%a0@(3)
+	beqs	.L408584da
+	movel	%sp@(4),%d0
+	clrl	%sp@-
+	clrw	%sp@-
+	movel	%d1,%sp@-
+	movew	#12,%sp@-
+	movel	%d0,%sp@-
+	jsr	%a0@
+	addqw	#4,%sp
+	movel	%sp@+,%sp@
+	rts
 
 CALLDRAGHOOK:
-	CallVector	0x2084 98	/* 40858526 2f30 81e2 2084 0188 */
-	rts				/* 4085852e 4e75 */
+	CallVector 0x2084 98
+	rts
 
 INVALRGN:
-	moveq	#0,%d0			/* 40858530 7000 */
+	moveq	#0,%d0
 
 __v__IVALCOMMON:
-	moveml	%d3-%d5/%a3,%sp@-	/* 40858532 48e7 1c10 */
-	movew	%d0,%d5			/* 40858536 3a00 */
-	moveal	%a5@,%a0		/* 40858538 2055 */
-	moveal	%a0@,%a3		/* 4085853a 2650 */
-	movel	%sp@(20),%d4		/* 4085853c 282f 0014 */
-	moveal	%a3,%a0			/* 40858540 204b */
-	bsrw	PORTTOBITMAP		/* 40858542 6100 eb0a */
-	movel	%a0@(6),%d3		/* 40858546 2628 0006 */
-	movel	%d4,%sp@-		/* 4085854a 2f04 */
-	movel	%d3,%sp@-		/* 4085854c 2f03 */
-	bsrw	NEGWORDS		/* 4085854e 6100 fb3a */
-	.short	0xa8e0			/* 40858552 a8e0 */
-	movel	%a3@(122),%sp@-		/* 40858554 2f2b 007a */
-	movel	%d4,%sp@-		/* 40858558 2f04 */
-	movel	%a3@(122),%sp@-		/* 4085855a 2f2b 007a */
-	tstw	%d5			/* 4085855e 4a45 */
-	bnes	.L40858566		/* 40858560 6604 */
-	.short	0xa8e5			/* 40858562 a8e5 */
-	bras	.L40858568		/* 40858564 6002 */
+	moveml	%d3-%d5/%a3,%sp@-
+	movew	%d0,%d5
+	moveal	%a5@,%a0
+	moveal	%a0@,%a3
+	movel	%sp@(20),%d4
+	moveal	%a3,%a0
+	bsrw	PORTTOBITMAP
+	movel	%a0@(6),%d3
+	movel	%d4,%sp@-
+	movel	%d3,%sp@-
+	bsrw	NEGWORDS
+	.short	0xa8e0
+	movel	%a3@(122),%sp@-
+	movel	%d4,%sp@-
+	movel	%a3@(122),%sp@-
+	tstw	%d5
+	bnes	.L40858566
+	.short	0xa8e5
+	bras	.L40858568
 
 .L40858566:
-	.short	0xa8e6			/* 40858566 a8e6 */
+	.short	0xa8e6
 
 .L40858568:
-	movel	%d4,%sp@-		/* 40858568 2f04 */
-	movel	%d3,%sp@-		/* 4085856a 2f03 */
-	.short	0xa8e0			/* 4085856c a8e0 */
+	movel	%d4,%sp@-
+	movel	%d3,%sp@-
+	.short	0xa8e0
 
 __v__GOEXIT1:
-	moveml	%sp@+,%d3-%d5/%a3	/* 4085856e 4cdf 0838 */
-	movel	%sp@+,%sp@		/* 40858572 2e9f */
-	rts				/* 40858574 4e75 */
+	moveml	%sp@+,%d3-%d5/%a3
+	movel	%sp@+,%sp@
+	rts
 
 .L40858576:
-	CallVector	0x2084 100	/* 40858576 2f30 81e2 2084 0190 */
-	rts				/* 4085857e 4e75 */
+	CallVector	0x2084 100
+	rts
 
 .L40858580:
-	CallVector	0x2084 99	/* 40858580 2f30 81e2 2084 018c */
-	rts				/* 40858588 4e75 */
+	CallVector	0x2084 99
+	rts
 
 	.align	16
 
