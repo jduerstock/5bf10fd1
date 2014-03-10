@@ -1,32 +1,31 @@
-/* SPLIT HERE */
 
 __v__IsItt:
-	linkw	%fp,#0			/* 40820000 4e56 0000 */
-	subql	#4,%sp			/* 40820004 598f */
-	movew	#137,%sp@-		/* 40820006 3f3c 0089 */
-	moveq	#0,%d0			/* 4082000a 7000 */
-	moveb	%d0,%sp@-		/* 4082000c 1f00 */
-	jsr	%pc@(sub_40820040)	/* 4082000e 4eba 0030 */
-	subql	#4,%sp			/* 40820012 598f */
-	movew	#159,%sp@-		/* 40820014 3f3c 009f */
-	moveq	#1,%d0			/* 40820018 7001 */
-	moveb	%d0,%sp@-		/* 4082001a 1f00 */
-	jsr	%pc@(sub_40820040)	/* 4082001c 4eba 0022 */
-	movel	%sp@+,%d0		/* 40820020 201f */
-	cmpl	%sp@+,%d0		/* 40820022 b09f */
-	sne	%d0			/* 40820024 56c0 */
-	negb	%d0			/* 40820026 4400 */
-	unlk	%fp			/* 40820028 4e5e */
-	rts				/* 4082002a 4e75 */
+	linkw	%fp,#0
+	subql	#4,%sp
+	movew	#137,%sp@-
+	moveq	#0,%d0
+	moveb	%d0,%sp@-
+	jsr	%pc@(j_NGETTRAPADDRESS)
+	subql	#4,%sp
+	movew	#159,%sp@-
+	moveq	#1,%d0
+	moveb	%d0,%sp@-
+	jsr	%pc@(j_NGETTRAPADDRESS)
+	movel	%sp@+,%d0
+	cmpl	%sp@+,%d0
+	sne	%d0
+	negb	%d0
+	unlk	%fp
+	rts
 
 IsItt:
-	moveal	0x205c,%a1		/* 4082002c 2278 205c */
-	moveal	%a1@(480),%a1		/* 40820030 2269 01e0 */
-	jmp	%a1@			/* 40820034 4ed1 */
+	moveal	0x205c,%a1
+	moveal	%a1@(480),%a1
+	jmp	%a1@
 
 	.align	16
 
-sub_40820040:
+j_NGETTRAPADDRESS:
 	bral	NGETTRAPADDRESS		/* 40820040 60ff 0008 374e */
 
 	.align	16
@@ -572,17 +571,17 @@ loc_40820600:
 	moveq	#0,%d0			/* 40820600 7000 */
 	movew	%d7,%d0			/* 40820602 3007 */
 	moveq	#0,%d1			/* 40820604 7200 */
-	movew	%a3@(0x0006,%d0:l:8),%d1	/* 40820606 3233 0e06 */
+	movew	%a3@(6,%d0:l:8),%d1	/* 40820606 3233 0e06 */
 	moveq	#0,%d0			/* 4082060a 7000 */
 	moveb	%fp@(-1),%d0		/* 4082060c 102e ffff */
 	cmpl	%d1,%d0			/* 40820610 b081 */
 	bnes	loc_40820628		/* 40820612 6614 */
 	moveq	#0,%d0			/* 40820614 7000 */
 	movew	%d7,%d0			/* 40820616 3007 */
-	movel	%a3@(0x0000,%d0:l:8),%d5	/* 40820618 2a33 0e00 */
+	movel	%a3@(%d0:l:8),%d5	/* 40820618 2a33 0e00 */
 	moveq	#0,%d0			/* 4082061c 7000 */
 	movew	%d7,%d0			/* 4082061e 3007 */
-	movew	%a3@(0x0004,%d0:l:8),%fp@(-8)	/* 40820620 3d73 0e04 fff8 */
+	movew	%a3@(4,%d0:l:8),%fp@(-8)	/* 40820620 3d73 0e04 fff8 */
 	bras	loc_40820636		/* 40820626 600e */
 
 loc_40820628:
@@ -634,7 +633,7 @@ loc_4082067e:
 	moveq	#0,%d0			/* 40820696 7000 */
 	moveb	%a0@(1),%d0		/* 40820698 1028 0001 */
 	moveal	%fp@(12),%a0		/* 4082069c 206e 000c */
-	movel	%a0@(0x000a,%d0:l:4),%d0	/* 408206a0 2030 0c0a */
+	movel	%a0@(10,%d0:l:4),%d0	/* 408206a0 2030 0c0a */
 	andl	%d1,%d0			/* 408206a4 c081 */
 	bnes	loc_408206ce		/* 408206a6 6626 */
 	moveq	#0,%d0			/* 408206a8 7000 */
@@ -1030,7 +1029,7 @@ SetLoadFlag:
 	moveb	%fp@(14),%d1		/* 40820aba 122e 000e */
 	moveq	#1,%d2			/* 40820abe 7401 */
 	lsll	%d1,%d2			/* 40820ac0 e3aa */
-	orl	%d2,%a0@(0x0a,%d0:l:4)	/* 40820ac2 85b0 0c0a */
+	orl	%d2,%a0@(10,%d0:l:4)	/* 40820ac2 85b0 0c0a */
 	moveq	#0,%d0			/* 40820ac6 7000 */
 	moveb	%fp@(14),%d0		/* 40820ac8 102e 000e */
 	movew	%d0,%fp@(-4)		/* 40820acc 3d40 fffc */
@@ -4804,7 +4803,7 @@ loc_40823148:
 	tstl	%a3@(54)		/* 4082314c 4aab 0036 */
 	beqs	loc_40823158		/* 40823150 6706 */
 	moveb	#1,%a3@(486)		/* 40823152 177c 0001 01e6 */
-	
+
 loc_40823158:
 	movel	#1048576,%d0		/* 40823158 203c 0010 0000 */
 	andl	%a4@(20),%d0		/* 4082315e c0ac 0014 */
@@ -5351,7 +5350,7 @@ loc_4082361e:
 	movew	#-24435,%sp@-		/* 4082362a 3f3c a08d */
 	moveq	#0,%d0			/* 4082362e 7000 */
 	moveb	%d0,%sp@-		/* 40823630 1f00 */
-	jsr	%pc@(sub_40820040)	/* 40823632 4eba ca0c */
+	jsr	%pc@(j_NGETTRAPADDRESS)	/* 40823632 4eba ca0c */
 	jsr	%pc@(ciDebuggerPatch)	/* 40823636 4eba c7ae */
 	movel	%d0,%a4@(76)		/* 4082363a 2940 004c */
 	addqw	#4,%sp			/* 4082363e 584f */
@@ -6994,7 +6993,7 @@ loc_4082456e:
 	movew	#137,%sp@-		/* 40824574 3f3c 0089 */
 	moveq	#0,%d0			/* 40824578 7000 */
 	moveb	%d0,%sp@-		/* 4082457a 1f00 */
-	jsr	%pc@(sub_40820040)	/* 4082457c 4eba bac2 */
+	jsr	%pc@(j_NGETTRAPADDRESS)	/* 4082457c 4eba bac2 */
 	movel	%sp@+,%d5		/* 40824580 2a1f */
 	pea	%pc@(SCSIAtomic)	/* 40824582 487a b5bc */
 	movew	#137,%sp@-		/* 40824586 3f3c 0089 */
@@ -7004,7 +7003,7 @@ loc_4082456e:
 	moveq	#36,%d0			/* 40824592 7024 */
 	movel	%d0,%sp@-		/* 40824594 2f00 */
 	pea	%fp@(-36)		/* 40824596 486e ffdc */
-	jsr	%pc@(Clear)	/* 4082459a 4eba 009c */
+	jsr	%pc@(Clear)		/* 4082459a 4eba 009c */
 	clrb	%d7			/* 4082459e 4207 */
 	addqw	#8,%sp			/* 408245a0 504f */
 	bras	loc_408245d4		/* 408245a2 6030 */
