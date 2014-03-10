@@ -1390,7 +1390,7 @@ __v__GETPIXELSSTATE:
 	_RecoverHandle			/* 4088905c a128 */
 
 loc_4088905e:
-	.short	0xa069			/* 4088905e a069 */
+	_HGetState
 	movel	%d0,%sp@(8)		/* 40889060 2f40 0008 */
 
 loc_40889064:
@@ -6140,68 +6140,57 @@ XGETFRONTSERVICEWINDOW:
 	.align	16
 
 __v__XFINDSERVICEWINDOW:
-	.short	0x4e56	/* 4088bbc0 4e56 */
-	.short	0xfff8	/* 4088bbc2 fff8 */
-	.short	0x48e7	/* 4088bbc4 48e7 */
-	.short	0x0318	/* 4088bbc6 0318 */
-	.short	0x266e	/* 4088bbc8 266e */
-	.short	0x0008	/* 4088bbca 0008 */
-	.short	0x387c	/* 4088bbcc 387c */
-	.short	0x0a1c	/* 4088bbce 0a1c */
-	moveq	#0,%d0			/* 4088bbd0 7000 */
-	.short	0x2680	/* 4088bbd2 2680 */
-	.short	0x4a94	/* 4088bbd4 4a94 */
-	.short	0x6606	/* 4088bbd6 6606 */
-	.short	0x426e	/* 4088bbd8 426e */
-	.short	0x0010	/* 4088bbda 0010 */
-	.short	0x6044	/* 4088bbdc 6044 */
-	.short	0x4247	/* 4088bbde 4247 */
-	.short	0x558f	/* 4088bbe0 558f */
-	.short	0x486e	/* 4088bbe2 486e */
-	.short	0xfff8	/* 4088bbe4 fff8 */
-	.short	0x3f3c	/* 4088bbe6 3f3c */
-	.short	0x0048	/* 4088bbe8 0048 */
-	.short	0xa88f	/* 4088bbea a88f */
-	.short	0x3c1f	/* 4088bbec 3c1f */
-	.short	0x662e	/* 4088bbee 662e */
-	.short	0x598f	/* 4088bbf0 598f */
-	.short	0x2f2e	/* 4088bbf2 2f2e */
-	.short	0xfff8	/* 4088bbf4 fff8 */
-	.short	0x7005	/* 4088bbf6 7005 */
-	.short	0xa829	/* 4088bbf8 a829 */
-	.short	0x2d5f	/* 4088bbfa 2d5f */
-	.short	0xfffc	/* 4088bbfc fffc */
-	.short	0x2054	/* 4088bbfe 2054 */
-	.short	0xa069	/* 4088bc00 a069 */
-	.short	0x1c00	/* 4088bc02 1c00 */
-	.short	0x558f	/* 4088bc04 558f */
-	.short	0x2f2e	/* 4088bc06 2f2e */
-	.short	0x000c	/* 4088bc08 000c */
-	.short	0x2f0b	/* 4088bc0a 2f0b */
-	.short	0xa92c	/* 4088bc0c a92c */
-	.short	0x3e1f	/* 4088bc0e 3e1f */
-	.short	0x2054	/* 4088bc10 2054 */
-	.short	0x1006	/* 4088bc12 1006 */
-	.short	0xa06a	/* 4088bc14 a06a */
-	.short	0x2f2e	/* 4088bc16 2f2e */
-	.short	0xfffc	/* 4088bc18 fffc */
-	.short	0x7004	/* 4088bc1a 7004 */
-	.short	0xa829	/* 4088bc1c a829 */
-	.short	0x3d47	/* 4088bc1e 3d47 */
-	.short	0x0010	/* 4088bc20 0010 */
-	.short	0x4cee	/* 4088bc22 4cee */
-	.short	0x18c0	/* 4088bc24 18c0 */
-	.short	0xffe8	/* 4088bc26 ffe8 */
-	.short	0x4e5e	/* 4088bc28 4e5e */
-	.short	0x4e74	/* 4088bc2a 4e74 */
-	.short	0x0008	/* 4088bc2c 0008 */
+	linkw	%fp,#-8
+	moveml	%d6-%d7/%a3-%a4,%sp@-
+	moveal	%fp@(8),%a3
+	moveaw	#2588,%a4
+	moveq	#0,%d0
+	movel	%d0,%a3@
+	tstl	%a4@
+	bnes	.L4088bbde
+	clrw	%fp@(16)
+	bras	.L4088bc22
+
+.L4088bbde:
+	clrw	%d7
+	subql	#2,%sp
+	pea	%fp@(-8)
+	movew	#72,%sp@-
+	.short	0xa88f
+	movew	%sp@+,%d6
+	bnes	.L4088bc1e
+	subql	#4,%sp
+	movel	%fp@(-8),%sp@-
+	moveq	#5,%d0
+	.short	0xa829
+	movel	%sp@+,%fp@(-4)
+	moveal	%a4@,%a0
+	_HGetState
+	moveb	%d0,%d6
+	subql	#2,%sp
+	movel	%fp@(12),%sp@-
+	movel	%a3,%sp@-
+	.short	0xa92c
+	movew	%sp@+,%d7
+	moveal	%a4@,%a0
+	moveb	%d6,%d0
+	.short	0xa06a
+	movel	%fp@(-4),%sp@-
+	moveq	#4,%d0
+	.short	0xa829
+
+.L4088bc1e:
+	movew	%d7,%fp@(16)
+
+.L4088bc22:
+	moveml	%fp@(-24),%d6-%d7/%a3-%a4
+	unlk	%fp
+	rtd	#8
 
 XFINDSERVICEWINDOW:
-	.short	0x2278	/* 4088bc2e 2278 */
-	.short	0x2078	/* 4088bc30 2078 */
-	.short	0x2269	/* 4088bc32 2269 */
-	.short	0x0134	/* 4088bc34 0134 */
-	jmp	%a1@			/* 4088bc36 4ed1 */
+	moveal	0x2078,%a1
+	moveal	%a1@(308),%a1
+	jmp	%a1@
 
 	.align	16
 
@@ -6743,7 +6732,7 @@ loc_4088c086:
 	beqs	loc_4088c0de		/* 4088c0a6 6736 */
 	movel	%a4,0xb58		/* 4088c0a8 21cc 0b58 */
 	moveal	%a4,%a0			/* 4088c0ac 204c */
-	.short	0xa069			/* 4088c0ae a069 */
+	_HGetState
 	extbl	%d0			/* 4088c0b0 49c0 */
 	movel	%d0,%d5			/* 4088c0b2 2a00 */
 	moveal	%a4,%a0			/* 4088c0b4 204c */
@@ -8236,7 +8225,7 @@ __v__utSuspendResumeApp:
 	beqw	loc_4088ce54		/* 4088cd4c 6700 0106 */
 	movew	%a0@(6),%d6		/* 4088cd50 3c28 0006 */
 	moveal	%a4,%a0			/* 4088cd54 204c */
-	.short	0xa069			/* 4088cd56 a069 */
+	_HGetState
 	moveb	%d0,%d5			/* 4088cd58 1a00 */
 	moveal	%a4,%a0			/* 4088cd5a 204c */
 	_HLock				/* 4088cd5c a029 */
