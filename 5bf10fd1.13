@@ -3524,14 +3524,14 @@ INITGDEVICE:
 	linkw	%fp,#-100		/* 40869e10 4e56 ff9c */
 	moveml	%d3/%a2-%a4,%sp@-	/* 40869e14 48e7 1038 */
 	moveal	%fp@(8),%a0		/* 40869e18 206e 0008 */
-	.short	0xa069			/* 40869e1c a069 */
+	_HGetState
 	movew	%d0,%fp@(-78)		/* 40869e1e 3d40 ffb2 */
 	_HLock				/* 40869e22 a029 */
 	moveal	%a0@,%a2		/* 40869e24 2450 */
 	moveal	%a2@(22),%a0		/* 40869e26 206a 0016 */
 	moveal	%a0@,%a1		/* 40869e2a 2250 */
 	movel	%a1@,%fp@(-88)		/* 40869e2c 2d51 ffa8 */
-	.short	0xa069			/* 40869e30 a069 */
+	_HGetState
 	movew	%d0,%fp@(-80)		/* 40869e32 3d40 ffb0 */
 	_HLock				/* 40869e36 a029 */
 	moveal	%a0@,%a3		/* 40869e38 2650 */
@@ -3712,7 +3712,7 @@ __v__GETDEVPIXMAP:
 	linkw	%fp,#-58		/* 4086a060 4e56 ffc6 */
 	moveml	%d3-%d5/%a2-%a4,%sp@-	/* 4086a064 48e7 1c38 */
 	moveal	%fp@(12),%a0		/* 4086a068 206e 000c */
-	.short	0xa069			/* 4086a06c a069 */
+	_HGetState
 	movew	%d0,%fp@(-58)		/* 4086a06e 3d40 ffc6 */
 	_HLock				/* 4086a072 a029 */
 	moveal	%a0@,%a2		/* 4086a074 2450 */
@@ -8512,11 +8512,11 @@ loc_4086c97c:
 
 loc_4086c9a4:
 	moveal	%a4@(2),%a0		/* 4086c9a4 206c 0002 */
-	.short	0xa069			/* 4086c9a8 a069 */
+	_HGetState
 	moveb	%d0,%fp@(-448)		/* 4086c9aa 1d40 fe40 */
 	.short	0xa04a			/* 4086c9ae a04a */
 	moveal	%fp@(-486),%a0		/* 4086c9b0 206e fe1a */
-	.short	0xa069			/* 4086c9b4 a069 */
+	_HGetState
 	moveb	%d0,%fp@(-446)		/* 4086c9b6 1d40 fe42 */
 	.short	0xa04a			/* 4086c9ba a04a */
 	movel	%fp@(-474),%d0		/* 4086c9bc 202e fe26 */
@@ -14206,7 +14206,7 @@ loc_4086f940:
 	.short	0xfffc	/* 4086f98c fffc */
 	.short	0x6008	/* 4086f98e 6008 */
 
-loc_4086f990:
+.L4086f990:
 	movew	%d0,%fp@(-4)		/* 4086f990 3d40 fffc */
 	movel	%a3,%fp@(-504)		/* 4086f994 2d4b fe08 */
 
@@ -14231,7 +14231,7 @@ loc_4086f9b8:
 	bras	loc_4086f9de		/* 4086f9d0 600c */
 	addqw	#1,%d7			/* 4086f9d2 5247 */
 	andiw	#15,%d7			/* 4086f9d4 0247 000f */
-	movel	%fp@(-136)@(0,%d7:w:4),%d6	/* 4086f9d8 2c36 7525 ff78 */
+	movel	%fp@(-136)@(%d7:w:4),%d6	/* 4086f9d8 2c36 7525 ff78 */
 
 loc_4086f9de:
 	movel	%fp@(-124),%d0		/* 4086f9de 202e ff84 */
@@ -14242,11 +14242,11 @@ loc_4086f9de:
 	cmpw	%fp@(-584),%d0		/* 4086f9f2 b06e fdb8 */
 	bnew	loc_4086f940		/* 4086f9f6 6600 ff48 */
 
-loc_4086f9fa:
+.L4086f9fa:
 	moveal	%fp@(-600),%sp		/* 4086f9fa 2e6e fda8 */
 	rts				/* 4086f9fe 4e75 */
 
-loc_4086fa00:
+.L4086fa00:
 	movew	%fp@(-644),%d4		/* 4086fa00 382e fd7c */
 	movel	%fp@(-636),%d6		/* 4086fa04 2c2e fd84 */
 	tstb	%fp@(-624)		/* 4086fa08 4a2e fd90 */
@@ -14265,7 +14265,7 @@ loc_4086fa28:
 	movew	%fp@(-638),%d0		/* 4086fa28 302e fd82 */
 	addqw	#1,%d0			/* 4086fa2c 5240 */
 	andiw	#15,%d0			/* 4086fa2e 0240 000f */
-	lea	%fp@(-136)@(0,%d0:w:4),%a3	/* 4086fa32 47f6 0525 ff78 */
+	lea	%fp@(-136)@(%d0:w:4),%a3	/* 4086fa32 47f6 0525 ff78 */
 	movew	%d0,%fp@(-638)		/* 4086fa38 3d40 fd82 */
 
 loc_4086fa3c:
@@ -14275,7 +14275,8 @@ loc_4086fa3c:
 	.align	16
 
 	movel	%a2,%d1			/* 4086fa50 220a */
-loc_4086fa52:
+
+.L4086fa52:
 	movel	%fp@(-636),%d6		/* 4086fa52 2c2e fd84 */
 	tstb	%fp@(-624)		/* 4086fa56 4a2e fd90 */
 	beqs	loc_4086fa76		/* 4086fa5a 671a */
@@ -14307,9 +14308,9 @@ loc_4086fa90:
 	movew	%fp@(-4),%d0		/* 4086fa9c 302e fffc */
 	addw	%fp@(-586),%d0		/* 4086faa0 d06e fdb6 */
 	cmpw	%fp@(-584),%d0		/* 4086faa4 b06e fdb8 */
-	beqw	loc_4086f9fa		/* 4086faa8 6700 ff50 */
+	beqw	.L4086f9fa		/* 4086faa8 6700 ff50 */
 	subqw	#1,%d1			/* 4086faac 5341 */
-	blew	loc_4086f990		/* 4086faae 6f00 fee0 */
+	blew	.L4086f990		/* 4086faae 6f00 fee0 */
 	movew	%d0,%fp@(-4)		/* 4086fab2 3d40 fffc */
 	moveal	%fp@(-536),%a2		/* 4086fab6 246e fde8 */
 	jmp	%a2@			/* 4086faba 4ed2 */
@@ -14962,16 +14963,16 @@ RMASK8:
 
 	.align	16
 
-loc_4086ffe0:
+.L4086ffe0:
 	addqw	#1,%d7			/* 40872760 5247 */
 	andiw	#15,%d7			/* 4086ffe2 0247 000f */
-	movel	%a3@(0,%d7:w:4),%d6	/* 4086ffe6 2c33 7400 */
+	movel	%a3@(%d7:w:4),%d6	/* 4086ffe6 2c33 7400 */
 	addal	%fp@(-124),%a5		/* 4086ffea dbee ff84 */
 	addqw	#1,%d0			/* 4086ffee 5240 */
 	cmpw	%fp@(-584),%d0		/* 4086fff0 b06e fdb8 */
-	bgew	loc_4086f9fa		/* 4086fff4 6c00 fa04 */
+	bgew	.L4086f9fa		/* 4086fff4 6c00 fa04 */
 	subqw	#1,%d1			/* 4086fff8 5341 */
-	blew	loc_4086f990		/* 4086fffa 6f00 f994 */
+	blew	.L4086f990		/* 4086fffa 6f00 f994 */
 
 RMASK9:
 	moveal	%a5,%a2			/* 4086fffe 244d */
