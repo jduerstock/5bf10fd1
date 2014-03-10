@@ -220,7 +220,10 @@
 		.short	0xa05f
 	.endm
 
-	.macro	_HGetState
+	.macro	_HGetState p1
+		.ifnb \p1
+			moveal \p1,%a0
+		.endif
 		.short	0xa069
 	.endm
 
