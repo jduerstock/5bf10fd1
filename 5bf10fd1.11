@@ -562,8 +562,7 @@ sub_408584d4:
 	beqs	.L408584da
 	moveal	%d1,%a0
 	moveal	%a0@,%a0
-	movel	%a0@(24),%d0
-	.short	0xa055
+	_StripAddress %a0@(24)
 	moveal	%d0,%a0
 	moveal	%a0@,%a0
 	cmpil	#0x43444546,%a0@(4)
@@ -1120,8 +1119,7 @@ sub_40858900:
 	moveal	%a0@,%a0		/* 4085899a 2050 */
 	movel	%a2,%a0@		/* 4085899c 208a */
 	movel	%fp@(20),%a0@(8)	/* 4085899e 216e 0014 0008 */
-	movel	%fp@(24),%d0		/* 408589a4 202e 0018 */
-	.short	0xa055			/* 408589a8 a055 */
+	_StripAddress %fp@(24)
 	movel	%d0,%a0@(4)		/* 408589aa 2140 0004 */
 	bras	.L40858962		/* 408589ae 60b2 */
 
@@ -1173,11 +1171,12 @@ sub_40858900:
 
 	.align	16
 
-	.short	0x2278	/* 40858a10 2278 */
-	.short	0x0cd0	/* 40858a12 0cd0 */
-	.short	0x6004	/* 40858a14 6004 */
-	.short	0x2278	/* 40858a16 2278 */
-	.short	0x0cd4	/* 40858a18 0cd4 */
+.L40858a10:
+	moveal	0xcd0,%a1
+	bras	__v__GETAUXGUTS
+
+.L40858a16:
+	moveal	0xcd4,%a1
 
 __v__GETAUXGUTS:
 	.short	0x1f7c	/* 40858a1a 1f7c */
@@ -13449,8 +13448,7 @@ sub_4085f3ca:
 	addal	0x2ae,%a3		/* 4085f450 d7f8 02ae */
 	moveal	0xb06,%a0		/* 4085f454 2078 0b06 */
 	.short	0xa126			/* 4085f458 a126 */
-	movel	%a3@(-4),%d0		/* 4085f45a 202b fffc */
-	.short	0xa055			/* 4085f45e a055 */
+	_StripAddress %a3@(-4)
 	addal	%d0,%a0			/* 4085f460 d1c0 */
 	movel	%a3,%a0@		/* 4085f462 208b */
 	movel	%a0,%sp@-		/* 4085f464 2f08 */
@@ -13637,7 +13635,7 @@ sub_4085f60c:
 	beqw	.L4085f678		/* 4085f610 6700 0066 */
 	moveq	#0,%d7			/* 4085f614 7e00 */
 	movel	%sp,%d0			/* 4085f616 200f */
-	.short	0xa055			/* 4085f618 a055 */
+	_StripAddress
 	subl	0x31e,%d0		/* 4085f61a 90b8 031e */
 	cmpl	0x130,%d0		/* 4085f61e b0b8 0130 */
 	bcss	.L4085f628		/* 4085f622 6504 */
@@ -14288,8 +14286,7 @@ sub_4085fb0e:
 
 .L4085fbe2:
 	addal	%a4@,%a2		/* 4085fbe2 d5d4 */
-	movel	%a3@,%d0		/* 4085fbe4 2013 */
-	.short	0xa055			/* 4085fbe6 a055 */
+	_StripAddress %a3@
 	addl	%d0,%d3			/* 4085fbe8 d680 */
 	moveal	%d0,%a1			/* 4085fbea 2240 */
 	movel	%a1,%d4			/* 4085fbec 2809 */
@@ -14306,13 +14303,12 @@ VCMPFRM:
 .L4085fc02:
 	bsrw	sub_4085fcec		/* 4085fc02 6100 00e8 */
 
-
 .L4085fc06:
 	bsrw	sub_4085fa28		/* 4085fc06 6100 fe20 */
 	beqs	VCMPFRM			/* 4085fc0a 67ea */
 	movel	%a1,%d0			/* 4085fc0c 2009 */
-	subl	%a3@,%d0		/* 4085fc0e 9093 */
-	.short	0xa055			/* 4085fc10 a055 */
+	subl	%a3@,%d0
+	_StripAddress
 	movel	%a3@,%d1		/* 4085fc12 2213 */
 	moveal	%a4@,%a0		/* 4085fc14 2054 */
 	movel	%d7,%d2			/* 4085fc16 2407 */
@@ -14431,7 +14427,7 @@ sub_4085fcda:
 .L4085fcde:
 	roll	#8,%d0			/* 4085fcde e198 */
 	moveb	%d0,%a1@+		/* 4085fce0 12c0 */
-	dbf	%d1,.L4085fcde	/* 4085fce2 51c9 fffa */
+	dbf	%d1,.L4085fcde		/* 4085fce2 51c9 fffa */
 	addql	#4,%d5			/* 4085fce6 5885 */
 	movel	%sp@+,%d1		/* 4085fce8 221f */
 	bras	.L4085fcb4		/* 4085fcea 60c8 */
