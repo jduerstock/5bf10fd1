@@ -174,7 +174,10 @@
 		.short	0xa051
 	.endm
 
-	.macro	_StripAddress
+	.macro	_StripAddress p1
+		.ifnb \p1
+			movel \p1,%d0
+		.endif
 		.short	0xa055
 	.endm
 
