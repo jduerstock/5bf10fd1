@@ -9764,8 +9764,7 @@ __v__EXTBTOPEN:
 
 .L40825ddc:
 	movew	%d0,%fp@-
-	moveal	%a4,%a0
-	.short	0xa01f
+	_DisposePtr %a4
 	movew	%fp@+,%d0
 	braw	.L40825ea6
 
@@ -11286,29 +11285,24 @@ EXTMARKBLOCK:
 	.align	16
 
 __v__EXTBTCLOSE:
-	.short	0x2d1f	/* 40826a60 2d1f */
-	.short	0x48e6	/* 40826a62 48e6 */
-	.short	0x7cf8	/* 40826a64 7cf8 */
-	.short	0x3600	/* 40826a66 3600 */
-	.short	0x3003	/* 40826a68 3003 */
-	.short	0x4eba	/* 40826a6a 4eba */
-	.short	0xfafa	/* 40826a6c fafa */
-	.short	0x7a00	/* 40826a6e 7a00 */
-	.short	0x4eba	/* 40826a70 4eba */
-	.short	0x01c8	/* 40826a72 01c8 */
-	.short	0x660e	/* 40826a74 660e */
-	.short	0x204c	/* 40826a76 204c */
-	.short	0xa01f	/* 40826a78 a01f */
-	.short	0x2878	/* 40826a7a 2878 */
-	.short	0x034e	/* 40826a7c 034e */
-	.short	0x42b4	/* 40826a7e 42b4 */
-	.short	0x3022	/* 40826a80 3022 */
-	.short	0x4240	/* 40826a82 4240 */
-	.short	0x4cde	/* 40826a84 4cde */
-	.short	0x1f3e	/* 40826a86 1f3e */
-	.short	0x2f1e	/* 40826a88 2f1e */
-	.short	0x4a40	/* 40826a8a 4a40 */
-	rts				/* 40826a8c 4e75 */
+	movel	%sp@+,%fp@-
+	moveml	%d1-%d5/%a0-%a4,%fp@-
+	movew	%d0,%d3
+	movew	%d3,%d0
+	jsr	%pc@(EXTLOCBTCB)
+	moveq	#0,%d5
+	jsr	%pc@(__v__EXTBTFLUSH)
+	bnes	.L40826a84
+	_DisposePtr %a4
+	moveal	0x34e,%a4
+	clrl	%a4@(34,%d3:w)
+	clrw	%d0
+
+.L40826a84:
+	moveml	%fp@+,%d1-%d5/%a0-%a4
+	movel	%fp@+,%sp@-
+	tstw	%d0
+	rts
 
 __v__EXTBTDELETE:
 	.short	0x2d1f	/* 40826a8e 2d1f */
