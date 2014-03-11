@@ -790,14 +790,12 @@ __v__ScanDrive:
 .L40820836:
 	tstl	%fp@(-16)		/* 40820836 4aae fff0 */
 	beqs	.L40820842		/* 4082083a 6706 */
-	moveal	%fp@(-16),%a0		/* 4082083c 206e fff0 */
-	.short	0xa01f			/* 40820840 a01f */
+	_DisposePtr %fp@(-16)
 
 .L40820842:
 	tstl	%fp@(-12)		/* 40820842 4aae fff4 */
 	beqs	.L4082084e		/* 40820846 6706 */
-	moveal	%fp@(-12),%a0		/* 40820848 206e fff4 */
-	.short	0xa01f			/* 4082084c a01f */
+	_DisposePtr %fp@(-12)
 
 .L4082084e:
 	movew	%fp@(-6),%d0		/* 4082084e 302e fffa */
@@ -908,8 +906,7 @@ __v__LoadDriver:
 	tstw	%d0			/* 40820966 4a40 */
 	lea	%sp@(20),%sp		/* 40820968 4fef 0014 */
 	beqs	.L40820978		/* 4082096c 670a */
-	moveal	%a3,%a0			/* 4082096e 204b */
-	.short	0xa01f			/* 40820970 a01f */
+	_DisposePtr %a3
 	moveq	#0,%d0			/* 40820972 7000 */
 	braw	.L40820a4e		/* 40820974 6000 00d8 */
 
@@ -929,8 +926,7 @@ __v__LoadDriver:
 	cmpl	%a0@(116),%d0		/* 408209a6 b0a8 0074 */
 	addqw	#8,%sp			/* 408209aa 504f */
 	beqs	.L408209b8		/* 408209ac 670a */
-	moveal	%a3,%a0			/* 408209ae 204b */
-	.short	0xa01f			/* 408209b0 a01f */
+	_DisposePtr %a3
 	moveq	#0,%d0			/* 408209b2 7000 */
 	braw	.L40820a4e		/* 408209b4 6000 0098 */
 
@@ -5316,8 +5312,7 @@ __v__InitXPT:
 	_NewPtrSys			/* 408235da a51e */
 	movel	%a0,%a4@(112)		/* 408235dc 2948 0070 */
 	bnes	.L408235ec		/* 408235e0 660a */
-	moveal	%a4,%a0			/* 408235e2 204c */
-	.short	0xa01f			/* 408235e4 a01f */
+	_DisposePtr %a4
 	moveq	#-108,%d0		/* 408235e6 7094 */
 	braw	.L4082366c		/* 408235e8 6000 0082 */
 
@@ -5688,8 +5683,7 @@ off_4082386a:
 	movew	%a3@(108),%d0		/* 4082394e 302b 006c */
 	tstl	%d0			/* 40823952 4a80 */
 	beqs	.L4082395c		/* 40823954 6706 */
-	moveal	%a3@(104),%a0		/* 40823956 206b 0068 */
-	.short	0xa01f			/* 4082395a a01f */
+	_DisposePtr %a3@(104)
 
 .L4082395c:
 	moveq	#0,%d0			/* 4082395c 7000 */
@@ -5865,8 +5859,7 @@ off_408239fa:
 	beqs	.L40823b46		/* 40823b26 671e */
 	tstl	%a3@(104)		/* 40823b28 4aab 0068 */
 	beqs	.L40823b34		/* 40823b2c 6706 */
-	moveal	%a3@(104),%a0		/* 40823b2e 206b 0068 */
-	.short	0xa01f			/* 40823b32 a01f */
+	_DisposePtr %a3@(104)
 
 .L40823b34:
 	moveq	#0,%d0			/* 40823b34 7000 */
@@ -5918,10 +5911,8 @@ __v__XPTKillXPT:
 	moveal	%a4@(76),%a3		/* 40823ba2 266c 004c */
 	moveq	#0,%d0			/* 40823ba6 7000 */
 	movel	%d0,%a3@-		/* 40823ba8 2700 */
-	moveal	%a4@(104),%a0		/* 40823baa 206c 0068 */
-	.short	0xa01f			/* 40823bae a01f */
-	moveal	%a4,%a0			/* 40823bb0 204c */
-	.short	0xa01f			/* 40823bb2 a01f */
+	_DisposePtr %a4@(104)
+	_DisposePtr %a4
 	moveq	#0,%d0			/* 40823bb4 7000 */
 	moveml	%fp@(-8),%a3-%a4	/* 40823bb6 4cee 1800 fff8 */
 	unlk	%fp			/* 40823bbc 4e5e */
@@ -6316,8 +6307,7 @@ __v__SetRefNum:
 	movel	%d6,%d0			/* 40823f1e 2006 */
 	subql	#8,%d0			/* 40823f20 5180 */
 	_BlockMove			/* 40823f22 a02e */
-	moveal	%a4@(112),%a0		/* 40823f24 206c 0070 */
-	.short	0xa01f			/* 40823f28 a01f */
+	_DisposePtr %a4@(112)
 	movel	%fp@(-4),%a4@(112)	/* 40823f2a 296e fffc 0070 */
 	bras	.L40823f3a		/* 40823f30 6008 */
 
@@ -7026,9 +7016,8 @@ __v__ReRegisterAllSIMs:
 	movel	%d1,%sp@-		/* 408245e0 2f01 */
 	jsr	%pc@(CallOldXPT)	/* 408245e2 4eba b66a */
 	movel	%a3,%sp@-		/* 408245e6 2f0b */
-	jsr	%pc@(SetXPTg)	/* 408245e8 4eba f0c2 */
-	moveal	%a4,%a0			/* 408245ec 204c */
-	.short	0xa01f			/* 408245ee a01f */
+	jsr	%pc@(SetXPTg)		/* 408245e8 4eba f0c2 */
+	_DisposePtr %a4
 	lea	%sp@(16),%sp		/* 408245f0 4fef 0010 */
 
 .L408245f4:
@@ -8538,8 +8527,7 @@ XBTCLOSE:
 .L408253ba:
 	movel	%a4@(64),%d0		/* 408253ba 202c 0040 */
 	beqs	.L408253c4		/* 408253be 6704 */
-	moveal	%d0,%a0			/* 408253c0 2040 */
-	.short	0xa01f			/* 408253c2 a01f */
+	_DisposePtr %d0
 
 .L408253c4:
 	movew	%d1,%d0			/* 408253c4 3001 */
