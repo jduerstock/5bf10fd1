@@ -96,7 +96,7 @@
 
 	.macro	_DisposePtr p1
 		.ifnb \p1
-			movel \p1,%a0
+			moveal \p1,%a0
 		.endif
 		.short	0xa01f
 	.endm

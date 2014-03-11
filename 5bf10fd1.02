@@ -5220,7 +5220,7 @@ sub_408130dc:
 	moveal	%a2@(76),%a0		/* 408130dc 206a 004c */
 	movel	%a0@(28),%d0		/* 408130e0 2028 001c */
 	beqs	loc_408130ea		/* 408130e4 6704 */
-	jsr	%a0@(0x0000,%d0:l)	/* 408130e6 4eb0 0800 */
+	jsr	%a0@(%d0:l)
 
 loc_408130ea:
 	movel	%a2@(156),%sp@-		/* 408130ea 2f2a 009c */
@@ -10982,8 +10982,7 @@ sub_408160b4:
 	beqs	.L408160d6		/* 408160c6 670e */
 	movel	%d0,%d1			/* 408160c8 2200 */
 	moveal	%a0,%a1			/* 408160ca 2248 */
-	moveal	%a1@(4),%a0		/* 408160cc 2069 0004 */
-	.short	0xa01f			/* 408160d0 a01f */
+	_DisposePtr %a1@(4)
 	moveal	%a1,%a0			/* 408160d2 2049 */
 	movel	%d1,%d0			/* 408160d4 2001 */
 
@@ -11021,8 +11020,7 @@ __v__GETSLOTBLOCK:
 	beqs	.L40816130		/* 40816120 670e */
 	movel	%d0,%d1			/* 40816122 2200 */
 	moveal	%a0,%a1			/* 40816124 2248 */
-	moveal	%a1@(4),%a0		/* 40816126 2069 0004 */
-	.short	0xa01f			/* 4081612a a01f */
+	_DisposePtr %a1@(4)
 	moveal	%a1,%a0			/* 4081612c 2049 */
 	movel	%d1,%d0			/* 4081612e 2001 */
 
@@ -11142,8 +11140,7 @@ READSLOTINFO:
 
 __v__SLOTDISPOSPTR:
 	movel	%a0,%sp@-		/* 40816230 2f08 */
-	moveal	%a0@(4),%a0		/* 40816232 2068 0004 */
-	.short	0xa01f			/* 40816236 a01f */
+	_DisposePtr %a0@(4)
 	beqs	.L40816240		/* 40816238 6706 */
 	movel	#-312,%d0		/* 4081623a 203c ffff fec8 */
 
@@ -11186,14 +11183,14 @@ __v__READSLOTDRVRNAME:
 	moveml	%sp@+,%a0-%a1		/* 4081629a 4cdf 0300 */
 	bnes	.L408162aa		/* 4081629e 660a */
 	exg	%a2,%a0			/* 408162a0 c548 */
-	.short	0xa01f			/* 408162a2 a01f */
+	_DisposePtr
 	moveal	%a2,%a0			/* 408162a4 204a */
 	moveq	#0,%d0			/* 408162a6 7000 */
 	bras	.L408162b6		/* 408162a8 600c */
 
 .L408162aa:
 	exg	%a2,%a0			/* 408162aa c548 */
-	.short	0xa01f			/* 408162ac a01f */
+	_DisposePtr
 	moveal	%a2,%a0			/* 408162ae 204a */
 
 .L408162b0:
@@ -11351,7 +11348,7 @@ sub_408163fa:
 loc_4081642a:
 	exg	%d0,%d2			/* 4081642a c142 */
 	exg	%a3,%a0			/* 4081642c c748 */
-	.short	0xa01f			/* 4081642e a01f */
+	_DisposePtr
 	moveal	%a3,%a0			/* 40816430 204b */
 	exg	%d2,%d0			/* 40816432 c540 */
 
@@ -12216,8 +12213,7 @@ __v__DELETESRTREC:
 	moveb	0xcb2,%sp@-		/* 40816bb0 1f38 0cb2 */
 	clrb	%d0			/* 40816bb4 4200 */
 	_SwapMMUMode			/* 40816bb6 a05d */
-	moveal	%a2,%a0			/* 40816bb8 204a */
-	.short	0xa01f			/* 40816bba a01f */
+	_DisposePtr %a2
 	moveb	%sp@+,%d0		/* 40816bbc 101f */
 	_SwapMMUMode			/* 40816bbe a05d */
 	moveal	0xd24,%a1		/* 40816bc0 2278 0d24 */
@@ -13417,8 +13413,7 @@ loc_4081772a:
 	bras	loc_40817734		/* 4081772c 6006 */
 
 loc_4081772e:
-	moveal	%a3,%a0			/* 4081772e 204b */
-	.short	0xa01f			/* 40817730 a01f */
+	_DisposePtr %a3
 
 loc_40817732:
 	moveq	#-1,%d0			/* 40817732 70ff */
