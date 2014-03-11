@@ -11231,36 +11231,33 @@ loc_4080782a:
 loc_40807846:
 	.short	0xa853			/* 40807846 a853 */
 
-loc_40807848:
+.L40807848:
 	moveml	%sp@+,%d1-%d2/%a0-%a3	/* 40807848 4cdf 0f06 */
 	unlk	%fp			/* 4080784c 4e5e */
 	rts				/* 4080784e 4e75 */
 
 loc_40807850:
-	.short	0xa852	/* 40807850 a852 */
-	.short	0x32bc	/* 40807852 32bc */
-	.short	0xffff	/* 40807854 ffff */
-	.short	0x204b	/* 40807856 204b */
-	.short	0x2441	/* 40807858 2441 */
-	.short	0x2452	/* 4080785a 2452 */
-	.short	0x3152	/* 4080785c 3152 */
-	.short	0x0018	/* 4080785e 0018 */
-	.short	0xa204	/* 40807860 a204 */
-	.short	0x222a	/* 40807862 222a */
-	.short	0x001e	/* 40807864 001e */
-	.short	0x66f0	/* 40807866 66f0 */
-	lea	a_backlight_0,%a2		/* 40807868 45fa 0018 */
-	.short	0x214a	/* 4080786c 214a */
-	.short	0x0012	/* 4080786e 0012 */
-	.short	0xa000	/* 40807870 a000 */
-	.short	0x660c	/* 40807872 660c */
-	.short	0x317c	/* 40807874 317c */
-	.short	0x4301	/* 40807876 4301 */
-	.short	0x001a	/* 40807878 001a */
-	.short	0x42a8	/* 4080787a 42a8 */
-	.short	0x001c	/* 4080787c 001c */
-	.short	0xa204	/* 4080787e a204 */
-	.short	0x60c6	/* 40807880 60c6 */
+	.short	0xa852
+	movew	#-1,%a1@
+	moveal	%a3,%a0
+
+.L40807858:
+	moveal	%d1,%a2
+	moveal	%a2@,%a2
+	movew	%a2@,%a0@(24)
+	.short	0xa204
+	movel	%a2@(30),%d1
+	bnes	.L40807858
+	lea	%pc@(a_backlight_0),%a2
+	movel	%a2,%a0@(18)
+	_PBOpenSync
+	bnes	.L40807880
+	movew	#17153,%a0@(26)
+	clrl	%a0@(28)
+	.short	0xa204
+
+.L40807880:
+	bras	.L40807848
 
 a_backlight_0:
 	.byte	0x0a	/* 40807882 0a */
