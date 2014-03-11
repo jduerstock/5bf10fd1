@@ -1129,7 +1129,7 @@ loc_40800bae:
 	beqs	loc_40800bdc		/* 40800bd0 670a */
 	lea	%pc@(a_newage),%a1	/* 40800bd2 43fa 00c0 */
 	movel	%a1,%a0@(18)		/* 40800bd6 2149 0012 */
-	.short	0xa000			/* 40800bda a000 */
+	_PBOpenSync
 
 loc_40800bdc:
 	btst	#5,0xdd3		/* 40800bdc 0838 0005 0dd3 */
@@ -1140,7 +1140,7 @@ loc_40800bdc:
 loc_40800bec:
 	lea	%pc@(a_sony),%a1	/* 40800bec 43fa 0090 */
 	movel	%a1,%a0@(18)		/* 40800bf0 2149 0012 */
-	.short	0xa000			/* 40800bf4 a000 */
+	_PBOpenSync
 
 loc_40800bf6:
 	movel	%a0,%sp@-		/* 40800bf6 2f08 */
@@ -1163,7 +1163,7 @@ loc_40800c18:
 	bnes	loc_40800c36		/* 40800c2a 660a */
 	lea	%pc@(a_sound),%a1	/* 40800c2c 43fa 0056 */
 	movel	%a1,%a0@(18)		/* 40800c30 2149 0012 */
-	.short	0xa000			/* 40800c34 a000 */
+	_PBOpenSync
 
 loc_40800c36:
 	bsrw	sub_40800d14		/* 40800c36 6100 00dc */
@@ -1763,7 +1763,7 @@ sub_4080126c:
 	moveal	%sp,%a0			/* 40801270 204f */
 	movel	%a1,%a0@(18)		/* 40801272 2149 0012 */
 	clrb	%a0@(27)		/* 40801276 4228 001b */
-	.short	0xa000			/* 4080127a a000 */
+	_PBOpenSync
 	movew	%a0@(24),%d0		/* 4080127c 3028 0018 */
 	swap	%d0			/* 40801280 4840 */
 	movew	%a0@(16),%d0		/* 40801282 3028 0010 */
@@ -10089,14 +10089,14 @@ dword_40806c12:
 	.short	0x1f28	/* 40806d18 1f28 */
 	.short	0x0021	/* 40806d1a 0021 */
 	jmp	%a1@			/* 40806d1c 4ed1 */
-	.short	0x2078	/* 40806d1e 2078 */
-	.short	0x0cec	/* 40806d20 0cec */
-	.short	0xd1fc	/* 40806d22 d1fc */
-	.short	0x0007	/* 40806d24 0007 */
-	.short	0xa000	/* 40806d26 a000 */
-	moveq	#-1,%d0			/* 40806d28 70ff */
-	.short	0x2080	/* 40806d2a 2080 */
-	jmp	%a1@			/* 40806d2c 4ed1 */
+
+sub_40806d1e:
+	moveal	0xcec,%a0
+	addal	#499712,%a0
+	moveq	#-1,%d0
+	movel	%d0,%a0@
+	jmp	%a1@
+
 	.short	0x2078	/* 40806d2e 2078 */
 	.short	0x0cec	/* 40806d30 0cec */
 	.short	0x115f	/* 40806d32 115f */
