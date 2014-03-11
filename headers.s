@@ -94,7 +94,10 @@
 		.short	0xa017
 	.endm
 
-	.macro	_DisposePtr
+	.macro	_DisposePtr p1
+		.ifnb \p1
+			movel \p1,%a0
+		.endif
 		.short	0xa01f
 	.endm
 
