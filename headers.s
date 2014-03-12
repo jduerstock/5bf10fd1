@@ -413,6 +413,10 @@
 		.short	0xa092
 	.endm
 
+	.macro	_GetZone
+		.short	0xa11a
+	.endm
+
 	.macro	_NewPtr
 		.short	0xa11e
 	.endm
