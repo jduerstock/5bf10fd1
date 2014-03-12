@@ -586,6 +586,10 @@
 		.short	0xa812
 	.endm
 
+	.macro	_SCSIDispatch
+		.short	0xa815
+	.endm
+
 	.macro	_AliasDispatch
 		.short	0xa823
 	.endm
