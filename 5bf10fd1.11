@@ -1179,38 +1179,36 @@ sub_40858900:
 	moveal	0xcd4,%a1
 
 __v__GETAUXGUTS:
-	.short	0x1f7c	/* 40858a1a 1f7c */
-	.short	0x0001	/* 40858a1c 0001 */
-	.short	0x000c	/* 40858a1e 000c */
-	.short	0x202f	/* 40858a20 202f */
-	.short	0x0008	/* 40858a22 0008 */
-	.short	0xa055	/* 40858a24 a055 */
-	.short	0x2051	/* 40858a26 2051 */
-	.short	0xb0a8	/* 40858a28 b0a8 */
-	.short	0x0004	/* 40858a2a 0004 */
-	.short	0x6712	/* 40858a2c 6712 */
-	.short	0x2409	/* 40858a2e 2409 */
-	.short	0x2210	/* 40858a30 2210 */
-	.short	0x2241	/* 40858a32 2241 */
-	.short	0x66f0	/* 40858a34 66f0 */
-	.short	0x4a80	/* 40858a36 4a80 */
-	.short	0x6706	/* 40858a38 6706 */
-	.short	0x422f	/* 40858a3a 422f */
-	.short	0x000c	/* 40858a3c 000c */
-	.short	0x2242	/* 40858a3e 2242 */
-	.short	0x206f	/* 40858a40 206f */
-	.short	0x0004	/* 40858a42 0004 */
-	.short	0x2089	/* 40858a44 2089 */
-	.short	0x2051	/* 40858a46 2051 */
-	.short	0x2068	/* 40858a48 2068 */
-	.short	0x0008	/* 40858a4a 0008 */
-	.short	0x4a90	/* 40858a4c 4a90 */
-	.short	0x6604	/* 40858a4e 6604 */
-	.short	0x2f08	/* 40858a50 2f08 */
-	.short	0xa9a2	/* 40858a52 a9a2 */
-	.short	0x205f	/* 40858a54 205f */
-	.short	0x504f	/* 40858a56 504f */
-	.short	0x4ed0	/* 40858a58 4ed0 */
+	moveb	#1,%sp@(12)
+	_StripAddress %sp@(8)
+
+.L40858a26:
+	moveal	%a1@,%a0
+	cmpl	%a0@(4),%d0
+	beqs	.L40858a40
+	movel	%a1,%d2
+	movel	%a0@,%d1
+	moveal	%d1,%a1
+	bnes	.L40858a26
+	tstl	%d0
+	beqs	.L40858a40
+	clrb	%sp@(12)
+	moveal	%d2,%a1
+
+.L40858a40:
+	moveal	%sp@(4),%a0
+	movel	%a1,%a0@
+	moveal	%a1@,%a0
+	moveal	%a0@(8),%a0
+	tstl	%a0@
+	bnes	.L40858a54
+	movel	%a0,%sp@-
+	.short	0xa9a2
+
+.L40858a54:
+	moveal	%sp@+,%a0
+	addqw	#8,%sp
+	jmp	%a0@
 
 GETAUXGUTS:
 	CallVector	0x2084 108	/* 40858a5a 2f30 81e2 2084 01b0 */
