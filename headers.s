@@ -788,6 +788,10 @@
 		.short	0xa938
 	.endm
 
+	.macro	_GetMenuBar
+		.short	0xa93b
+	.endm
+
 	.macro	_GetItemMark
 		.short	0xa943
 	.endm
