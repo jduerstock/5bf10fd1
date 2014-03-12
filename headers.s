@@ -414,6 +414,11 @@
 		.short	0xa08e
 	.endm
 
+	.macro	_BTreeCleanUp
+		moveq	#11,%d0
+		.short	0xa08e
+	.endm
+
 	.macro	_BTreeUpdate
 		moveq	#15,%d0
 		.short	0xa08e
