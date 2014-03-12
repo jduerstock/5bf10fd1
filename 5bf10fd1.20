@@ -419,30 +419,22 @@ sub_408a03ce:
 	.align	16
 
 __v__MarkMapDirty:
-	.short	0x4e56	/* 408a03e0 4e56 */
-	.short	0x0000	/* 408a03e2 0000 */
-	.short	0x48e7	/* 408a03e4 48e7 */
-	.short	0x0108	/* 408a03e6 0108 */
-	.short	0x286e	/* 408a03e8 286e */
-	.short	0x000c	/* 408a03ea 000c */
-	.short	0x2054	/* 408a03ec 2054 */
-	.short	0x116e	/* 408a03ee 116e */
-	.short	0x000b	/* 408a03f0 000b */
-	.short	0x0004	/* 408a03f2 0004 */
-	.short	0x2f0c	/* 408a03f4 2f0c */
-	.short	0x4eba	/* 408a03f6 4eba */
-	.short	0x11b2	/* 408a03f8 11b2 */
-	.short	0x3e00	/* 408a03fa 3e00 */
-	.short	0x4cee	/* 408a03fc 4cee */
-	.short	0x1080	/* 408a03fe 1080 */
-	.short	0xfff8	/* 408a0400 fff8 */
-	.short	0x4e5e	/* 408a0402 4e5e */
-	rts				/* 408a0404 4e75 */
-	.short	0x2278	/* 408a0406 2278 */
-	.short	0x202c	/* 408a0408 202c */
-	.short	0x2269	/* 408a040a 2269 */
-	.short	0x00ac	/* 408a040c 00ac */
-	jmp	%a1@			/* 408a040e 4ed1 */
+	linkw	%fp,#0
+	moveml	%d7/%a4,%sp@-
+	moveal	%fp@(12),%a4
+	moveal	%a4@,%a0
+	moveb	%fp@(11),%a0@(4)
+	movel	%a4,%sp@-
+	jsr	%pc@(DumpDiskCacheMap)
+	movew	%d0,%d7
+	moveml	%fp@(-8),%d7/%a4
+	unlk	%fp
+	rts
+
+sub_408a0406:
+	moveal	0x202c,%a1
+	moveal	%a1@(172),%a1
+	jmp	%a1@
 
 __v__PurgeDiskCaches:
 	.short	0x4e56	/* 408a0410 4e56 */
