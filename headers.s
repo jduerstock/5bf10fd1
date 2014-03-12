@@ -590,6 +590,15 @@
 		.short	0xa815
 	.endm
 
+	.macro	_Pack8
+		.short	0xa816
+	.endm
+
+	.macro	_AEGetParamPtr
+		movew	#0xe11,%d0
+		_Pack8
+	.endm
+
 	.macro	_AliasDispatch
 		.short	0xa823
 	.endm
