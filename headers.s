@@ -646,6 +646,10 @@
 		.short	0xa874
 	.endm
 
+	.macro	_SubPt
+		.short	0xa87f
+	.endm
+
 	.macro	_DrawChar
 		.short	0xa883
 	.endm
