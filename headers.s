@@ -94,6 +94,10 @@
 		.short	0xa017
 	.endm
 
+	.macro	_SetZOne
+		.short	0xa01b
+	.endm
+
 	.macro	_DisposePtr p1
 		.ifnb \p1
 			moveal \p1,%a0
