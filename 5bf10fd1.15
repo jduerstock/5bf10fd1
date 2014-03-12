@@ -297,46 +297,39 @@ sub_408783e4:
 
 .L4087840a:
 	jsr	%pc@(GETUBYTE)
-	.short	0x0c40	/* 4087840e 0c40 */
-	.short	0x0001	/* 40878410 0001 */
-	.short	0x670c	/* 40878412 670c */
-	.short	0x3c00	/* 40878414 3c00 */
-	.short	0xe14e	/* 40878416 e14e */
-	.short	0x4eba	/* 40878418 4eba */
-	.short	0x0ab8	/* 4087841a 0ab8 */
-	.short	0x1c00	/* 4087841c 1c00 */
-	.short	0x3006	/* 4087841e 3006 */
-	.short	0x266e	/* 40878420 266e */
-	.short	0x0008	/* 40878422 0008 */
-	.short	0x3740	/* 40878424 3740 */
-	.short	0x0034	/* 40878426 0034 */
-	.short	0x6000	/* 40878428 6000 */
-	.short	0x0a8a	/* 4087842a 0a8a */
+	cmpiw	#1,%d0
+	beqs	.L40878420
+	movew	%d0,%d6
+	lslw	#8,%d6
+	jsr	%pc@(GETUBYTE)
+	moveb	%d0,%d6
+	movew	%d6,%d0
+
+.L40878420:
+	moveal	%fp@(8),%a3
+	movew	%d0,%a3@(52)
+	braw	.L40878eb4
 
 .L4087842c:
-	.short	0x486b	/* 4087842c 486b */
-	.short	0x0038	/* 4087842e 0038 */
+	pea	%a3@(56)
 
 .L40878430:
-	.short	0x4eba	/* 40878430 4eba */
-	.short	0x0abe	/* 40878432 0abe */
-	.short	0x4a6b	/* 40878434 4a6b */
-	.short	0x0006	/* 40878436 0006 */
-	.short	0x6b14	/* 40878438 6b14 */
-	.short	0x4aab	/* 4087843a 4aab */
-	.short	0x0068	/* 4087843c 0068 */
-	.short	0x670e	/* 4087843e 670e */
-	.short	0x0800	/* 40878440 0800 */
-	.short	0x0005	/* 40878442 0005 */
-	.short	0x6708	/* 40878444 6708 */
-	.short	0x0240	/* 40878446 0240 */
-	.short	0x0007	/* 40878448 0007 */
-	.short	0x103b	/* 4087844a 103b */
-	.short	0x000a	/* 4087844c 000a */
-	.short	0x205f	/* 4087844e 205f */
-	.short	0x3080	/* 40878450 3080 */
-	.short	0x6000	/* 40878452 6000 */
-	.short	0x0a60	/* 40878454 0a60 */
+	jsr	%pc@(GETWORD)
+	tstw	%a3@(6)
+	bmis	.L4087844e
+	tstl	%a3@(104)
+	beqs	.L4087844e
+	btst	#5,%d0
+	beqs	.L4087844e
+	andiw	#7,%d0
+	moveb	%pc@(byte_40878456,%d0:w),%d0
+
+.L4087844e:
+	moveal	%sp@+,%a0
+	movew	%d0,%a0@
+	braw	.L40878eb4
+
+byte_40878456:
 	.short	0x0003	/* 40878456 0003 */
 	.short	0x0201	/* 40878458 0201 */
 	.short	0x0103	/* 4087845a 0103 */
