@@ -405,6 +405,10 @@
 		.short	0xa087
 	.endm
 
+	.macro	_BTreeDispatch
+		.short	0xa08e
+	.endm
+
 	.macro	_DeferUserFn
 		.short	0xa08f
 	.endm
@@ -497,6 +501,10 @@
 
 	.macro	_ReserveMemSys
 		.short	0xa440
+	.endm
+
+	.macro	_BTreeDispatchAsync
+		.short	0xa48e
 	.endm
 
 	.macro	_NewPtrSys
