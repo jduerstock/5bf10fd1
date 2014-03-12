@@ -94,7 +94,7 @@
 		.short	0xa017
 	.endm
 
-	.macro	_SetZOne
+	.macro	_SetZone
 		.short	0xa01b
 	.endm
 
