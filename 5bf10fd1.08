@@ -63,7 +63,7 @@
 	movew	%d1,%sp@-		/* 40840074 3f01 */
 	movel	%fp@(8),%sp@-		/* 40840076 2f2e 0008 */
 	subql	#4,%sp			/* 4084007a 598f */
-	.short	0xa975			/* 4084007c a975 */
+	_TickCount
 	movel	%sp@+,%d1		/* 4084007e 221f */
 	movel	%d1,%sp@(10)		/* 40840080 2f41 000a */
 	movel	%a3@(46),%d0		/* 40840084 202b 002e */
@@ -75,7 +75,7 @@
 	movel	%d0,%sp@(14)		/* 40840090 2f40 000e */
 	_TEPinScroll			/* 40840094 a812 */
 	movew	#1280,%d0		/* 40840096 303c 0500 */
-	.short	0xa84c			/* 4084009a a84c */
+	_UserDelay
 	addql	#2,%sp			/* 4084009c 548f */
 	bras	.L4084005a		/* 4084009e 60ba */
 
@@ -98,7 +98,7 @@ sub_408400a0:
 	moveq	#0,%d4			/* 408400c0 7800 */
 	movew	%d3,%d4			/* 408400c2 3803 */
 	lsll	#2,%d4			/* 408400c4 e58c */
-	cmpw	%a0@(0x0000,%d4:w),%d2	/* 408400c6 b470 4000 */
+	cmpw	%a0@(%d4:w),%d2		/* 408400c6 b470 4000 */
 	beqs	.L408400d8		/* 408400ca 670c */
 	blss	.L408400d4		/* 408400cc 6306 */
 	movew	%d3,%d0			/* 408400ce 3003 */
@@ -668,7 +668,7 @@ sub_4084054a:
 	subqw	#1,%d2			/* 40840578 5342 */
 	beqs	.L40840586		/* 4084057a 670a */
 	muluw	#18,%d1			/* 4084057c c2fc 0012 */
-	subw	%d2,%a2@(0x0000,%d1:l)	/* 40840580 9572 1800 */
+	subw	%d2,%a2@(%d1:l)		/* 40840580 9572 1800 */
 	moveq	#0,%d2			/* 40840584 7400 */
 
 .L40840586:
@@ -1807,7 +1807,7 @@ PRGLUE:
 	moveb	%fp@(11),%d0		/* 40840f92 102e 000b */
 	andib	#127,%d0		/* 40840f96 0200 007f */
 	moveal	%a4@,%a0		/* 40840f9a 2054 */
-	jsr	%a0@(0x0000,%d0:w)	/* 40840f9c 4eb0 0000 */
+	jsr	%a0@(%d0:w)		/* 40840f9c 4eb0 0000 */
 	moveb	%fp@(11),%d0		/* 40840fa0 102e 000b */
 	bpls	.L40840faa		/* 40840fa4 6a04 */
 	moveal	%a4,%a0			/* 40840fa6 204c */
@@ -8962,7 +8962,7 @@ NewCandidate:
 	pea	%a4@(6)
 	movel	%a3,%sp@-
 	moveq	#25,%d0
-	.short	0xa823
+	_AliasDispatch
 	tstb	%sp@+
 	beqs	.L40844c0e
 	moveq	#0,%d0
@@ -9100,42 +9100,31 @@ UpdateFileNumber:
 
 AddCandidate:
 	linkw	%fp,#0			/* 40844d50 4e56 0000 */
-	.short	0x48e7	/* 40844d54 48e7 */
-	.short	0x0118	/* 40844d56 0118 */
-	.short	0x266e	/* 40844d58 266e */
-	.short	0x0014	/* 40844d5a 0014 */
-	.short	0x286e	/* 40844d5c 286e */
-	.short	0x001c	/* 40844d5e 001c */
-	.short	0x3e13	/* 40844d60 3e13 */
-	.short	0xbe6e	/* 40844d62 be6e */
-	.short	0x001a	/* 40844d64 001a */
-	.short	0x6c2a	/* 40844d66 6c2a */
-	.short	0x48c7	/* 40844d68 48c7 */
-	.short	0x204c	/* 40844d6a 204c */
-	.short	0x2007	/* 40844d6c 2007 */
-	.short	0x7246	/* 40844d6e 7246 */
-	.short	0x4c01	/* 40844d70 4c01 */
-	.short	0x0800	/* 40844d72 0800 */
-	.short	0x49f0	/* 40844d74 49f0 */
-	.short	0x0800	/* 40844d76 0800 */
-	.short	0x38ae	/* 40844d78 38ae */
-	.short	0x000a	/* 40844d7a 000a */
-	.short	0x296e	/* 40844d7c 296e */
-	.short	0x000c	/* 40844d7e 000c */
-	.short	0x0002	/* 40844d80 0002 */
-	.short	0x2f2e	/* 40844d82 2f2e */
-	.short	0x0010	/* 40844d84 0010 */
-	.short	0x486c	/* 40844d86 486c */
-	.short	0x0006	/* 40844d88 0006 */
-	.short	0x7018	/* 40844d8a 7018 */
-	.short	0xa823	/* 40844d8c a823 */
-	.short	0x5247	/* 40844d8e 5247 */
-	.short	0x3687	/* 40844d90 3687 */
-	.short	0x4cee	/* 40844d92 4cee */
-	.short	0x1880	/* 40844d94 1880 */
-	.short	0xfff4	/* 40844d96 fff4 */
-	.short	0x4e5e	/* 40844d98 4e5e */
-	rts				/* 40844d9a 4e75 */
+	moveml	%d7/%a3-%a4,%sp@-
+	moveal	%fp@(20),%a3
+	moveal	%fp@(28),%a4
+	movew	%a3@,%d7
+	cmpw	%fp@(26),%d7
+	bges	.L40844d92
+	extl	%d7
+	moveal	%a4,%a0
+	movel	%d7,%d0
+	moveq	#70,%d1
+	mulsl	%d1,%d0
+	lea	%a0@(%d0:l),%a4
+	movew	%fp@(10),%a4@
+	movel	%fp@(12),%a4@(2)
+	movel	%fp@(16),%sp@-
+	pea	%a4@(6)
+	moveq	#24,%d0
+	_AliasDispatch
+	addqw	#1,%d7
+	movew	%d7,%a3@
+
+.L40844d92:
+	moveml	%fp@(-12),%d7/%a3-%a4
+	unlk	%fp
+	rts
 
 	.align	16
 
@@ -9600,7 +9589,7 @@ FindNextByAttribute:
 	extl	%d0			/* 40845196 48c0 */
 	moveal	%a4@(142),%a0		/* 40845198 206c 008e */
 	moveal	%a0@,%a0		/* 4084519c 2050 */
-	movel	%fp@(-124),%a0@(0x0000,%d0:l:4) /* 4084519e 21ae ff84 0c00 */
+	movel	%fp@(-124),%a0@(%d0:l:4) /* 4084519e 21ae ff84 0c00 */
 	bras	.L408451c8		/* 408451a4 6022 */
 
 .L408451a6:
@@ -9611,7 +9600,7 @@ FindNextByAttribute:
 	extl	%d0			/* 408451b4 48c0 */
 	moveal	%a4@(142),%a0		/* 408451b6 206c 008e */
 	moveal	%a0@,%a0		/* 408451ba 2050 */
-	movel	%a0@(0x0000,%d0:l:4),%a4@(134)	/* 408451bc 2970 0c00 0086 */
+	movel	%a0@(%d0:l:4),%a4@(134)	/* 408451bc 2970 0c00 0086 */
 	clrw	%fp@(-144)		/* 408451c2 426e ff70 */
 	clrw	%d7			/* 408451c6 4247 */
 
@@ -12765,17 +12754,17 @@ __v__ALI_FINDVOLBYNAME:
 	movel	%fp@(12),%sp@-		/* 408470fe 2f2e 000c */
 	movel	%a4,%sp@-		/* 40847102 2f0c */
 	moveq	#24,%d0			/* 40847104 7018 */
-	.short	0xa823			/* 40847106 a823 */
+	_AliasDispatch
 	moveq	#0,%d0			/* 40847108 7000 */
 	moveb	%a4@,%d0		/* 4084710a 1014 */
 	moveq	#0,%d1			/* 4084710c 7200 */
-	moveb	%a4@(0x0000,%d0:w),%d1	/* 4084710e 1234 0000 */
+	moveb	%a4@(%d0:w),%d1		/* 4084710e 1234 0000 */
 	cmpiw	#58,%d1			/* 40847112 0c41 003a */
 	beqs	.L40847124		/* 40847116 670c */
 	addqb	#1,%a4@			/* 40847118 5214 */
 	moveq	#0,%d0			/* 4084711a 7000 */
 	moveb	%a4@,%d0		/* 4084711c 1014 */
-	moveb	#58,%a4@(0x0000,%d0:w)	/* 4084711e 19bc 003a 0000 */
+	moveb	#58,%a4@(%d0:w)		/* 4084711e 19bc 003a 0000 */
 
 .L40847124:
 	movel	%a4,%a3@(18)		/* 40847124 274c 0012 */
@@ -13002,7 +12991,7 @@ __v__AL_findByID:
 	movel	%a3,%sp@-		/* 40847372 2f0b */
 	movel	%fp@(20),%sp@-		/* 40847374 2f2e 0014 */
 	moveq	#19,%d0			/* 40847378 7013 */
-	.short	0xa823			/* 4084737a a823 */
+	_AliasDispatch
 	movew	%sp@+,%d0		/* 4084737c 301f */
 	bras	.L4084739c		/* 4084737e 601c */
 
@@ -13016,7 +13005,7 @@ __v__AL_findByID:
 	movel	%a3,%sp@-		/* 40847390 2f0b */
 	movel	%fp@(20),%sp@-		/* 40847392 2f2e 0014 */
 	moveq	#17,%d0			/* 40847396 7011 */
-	.short	0xa823			/* 40847398 a823 */
+	_AliasDispatch
 	movew	%sp@+,%d0		/* 4084739a 301f */
 
 .L4084739c:
@@ -13067,7 +13056,7 @@ __v__ALI_FINDFILEBYNUM:
 	movel	%a4,%sp@-		/* 4084740a 2f0c */
 	movel	%a3,%sp@-		/* 4084740c 2f0b */
 	moveq	#24,%d0			/* 4084740e 7018 */
-	.short	0xa823			/* 40847410 a823 */
+	_AliasDispatch
 	clrw	%fp@(22)		/* 40847412 426e 0016 */
 
 .L40847416:
@@ -13138,7 +13127,7 @@ FindGivenPath:
 	movel	%a3,%sp@-		/* 4084749a 2f0b */
 	pea	%fp@(-326)		/* 4084749c 486e feba */
 	moveq	#24,%d0			/* 408474a0 7018 */
-	.short	0xa823			/* 408474a2 a823 */
+	_AliasDispatch
 	subql	#2,%sp			/* 408474a4 558f */
 	movew	%d5,%sp@-		/* 408474a6 3f05 */
 	moveal	%fp@(24),%a0		/* 408474a8 206e 0018 */
@@ -13147,7 +13136,7 @@ FindGivenPath:
 	movel	%a0,%sp@-		/* 408474b0 2f08 */
 	movel	%fp@(28),%sp@-		/* 408474b2 2f2e 001c */
 	moveq	#18,%d0			/* 408474b6 7012 */
-	.short	0xa823			/* 408474b8 a823 */
+	_AliasDispatch
 	movew	%sp@+,%d7		/* 408474ba 3e1f */
 	moveb	%d6,%a3@		/* 408474bc 1686 */
 	moveal	%a4,%a3			/* 408474be 264c */
@@ -13173,7 +13162,7 @@ FindGivenPath:
 	pea	%fp@(-64)		/* 408474ee 486e ffc0 */
 	movel	%fp@(32),%sp@-		/* 408474f2 2f2e 0020 */
 	moveq	#24,%d0			/* 408474f6 7018 */
-	.short	0xa823			/* 408474f8 a823 */
+	_AliasDispatch
 	bras	.L4084753c		/* 408474fa 6040 */
 
 .L408474fc:
@@ -13187,7 +13176,7 @@ FindGivenPath:
 	movew	%d0,%sp@-		/* 4084750e 3f00 */
 	pea	%fp@(-326)		/* 40847510 486e feba */
 	moveq	#23,%d0			/* 40847514 7017 */
-	.short	0xa823			/* 40847516 a823 */
+	_AliasDispatch
 	subql	#2,%sp			/* 40847518 558f */
 	movew	%d5,%sp@-		/* 4084751a 3f05 */
 	movel	%d4,%sp@-		/* 4084751c 2f04 */
@@ -13195,7 +13184,7 @@ FindGivenPath:
 	movel	%fp@(28),%sp@-		/* 40847522 2f2e 001c */
 	movel	%fp@(24),%sp@-		/* 40847526 2f2e 0018 */
 	moveq	#18,%d0			/* 4084752a 7012 */
-	.short	0xa823			/* 4084752c a823 */
+	_AliasDispatch
 	movew	%sp@+,%d7		/* 4084752e 3e1f */
 	bnes	.L40847536		/* 40847530 6604 */
 	moveq	#-43,%d0		/* 40847532 70d5 */
@@ -13474,13 +13463,13 @@ __v__AL_findByRelPath:
 	moveq	#0,%d0			/* 408477bc 7000 */
 	movel	%d0,%sp@-		/* 408477be 2f00 */
 	moveq	#17,%d0			/* 408477c0 7011 */
-	.short	0xa823			/* 408477c2 a823 */
+	_AliasDispatch
 	movew	%sp@+,%d5		/* 408477c4 3a1f */
 	bnew	.L408478ae		/* 408477c6 6600 00e6 */
 	moveq	#2,%d0			/* 408477ca 7002 */
 	cmpl	%fp@(-6),%d0		/* 408477cc b0ae fffa */
 	beqs	.L408477d6		/* 408477d0 6704 */
-	dbf	%d6,.L408477ac	/* 408477d2 51ce ffd8 */
+	dbf	%d6,.L408477ac		/* 408477d2 51ce ffd8 */
 
 .L408477d6:
 	subql	#4,%sp			/* 408477d6 598f */
@@ -13569,7 +13558,7 @@ __v__AL_findByRelPath:
 	movel	%fp@(20),%sp@-		/* 40847894 2f2e 0014 */
 	movel	%fp@(16),%sp@-		/* 40847898 2f2e 0010 */
 	moveq	#18,%d0			/* 4084789c 7012 */
-	.short	0xa823			/* 4084789e a823 */
+	_AliasDispatch
 	movew	%sp@+,%d5		/* 408478a0 3a1f */
 	beqs	.L408478ae		/* 408478a2 670a */
 	moveal	%fp@(20),%a0		/* 408478a4 206e 0014 */
@@ -13991,7 +13980,7 @@ __v__ALI_STRIPFILENAME:
 	movew	%d7,%sp@-		/* 40847c26 3f07 */
 	pea	%fp@(-256)		/* 40847c28 486e ff00 */
 	moveq	#22,%d0			/* 40847c2c 7016 */
-	.short	0xa823			/* 40847c2e a823 */
+	_AliasDispatch
 	extl	%d7			/* 40847c30 48c7 */
 	moveq	#0,%d0			/* 40847c32 7000 */
 	moveb	%fp@(-256),%d0		/* 40847c34 102e ff00 */

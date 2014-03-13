@@ -616,6 +616,10 @@
 		.short	0xa840
 	.endm
 
+	.macro	_UserDelay
+		.short	0xa84c
+	.endm
+
 	.macro	_FixDiv
 		.short	0xa84d
 	.endm
@@ -855,6 +859,10 @@
 
 	.macro	_Button
 		.short	0xa974
+	.endm
+
+	.macro	_TickCount
+		.short	0xa975
 	.endm
 
 	.macro	_GetNewDialog
