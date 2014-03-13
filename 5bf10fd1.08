@@ -9837,69 +9837,61 @@ sub_408454b0:
 	.align	16
 
 SearchAllVolumes:
-	linkw	%fp,#0			/* 408454c0 4e56 0000 */
-	.short	0x48e7	/* 408454c4 48e7 */
-	.short	0x0f18	/* 408454c6 0f18 */
-	.short	0x382e	/* 408454c8 382e */
-	.short	0x001a	/* 408454ca 001a */
-	.short	0x3a2e	/* 408454cc 3a2e */
-	.short	0x000e	/* 408454ce 000e */
-	.short	0x1c2e	/* 408454d0 1c2e */
-	.short	0x000b	/* 408454d2 000b */
-	.short	0x2e2e	/* 408454d4 2e2e */
-	.short	0x0014	/* 408454d6 0014 */
-	.short	0x286e	/* 408454d8 286e */
-	.short	0x0010	/* 408454da 0010 */
-	.short	0x2678	/* 408454dc 2678 */
-	.short	0x0358	/* 408454de 0358 */
-	.short	0x6050	/* 408454e0 6050 */
-	moveq	#0,%d0			/* 408454e2 7000 */
-	.short	0x1006	/* 408454e4 1006 */
-	.short	0x0c40	/* 408454e6 0c40 */
-	.short	0x0001	/* 408454e8 0001 */
-	.short	0x6606	/* 408454ea 6606 */
-	.short	0xba6b	/* 408454ec ba6b */
-	.short	0x004e	/* 408454ee 004e */
-	.short	0x673e	/* 408454f0 673e */
-	.short	0x396b	/* 408454f2 396b */
-	.short	0x004e	/* 408454f4 004e */
-	.short	0x001c	/* 408454f6 001c */
-	.short	0x203c	/* 408454f8 203c */
-	.short	0x0000	/* 408454fa 0000 */
-	.short	0x0100	/* 408454fc 0100 */
-	.short	0xc087	/* 408454fe c087 */
-	.short	0x670c	/* 40845500 670c */
-	.short	0x2f0c	/* 40845502 2f0c */
-	.short	0x48c4	/* 40845504 48c4 */
-	.short	0x2f04	/* 40845506 2f04 */
-	.short	0x4eba	/* 40845508 4eba */
-	.short	0xf916	/* 4084550a f916 */
-	.short	0x504f	/* 4084550c 504f */
-	.short	0x203c	/* 4084550e 203c */
-	.short	0x0000	/* 40845510 0000 */
-	.short	0x0200	/* 40845512 0200 */
-	.short	0xc087	/* 40845514 c087 */
-	.short	0x6708	/* 40845516 6708 */
-	.short	0x2f0c	/* 40845518 2f0c */
-	.short	0x4eba	/* 4084551a 4eba */
-	.short	0xfe24	/* 4084551c fe24 */
-	.short	0x584f	/* 4084551e 584f */
-	.short	0x302c	/* 40845520 302c */
-	.short	0x001e	/* 40845522 001e */
-	.short	0xb06c	/* 40845524 b06c */
-	.short	0x0008	/* 40845526 0008 */
-	.short	0x6c0c	/* 40845528 6c0c */
-	.short	0x4a2c	/* 4084552a 4a2c */
-	.short	0x0070	/* 4084552c 0070 */
-	.short	0x6606	/* 4084552e 6606 */
-	.short	0x2653	/* 40845530 2653 */
-	.short	0x200b	/* 40845532 200b */
-	.short	0x66ac	/* 40845534 66ac */
-	.short	0x4cee	/* 40845536 4cee */
-	.short	0x18f0	/* 40845538 18f0 */
-	.short	0xffe8	/* 4084553a ffe8 */
-	.short	0x4e5e	/* 4084553c 4e5e */
-	rts				/* 4084553e 4e75 */
+	linkw	%fp,#0
+	moveml	%d4-%d7/%a3-%a4,%sp@-
+	movew	%fp@(26),%d4
+	movew	%fp@(14),%d5
+	moveb	%fp@(11),%d6
+	movel	%fp@(20),%d7
+	moveal	%fp@(16),%a4
+	moveal	0x358,%a3
+	bras	.L40845532
+
+.L408454e2:
+	moveq	#0,%d0
+	moveb	%d6,%d0
+	cmpiw	#1,%d0
+	bnes	.L408454f2
+	cmpw	%a3@(78),%d5
+	beqs	.L40845530
+
+.L408454f2:
+	movew	%a3@(78),%a4@(28)
+	movel	#256,%d0
+	andl	%d7,%d0
+	beqs	.L4084550e
+	movel	%a4,%sp@-
+	extl	%d4
+	movel	%d4,%sp@-
+	jsr	%pc@(FindTarget)
+	addqw	#8,%sp
+
+.L4084550e:
+	movel	#512,%d0
+	andl	%d7,%d0
+	beqs	.L40845520
+	movel	%a4,%sp@-
+	jsr	%pc@(SearchOneVolume)
+	addqw	#4,%sp
+
+.L40845520:
+	movew	%a4@(30),%d0
+	cmpw	%a4@(8),%d0
+	bges	.L40845536
+	tstb	%a4@(112)
+	bnes	.L40845536
+
+.L40845530:
+	moveal	%a3@,%a3
+
+.L40845532:
+	movel	%a3,%d0
+	bnes	.L408454e2
+
+.L40845536:
+	moveml	%fp@(-24),%d4-%d7/%a3-%a4
+	unlk	%fp
+	rts
 
 __v__AL_isItSelf:
 	linkw	%fp,#-66		/* 40845540 4e56 ffbe */
