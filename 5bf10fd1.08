@@ -9201,34 +9201,27 @@ off_40844e64:
 	.short	.L40844fc8+2-off_40844e64
 
 .L40844e6e:
-	.short	0x7601	/* 40844e6e 7601 */
-	.short	0x4a2b	/* 40844e70 4a2b */
-	.short	0x0071	/* 40844e72 0071 */
-	.short	0x6608	/* 40844e74 6608 */
-	.short	0x4aab	/* 40844e76 4aab */
-	.short	0x0010	/* 40844e78 0010 */
-	.short	0x6602	/* 40844e7a 6602 */
-	.short	0x7600	/* 40844e7c 7600 */
-	.short	0x1c03	/* 40844e7e 1c03 */
-	.short	0x486b	/* 40844e80 486b */
-	.short	0x0024	/* 40844e82 0024 */
-	.short	0x486b	/* 40844e84 486b */
-	.short	0x0020	/* 40844e86 0020 */
-	.short	0x2f0c	/* 40844e88 2f0c */
-	.short	0x302b	/* 40844e8a 302b */
-	.short	0x001c	/* 40844e8c 001c */
-	.short	0x48c0	/* 40844e8e 48c0 */
-	.short	0x2f00	/* 40844e90 2f00 */
-	.short	0x4eba	/* 40844e92 4eba */
-	.short	0x2512	/* 40844e94 2512 */
-	.short	0x3e00	/* 40844e96 3e00 */
-	.short	0x4fef	/* 40844e98 4fef */
-	.short	0x0010	/* 40844e9a 0010 */
-	.short	0x6700	/* 40844e9c 6700 */
-	.short	0x0178	/* 40844e9e 0178 */
-	.short	0x3007	/* 40844ea0 3007 */
-	.short	0x6000	/* 40844ea2 6000 */
-	.short	0x01b8	/* 40844ea4 01b8 */
+	moveq	#1,%d3
+	tstb	%a3@(113)
+	bnes	.L40844e7e
+	tstl	%a3@(16)
+	bnes	.L40844e7e
+	moveq	#0,%d3
+
+.L40844e7e:
+	moveb	%d3,%d6
+	pea	%a3@(36)
+	pea	%a3@(32)
+	movel	%a4,%sp@-
+	movew	%a3@(28),%d0
+	extl	%d0
+	movel	%d0,%sp@-
+	jsr	%pc@(sub_408473a6)
+	movew	%d0,%d7
+	lea	%sp@(16),%sp
+	beqw	.L40845016
+	movew	%d7,%d0
+	braw	.L4084505c
 
 .L40844ea6:
 	.short	0x426e	/* 40844ea6 426e */
@@ -9424,6 +9417,8 @@ off_40844e64:
 .L40845012:
 	.short	0x70d5	/* 40845012 70d5 */
 	.short	0x6046	/* 40845014 6046 */
+
+.L40845016:
 	.short	0x4a06	/* 40845016 4a06 */
 	.short	0x6628	/* 40845018 6628 */
 	.short	0x2f2b	/* 4084501a 2f2b */
@@ -9459,6 +9454,8 @@ off_40844e64:
 	.short	0xfd4a	/* 40845056 fd4a */
 	.short	0x584f	/* 40845058 584f */
 	moveq	#0,%d0			/* 4084505a 7000 */
+
+.L4084505c:
 	.short	0x4cee	/* 4084505c 4cee */
 	.short	0x18c8	/* 4084505e 18c8 */
 	.short	0xff80	/* 40845060 ff80 */
@@ -13005,6 +13002,7 @@ __v__AL_findByID:
 	unlk	%fp			/* 408473a2 4e5e */
 	rts				/* 408473a4 4e75 */
 
+sub_408473a6:
 	moveal	0x2018,%a1		/* 408473a6 2278 2018 */
 	moveal	%a1@(172),%a1		/* 408473aa 2269 00ac */
 	jmp	%a1@			/* 408473ae 4ed1 */
