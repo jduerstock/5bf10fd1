@@ -9224,58 +9224,49 @@ off_40844e64:
 	braw	.L4084505c
 
 .L40844ea6:
-	.short	0x426e	/* 40844ea6 426e */
-	.short	0xffb0	/* 40844ea8 ffb0 */
-	moveq	#-1,%d0			/* 40844eaa 70ff */
-	.short	0xb0ac	/* 40844eac b0ac */
-	.short	0x002e	/* 40844eae 002e */
-	.short	0x671a	/* 40844eb0 671a */
-	.short	0x558f	/* 40844eb2 558f */
-	.short	0x3f2b	/* 40844eb4 3f2b */
-	.short	0x001c	/* 40844eb6 001c */
-	.short	0x2f2c	/* 40844eb8 2f2c */
-	.short	0x002e	/* 40844eba 002e */
-	.short	0x486c	/* 40844ebc 486c */
-	.short	0x0032	/* 40844ebe 0032 */
-	.short	0x486e	/* 40844ec0 486e */
-	.short	0xff94	/* 40844ec2 ff94 */
-	.short	0x4eba	/* 40844ec4 4eba */
-	.short	0x3058	/* 40844ec6 3058 */
-	.short	0x301f	/* 40844ec8 301f */
-	.short	0x6002	/* 40844eca 6002 */
-	.short	0x7088	/* 40844ecc 7088 */
-	.short	0x3e00	/* 40844ece 3e00 */
-	.short	0x6706	/* 40844ed0 6706 */
-	.short	0x3007	/* 40844ed2 3007 */
-	.short	0x6000	/* 40844ed4 6000 */
-	.short	0x0186	/* 40844ed6 0186 */
-	.short	0x276e	/* 40844ed8 276e */
-	.short	0xffc4	/* 40844eda ffc4 */
-	.short	0x0064	/* 40844edc 0064 */
-	.short	0x7601	/* 40844ede 7601 */
-	.short	0x4a2b	/* 40844ee0 4a2b */
-	.short	0x0071	/* 40844ee2 0071 */
-	.short	0x661c	/* 40844ee4 661c */
-	.short	0x4aab	/* 40844ee6 4aab */
-	.short	0x0010	/* 40844ee8 0010 */
-	.short	0x6616	/* 40844eea 6616 */
-	.short	0x2f03	/* 40844eec 2f03 */
-	.short	0x2f0c	/* 40844eee 2f0c */
-	.short	0x486e	/* 40844ef0 486e */
-	.short	0xff94	/* 40844ef2 ff94 */
-	.short	0x4eba	/* 40844ef4 4eba */
-	.short	0xfb4a	/* 40844ef6 fb4a */
-	.short	0x508f	/* 40844ef8 508f */
-	.short	0x261f	/* 40844efa 261f */
-	.short	0x4a00	/* 40844efc 4a00 */
-	.short	0x6702	/* 40844efe 6702 */
-	.short	0x7600	/* 40844f00 7600 */
-	.short	0x1c03	/* 40844f02 1c03 */
-	.short	0x177c	/* 40844f04 177c */
-	.short	0x0001	/* 40844f06 0001 */
-	.short	0x0072	/* 40844f08 0072 */
-	.short	0x6000	/* 40844f0a 6000 */
-	.short	0x010a	/* 40844f0c 010a */
+	clrw	%fp@(-80)
+	moveq	#-1,%d0
+	cmpl	%a4@(46),%d0
+	beqs	.L40844ecc
+	subql	#2,%sp
+	movew	%a3@(28),%sp@-
+	movel	%a4@(46),%sp@-
+	pea	%a4@(50)
+	pea	%fp@(-108)
+	jsr	%pc@(AL_GETCATINFO)
+	movew	%sp@+,%d0
+	bras	.L40844ece
+
+.L40844ecc:
+	moveq	#-120,%d0
+
+.L40844ece:
+	movew	%d0,%d7
+	beqs	.L40844ed8
+	movew	%d7,%d0
+	braw	.L4084505c
+
+.L40844ed8:
+	movel	%fp@(-60),%a3@(100)
+	moveq	#1,%d3
+	tstb	%a3@(113)
+	bnes	.L40844f02
+	tstl	%a3@(16)
+	bnes	.L40844f02
+	movel	%d3,%sp@-
+	movel	%a4,%sp@-
+	pea	%fp@(-108)
+	jsr	%pc@(KindMatches)
+	addql	#8,%sp
+	movel	%sp@+,%d3
+	tstb	%d0
+	beqs	.L40844f02
+	moveq	#0,%d3
+
+.L40844f02:
+	moveb	%d3,%d6
+	moveb	#1,%a3@(114)
+	braw	.L40845016
 
 .L40844f0e:
 	.short	0x558f	/* 40844f0e 558f */
