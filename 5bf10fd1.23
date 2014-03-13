@@ -668,51 +668,35 @@ sub_408b9576:
 	rts
 
 .L408b95ca:
-	.short	0x082e	/* 408b95ca 082e */
-	.short	0x0005	/* 408b95cc 0005 */
-	.short	0xff1c	/* 408b95ce ff1c */
-	.short	0x6700	/* 408b95d0 6700 */
-	.short	0x013a	/* 408b95d2 013a */
-	.short	0x6100	/* 408b95d4 6100 */
-	.short	0x009c	/* 408b95d6 009c */
-	.short	0x1d57	/* 408b95d8 1d57 */
-	.short	0xffbb	/* 408b95da ffbb */
-	.short	0x0c17	/* 408b95dc 0c17 */
-	.short	0x0040	/* 408b95de 0040 */
-	.short	0x6604	/* 408b95e0 6604 */
-	.short	0x700d	/* 408b95e2 700d */
-	.short	0x6002	/* 408b95e4 6002 */
-	.short	0x700b	/* 408b95e6 700b */
-	.short	0x4297	/* 408b95e8 4297 */
-	.short	0x42a7	/* 408b95ea 42a7 */
-	.short	0x51c8	/* 408b95ec 51c8 */
-	.short	0xfffc	/* 408b95ee fffc */
-	.short	0x1eae	/* 408b95f0 1eae */
-	.short	0xffbb	/* 408b95f2 ffbb */
-	.short	0x1f7c	/* 408b95f4 1f7c */
-	.short	0x0060	/* 408b95f6 0060 */
-	.short	0x0001	/* 408b95f8 0001 */
-	.short	0x2d6e	/* 408b95fa 2d6e */
-	.short	0xff84	/* 408b95fc ff84 */
-	.short	0xff00	/* 408b95fe ff00 */
-	.short	0x00ae	/* 408b9600 00ae */
-	.short	0x0180	/* 408b9602 0180 */
-	.short	0x0000	/* 408b9604 0000 */
-	.short	0xff24	/* 408b9606 ff24 */
-	.short	0x4cee	/* 408b9608 4cee */
-	.short	0x0303	/* 408b960a 0303 */
-	.short	0xff40	/* 408b960c ff40 */
-	.short	0xf22e	/* 408b960e f22e */
-	.short	0xd0f0	/* 408b9610 d0f0 */
-	.short	0xff50	/* 408b9612 ff50 */
-	.short	0xf22e	/* 408b9614 f22e */
-	.short	0x9c00	/* 408b9616 9c00 */
-	.short	0xff80	/* 408b9618 ff80 */
-	.short	0xf35f	/* 408b961a f35f */
-	.short	0x4e5e	/* 408b961c 4e5e */
-	.short	0x2f38	/* 408b961e 2f38 */
-	.short	0x1fdc	/* 408b9620 1fdc */
-	rts				/* 408b9622 4e75 */
+	btst	#5,%fp@(-228)
+	beqw	.L408b970c
+	bsrw	sub_408b9672
+	moveb	%sp@,%fp@(-69)
+	cmpib	#64,%sp@
+	bnes	.L408b95e6
+	moveq	#13,%d0
+	bras	.L408b95e8
+
+.L408b95e6:
+	moveq	#11,%d0
+
+.L408b95e8:
+	clrl	%sp@
+
+.L408b95ea:
+	clrl	%sp@-
+	dbf	%d0,.L408b95ea
+	moveb	%fp@(-69),%sp@
+	moveb	#96,%sp@(1)
+	movel	%fp@(-124),%fp@(-256)
+	oril	#25165824,%fp@(-220)
+	moveml	%fp@(-192),%d0-%d1/%a0-%a1
+	fmovemx	%fp@(-176),%fp0-%fp3
+	fmoveml	%fp@(-128),%fpiar/%fpsr/%fpcr
+	frestore	%sp@+
+	unlk	%fp
+	movel	0x1fdc,%sp@-
+	rts
 
 .L408b9624:
 	.short	0x08ae	/* 408b9624 08ae */
@@ -833,6 +817,8 @@ sub_408b9672:
 	.short	0x308c	/* 408b9706 308c */
 	.short	0x6000	/* 408b9708 6000 */
 	.short	0x3088	/* 408b970a 3088 */
+
+.L408b970c:
 	.short	0x202e	/* 408b970c 202e */
 	.short	0xff20	/* 408b970e ff20 */
 	.short	0xe9c0	/* 408b9710 e9c0 */
