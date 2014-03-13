@@ -9291,40 +9291,31 @@ off_40844e64:
 	braw	.L40845016
 
 .L40844f48:
-	.short	0x486b	/* 40844f48 486b */
-	.short	0x0024	/* 40844f4a 0024 */
-	.short	0x486b	/* 40844f4c 486b */
-	.short	0x0020	/* 40844f4e 0020 */
-	.short	0x2f0c	/* 40844f50 2f0c */
-	.short	0x302b	/* 40844f52 302b */
-	.short	0x001c	/* 40844f54 001c */
-	.short	0x48c0	/* 40844f56 48c0 */
-	.short	0x2f00	/* 40844f58 2f00 */
-	.short	0x4eba	/* 40844f5a 4eba */
-	.short	0x266e	/* 40844f5c 266e */
-	.short	0x3e00	/* 40844f5e 3e00 */
-	.short	0x4fef	/* 40844f60 4fef */
-	.short	0x0010	/* 40844f62 0010 */
-	.short	0x673e	/* 40844f64 673e */
-	moveq	#-1,%d0			/* 40844f66 70ff */
-	.short	0xb06c	/* 40844f68 b06c */
-	.short	0x002c	/* 40844f6a 002c */
-	.short	0x671e	/* 40844f6c 671e */
-	.short	0x486b	/* 40844f6e 486b */
-	.short	0x0024	/* 40844f70 0024 */
-	.short	0x486b	/* 40844f72 486b */
-	.short	0x0020	/* 40844f74 0020 */
-	.short	0x2f0c	/* 40844f76 2f0c */
-	.short	0x302b	/* 40844f78 302b */
-	.short	0x001c	/* 40844f7a 001c */
-	.short	0x48c0	/* 40844f7c 48c0 */
-	.short	0x2f00	/* 40844f7e 2f00 */
-	.short	0x4eba	/* 40844f80 4eba */
-	.short	0x27d6	/* 40844f82 27d6 */
-	.short	0x3e00	/* 40844f84 3e00 */
-	.short	0x4fef	/* 40844f86 4fef */
-	.short	0x0010	/* 40844f88 0010 */
-	.short	0x6018	/* 40844f8a 6018 */
+	pea	%a3@(36)
+	pea	%a3@(32)
+	movel	%a4,%sp@-
+	movew	%a3@(28),%d0
+	extl	%d0
+	movel	%d0,%sp@-
+	jsr	%pc@(AL_findByAbsPath)
+	movew	%d0,%d7
+	lea	%sp@(16),%sp
+	beqs	.L40844fa4
+	moveq	#-1,%d0
+	cmpw	%a4@(44),%d0
+	beqs	.L40844f8c
+	pea	%a3@(36)
+	pea	%a3@(32)
+	movel	%a4,%sp@-
+	movew	%a3@(28),%d0
+	extl	%d0
+	movel	%d0,%sp@-
+	jsr	%pc@(sub_40847758)
+	movew	%d0,%d7
+	lea	%sp@(16),%sp
+	bras	.L40844fa4
+
+.L40844f8c:
 	.short	0x486b	/* 40844f8c 486b */
 	.short	0x0024	/* 40844f8e 0024 */
 	.short	0x486b	/* 40844f90 486b */
@@ -9337,6 +9328,8 @@ off_40844e64:
 	.short	0x3e00	/* 40844f9e 3e00 */
 	.short	0x4fef	/* 40844fa0 4fef */
 	.short	0x0010	/* 40844fa2 0010 */
+
+.L40844fa4:
 	.short	0x0c47	/* 40844fa4 0c47 */
 	.short	0xffd5	/* 40844fa6 ffd5 */
 	.short	0x6704	/* 40844fa8 6704 */
@@ -13396,6 +13389,7 @@ __v__AL_findByAbsPathToRoot:
 	unlk	%fp			/* 40847754 4e5e */
 	rts				/* 40847756 4e75 */
 
+sub_40847758:
 	moveal	0x2018,%a1		/* 40847758 2278 2018 */
 	moveal	%a1@(188),%a1		/* 4084775c 2269 00bc */
 	jmp	%a1@			/* 40847760 4ed1 */
