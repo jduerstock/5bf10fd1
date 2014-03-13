@@ -9129,65 +9129,47 @@ AddCandidate:
 	.align	16
 
 UpdateAliasListAndFlag:
-	linkw	%fp,#0			/* 40844da0 4e56 0000 */
-	.short	0x48e7	/* 40844da4 48e7 */
-	.short	0x0018	/* 40844da6 0018 */
-	.short	0x286e	/* 40844da8 286e */
-	.short	0x0008	/* 40844daa 0008 */
-	.short	0x266c	/* 40844dac 266c */
-	.short	0x0018	/* 40844dae 0018 */
-	.short	0x2f2c	/* 40844db0 2f2c */
-	.short	0x000a	/* 40844db2 000a */
-	.short	0x302c	/* 40844db4 302c */
-	.short	0x0008	/* 40844db6 0008 */
-	.short	0x48c0	/* 40844db8 48c0 */
-	.short	0x2f00	/* 40844dba 2f00 */
-	.short	0x486c	/* 40844dbc 486c */
-	.short	0x001e	/* 40844dbe 001e */
-	.short	0x486c	/* 40844dc0 486c */
-	.short	0x0024	/* 40844dc2 0024 */
-	.short	0x2f2c	/* 40844dc4 2f2c */
-	.short	0x0020	/* 40844dc6 0020 */
-	.short	0x302c	/* 40844dc8 302c */
-	.short	0x001c	/* 40844dca 001c */
-	.short	0x48c0	/* 40844dcc 48c0 */
-	.short	0x2f00	/* 40844dce 2f00 */
-	.short	0x4eba	/* 40844dd0 4eba */
-	.short	0xff7e	/* 40844dd2 ff7e */
-	moveq	#0,%d0			/* 40844dd4 7000 */
-	.short	0x102c	/* 40844dd6 102c */
-	.short	0x000e	/* 40844dd8 000e */
-	.short	0x4a80	/* 40844dda 4a80 */
-	.short	0x4fef	/* 40844ddc 4fef */
-	.short	0x0018	/* 40844dde 0018 */
-	.short	0x662c	/* 40844de0 662c */
-	.short	0x202c	/* 40844de2 202c */
-	.short	0x0020	/* 40844de4 0020 */
-	.short	0xb0ab	/* 40844de6 b0ab */
-	.short	0x002e	/* 40844de8 002e */
-	.short	0x661c	/* 40844dea 661c */
-	.short	0x202c	/* 40844dec 202c */
-	.short	0x0064	/* 40844dee 0064 */
-	.short	0xb0ab	/* 40844df0 b0ab */
-	.short	0x0072	/* 40844df2 0072 */
-	.short	0x6612	/* 40844df4 6612 */
-	.short	0x558f	/* 40844df6 558f */
-	.short	0x486c	/* 40844df8 486c */
-	.short	0x0024	/* 40844dfa 0024 */
-	.short	0x486b	/* 40844dfc 486b */
-	.short	0x0032	/* 40844dfe 0032 */
-	.short	0x7019	/* 40844e00 7019 */
-	.short	0xa823	/* 40844e02 a823 */
-	.short	0x4a1f	/* 40844e04 4a1f */
-	.short	0x6606	/* 40844e06 6606 */
-	.short	0x197c	/* 40844e08 197c */
-	.short	0x0001	/* 40844e0a 0001 */
-	.short	0x000e	/* 40844e0c 000e */
-	.short	0x4cee	/* 40844e0e 4cee */
-	.short	0x1800	/* 40844e10 1800 */
-	.short	0xfff8	/* 40844e12 fff8 */
-	.short	0x4e5e	/* 40844e14 4e5e */
-	rts				/* 40844e16 4e75 */
+	linkw	%fp,#0
+	moveml	%a3-%a4,%sp@-
+	moveal	%fp@(8),%a4
+	moveal	%a4@(24),%a3
+	movel	%a4@(10),%sp@-
+	movew	%a4@(8),%d0
+	extl	%d0
+	movel	%d0,%sp@-
+	pea	%a4@(30)
+	pea	%a4@(36)
+	movel	%a4@(32),%sp@-
+	movew	%a4@(28),%d0
+	extl	%d0
+	movel	%d0,%sp@-
+	jsr	%pc@(AddCandidate)
+	moveq	#0,%d0
+	moveb	%a4@(14),%d0
+	tstl	%d0
+	lea	%sp@(24),%sp
+	bnes	.L40844e0e
+	movel	%a4@(32),%d0
+	cmpl	%a3@(46),%d0
+	bnes	.L40844e08
+	movel	%a4@(100),%d0
+	cmpl	%a3@(114),%d0
+	bnes	.L40844e08
+	subql	#2,%sp
+	pea	%a4@(36)
+	pea	%a3@(50)
+	moveq	#25,%d0
+	.short	0xa823
+	tstb	%sp@+
+	bnes	.L40844e0e
+
+.L40844e08:
+	moveb	#1,%a4@(14)
+
+.L40844e0e:
+	moveml	%fp@(-8),%a3-%a4
+	unlk	%fp
+	rts
 
 	.align	16
 
