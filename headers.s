@@ -845,6 +845,10 @@
 		.short	0xa971
 	.endm
 
+	.macro	_GetMouse
+		.short	0xa972
+	.endm
+
 	.macro	_StillDown
 		.short	0xa973
 	.endm
