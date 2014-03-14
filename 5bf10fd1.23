@@ -6649,6 +6649,8 @@ sub_408bc832:
 	.short	0xf210	/* 408bc96a f210 */
 	.short	0xd080	/* 408bc96c d080 */
 	rts				/* 408bc96e 4e75 */
+
+.L408bc970:
 	.short	0x00ae	/* 408bc970 00ae */
 	.short	0x0000	/* 408bc972 0000 */
 	.short	0x1048	/* 408bc974 1048 */
@@ -6858,6 +6860,7 @@ sub_408bc832:
 	oril	#2600,%fp@(-124)	/* 408bcb08 00ae 0000 0a28 ff84 */
 	bras	.L408bcb1a		/* 408bcb10 6008 */
 
+.L408bcb12:
 	.short	0x00ae	/* 408bcb12 00ae */
 	.short	0x0000	/* 408bcb14 0000 */
 	.short	0x0800	/* 408bcb16 0800 */
@@ -8625,51 +8628,34 @@ sub_408bd894:
 	rts
 
 .L408bd964:
-	.short	0x4a2e	/* 408bd964 4a2e */
-	.short	0xffac	/* 408bd966 ffac */
-	.short	0x6704	/* 408bd968 6704 */
-	.short	0x0041	/* 408bd96a 0041 */
-	.short	0x8000	/* 408bd96c 8000 */
-	.short	0x3d6e	/* 408bd96e 3d6e */
-	.short	0xff28	/* 408bd970 ff28 */
-	.short	0xff34	/* 408bd972 ff34 */
-	.short	0x2d6e	/* 408bd974 2d6e */
-	.short	0xff2c	/* 408bd976 ff2c */
-	.short	0xff38	/* 408bd978 ff38 */
-	.short	0x2d6e	/* 408bd97a 2d6e */
-	.short	0xff30	/* 408bd97c ff30 */
-	.short	0xff3c	/* 408bd97e ff3c */
-	.short	0x6000	/* 408bd980 6000 */
-	.short	0xefee	/* 408bd982 efee */
+	tstb	%fp@(-84)
+	beqs	.L408bd96e
+	oriw	#-32768,%d1
+
+.L408bd96e:
+	movew	%fp@(-216),%fp@(-204)
+	movel	%fp@(-212),%fp@(-200)
+	movel	%fp@(-208),%fp@(-196)
+	braw	.L408bc970
 
 .L408bd984:
-	.short	0x4a2e	/* 408bd984 4a2e */
-	.short	0xffac	/* 408bd986 ffac */
-	.short	0x6704	/* 408bd988 6704 */
-	.short	0x0041	/* 408bd98a 0041 */
-	.short	0x8000	/* 408bd98c 8000 */
-	.short	0x4aae	/* 408bd98e 4aae */
-	.short	0xff2c	/* 408bd990 ff2c */
-	.short	0x6d14	/* 408bd992 6d14 */
-	.short	0x3d41	/* 408bd994 3d41 */
-	.short	0xff28	/* 408bd996 ff28 */
-	.short	0x00ae	/* 408bd998 00ae */
-	.short	0x0000	/* 408bd99a 0000 */
-	.short	0x0800	/* 408bd99c 0800 */
-	.short	0xff84	/* 408bd99e ff84 */
-	.short	0x41ee	/* 408bd9a0 41ee */
-	.short	0xff28	/* 408bd9a2 ff28 */
-	.short	0x6000	/* 408bd9a4 6000 */
-	.short	0xf16c	/* 408bd9a6 f16c */
-	.short	0x3d41	/* 408bd9a8 3d41 */
-	.short	0xff28	/* 408bd9aa ff28 */
-	.short	0xf22e	/* 408bd9ac f22e */
-	.short	0x9000	/* 408bd9ae 9000 */
-	.short	0xff80	/* 408bd9b0 ff80 */
-	.short	0xf22e	/* 408bd9b2 f22e */
-	.short	0x4800	/* 408bd9b4 4800 */
-	.short	0xff28	/* 408bd9b6 ff28 */
-	rts				/* 408bd9b8 4e75 */
+	tstb	%fp@(-84)
+	beqs	.L408bd98e
+	oriw	#-32768,%d1
+
+.L408bd98e:
+	tstl	%fp@(-212)
+	blts	.L408bd9a8
+	movew	%d1,%fp@(-216)
+	oril	#2048,%fp@(-124)
+	lea	%fp@(-216),%a0
+	braw	.L408bcb12
+
+.L408bd9a8:
+	movew	%d1,%fp@(-216)
+	fmovel	%fp@(-128),%fpcr
+	fmovex	%fp@(-216),%fp0
+	rts
 
 .L408bd9ba:
 	.short	0xd280	/* 408bd9ba d280 */
