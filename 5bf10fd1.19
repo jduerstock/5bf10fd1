@@ -412,31 +412,24 @@ sb_SetNewSFNT:
 	rts
 
 __v__IntrinsicStyle:
-	.short	0x4e56	/* 408984c0 4e56 */
-	.short	0x0000	/* 408984c2 0000 */
-	.short	0x2f0c	/* 408984c4 2f0c */
-	.short	0x286e	/* 408984c6 286e */
-	.short	0x0008	/* 408984c8 0008 */
-	.short	0x302c	/* 408984ca 302c */
-	.short	0x0410	/* 408984cc 0410 */
-	.short	0xe040	/* 408984ce e040 */
-	.short	0x7200	/* 408984d0 7200 */
-	.short	0x122c	/* 408984d2 122c */
-	.short	0x0423	/* 408984d4 0423 */
-	.short	0x4641	/* 408984d6 4641 */
-	.short	0xc240	/* 408984d8 c240 */
-	.short	0x3001	/* 408984da 3001 */
-	.short	0x286e	/* 408984dc 286e */
-	.short	0xfffc	/* 408984de fffc */
-	.short	0x4e5e	/* 408984e0 4e5e */
-	rts				/* 408984e2 4e75 */
+	linkw	%fp,#0
+	movel	%a4,%sp@-
+	moveal	%fp@(8),%a4
+	movew	%a4@(1040),%d0
+	asrw	#8,%d0
+	moveq	#0,%d1
+	moveb	%a4@(1059),%d1
+	notw	%d1
+	andw	%d0,%d1
+	movew	%d1,%d0
+	moveal	%fp@(-4),%a4
+	unlk	%fp
+	rts
 
 IntrinsicStyle:
-	.short	0x2278	/* 408984e4 2278 */
-	.short	0x202c	/* 408984e6 202c */
-	.short	0x2269	/* 408984e8 2269 */
-	.short	0x0050	/* 408984ea 0050 */
-	jmp	%a1@			/* 408984ec 4ed1 */
+	moveal	0x202c,%a1
+	moveal	%a1@(80),%a1
+	jmp	%a1@
 
 	.align	16
 
