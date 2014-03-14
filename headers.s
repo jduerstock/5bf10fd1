@@ -230,6 +230,10 @@
 		.short	0xa05f
 	.endm
 
+	.macro	_FSDispatch
+		.short	0xa060
+	.endm
+
 	.macro	_HGetState p1
 		.ifnb \p1
 			moveal \p1,%a0
