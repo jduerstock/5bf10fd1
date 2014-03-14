@@ -397,6 +397,10 @@
 		.short	0xa080
 	.endm
 
+	.macro	_DTInstall
+		.short	0xa082
+	.endm
+
 	.macro	_GetOSDefault
 		.short	0xa084
 	.endm
