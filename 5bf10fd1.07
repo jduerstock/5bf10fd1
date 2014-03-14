@@ -9732,26 +9732,21 @@ sub_4083d59a:
 
 	linkw	%fp,#0			/* 4083d60c 4e56 0000 */
 	moveml	%d0-%d1/%a1/%a3,%sp@-
-	.short	0x206e	/* 4083d614 206e */
-	.short	0x0008	/* 4083d616 0008 */
-	.short	0x2258	/* 4083d618 2258 */
-	.short	0x2650	/* 4083d61a 2650 */
-	.short	0x302e	/* 4083d61c 302e */
-	.short	0x000c	/* 4083d61e 000c */
-	.short	0xe548	/* 4083d620 e548 */
-	.short	0x2049	/* 4083d622 2049 */
-	.short	0xd0c0	/* 4083d624 d0c0 */
-	.short	0x6100	/* 4083d626 6100 */
-	.short	0xfe60	/* 4083d628 fe60 */
-	.short	0x1d41	/* 4083d62a 1d41 */
-	.short	0x000e	/* 4083d62c 000e */
-	.short	0x4cdf	/* 4083d62e 4cdf */
-	.short	0x0a03	/* 4083d630 0a03 */
-	.short	0x4e5e	/* 4083d632 4e5e */
-	.short	0x205f	/* 4083d634 205f */
-	.short	0x5c8f	/* 4083d636 5c8f */
-	.short	0x4ed0	/* 4083d638 4ed0 */
-	rts				/* 4083d63a 4e75 */
+	moveal	%fp@(8),%a0
+	moveal	%a0@+,%a1
+	moveal	%a0@,%a3
+	movew	%fp@(12),%d0
+	lslw	#2,%d0
+	moveal	%a1,%a0
+	addaw	%d0,%a0
+	bsrw	sub_4083d488
+	moveb	%d1,%fp@(14)
+	moveml	%sp@+,%d0-%d1/%a1/%a3
+	unlk	%fp
+	moveal	%sp@+,%a0
+	addql	#6,%sp
+	jmp	%a0@
+	rts
 
 sub_4083d63c:
 	moveal	ExpandMem,%a0		/* 4083d63c 2078 02b6 */
