@@ -436,6 +436,10 @@
 		.short	0xa092
 	.endm
 
+	.macro	_ServerDispatch
+		.short	0xa094
+	.endm
+
 	.macro	_GetZone
 		.short	0xa11a
 	.endm
