@@ -10716,59 +10716,56 @@ XTRIMMEASURE:
 	.short	0x5247	/* 4083dec4 5247 */
 
 __v__MEASUREIT:
-	.short	0x4a38	/* 4083dec6 4a38 */
-	.short	0x0ba5	/* 4083dec8 0ba5 */
-	.short	0x6d04	/* 4083deca 6d04 */
-	.short	0xbe46	/* 4083decc be46 */
-	.short	0x634e	/* 4083dece 634e */
-	.short	0x48e7	/* 4083ded0 48e7 */
-	.short	0x2a00	/* 4083ded2 2a00 */
-	.short	0xccba	/* 4083ded4 ccba */
-	.short	0x095e	/* 4083ded6 095e */
-	.short	0x4a6b	/* 4083ded8 4a6b */
-	.short	0x0050	/* 4083deda 0050 */
-	.short	0x6b08	/* 4083dedc 6b08 */
-	.short	0x3007	/* 4083dede 3007 */
-	.short	0x6140	/* 4083dee0 6140 */
-	.short	0x3001	/* 4083dee2 3001 */
-	.short	0x602a	/* 4083dee4 602a */
-	.short	0x7800	/* 4083dee6 7800 */
-	.short	0x3006	/* 4083dee8 3006 */
-	.short	0x6100	/* 4083deea 6100 */
-	.short	0x21b4	/* 4083deec 21b4 */
-	.short	0x3207	/* 4083deee 3207 */
-	.short	0x6100	/* 4083def0 6100 */
-	.short	0x21fc	/* 4083def2 21fc */
-	.short	0x3400	/* 4083def4 3400 */
-	.short	0x6100	/* 4083def6 6100 */
-	.short	0x260e	/* 4083def8 260e */
-	.short	0x6100	/* 4083defa 6100 */
-	.short	0x1c42	/* 4083defc 1c42 */
-	.short	0x5848	/* 4083defe 5848 */
-	.short	0x3f02	/* 4083df00 3f02 */
-	.short	0x611e	/* 4083df02 611e */
-	.short	0xd841	/* 4083df04 d841 */
-	.short	0x341f	/* 4083df06 341f */
-	.short	0x3c10	/* 4083df08 3c10 */
-	.short	0x5342	/* 4083df0a 5342 */
-	.short	0x66e8	/* 4083df0c 66e8 */
-	.short	0x3004	/* 4083df0e 3004 */
-	.short	0x4cdf	/* 4083df10 4cdf */
-	.short	0x0054	/* 4083df12 0054 */
-	.short	0x2278	/* 4083df14 2278 */
-	.short	0x02b6	/* 4083df16 02b6 */
-	.short	0x51e9	/* 4083df18 51e9 */
-	.short	0x003e	/* 4083df1a 003e */
-	rts				/* 4083df1c 4e75 */
-	moveq	#0,%d0			/* 4083df1e 7000 */
-	rts				/* 4083df20 4e75 */
+	tstb	0xba5
+	blts	.L4083ded0
+	cmpw	%d6,%d7
+	blss	.L4083df1e
+
+.L4083ded0:
+	moveml	%d2/%d4/%d6,%sp@-
+	andl	%pc@(sub_4083e832+2),%d6
+	tstw	%a3@(80)
+	bmis	.L4083dee6
+	movew	%d7,%d0
+	bsrs	sub_4083df22
+	movew	%d1,%d0
+	bras	.L4083df10
+
+.L4083dee6:
+	moveq	#0,%d4
+	movew	%d6,%d0
+	bsrw	sub_408400a0
+	movew	%d7,%d1
+	bsrw	sub_408400ee
+	movew	%d0,%d2
+
+.L4083def6:
+	bsrw	sub_40840506
+	bsrw	sub_4083fb3e
+	addqw	#4,%a0
+	movew	%d2,%sp@-
+	bsrs	sub_4083df22
+	addw	%d1,%d4
+	movew	%sp@+,%d2
+	movew	%a0@,%d6
+	subqw	#1,%d2
+	bnes	.L4083def6
+	movew	%d4,%d0
+
+.L4083df10:
+	moveml	%sp@+,%d2/%d4/%d6
+	moveal	0x2b6,%a1
+	sf	%a1@(62)
+	rts
+
+.L4083df1e:
+	moveq	#0,%d0
+	rts
 
 sub_4083df22:
-	.short	0x2278	/* 4083df22 2278 */
-	.short	0x02b6	/* 4083df24 02b6 */
-	.short	0x2269	/* 4083df26 2269 */
-	.short	0x00b8	/* 4083df28 00b8 */
-	jmp	%a1@			/* 4083df2a 4ed1 */
+	moveal	0x2b6,%a1
+	moveal	%a1@(184),%a1
+	jmp	%a1@
 
 __v__XGETWIDTH:
 	.short	0x4a6b	/* 4083df2c 4a6b */
