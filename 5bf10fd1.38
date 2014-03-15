@@ -46,55 +46,39 @@ sub_4093004c:
 	rtd	#8
 
 sub_40930080:
-	.short	0x4e56	/* 40930080 4e56 */
-	.short	0xffa2	/* 40930082 ffa2 */
-	.short	0x2d7c	/* 40930084 2d7c */
-	.short	0x0010	/* 40930086 0010 */
-	.short	0x2010	/* 40930088 2010 */
-	.short	0xfffc	/* 4093008a fffc */
-	.short	0x2f08	/* 4093008c 2f08 */
-	.short	0x206e	/* 4093008e 206e */
-	.short	0x000c	/* 40930090 000c */
-	.short	0x5c48	/* 40930092 5c48 */
-	.short	0x2f10	/* 40930094 2f10 */
-	.short	0x2f20	/* 40930096 2f20 */
-	.short	0x5548	/* 40930098 5548 */
-	.short	0x2f10	/* 4093009a 2f10 */
-	.short	0xf21f	/* 4093009c f21f */
-	.short	0xd080	/* 4093009e d080 */
-	.short	0xf227	/* 409300a0 f227 */
-	.short	0xb800	/* 409300a2 b800 */
-	.short	0x2f17	/* 409300a4 2f17 */
-	.short	0x422f	/* 409300a6 422f */
-	.short	0x0002	/* 409300a8 0002 */
-	.short	0xf21f	/* 409300aa f21f */
-	.short	0x9000	/* 409300ac 9000 */
-	.short	0x206e	/* 409300ae 206e */
-	.short	0x0008	/* 409300b0 0008 */
-	.short	0xf210	/* 409300b2 f210 */
-	moveq	#0,%d0			/* 409300b4 7000 */
-	.short	0xf227	/* 409300b6 f227 */
-	.short	0xa800	/* 409300b8 a800 */
-	.short	0x082f	/* 409300ba 082f */
-	.short	0x0005	/* 409300bc 0005 */
-	.short	0x0002	/* 409300be 0002 */
-	.short	0x584f	/* 409300c0 584f */
-	.short	0xf21f	/* 409300c2 f21f */
-	.short	0x9800	/* 409300c4 9800 */
-	.short	0x670a	/* 409300c6 670a */
-	.short	0xf23c	/* 409300c8 f23c */
-	.short	0x4480	/* 409300ca 4480 */
-	.short	0x7fbf	/* 409300cc 7fbf */
-	.short	0xffff	/* 409300ce ffff */
-	.short	0x6004	/* 409300d0 6004 */
-	.short	0xf210	/* 409300d2 f210 */
-	moveq	#0,%d0			/* 409300d4 7000 */
-	.short	0xf280	/* 409300d6 f280 */
-	.short	0x0000	/* 409300d8 0000 */
-	.short	0x205f	/* 409300da 205f */
-	.short	0x4e5e	/* 409300dc 4e5e */
-	.short	0x4e74	/* 409300de 4e74 */
-	.short	0x0008	/* 409300e0 0008 */
+	linkw	%fp,#-94
+	movel	#1056784,%fp@(-4)
+	movel	%a0,%sp@-
+	moveal	%fp@(12),%a0
+	addqw	#6,%a0
+	movel	%a0@,%sp@-
+	movel	%a0@-,%sp@-
+	subqw	#2,%a0
+	movel	%a0@,%sp@-
+	fmovemx	%sp@+,%fp0
+	fmoveml	%fpsr/%fpcr,%sp@-
+	movel	%sp@,%sp@-
+	clrb	%sp@(2)
+	fmovel	%sp@+,%fpcr
+	moveal	%fp@(8),%a0
+	fmovew	%fp0,%a0@
+	fmovel	%fpsr,%sp@-
+	btst	#5,%sp@(2)
+	addqw	#4,%sp
+	fmoveml	%sp@+,%fpsr/%fpcr
+	beqs	.L409300d2
+	.int	0xf23c4480,0x7fbfffff	/* fmoves #0enan,%fp1 */
+	bras	.L409300d6
+
+.L409300d2:
+	fmovew	%fp0,%a0@
+
+.L409300d6:
+	fnop
+	moveal	%sp@+,%a0
+	unlk	%fp
+	rtd	#8
+
 	.short	0x4e56	/* 409300e2 4e56 */
 	.short	0xffa2	/* 409300e4 ffa2 */
 	.short	0x2d7c	/* 409300e6 2d7c */
