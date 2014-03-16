@@ -181,6 +181,10 @@
 		.short	0xa051
 	.endm
 
+	.macro	_WriteXPRAM
+		.short	0xa052
+	.endm
+
 	.macro	_StripAddress p1
 		.ifnb \p1
 			movel \p1,%d0
