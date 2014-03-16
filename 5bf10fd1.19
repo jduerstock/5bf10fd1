@@ -13239,81 +13239,58 @@ __v__QDGetFontFrag:
 	rts
 
 QDGetFontFrag:
-	.short	0x2278	/* 4089f300 2278 */
-	.short	0x202c	/* 4089f302 202c */
-	.short	0x2269	/* 4089f304 2269 */
-	.short	0x0284	/* 4089f306 0284 */
-	jmp	%a1@			/* 4089f308 4ed1 */
+	moveal	0x202c,%a1
+	moveal	%a1@(644),%a1
+	jmp	%a1@
 
 	.align	16
 
 __v__QDUngetFontFrag:
-	.short	0x4e56	/* 4089f310 4e56 */
-	.short	0xfff4	/* 4089f312 fff4 */
-	.short	0x48e7	/* 4089f314 48e7 */
-	.short	0x0018	/* 4089f316 0018 */
-	.short	0x266e	/* 4089f318 266e */
-	.short	0x000c	/* 4089f31a 000c */
-	.short	0x286e	/* 4089f31c 286e */
-	.short	0x0008	/* 4089f31e 0008 */
-	.short	0x200b	/* 4089f320 200b */
-	.short	0x6758	/* 4089f322 6758 */
-	.short	0x2014	/* 4089f324 2014 */
-	.short	0xa055	/* 4089f326 a055 */
-	.short	0x4a80	/* 4089f328 4a80 */
-	.short	0x6650	/* 4089f32a 6650 */
-	.short	0x2f0c	/* 4089f32c 2f0c */
-	.short	0x4eba	/* 4089f32e 4eba */
-	.short	0x0d98	/* 4089f330 0d98 */
-	.short	0x4a00	/* 4089f332 4a00 */
-	.short	0x584f	/* 4089f334 584f */
-	.short	0x6744	/* 4089f336 6744 */
-	.short	0x4eba	/* 4089f338 4eba */
-	.short	0xfd02	/* 4089f33a fd02 */
-	.short	0x2d40	/* 4089f33c 2d40 */
-	.short	0xfffc	/* 4089f33e fffc */
-	.short	0x2f00	/* 4089f340 2f00 */
-	.short	0x2f0c	/* 4089f342 2f0c */
-	.short	0x486e	/* 4089f344 486e */
-	.short	0xfff8	/* 4089f346 fff8 */
-	.short	0x4eba	/* 4089f348 4eba */
-	.short	0x0606	/* 4089f34a 0606 */
-	.short	0x4aae	/* 4089f34c 4aae */
-	.short	0xfff8	/* 4089f34e fff8 */
-	.short	0x4fef	/* 4089f350 4fef */
-	.short	0x000c	/* 4089f352 000c */
-	.short	0x6726	/* 4089f354 6726 */
-	.short	0x2f2e	/* 4089f356 2f2e */
-	.short	0xfff8	/* 4089f358 fff8 */
-	.short	0x2f0b	/* 4089f35a 2f0b */
-	.short	0x486e	/* 4089f35c 486e */
-	.short	0xfff4	/* 4089f35e fff4 */
-	.short	0x4eba	/* 4089f360 4eba */
-	.short	0x0d24	/* 4089f362 0d24 */
-	.short	0x4aae	/* 4089f364 4aae */
-	.short	0xfff4	/* 4089f366 fff4 */
-	.short	0x4fef	/* 4089f368 4fef */
-	.short	0x000c	/* 4089f36a 000c */
-	.short	0x670e	/* 4089f36c 670e */
-	.short	0x2f2e	/* 4089f36e 2f2e */
-	.short	0xfff8	/* 4089f370 fff8 */
-	.short	0x2f2e	/* 4089f372 2f2e */
-	.short	0xfff4	/* 4089f374 fff4 */
-	.short	0x4eba	/* 4089f376 4eba */
-	.short	0x08ec	/* 4089f378 08ec */
-	.short	0x504f	/* 4089f37a 504f */
-	.short	0x4cee	/* 4089f37c 4cee */
-	.short	0x1800	/* 4089f37e 1800 */
-	.short	0xffec	/* 4089f380 ffec */
-	.short	0x4e5e	/* 4089f382 4e5e */
-	rts				/* 4089f384 4e75 */
+	linkw	%fp,#-12
+	moveml	%a3-%a4,%sp@-
+	moveal	%fp@(12),%a3
+	moveal	%fp@(8),%a4
+	movel	%a3,%d0
+	beqs	.L4089f37c
+	movel	%a4@,%d0
+	_StripAddress
+	tstl	%d0
+	bnes	.L4089f37c
+	movel	%a4,%sp@-
+	jsr	%pc@(AssertHandle)
+	tstb	%d0
+	addqw	#4,%sp
+	beqs	.L4089f37c
+	jsr	%pc@(GetGlobalFontFragmentTableCache)
+	movel	%d0,%fp@(-4)
+	movel	%d0,%sp@-
+	movel	%a4,%sp@-
+	pea	%fp@(-8)
+	jsr	%pc@(FindFragmentTable)
+	tstl	%fp@(-8)
+	lea	%sp@(12),%sp
+	beqs	.L4089f37c
+	movel	%fp@(-8),%sp@-
+	movel	%a3,%sp@-
+	pea	%fp@(-12)
+	jsr	%pc@(FindFragmentHandle)
+	tstl	%fp@(-12)
+	lea	%sp@(12),%sp
+	beqs	.L4089f37c
+	movel	%fp@(-8),%sp@-
+	movel	%fp@(-12),%sp@-
+	jsr	%pc@(UnlockFragment)
+	addqw	#8,%sp
+
+.L4089f37c:
+	moveml	%fp@(-20),%a3-%a4
+	unlk	%fp
+	rts
 
 QDUngetFontFrag:
-	.short	0x2278	/* 4089f386 2278 */
-	.short	0x202c	/* 4089f388 202c */
-	.short	0x2269	/* 4089f38a 2269 */
-	.short	0x0288	/* 4089f38c 0288 */
-	jmp	%a1@			/* 4089f38e 4ed1 */
+	moveal	0x202c,%a1
+	moveal	%a1@(648),%a1
+	jmp	%a1@
 
 __v__KillApplicationHeapFragmentTableCaches:
 	.short	0x4e56	/* 4089f390 4e56 */
@@ -14464,6 +14441,8 @@ __v__UnlockFragment:
 	.short	0xfffc	/* 4089fc5e fffc */
 	.short	0x4e5e	/* 4089fc60 4e5e */
 	rts				/* 4089fc62 4e75 */
+
+UnlockFragment:
 	.short	0x2278	/* 4089fc64 2278 */
 	.short	0x202c	/* 4089fc66 202c */
 	.short	0x2269	/* 4089fc68 2269 */
