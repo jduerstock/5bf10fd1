@@ -97,7 +97,7 @@ __v__InitSCSIBoot:
 	asll	#2,%d0			/* 40820112 e580 */
 	moveq	#10,%d1			/* 40820114 720a */
 	addl	%d1,%d0			/* 40820116 d081 */
-	.short	0xa71e			/* 40820118 a71e */
+	_NewPtrSysClear
 	moveal	%a0,%a4			/* 4082011a 2848 */
 	movel	%a4,%d0			/* 4082011c 200c */
 	beqs	.L40820156		/* 4082011e 6736 */
@@ -200,7 +200,7 @@ __v__IttBoot:
 	cmpw	%d0,%d1			/* 4082021a b240 */
 	bhis	.L408201cc		/* 4082021c 62ae */
 	movel	%d4,%d0			/* 4082021e 2004 */
-	.short	0xa71e			/* 40820220 a71e */
+	_NewPtrSysClear
 	moveal	%a0,%a3			/* 40820222 2648 */
 	movel	%a3,%d0			/* 40820224 200b */
 	bnes	.L4082022e		/* 40820226 6606 */
@@ -518,7 +518,7 @@ __v__ScanDrive:
 	movel	%d0,%fp@(-12)		/* 40820570 2d40 fff4 */
 	movel	%d0,%fp@(-16)		/* 40820574 2d40 fff0 */
 	movel	#512,%d0		/* 40820578 203c 0000 0200 */
-	.short	0xa71e			/* 4082057e a71e */
+	_NewPtrSysClear
 	movel	%a0,%fp@(-20)		/* 40820580 2d48 ffec */
 	movel	%a0,%d0			/* 40820584 2008 */
 	bnes	.L4082058e		/* 40820586 6606 */
@@ -527,7 +527,7 @@ __v__ScanDrive:
 
 .L4082058e:
 	movel	#512,%d0		/* 4082058e 203c 0000 0200 */
-	.short	0xa71e			/* 40820594 a71e */
+	_NewPtrSysClear
 	moveal	%a0,%a4			/* 40820596 2848 */
 	movel	%a4,%d0			/* 40820598 200c */
 	beqw	.L40820822		/* 4082059a 6700 0286 */
@@ -538,7 +538,7 @@ __v__ScanDrive:
 	moveq	#0,%d1			/* 408205aa 7200 */
 	movel	%d1,%sp@-		/* 408205ac 2f01 */
 	movel	%fp@(8),%sp@-		/* 408205ae 2f2e 0008 */
-	jsr	%pc@(ScRead)	/* 408205b2 4eba 06b4 */
+	jsr	%pc@(ScRead)		/* 408205b2 4eba 06b4 */
 	tstw	%d0			/* 408205b6 4a40 */
 	lea	%sp@(20),%sp		/* 408205b8 4fef 0014 */
 	bnew	.L40820822		/* 408205bc 6600 0264 */
@@ -705,7 +705,7 @@ __v__ScanDrive:
 	moveb	%d0,%d4			/* 40820758 1800 */
 	movel	%a4,%fp@(-12)		/* 4082075a 2d4c fff4 */
 	movel	#512,%d0		/* 4082075e 203c 0000 0200 */
-	.short	0xa71e			/* 40820764 a71e */
+	_NewPtrSysClear
 	moveal	%a0,%a4			/* 40820766 2848 */
 	movel	%a4,%d0			/* 40820768 200c */
 	beqw	.L40820822		/* 4082076a 6700 00b6 */
@@ -724,7 +724,7 @@ __v__ScanDrive:
 	bnes	.L408207a8		/* 40820794 6612 */
 	movel	%a4,%fp@(-16)		/* 40820796 2d4c fff0 */
 	movel	#512,%d0		/* 4082079a 203c 0000 0200 */
-	.short	0xa71e			/* 408207a0 a71e */
+	_NewPtrSysClear
 	moveal	%a0,%a4			/* 408207a2 2848 */
 	movel	%a4,%d0			/* 408207a4 200c */
 	beqs	.L40820822		/* 408207a6 677a */
@@ -1835,7 +1835,7 @@ __v__InitItt:
 	clrb	%d7			/* 40821352 4207 */
 
 .L40821354:
-	jsr	%pc@(InitXPT)	/* 40821354 4eba 2320 */
+	jsr	%pc@(InitXPT)		/* 40821354 4eba 2320 */
 	extl	%d0			/* 40821358 48c0 */
 	movel	%d0,%d6			/* 4082135a 2c00 */
 	beqs	.L40821364		/* 4082135c 6706 */
@@ -1843,13 +1843,13 @@ __v__InitItt:
 	braw	.L408215ac		/* 40821360 6000 024a */
 
 .L40821364:
-	jsr	%pc@(AppleSIMS)	/* 40821364 4eba 02cc */
+	jsr	%pc@(AppleSIMS)		/* 40821364 4eba 02cc */
 	moveq	#0,%d1			/* 40821368 7200 */
 	moveb	%d0,%d1			/* 4082136a 1200 */
 	tstl	%d1			/* 4082136c 4a81 */
 	bnew	.L4082157a		/* 4082136e 6600 020a */
 	moveq	#48,%d0			/* 40821372 7030 */
-	.short	0xa71e			/* 40821374 a71e */
+	_NewPtrSysClear
 	moveal	%a0,%a4			/* 40821376 2848 */
 	movel	%a4,%d0			/* 40821378 200c */
 	bnes	.L40821382		/* 4082137a 6606 */
@@ -2076,7 +2076,7 @@ sub_40821640:
 	moveml	%d7/%a3-%a4,%sp@-	/* 40821644 48e7 0118 */
 	moveal	%fp@(8),%a3		/* 40821648 266e 0008 */
 	moveq	#60,%d0			/* 4082164c 703c */
-	.short	0xa71e			/* 4082164e a71e */
+	_NewPtrSysClear
 	moveal	%a0,%a4			/* 40821650 2848 */
 	movel	%a4,%d0			/* 40821652 200c */
 	bnes	.L4082165a		/* 40821654 6604 */
@@ -5287,7 +5287,7 @@ __v__InitXPT:
 	jsr	%pc@(IsItt)		/* 408235a8 4eba ca82 */
 	moveb	%d0,%d7			/* 408235ac 1e00 */
 	movel	#320,%d0		/* 408235ae 203c 0000 0140 */
-	.short	0xa71e			/* 408235b4 a71e */
+	_NewPtrSysClear
 	moveal	%a0,%a4			/* 408235b6 2848 */
 	tstb	%d7			/* 408235b8 4a07 */
 	beqs	.L408235c6		/* 408235ba 670a */
@@ -5520,7 +5520,7 @@ __v__XPTRegisterBus:
 
 .L408237c8:
 	movel	%a4@(4),%d0		/* 408237c8 202c 0004 */
-	.short	0xa71e			/* 408237cc a71e */
+	_NewPtrSysClear
 	movel	%a0,%fp@(-8)		/* 408237ce 2d48 fff8 */
 	bnes	.L408237da		/* 408237d2 6606 */
 	moveq	#-108,%d0		/* 408237d4 7094 */
@@ -5541,7 +5541,7 @@ __v__XPTRegisterBus:
 
 .L408237fc:
 	moveq	#60,%d0			/* 408237fc 703c */
-	.short	0xa71e			/* 408237fe a71e */
+	_NewPtrSysClear
 	movel	%a0,%fp@(-4)		/* 40823800 2d48 fffc */
 	bnes	.L4082380c		/* 40823804 6606 */
 	moveq	#-108,%d0		/* 40823806 7094 */
@@ -5814,7 +5814,7 @@ off_408239fa:
 .L40823abe:
 	moveq	#0,%d0			/* 40823abe 7000 */
 	movew	%d7,%d0			/* 40823ac0 3007 */
-	tstl	%a3@(0x0000,%d0:l:4)	/* 40823ac2 4ab3 0c00 */
+	tstl	%a3@(%d0:l:4)		/* 40823ac2 4ab3 0c00 */
 	bnes	.L40823b06		/* 40823ac6 663e */
 	moveq	#0,%d0			/* 40823ac8 7000 */
 	movew	%a3@(68),%d0		/* 40823aca 302b 0044 */
@@ -5824,13 +5824,13 @@ off_408239fa:
 	movew	%a3@(68),%d0		/* 40823ad6 302b 0044 */
 	moveq	#60,%d1			/* 40823ada 723c */
 	mulsl	%d1,%d0			/* 40823adc 4c01 0800 */
-	lea	%a3@(0x0078,%d0:l),%a0	/* 40823ae0 41f3 0878 */
+	lea	%a3@(120,%d0:l),%a0	/* 40823ae0 41f3 0878 */
 	movel	%a0,%fp@(-4)		/* 40823ae4 2d48 fffc */
 	bras	.L40823af8		/* 40823ae8 600e */
 
 .L40823aea:
 	moveq	#60,%d0			/* 40823aea 703c */
-	.short	0xa71e			/* 40823aec a71e */
+	_NewPtrSysClear
 	movel	%a0,%fp@(-4)		/* 40823aee 2d48 fffc */
 	bnes	.L40823af8		/* 40823af2 6604 */
 	moveq	#-108,%d0		/* 40823af4 7094 */
@@ -6299,7 +6299,7 @@ __v__SetRefNum:
 	movel	%d0,%d6			/* 40823f08 2c00 */
 	addql	#4,%d6			/* 40823f0a 5886 */
 	movel	%d6,%d0			/* 40823f0c 2006 */
-	.short	0xa71e			/* 40823f0e a71e */
+	_NewPtrSysClear
 	movel	%a0,%fp@(-4)		/* 40823f10 2d48 fffc */
 	beqs	.L40823f32		/* 40823f14 671c */
 	moveal	%a4@(112),%a0		/* 40823f16 206c 0070 */
@@ -6319,9 +6319,9 @@ __v__SetRefNum:
 	moveal	%a4@(112),%a0		/* 40823f3a 206c 0070 */
 	addql	#1,%a0@			/* 40823f3e 5290 */
 	moveal	%a4@(112),%a0		/* 40823f40 206c 0070 */
-	movel	%a3@(12),%a0@(0x0004,%d7:l:8)	/* 40823f44 21ab 000c 7e04 */
+	movel	%a3@(12),%a0@(4,%d7:l:8)	/* 40823f44 21ab 000c 7e04 */
 	moveal	%a4@(112),%a0		/* 40823f4a 206c 0070 */
-	movew	%a3@(36),%a0@(0x0008,%d7:l:8)	/* 40823f4e 31ab 0024 7e08 */
+	movew	%a3@(36),%a0@(8,%d7:l:8)	/* 40823f4e 31ab 0024 7e08 */
 	clrw	%a3@(10)		/* 40823f54 426b 000a */
 
 .L40823f58:
@@ -6924,7 +6924,7 @@ __v__ReRegisterAllSIMs:
 	bnes	.L408244d6		/* 408244fa 66da */
 	pea	0xac			/* 408244fc 4878 00ac */
 	pea	%fp@(-208)		/* 40824500 486e ff30 */
-	jsr	%pc@(Clear)	/* 40824504 4eba 0132 */
+	jsr	%pc@(Clear)		/* 40824504 4eba 0132 */
 	movel	#255,%fp@(-196)		/* 40824508 2d7c 0000 00ff ff3c */
 	moveb	#3,%fp@(-200)		/* 40824510 1d7c 0003 ff38 */
 	movew	#172,%fp@(-202)		/* 40824516 3d7c 00ac ff36 */
@@ -6936,7 +6936,7 @@ __v__ReRegisterAllSIMs:
 	moveb	%d6,%d0			/* 4082452a 1006 */
 	addqw	#1,%d0			/* 4082452c 5240 */
 	extl	%d0			/* 4082452e 48c0 */
-	.short	0xa71e			/* 40824530 a71e */
+	_NewPtrSysClear
 	moveal	%a0,%a4			/* 40824532 2848 */
 	movel	%a4,%d0			/* 40824534 200c */
 	addqw	#8,%sp			/* 40824536 504f */
@@ -8147,14 +8147,14 @@ EXTALLOCNODE:
 
 __v__EXTBTREEINSTALL:
 	moveq	#34,%d0			/* 40824fd0 7022 */
-	.short	0xa71e			/* 40824fd2 a71e */
+	_NewPtrSysClear
 	bnew	.L40825036		/* 40824fd4 6600 0060 */
 	moveal	%a0,%a1			/* 40824fd8 2248 */
 	movel	0xbb8,%d0		/* 40824fda 2038 0bb8 */
 	cmpil	#-1,%d0			/* 40824fde 0c80 ffff ffff */
 	bnes	.L40824ff8		/* 40824fe4 6612 */
 	moveq	#116,%d0		/* 40824fe6 7074 */
-	.short	0xa71e			/* 40824fe8 a71e */
+	_NewPtrSysClear
 	bnew	.L40825036		/* 40824fea 6600 004a */
 	movel	%a0,0xbb8		/* 40824fee 21c8 0bb8 */
 	movew	#116,%a0@		/* 40824ff2 30bc 0074 */
@@ -8166,10 +8166,9 @@ __v__EXTBTREEINSTALL:
 .L40824ffa:
 	movel	%a1,%a0@(10)		/* 40824ffa 2149 000a */
 	movel	#4936704,%a1@(26)	/* 40824ffe 237c 004b 5400 001a */
-/* SPLIT HERE */
 	movel	#-1,%a1@(22)		/* 40825006 237c ffff ffff 0016 */
 	movel	#2680,%d0		/* 4082500e 203c 0000 0a78 */
-	.short	0xa71e			/* 40825014 a71e */
+	_NewPtrSysClear
 	bnew	.L40825036		/* 40825016 6600 001e */
 	movel	%a0,%a1@(10)		/* 4082501a 2348 000a */
 	addaw	#86,%a0			/* 4082501e d0fc 0056 */
@@ -9716,7 +9715,7 @@ __v__EXTBTOPEN:
 	movel	%a0,%d4
 	movel	%a1,%d5
 	moveq	#74,%d0
-	.short	0xa71e
+	_NewPtrSysClear
 	bnew	.L40825eb8
 	moveal	%a0,%a4
 	moveal	0x34e,%a3
@@ -9829,7 +9828,7 @@ __v__EXTBTOPEN:
 
 .L40825e88:
 	addqw	#1,%d0
-	.short	0xa71e
+	_NewPtrSysClear
 	bnew	.L40825ddc
 	movel	%a0,%a4@(64)
 	lea	%a2@(120),%a1
