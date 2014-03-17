@@ -14443,11 +14443,9 @@ __v__UnlockFragment:
 	rts				/* 4089fc62 4e75 */
 
 UnlockFragment:
-	.short	0x2278	/* 4089fc64 2278 */
-	.short	0x202c	/* 4089fc66 202c */
-	.short	0x2269	/* 4089fc68 2269 */
-	.short	0x0248	/* 4089fc6a 0248 */
-	jmp	%a1@			/* 4089fc6c 4ed1 */
+	moveal	0x202c,%a1
+	moveal	%a1@(584),%a1
+	jmp	%a1@
 
 	.align	16
 
@@ -14905,3 +14903,18 @@ __v__FindOrCreateFragment:
 	movel	%a3,%sp@-		/* 4089fff8 2f0b */
 	movel	%a4@,%sp@-		/* 4089fffa 2f14 */
 	jsr	%pc@(LockFragment)	/* 4089fffc 4eba fc06 */
+	lea	%sp@(20),%sp
+
+.L408a0004:
+	movew	%d7,%d0
+	moveml	%fp@(-20),%d5-%d7/%a3-%a4
+	unlk	%fp
+	rts
+
+FindOrCreateFragment:
+	moveal	0x202c,%a1
+	moveal	%a1@(608),%a1
+	jmp	%a1@
+
+	.align	16
+
