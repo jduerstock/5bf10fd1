@@ -14645,63 +14645,58 @@ ExpandAndLockFragment:
 	.align	16
 
 __v__FindFragment:
-	.short	0x4e56	/* 4089ff20 4e56 */
-	.short	0x0000	/* 4089ff22 0000 */
-	.short	0x48e7	/* 4089ff24 48e7 */
-	.short	0x0f18	/* 4089ff26 0f18 */
-	.short	0x282e	/* 4089ff28 282e */
-	.short	0x0010	/* 4089ff2a 0010 */
-	.short	0x266e	/* 4089ff2c 266e */
-	.short	0x0008	/* 4089ff2e 0008 */
-	.short	0x2e2e	/* 4089ff30 2e2e */
-	.short	0x000c	/* 4089ff32 000c */
-	moveq	#0,%d0			/* 4089ff34 7000 */
-	.short	0x2680	/* 4089ff36 2680 */
-	.short	0x206e	/* 4089ff38 206e */
-	.short	0x0014	/* 4089ff3a 0014 */
-	.short	0x2050	/* 4089ff3c 2050 */
-	.short	0x2868	/* 4089ff3e 2868 */
-	.short	0x000c	/* 4089ff40 000c */
-	.short	0x602e	/* 4089ff42 602e */
-	.short	0x2054	/* 4089ff44 2054 */
-	.short	0x2a28	/* 4089ff46 2a28 */
-	.short	0x000a	/* 4089ff48 000a */
-	.short	0x2c28	/* 4089ff4a 2c28 */
-	.short	0x000e	/* 4089ff4c 000e */
-	.short	0xdc85	/* 4089ff4e dc85 */
-	.short	0xba87	/* 4089ff50 ba87 */
-	.short	0x6e18	/* 4089ff52 6e18 */
-	.short	0xbc87	/* 4089ff54 bc87 */
-	.short	0x6d14	/* 4089ff56 6d14 */
-	moveq	#0,%d0			/* 4089ff58 7000 */
-	.short	0x1028	/* 4089ff5a 1028 */
-	.short	0x0009	/* 4089ff5c 0009 */
-	.short	0x4a80	/* 4089ff5e 4a80 */
-	.short	0x6708	/* 4089ff60 6708 */
-	.short	0x2007	/* 4089ff62 2007 */
-	.short	0xd084	/* 4089ff64 d084 */
-	.short	0xbc80	/* 4089ff66 bc80 */
-	.short	0x6d02	/* 4089ff68 6d02 */
-	.short	0x268c	/* 4089ff6a 268c */
-	.short	0x2054	/* 4089ff6c 2054 */
-	.short	0x2868	/* 4089ff6e 2868 */
-	.short	0x0004	/* 4089ff70 0004 */
-	.short	0x4a93	/* 4089ff72 4a93 */
-	.short	0x6604	/* 4089ff74 6604 */
-	.short	0x200c	/* 4089ff76 200c */
-	.short	0x66ca	/* 4089ff78 66ca */
-	.short	0x4cee	/* 4089ff7a 4cee */
-	.short	0x18f0	/* 4089ff7c 18f0 */
-	.short	0xffe8	/* 4089ff7e ffe8 */
-	.short	0x4e5e	/* 4089ff80 4e5e */
-	rts				/* 4089ff82 4e75 */
+	linkw	%fp,#0
+	moveml	%d4-%d7/%a3-%a4,%sp@-
+	movel	%fp@(16),%d4
+	moveal	%fp@(8),%a3
+	movel	%fp@(12),%d7
+	moveq	#0,%d0
+	movel	%d0,%a3@
+	moveal	%fp@(20),%a0
+	moveal	%a0@,%a0
+	moveal	%a0@(12),%a4
+	bras	.L4089ff72
+
+.L4089ff44:
+	moveal	%a4@,%a0
+	movel	%a0@(10),%d5
+	movel	%a0@(14),%d6
+	addl	%d5,%d6
+	cmpl	%d7,%d5
+	bgts	.L4089ff6c
+	cmpl	%d7,%d6
+	blts	.L4089ff6c
+	moveq	#0,%d0
+	moveb	%a0@(9),%d0
+	tstl	%d0
+	beqs	.L4089ff6a
+	movel	%d7,%d0
+	addl	%d4,%d0
+	cmpl	%d0,%d6
+	blts	.L4089ff6c
+
+.L4089ff6a:
+	movel	%a4,%a3@
+
+.L4089ff6c:
+	moveal	%a4@,%a0
+	moveal	%a0@(4),%a4
+
+.L4089ff72:
+	tstl	%a3@
+	bnes	.L4089ff7a
+	movel	%a4,%d0
+	bnes	.L4089ff44
+
+.L4089ff7a:
+	moveml	%fp@(-24),%d4-%d7/%a3-%a4
+	unlk	%fp
+	rts
 
 FindFragment:
-	.short	0x2278	/* 4089ff84 2278 */
-	.short	0x202c	/* 4089ff86 202c */
-	.short	0x2269	/* 4089ff88 2269 */
-	.short	0x025c	/* 4089ff8a 025c */
-	jmp	%a1@			/* 4089ff8c 4ed1 */
+	moveal	0x202c,%a1
+	moveal	%a1@(604),%a1
+	jmp	%a1@
 
 	.align	16
 
