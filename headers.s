@@ -177,6 +177,10 @@
 		.short	0xa049
 	.endm
 
+	.macro	_HNoPurge
+		.short	0xa04a
+	.endm
+
 	.macro	_CompactMem
 		.short	0xa04c
 	.endm
