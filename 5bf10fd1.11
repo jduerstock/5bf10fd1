@@ -4642,49 +4642,40 @@ __v____REDRAWALL:
 
 	.align	16
 
-	.short	0x2078	/* 4085aa20 2078 */
-	.short	0x0b5c	/* 4085aa22 0b5c */
-	.short	0x2050	/* 4085aa24 2050 */
-	.short	0x4228	/* 4085aa26 4228 */
-	.short	0x000e	/* 4085aa28 000e */
-	.short	0x4228	/* 4085aa2a 4228 */
-	.short	0x000f	/* 4085aa2c 000f */
-	.short	0x0838	/* 4085aa2e 0838 */
-	.short	0x0005	/* 4085aa30 0005 */
-	.short	0x0b22	/* 4085aa32 0b22 */
-	.short	0x6722	/* 4085aa34 6722 */
-	.short	0x41e8	/* 4085aa36 41e8 */
-	.short	0x000e	/* 4085aa38 000e */
-	moveq	#1,%d0			/* 4085aa3a 7001 */
-	.short	0x4840	/* 4085aa3c 4840 */
-	.short	0x303c	/* 4085aa3e 303c */
-	.short	0x007e	/* 4085aa40 007e */
-	_ReadXPRAM			/* 4085aa42 a051 */
-	.short	0x2078	/* 4085aa44 2078 */
-	.short	0x0b5c	/* 4085aa46 0b5c */
-	.short	0x2050	/* 4085aa48 2050 */
-	.short	0x41e8	/* 4085aa4a 41e8 */
-	.short	0x000f	/* 4085aa4c 000f */
-	moveq	#1,%d0			/* 4085aa4e 7001 */
-	.short	0x4840	/* 4085aa50 4840 */
-	.short	0x303c	/* 4085aa52 303c */
-	.short	0x007f	/* 4085aa54 007f */
-	_ReadXPRAM			/* 4085aa56 a051 */
-	.short	0x2078	/* 4085aa58 2078 */
-	.short	0x0b5c	/* 4085aa5a 0b5c */
-	.short	0x2050	/* 4085aa5c 2050 */
-	.short	0x4a28	/* 4085aa5e 4a28 */
-	.short	0x000e	/* 4085aa60 000e */
-	.short	0x6604	/* 4085aa62 6604 */
-	.short	0x5028	/* 4085aa64 5028 */
-	.short	0x000e	/* 4085aa66 000e */
-	.short	0x4a28	/* 4085aa68 4a28 */
-	.short	0x000f	/* 4085aa6a 000f */
-	.short	0x6606	/* 4085aa6c 6606 */
-	.short	0x0628	/* 4085aa6e 0628 */
-	.short	0x003c	/* 4085aa70 003c */
-	.short	0x000f	/* 4085aa72 000f */
-	rts				/* 4085aa74 4e75 */
+sub_4085aa20:
+	moveal	0xb5c,%a0
+	moveal	%a0@,%a0
+	clrb	%a0@(14)
+	clrb	%a0@(15)
+	btst	#5,0xb22
+	beqs	.L4085aa58
+	lea	%a0@(14),%a0
+	moveq	#1,%d0
+	swap	%d0
+	movew	#126,%d0
+	_ReadXPRAM
+	moveal	0xb5c,%a0
+	moveal	%a0@,%a0
+	lea	%a0@(15),%a0
+	moveq	#1,%d0
+	swap	%d0
+	movew	#127,%d0
+	_ReadXPRAM
+
+.L4085aa58:
+	moveal	0xb5c,%a0
+	moveal	%a0@,%a0
+	tstb	%a0@(14)
+	bnes	.L4085aa68
+	addqb	#8,%a0@(14)
+
+.L4085aa68:
+	tstb	%a0@(15)
+	bnes	.L4085aa74
+	addib	#60,%a0@(15)
+
+.L4085aa74:
+	rts
 
 	.align	16
 
