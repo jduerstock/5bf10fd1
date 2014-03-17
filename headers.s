@@ -606,6 +606,14 @@
 		.short	0xa805
 	.endm
 
+	.macro	_SndControl
+		.short	0xa806
+	.endm
+
+	.macro	_SndNewChannel
+		.short	0xa807
+	.endm
+
 	.macro	_TEPinScroll
 		.short	0xa812
 	.endm
