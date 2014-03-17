@@ -8737,6 +8737,8 @@ DELTARGB:
 	.short	0x0000	/* 4088489a 0000 */
 	.short	0x0000	/* 4088489c 0000 */
 	.short	0x0101	/* 4088489e 0101 */
+
+.L408848a0:
 	.short	0x0240	/* 408848a0 0240 */
 	.short	0x000f	/* 408848a2 000f */
 	.short	0x3f40	/* 408848a4 3f40 */
@@ -8788,6 +8790,8 @@ DELTARGB:
 	.short	0x64f4	/* 40884900 64f4 */
 	.short	0x6000	/* 40884902 6000 */
 	.short	0x00e0	/* 40884904 00e0 */
+
+.L40884906:
 	.short	0x0240	/* 40884906 0240 */
 	.short	0x000f	/* 40884908 000f */
 	.short	0x3f00	/* 4088490a 3f00 */
@@ -8894,36 +8898,30 @@ DELTARGB:
 	.short	0x600e	/* 408849d4 600e */
 
 GETCTABLE:
-	.short	0x42af	/* 408849d6 42af */
-	.short	0x0006	/* 408849d8 0006 */
-	.short	0x3f2f	/* 408849da 3f2f */
-	.short	0x0004	/* 408849dc 0004 */
-	.short	0x6132	/* 408849de 6132 */
-	.short	0x2008	/* 408849e0 2008 */
-	.short	0x6708	/* 408849e2 6708 */
-	.short	0x2f48	/* 408849e4 2f48 */
-	.short	0x0006	/* 408849e6 0006 */
-	.short	0x4e74	/* 408849e8 4e74 */
-	.short	0x0002	/* 408849ea 0002 */
-	.short	0x302f	/* 408849ec 302f */
-	.short	0x0004	/* 408849ee 0004 */
-	.short	0x0c40	/* 408849f0 0c40 */
-	.short	0x0048	/* 408849f2 0048 */
-	.short	0x62f2	/* 408849f4 62f2 */
-	.short	0x223c	/* 408849f6 223c */
-	.short	0x0000	/* 408849f8 0000 */
-	.short	0x0116	/* 408849fa 0116 */
-	.short	0x0101	/* 408849fc 0101 */
-	.short	0x67e8	/* 408849fe 67e8 */
-	.short	0x0800	/* 40884a00 0800 */
-	.short	0x0005	/* 40884a02 0005 */
-	.short	0x6600	/* 40884a04 6600 */
-	.short	0xfe9a	/* 40884a06 fe9a */
-	.short	0x0800	/* 40884a08 0800 */
-	.short	0x0006	/* 40884a0a 0006 */
-	.short	0x6600	/* 40884a0c 6600 */
-	.short	0xfef8	/* 40884a0e fef8 */
-	.short	0x60d6	/* 40884a10 60d6 */
+	clrl	%sp@(6)
+	movew	%sp@(4),%sp@-
+	bsrs	sub_40884a12
+	movel	%a0,%d0
+	beqs	.L408849ec
+	movel	%a0,%sp@(6)
+
+.L408849e8:
+	rtd	#2
+
+.L408849ec:
+	movew	%sp@(4),%d0
+	cmpiw	#72,%d0
+	bhis	.L408849e8
+	movel	#278,%d1
+	btst	%d0,%d1
+	beqs	.L408849e8
+	btst	#5,%d0
+	bnew	.L408848a0
+	btst	#6,%d0
+	bnew	.L40884906
+	bras	.L408849e8
+
+sub_40884a12:
 	.short	0x594f	/* 40884a12 594f */
 	.short	0x2f3c	/* 40884a14 2f3c */
 	.short	0x636c	/* 40884a16 636c */
