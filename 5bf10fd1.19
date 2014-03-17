@@ -14482,6 +14482,8 @@ __v__ExpandFragment:
 	.short	0xffec	/* 4089fdde ffec */
 	.short	0x4e5e	/* 4089fde0 4e5e */
 	rts				/* 4089fde2 4e75 */
+
+sub_4089fde4:
 	.short	0x2278	/* 4089fde4 2278 */
 	.short	0x202c	/* 4089fde6 202c */
 	.short	0x2269	/* 4089fde8 2269 */
@@ -14548,20 +14550,16 @@ __v__ExpandAndLockFragment:
 	bras	.L4089fed8
 
 .L4089fea2:
-	.short	0x2f0c	/* 4089fea2 2f0c */
-	.short	0x2005	/* 4089fea4 2005 */
-	.short	0x9086	/* 4089fea6 9086 */
-	.short	0x2f00	/* 4089fea8 2f00 */
-	.short	0x2f2e	/* 4089feaa 2f2e */
-	.short	0xfffc	/* 4089feac fffc */
-	.short	0x4eba	/* 4089feae 4eba */
-	.short	0xff34	/* 4089feb0 ff34 */
-	.short	0x3e00	/* 4089feb2 3e00 */
-	.short	0x4fef	/* 4089feb4 4fef */
-	.short	0x000c	/* 4089feb6 000c */
-	.short	0x661e	/* 4089feb8 661e */
-	.short	0x206e	/* 4089feba 206e */
-	.short	0xfffc	/* 4089febc fffc */
+	movel	%a4,%sp@-
+	movel	%d5,%d0
+	subl	%d6,%d0
+	movel	%d0,%sp@-
+	movel	%fp@(-4),%sp@-
+	jsr	%pc@(sub_4089fde4)
+	movew	%d0,%d7
+	lea	%sp@(12),%sp
+	bnes	.L4089fed8
+	moveal	%fp@(-4),%a0
 	.short	0x2050	/* 4089febe 2050 */
 	.short	0x0ca8	/* 4089fec0 0ca8 */
 	.short	0x0000	/* 4089fec2 0000 */
