@@ -1068,7 +1068,7 @@ __v__sb_LoadNewCache:
 	movel	%a4@(4),%a3@(28)	/* 40898c00 276c 0004 001c */
 	movew	%d7,%a3@(32)		/* 40898c06 3747 0020 */
 	moveal	%a3@(24),%a0		/* 40898c0a 206b 0018 */
-	.short	0xa04a			/* 40898c0e a04a */
+	_HNoPurge
 	bras	.L40898c24		/* 40898c10 6012 */
 
 .L40898c12:
@@ -1146,7 +1146,7 @@ __v__sb_LoadNewCache:
 	movel	%fp@(-12),%a3@(28)	/* 40898cc2 276e fff4 001c */
 	movew	%d6,%a3@(32)		/* 40898cc8 3746 0020 */
 	moveal	%fp@(-8),%a0		/* 40898ccc 206e fff8 */
-	.short	0xa04a			/* 40898cd0 a04a */
+	_HNoPurge
 	braw	.L40898d82		/* 40898cd2 6000 00ae */
 
 .L40898cd6:
@@ -1189,7 +1189,7 @@ __v__sb_LoadNewCache:
 	movel	%a4@(4),%a3@(28)	/* 40898d44 276c 0004 001c */
 	movew	%d6,%a3@(32)		/* 40898d4a 3746 0020 */
 	moveal	%fp@(-8),%a0		/* 40898d4e 206e fff8 */
-	.short	0xa04a			/* 40898d52 a04a */
+	_HNoPurge
 
 .L40898d54:
 	tstl	%fp@(-4)		/* 40898d54 4aae fffc */
@@ -1295,7 +1295,7 @@ __v__SB_SEARCHFORCACHE:
 	_HLock				/* 40898e56 a029 */
 	moveal	%fp@(-6),%a0		/* 40898e58 206e fffa */
 	moveal	%a0@(1024),%a0		/* 40898e5c 2068 0400 */
-	.short	0xa04a			/* 40898e60 a04a */
+	_HNoPurge
 	jsr	%pc@(sb_CheckWorkHandle)	/* 40898e62 4eba f342 */
 	movel	%d0,%d6			/* 40898e66 2c00 */
 	bnes	.L40898eae		/* 40898e68 6644 */
@@ -1303,7 +1303,7 @@ __v__SB_SEARCHFORCACHE:
 	extw	%d0			/* 40898e70 4880 */
 	movew	%d0,%d5			/* 40898e72 3a00 */
 	moveal	%a4@(80),%a0		/* 40898e74 206c 0050 */
-	.short	0xa04a			/* 40898e78 a04a */
+	_HNoPurge
 	tstl	%a4@(20)		/* 40898e7a 4aac 0014 */
 	bnes	.L40898e8e		/* 40898e7e 660e */
 	movel	%fp@(-10),%sp@-		/* 40898e80 2f2e fff6 */
@@ -1450,12 +1450,11 @@ __v__SB_FILLWIDTHTAB:
 	moveq	#0,%d7			/* 40898fde 7e00 */
 	clrb	%d6			/* 40898fe0 4206 */
 	moveal	%a4@(1024),%a0		/* 40898fe2 206c 0400 */
-	.short	0xa04a			/* 40898fe6 a04a */
+	_HNoPurge
 	movew	#256,%a4@(1060)		/* 40898fe8 397c 0100 0424 */
 	movew	#256,%a4@(1062)		/* 40898fee 397c 0100 0426 */
 	movew	#256,%a4@(1064)		/* 40898ff4 397c 0100 0428 */
 	movew	#256,%a4@(1066)		/* 40898ffa 397c 0100 042a */
-/* SPLIT HERE */
 	moveq	#1,%d3			/* 40899000 7601 */
 	moveal	%fp@(-4),%a0		/* 40899002 206e fffc */
 	tstb	%a0@(6)			/* 40899006 4a28 0006 */
@@ -1560,7 +1559,7 @@ __v__SB_FILLWIDTHTAB:
 	moveal	%fp@(-8),%a0
 	moveal	%a0@,%a3
 	moveal	%a3@(80),%a0
-	.short	0xa04a
+	_HNoPurge
 	movel	%fp@(10),%sp@-
 	jsr	%pc@(sb_SetNewSFNT)
 	movel	%d0,%d7
@@ -1774,7 +1773,7 @@ __v__SB_PREFLIGHTFONTMEM:
 	extw	%d0
 	movew	%d0,%fp@(-2)
 	moveal	%fp@(12),%a0
-	.short	0xa04a
+	_HNoPurge
 	movel	%fp@(16),%sp@-
 	movel	%fp@(12),%sp@-
 	jsr	%pc@(AppendSplineDirectoryToWidthTable)
@@ -1789,7 +1788,7 @@ __v__SB_PREFLIGHTFONTMEM:
 	movel	%a4,%sp@-
 	jsr	%pc@(sb_ResetFSWorkState)
 	moveal	%a4@(80),%a0
-	.short	0xa04a
+	_HNoPurge
 	movel	%fp@(16),%sp@-
 	jsr	%pc@(sb_SetMemPtrs)
 	moveal	%a4@(88),%a0
@@ -3940,9 +3939,9 @@ __v__SB_RETRIEVEGLYPH:
 	moveal	%fp@(8),%a0
 	movew	%a0@(2),%a4@(44)
 	moveal	%a3@(1024),%a0
-	.short	0xa04a
+	_HNoPurge
 	moveal	%a4@(24),%a0
-	.short	0xa04a
+	_HNoPurge
 	jsr	%pc@(sb_CheckWorkHandle)
 	movel	%d0,%d7
 	moveq	#113,%d0
@@ -3964,7 +3963,7 @@ __v__SB_RETRIEVEGLYPH:
 	tstl	%d7
 	bnes	.L4089a608
 	moveal	%a4@(80),%a0
-	.short	0xa04a
+	_HNoPurge
 	moveal	%fp@(8),%a0
 	tstb	%a0@(32)
 	bnes	.L4089a5ca
