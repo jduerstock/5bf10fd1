@@ -472,6 +472,10 @@
 		.short	0xa128
 	.endm
 
+	.macro	_HWPriv
+		.short	0xa198
+	.endm
+
 	.macro	_Gestalt
 		.short	0xa1ad
 	.endm
@@ -486,6 +490,10 @@
 
 	.macro	_SetOSTrapAddress
 		.short	0xa247
+	.endm
+
+	.macro	_HFSDispatch
+		.short	0xa260
 	.endm
 
 	.macro	__PBOpenWDSync
