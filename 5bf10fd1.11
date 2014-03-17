@@ -4695,7 +4695,7 @@ INITMENUS:
 	subqw	#4,%sp
 	movel	#1296188486,%sp@-
 	movew	%d1,%sp@-
-	.short	0xa9a0
+	_GetResource
 	movel	%sp@+,0xb58
 	bnes	.L4085aab4
 	tstw	%d1
@@ -4769,7 +4769,7 @@ GETMBCOLORS:
 	subqw	#4,%sp			/* 4085ab36 594f */
 	movel	#1835234402,%sp@-	/* 4085ab38 2f3c 6d63 7462 */
 	clrw	%sp@-			/* 4085ab3e 4267 */
-	.short	0xa9a0			/* 4085ab40 a9a0 */
+	_GetResource
 	moveal	%sp@+,%a0		/* 4085ab42 205f */
 	movel	%a0,%d0			/* 4085ab44 2008 */
 	beqs	.L4085ab5e		/* 4085ab46 6716 */
@@ -4829,7 +4829,7 @@ __v__CALLMBARPROC:
 	movel	#1296188486,%sp@-	/* 4085abc0 2f3c 4d42 4446 */
 	movew	%a0@(4),%sp@-		/* 4085abc6 3f28 0004 */
 	movew	#-1,0xb9e		/* 4085abca 31fc ffff 0b9e */
-	.short	0xa9a0			/* 4085abd0 a9a0 */
+	_GetResource
 	movel	%sp@+,0xb58		/* 4085abd2 21df 0b58 */
 	moveal	0xb58,%a0		/* 4085abd6 2078 0b58 */
 	_HGetState
@@ -7077,47 +7077,37 @@ GETITEM:
 	.align	16
 
 NEWMENU:
-	.short	0x7200	/* 4085bef0 7200 */
-	.short	0x7010	/* 4085bef2 7010 */
-	.short	0x206f	/* 4085bef4 206f */
-	.short	0x0004	/* 4085bef6 0004 */
-	.short	0x1210	/* 4085bef8 1210 */
-	.short	0xd041	/* 4085befa d041 */
-	.short	0xa122	/* 4085befc a122 */
-	.short	0x2f48	/* 4085befe 2f48 */
-	.short	0x000a	/* 4085bf00 000a */
-	.short	0x2250	/* 4085bf02 2250 */
-	.short	0x3f01	/* 4085bf04 3f01 */
-	.short	0x32ef	/* 4085bf06 32ef */
-	.short	0x000a	/* 4085bf08 000a */
-	.short	0x4299	/* 4085bf0a 4299 */
-	moveq	#0,%d0			/* 4085bf0c 7000 */
-	.short	0x594f	/* 4085bf0e 594f */
-	.short	0x2f3c	/* 4085bf10 2f3c */
-	.short	0x4d44	/* 4085bf12 4d44 */
-	.short	0x4546	/* 4085bf14 4546 */
-	.short	0x3f00	/* 4085bf16 3f00 */
-	.short	0x31fc	/* 4085bf18 31fc */
-	.short	0xffff	/* 4085bf1a ffff */
-	.short	0x0b9e	/* 4085bf1c 0b9e */
-	.short	0xa9a0	/* 4085bf1e a9a0 */
-	.short	0x205f	/* 4085bf20 205f */
-	.short	0x226f	/* 4085bf22 226f */
-	.short	0x000c	/* 4085bf24 000c */
-	.short	0x2251	/* 4085bf26 2251 */
-	.short	0x5c49	/* 4085bf28 5c49 */
-	.short	0x22c8	/* 4085bf2a 22c8 */
-	.short	0x22f8	/* 4085bf2c 22f8 */
-	.short	0x0a06	/* 4085bf2e 0a06 */
-	.short	0x321f	/* 4085bf30 321f */
-	.short	0x206f	/* 4085bf32 206f */
-	.short	0x0004	/* 4085bf34 0004 */
-	.short	0x12d8	/* 4085bf36 12d8 */
-	.short	0x51c9	/* 4085bf38 51c9 */
-	.short	0xfffc	/* 4085bf3a fffc */
-	.short	0x4219	/* 4085bf3c 4219 */
-	.short	0x6000	/* 4085bf3e 6000 */
-	.short	0xef1c	/* 4085bf40 ef1c */
+	moveq	#0,%d1
+	moveq	#16,%d0
+	moveal	%sp@(4),%a0
+	moveb	%a0@,%d1
+	addw	%d1,%d0
+	.short	0xa122
+	movel	%a0,%sp@(10)
+	moveal	%a0@,%a1
+	movew	%d1,%sp@-
+	movew	%sp@(10),%a1@+
+	clrl	%a1@+
+	moveq	#0,%d0
+	subqw	#4,%sp
+	movel	#1296319814,%sp@-
+	movew	%d0,%sp@-
+	movew	#-1,0xb9e
+	.short	0xa9a0
+	moveal	%sp@+,%a0
+	moveal	%sp@(12),%a1
+	moveal	%a1@,%a1
+	addqw	#6,%a1
+	movel	%a0,%a1@+
+	movel	0xa06,%a1@+
+	movew	%sp@+,%d1
+	moveal	%sp@(4),%a0
+
+.L4085bf36:
+	moveb	%a0@+,%a1@+
+	dbf	%d1,.L4085bf36
+	clrb	%a1@+
+	braw	.L4085ae5c
 
 	.align	16
 
@@ -9123,7 +9113,7 @@ sub_4085d00c:
 
 .L4085d028:
 	movew	#-1,0xb9e		/* 4085d028 31fc ffff 0b9e */
-	.short	0xa9a0			/* 4085d02e a9a0 */
+	_GetResource
 	moveal	%sp@+,%a0		/* 4085d030 205f */
 	movel	%a0,%d0			/* 4085d032 2008 */
 	beqs	.L4085d03a		/* 4085d034 6704 */
@@ -9654,7 +9644,7 @@ DISPOSDIALOG:
 	movew	%d0,%sp@-		/* 4085d4c4 3f00 */
 	bsrs	sub_4085d4d6		/* 4085d4c6 610e */
 	movew	#-1,0xb9e		/* 4085d4c8 31fc ffff 0b9e */
-	.short	0xa9a0			/* 4085d4ce a9a0 */
+	_GetResource
 	moveal	%sp@+,%a2		/* 4085d4d0 245f */
 	movel	%a2,%d0			/* 4085d4d2 200a */
 	rts				/* 4085d4d4 4e75 */
@@ -9664,7 +9654,7 @@ sub_4085d4d6:
 	movel	#1768125538,%sp@-	/* 4085d4d8 2f3c 6963 7462 */
 	movew	%d0,%sp@-		/* 4085d4de 3f00 */
 	movew	#-1,0xb9e		/* 4085d4e0 31fc ffff 0b9e */
-	.short	0xa9a0			/* 4085d4e6 a9a0 */
+	_GetResource
 	movel	%sp@+,%fp@(-80)		/* 4085d4e8 2d5f ffb0 */
 	rts				/* 4085d4ec 4e75 */
 
@@ -9680,7 +9670,7 @@ sub_4085d4f6:
 	movel	%a0,%sp@-		/* 4085d4fa 2f08 */
 	movew	%d0,%sp@-		/* 4085d4fc 3f00 */
 	movew	#-1,0xb9e		/* 4085d4fe 31fc ffff 0b9e */
-	.short	0xa9a0			/* 4085d504 a9a0 */
+	_GetResource
 	moveal	%sp@,%a0		/* 4085d506 2057 */
 	_HNoPurge
 	movel	%sp@,%fp@(-84)		/* 4085d50a 2d57 ffac */
