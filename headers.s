@@ -566,6 +566,10 @@
 		.short	0xa647
 	.endm
 
+	.macro	_SerialPower
+		.short	0xa685
+	.endm
+
 	.macro	_NewPtrSysClear
 		.short	0xa71e
 	.endm
