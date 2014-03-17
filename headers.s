@@ -177,6 +177,10 @@
 		.short	0xa049
 	.endm
 
+	.macro	_CompactMem
+		.short	0xa04c
+	.endm
+
 	.macro	_ReadXPRAM
 		.short	0xa051
 	.endm
