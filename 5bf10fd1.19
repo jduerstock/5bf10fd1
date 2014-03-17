@@ -14198,11 +14198,9 @@ __v__RemoveFragmentFromFragmentTable:
 	rts				/* 4089fbc0 4e75 */
 
 RemoveFragmentFromFragmentTable:
-	.short	0x2278	/* 4089fbc2 2278 */
-	.short	0x202c	/* 4089fbc4 202c */
-	.short	0x2269	/* 4089fbc6 2269 */
-	.short	0x0240	/* 4089fbc8 0240 */
-	jmp	%a1@			/* 4089fbca 4ed1 */
+	moveal	0x202c,%a1
+	moveal	%a1@(576),%a1
+	jmp	%a1@
 
 	.align	16
 
@@ -14493,27 +14491,18 @@ __v__ExpandFragment:
 	.align	16
 
 __v__ExpandAndLockFragment:
-	.short	0x4e56	/* 4089fdf0 4e56 */
-	.short	0xfffc	/* 4089fdf2 fffc */
-	.short	0x48e7	/* 4089fdf4 48e7 */
-	.short	0x0f18	/* 4089fdf6 0f18 */
-	.short	0x282e	/* 4089fdf8 282e */
-	.short	0x000c	/* 4089fdfa 000c */
-	.short	0x266e	/* 4089fdfc 266e */
-	.short	0x0008	/* 4089fdfe 0008 */
-	.short	0x286e	/* 4089fe00 286e */
-	.short	0x0014	/* 4089fe02 0014 */
-	.short	0x4247	/* 4089fe04 4247 */
-	.short	0x2d53	/* 4089fe06 2d53 */
-	.short	0xfffc	/* 4089fe08 fffc */
-	.short	0x2f0c	/* 4089fe0a 2f0c */
-	.short	0x2f2e	/* 4089fe0c 2f2e */
-	.short	0xfffc	/* 4089fe0e fffc */
-	.short	0x4eba	/* 4089fe10 4eba */
-	.short	0xfdb0	/* 4089fe12 fdb0 */
-	.short	0x2a2e	/* 4089fe14 2a2e */
-	.short	0x0010	/* 4089fe16 0010 */
-	.short	0xda84	/* 4089fe18 da84 */
+	linkw	%fp,#-4
+	moveml	%d4-%d7/%a3-%a4,%sp@-
+	movel	%fp@(12),%d4
+	moveal	%fp@(8),%a3
+	moveal	%fp@(20),%a4
+	clrw	%d7
+	movel	%a3@,%fp@(-4)
+	movel	%a4,%sp@-
+	movel	%fp@(-4),%sp@-
+	jsr	%pc@(RemoveFragmentFromFragmentTable)
+	movel	%fp@(16),%d5
+	addl	%d4,%d5
 	.short	0x206e	/* 4089fe1a 206e */
 	.short	0xfffc	/* 4089fe1c fffc */
 	.short	0x2050	/* 4089fe1e 2050 */
