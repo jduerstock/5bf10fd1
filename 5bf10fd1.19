@@ -14571,24 +14571,20 @@ __v__ExpandAndLockFragment:
 
 .L4089fed8:
 	tstw	%d7
-	.short	0x6622	/* 4089feda 6622 */
-	.short	0x2f0c	/* 4089fedc 2f0c */
-	.short	0x2f2e	/* 4089fede 2f2e */
-	.short	0xfffc	/* 4089fee0 fffc */
-	.short	0x4eba	/* 4089fee2 4eba */
-	.short	0xfd20	/* 4089fee4 fd20 */
-	.short	0x2f0c	/* 4089fee6 2f0c */
-	.short	0x2054	/* 4089fee8 2054 */
-	.short	0x2f28	/* 4089feea 2f28 */
-	.short	0x000c	/* 4089feec 000c */
-	.short	0x2f2e	/* 4089feee 2f2e */
-	.short	0xfffc	/* 4089fef0 fffc */
-	.short	0x4eba	/* 4089fef2 4eba */
-	.short	0xfc60	/* 4089fef4 fc60 */
-	.short	0x26ae	/* 4089fef6 26ae */
-	.short	0xfffc	/* 4089fef8 fffc */
+	bnes	.L4089fefe
+	movel	%a4,%sp@-
+	movel	%fp@(-4),%sp@-
+	jsr	%pc@(LockFragment)
+	movel	%a4,%sp@-
+	moveal	%a4@,%a0
+	movel	%a0@(12),%sp@-
+	movel	%fp@(-4),%sp@-
+	jsr	%pc@(AddFragmentToFragmentTable)
+	movel	%fp@(-4),%a3@
 	.short	0x4fef	/* 4089fefa 4fef */
 	.short	0x0014	/* 4089fefc 0014 */
+
+.L4089fefe:
 	.short	0x3007	/* 4089fefe 3007 */
 	.short	0x4cee	/* 4089ff00 4cee */
 	.short	0x18f0	/* 4089ff02 18f0 */
