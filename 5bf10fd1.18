@@ -11924,45 +11924,41 @@ sb_DisposeZoneHandle:
 	.align	16
 
 __v__sb_SetCachesNoPurge:
-	.short	0x4e56	/* 40897710 4e56 */
-	.short	0x0000	/* 40897712 0000 */
-	.short	0x48e7	/* 40897714 48e7 */
-	.short	0x0118	/* 40897716 0118 */
-	.short	0x2078	/* 40897718 2078 */
-	.short	0x02b6	/* 4089771a 02b6 */
-	.short	0x2868	/* 4089771c 2868 */
-	.short	0x0068	/* 4089771e 0068 */
-	.short	0x2654	/* 40897720 2654 */
-	.short	0x4aab	/* 40897722 4aab */
-	.short	0x0014	/* 40897724 0014 */
-	.short	0x6722	/* 40897726 6722 */
-	.short	0x3e2b	/* 40897728 3e2b */
-	.short	0x0022	/* 4089772a 0022 */
-	.short	0x206b	/* 4089772c 206b */
-	.short	0x0014	/* 4089772e 0014 */
-	.short	0x2850	/* 40897730 2850 */
-	.short	0x5347	/* 40897732 5347 */
-	.short	0x4a47	/* 40897734 4a47 */
-	.short	0x6d12	/* 40897736 6d12 */
-	.short	0x4a94	/* 40897738 4a94 */
-	.short	0x6708	/* 4089773a 6708 */
-	.short	0x2054	/* 4089773c 2054 */
-	.short	0x4a90	/* 4089773e 4a90 */
-	.short	0x6702	/* 40897740 6702 */
-	.short	0xa04a	/* 40897742 a04a */
-	.short	0x504c	/* 40897744 504c */
-	.short	0x51cf	/* 40897746 51cf */
-	.short	0xfff0	/* 40897748 fff0 */
-	.short	0x4cee	/* 4089774a 4cee */
-	.short	0x1880	/* 4089774c 1880 */
-	.short	0xfff4	/* 4089774e fff4 */
-	.short	0x4e5e	/* 40897750 4e5e */
-	rts				/* 40897752 4e75 */
-	.short	0x2278	/* 40897754 2278 */
-	.short	0x202c	/* 40897756 202c */
-	.short	0x2269	/* 40897758 2269 */
-	.short	0x0014	/* 4089775a 0014 */
-	jmp	%a1@			/* 4089775c 4ed1 */
+	linkw	%fp,#0
+	moveml	%d7/%a3-%a4,%sp@-
+	moveal	0x2b6,%a0
+	moveal	%a0@(104),%a4
+	moveal	%a4@,%a3
+	tstl	%a3@(20)
+	beqs	.L4089774a
+	movew	%a3@(34),%d7
+	moveal	%a3@(20),%a0
+	moveal	%a0@,%a4
+	subqw	#1,%d7
+	tstw	%d7
+	blts	.L4089774a
+
+.L40897738:
+	tstl	%a4@
+	beqs	.L40897744
+	moveal	%a4@,%a0
+	tstl	%a0@
+	beqs	.L40897744
+	_HNoPurge
+
+.L40897744:
+	addqw	#8,%a4
+	dbf	%d7,.L40897738
+
+.L4089774a:
+	moveml	%fp@(-12),%d7/%a3-%a4
+	unlk	%fp
+	rts
+
+sub_40897754:
+	moveal	0x202c,%a1
+	moveal	%a1@(20),%a1
+	jmp	%a1@
 
 	.align	16
 
