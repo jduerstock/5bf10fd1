@@ -448,6 +448,10 @@
 		.short	0xa08f
 	.endm
 
+	.macro	_SysEnvirons
+		.short	0xa090
+	.endm
+
 	.macro	_Translate24To32
 		.short	0xa091
 	.endm
