@@ -708,6 +708,10 @@
 		.short	0xa874
 	.endm
 
+	.macro	_AddPt
+		.short	0xa87e
+	.endm
+
 	.macro	_SubPt
 		.short	0xa87f
 	.endm
