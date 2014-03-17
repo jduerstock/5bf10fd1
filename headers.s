@@ -837,6 +837,10 @@
 		.short	0xa8fd
 	.endm
 
+	.macro	_GetFName
+		.short	0xa8ff
+	.endm
+
 	.macro	_PaintOne
 		.short	0xa90c
 	.endm
