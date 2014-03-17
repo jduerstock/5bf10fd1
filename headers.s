@@ -762,6 +762,10 @@
 		.short	0xa89e
 	.endm
 
+	.macro	_FrameRect
+		.short	0xa8a1
+	.endm
+
 	.macro	_EraseRect
 		.short	0xa8a3
 	.endm
