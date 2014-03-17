@@ -716,12 +716,16 @@
 		.short	0xa883
 	.endm
 
+	.macro	_TextFont
+		.short	0xa887
+	.endm
+
 	.macro	_OSDispatch
 		.short	0xa88f
 	.endm
 
 	.macro	_GetCurrentProcess
-		movew	#55,%sp@-	/* 3f3c 0037 */
+		movew	#55,%sp@-
 		.short	0xa88f
 	.endm
 
