@@ -1283,7 +1283,7 @@ str_4099c350:
 	movel	#1398034976,%sp@-	/* 4099c4ea 2f3c 5354 5220 */
 	movew	#-16565,%sp@-		/* 4099c4f0 3f3c bf4b */
 	movew	#-1,RomMapInsert	/* 4099c4f4 31fc ffff 0b9e */
-	.short	0xa9a0			/* 4099c4fa a9a0 */
+	_GetResource
 
 .L4099c4fc:
 	movel	%sp@+,%d0		/* 4099c4fc 201f */
@@ -1321,53 +1321,39 @@ str_4099c52f:
 	.byte	0x08	/* 4099c52f 08 */
 	.ascii	"Built-in"
 
-	.short	0x0802	/* 4099c538 0802 */
-	.short	0x0000	/* 4099c53a 0000 */
-	.short	0x6600	/* 4099c53c 6600 */
-	.short	0x0a3e	/* 4099c53e 0a3e */
-	.short	0x0c41	/* 4099c540 0c41 */
-	.short	0x0001	/* 4099c542 0001 */
-	.short	0x6700	/* 4099c544 6700 */
-	.short	0x001a	/* 4099c546 001a */
-	.short	0x0c41	/* 4099c548 0c41 */
-	.short	0x0002	/* 4099c54a 0002 */
-	.short	0x6700	/* 4099c54c 6700 */
-	.short	0x0012	/* 4099c54e 0012 */
-	.short	0x0c41	/* 4099c550 0c41 */
-	.short	0x0017	/* 4099c552 0017 */
-	.short	0x6200	/* 4099c554 6200 */
-	.short	0x0a14	/* 4099c556 0a14 */
-	.short	0x0c41	/* 4099c558 0c41 */
-	.short	0x000f	/* 4099c55a 000f */
-	.short	0x6300	/* 4099c55c 6300 */
-	.short	0x0a0c	/* 4099c55e 0a0c */
-	.short	0x202a	/* 4099c560 202a */
-	.short	0x0020	/* 4099c562 0020 */
-	.short	0x6700	/* 4099c564 6700 */
-	.short	0x0a10	/* 4099c566 0a10 */
-	.short	0x2040	/* 4099c568 2040 */
-	.short	0x2010	/* 4099c56a 2010 */
-	.short	0x6700	/* 4099c56c 6700 */
-	.short	0x0a08	/* 4099c56e 0a08 */
-	.short	0x2f00	/* 4099c570 2f00 */
-	.short	0x594f	/* 4099c572 594f */
-	.short	0x2f3c	/* 4099c574 2f3c */
-	.short	0x4943	/* 4099c576 4943 */
-	.short	0x4f4e	/* 4099c578 4f4e */
-	.short	0x3f3c	/* 4099c57a 3f3c */
-	.short	0xbf4b	/* 4099c57c bf4b */
-	.short	0x31fc	/* 4099c57e 31fc */
-	.short	0xffff	/* 4099c580 ffff */
-	.short	0x0b9e	/* 4099c582 0b9e */
-	.short	0xa9a0	/* 4099c584 a9a0 */
-	.short	0x201f	/* 4099c586 201f */
-	.short	0x6708	/* 4099c588 6708 */
-	.short	0x2040	/* 4099c58a 2040 */
-	.short	0x2050	/* 4099c58c 2050 */
-	.short	0x6000	/* 4099c58e 6000 */
-	.short	0x0006	/* 4099c590 0006 */
-	.short	0x41fa	/* 4099c592 41fa */
-	.short	0x001e	/* 4099c594 001e */
+	btst	#0,%d2
+	bnew	.L4099cf7c
+	cmpiw	#1,%d1
+	beqw	.L4099c560
+	cmpiw	#2,%d1
+	beqw	.L4099c560
+	cmpiw	#23,%d1
+	bhiw	.L4099cf6a
+	cmpiw	#15,%d1
+	blsw	.L4099cf6a
+
+.L4099c560:
+	movel	%a2@(32),%d0
+	beqw	.L4099cf76
+	moveal	%d0,%a0
+	movel	%a0@,%d0
+	beqw	.L4099cf76
+	movel	%d0,%sp@-
+	subqw	#4,%sp
+	movel	#1229147982,%sp@-
+	movew	#-16565,%sp@-
+	movew	#-1,0xb9e
+	_GetResource
+	movel	%sp@+,%d0
+	beqs	.L4099c592
+	moveal	%d0,%a0
+	moveal	%a0@,%a0
+	braw	.L4099c596
+
+.L4099c592:
+	lea	%pc@(byte_4099c5b2),%a0
+
+.L4099c596:
 	.short	0x225f	/* 4099c596 225f */
 	.short	0x7200	/* 4099c598 7200 */
 	.short	0x123c	/* 4099c59a 123c */
@@ -1382,6 +1368,8 @@ str_4099c52f:
 	.short	0xa9a3	/* 4099c5ac a9a3 */
 	.short	0x6000	/* 4099c5ae 6000 */
 	.short	0x09da	/* 4099c5b0 09da */
+
+byte_4099c5b2:
 	.short	0x7fe0	/* 4099c5b2 7fe0 */
 	.short	0x07fe	/* 4099c5b4 07fe */
 	.short	0x8040	/* 4099c5b6 8040 */
