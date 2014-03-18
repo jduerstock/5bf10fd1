@@ -716,6 +716,10 @@
 		.short	0xa874
 	.endm
 
+	.macro	_SetClip
+		.short	0xa879
+	.endm
+
 	.macro	_AddPt
 		.short	0xa87e
 	.endm
