@@ -8258,15 +8258,37 @@ sub_4099ffd0:
 	.align	16
 
 sub_4099ffe0:
-	linkw	%fp,#0			/* 4099ffe0 4e56 0000 */
-	moveml	%d6-%d7/%a3-%a4,%sp@-	/* 4099ffe4 48e7 0318 */
-	movew	%fp@(12),%d6		/* 4099ffe8 3c2e 000c */
-	movew	%fp@(14),%d7		/* 4099ffec 3e2e 000e */
-	moveal	%fp@(8),%a3		/* 4099fff0 266e 0008 */
-	moveal	0x1fc4,%a0		/* 4099fff4 2078 1fc4 */
-	moveal	%a0@,%a4		/* 4099fff8 2850 */
-	clrw	%a3@			/* 4099fffa 4253 */
+	linkw	%fp,#0
+	moveml	%d6-%d7/%a3-%a4,%sp@-
+	movew	%fp@(12),%d6
+	movew	%fp@(14),%d7
+	moveal	%fp@(8),%a3
+	moveal	0x1fc4,%a0
+	moveal	%a0@,%a4
+	clrw	%a3@
 
 .L4099fffc:
-	movel	%a4,%d0			/* 4099fffc 200c */
-	bnes	.L409a0008		/* 4099fffe 6608 */
+	movel	%a4,%d0
+	bnes	.L409a0008
+	movew	#-2607,%fp@(16)
+	bras	.L409a0024
+
+.L409a0008:
+	cmpw	%a4@(8),%d7
+	bnes	.L409a001e
+	moveq	#0,%d0
+	moveb	%a4@(87),%d0
+	cmpw	%d0,%d6
+	bnes	.L409a001e
+	clrw	%fp@(16)
+	bras	.L409a0024
+
+.L409a001e:
+	moveal	%a4@,%a4
+	addqw	#1,%a3@
+	bras	.L4099fffc
+
+.L409a0024:
+	moveml	%fp@(-16),%d6-%d7/%a3-%a4
+	unlk	%fp
+	rtd	#8
