@@ -208,27 +208,24 @@ sub_409801d4:
 	rts
 
 sub_409801f2:
-	.short	0x48e7	/* 409801f2 48e7 */
-	.short	0x00f0	/* 409801f4 00f0 */
-	.short	0x2f02	/* 409801f6 2f02 */
-	.short	0x204f	/* 409801f8 204f */
-	.short	0x5d4f	/* 409801fa 5d4f */
-	.short	0x224f	/* 409801fc 224f */
-	.short	0x6100	/* 409801fe 6100 */
-	.short	0x02ce	/* 40980200 02ce */
-	.short	0x4a40	/* 40980202 4a40 */
-	.short	0x6704	/* 40980204 6704 */
-	.short	0x44fc	/* 40980206 44fc */
-	.short	0x0008	/* 40980208 0008 */
-	.short	0x4c9f	/* 4098020a 4c9f */
-	.short	0x0002	/* 4098020c 0002 */
-	.short	0x4cdf	/* 4098020e 4cdf */
-	.short	0x0001	/* 40980210 0001 */
-	.short	0x4cdf	/* 40980212 4cdf */
-	.short	0x0004	/* 40980214 0004 */
-	.short	0x4cdf	/* 40980216 4cdf */
-	.short	0x0f00	/* 40980218 0f00 */
-	rts				/* 4098021a 4e75 */
+	moveml	%a0-%a3,%sp@-
+	movel	%d2,%sp@-
+	moveal	%sp,%a0
+	subqw	#6,%sp
+	moveal	%sp,%a1
+	bsrw	sub_409804ce
+	tstw	%d0
+	beqs	.L4098020a
+	movew	#8,%ccr
+
+.L4098020a:
+	movemw	%sp@+,%d1
+	moveml	%sp@+,%d0
+	moveml	%sp@+,%d2
+	moveml	%sp@+,%a0-%a3
+	rts
+
+sub_4098021c:
 	.short	0x48e7	/* 4098021c 48e7 */
 	.short	0xc0f0	/* 4098021e c0f0 */
 	.short	0x2f02	/* 40980220 2f02 */
@@ -565,6 +562,8 @@ sub_4098039a:
 	.short	0xb5c2	/* 409804c8 b5c2 */
 	.short	0x67b4	/* 409804ca 67b4 */
 	.short	0x6086	/* 409804cc 6086 */
+
+sub_409804ce:
 	.short	0x266b	/* 409804ce 266b */
 	.short	0x03e6	/* 409804d0 03e6 */
 	.short	0x4eba	/* 409804d2 4eba */
