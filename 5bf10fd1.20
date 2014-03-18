@@ -1113,7 +1113,7 @@ INITIALIZEDISKCACHE:
 	moveal	%a3,%a0			/* 408a0ae6 204b */
 	_HUnlock			/* 408a0ae8 a02a */
 	movel	%a3,%sp@-		/* 408a0aea 2f0b */
-	.short	0xa9a3			/* 408a0aec a9a3 */
+	_ReleaseResource
 	cmpiw	#-43,%d6		/* 408a0aee 0c46 ffd5 */
 	beqw	.L408a0bea		/* 408a0af2 6700 00f6 */
 	tstw	%d6			/* 408a0af6 4a46 */
@@ -1201,56 +1201,58 @@ INITIALIZEDISKCACHE:
 	.align	16
 
 __v__FindCacheInCacheList:
-	.short	0x4e56	/* 408a0c00 4e56 */
-	.short	0xfffc	/* 408a0c02 fffc */
-	.short	0x48e7	/* 408a0c04 48e7 */
-	.short	0x0718	/* 408a0c06 0718 */
-	.short	0x286e	/* 408a0c08 286e */
-	.short	0x000c	/* 408a0c0a 000c */
-	.short	0x266e	/* 408a0c0c 266e */
-	.short	0x0008	/* 408a0c0e 0008 */
-	.short	0x4206	/* 408a0c10 4206 */
-	.short	0x2054	/* 408a0c12 2054 */
-	.short	0x2d68	/* 408a0c14 2d68 */
-	.short	0x0014	/* 408a0c16 0014 */
-	.short	0xfffc	/* 408a0c18 fffc */
-	.short	0x672a	/* 408a0c1a 672a */
-	.short	0x4247	/* 408a0c1c 4247 */
-	.short	0x2054	/* 408a0c1e 2054 */
-	.short	0x3a28	/* 408a0c20 3a28 */
-	.short	0x0022	/* 408a0c22 0022 */
-	.short	0x206e	/* 408a0c24 206e */
-	.short	0xfffc	/* 408a0c26 fffc */
-	.short	0x2850	/* 408a0c28 2850 */
-	.short	0x600e	/* 408a0c2a 600e */
-	.short	0xb7d4	/* 408a0c2c b7d4 */
-	.short	0x6604	/* 408a0c2e 6604 */
-	.short	0x7c01	/* 408a0c30 7c01 */
-	.short	0x6006	/* 408a0c32 6006 */
-	.short	0x3007	/* 408a0c34 3007 */
-	.short	0x5247	/* 408a0c36 5247 */
-	.short	0x504c	/* 408a0c38 504c */
-	moveq	#0,%d0			/* 408a0c3a 7000 */
-	.short	0x1006	/* 408a0c3c 1006 */
-	.short	0x4a80	/* 408a0c3e 4a80 */
-	.short	0x6604	/* 408a0c40 6604 */
-	.short	0xba47	/* 408a0c42 ba47 */
-	.short	0x6ee6	/* 408a0c44 6ee6 */
-	.short	0x4a06	/* 408a0c46 4a06 */
-	.short	0x6704	/* 408a0c48 6704 */
-	.short	0x3007	/* 408a0c4a 3007 */
-	.short	0x6002	/* 408a0c4c 6002 */
-	moveq	#-1,%d0			/* 408a0c4e 70ff */
-	.short	0x4cee	/* 408a0c50 4cee */
-	.short	0x18e0	/* 408a0c52 18e0 */
-	.short	0xffe8	/* 408a0c54 ffe8 */
-	.short	0x4e5e	/* 408a0c56 4e5e */
-	rts				/* 408a0c58 4e75 */
+	linkw	%fp,#-4
+	moveml	%d5-%d7/%a3-%a4,%sp@-
+	moveal	%fp@(12),%a4
+	moveal	%fp@(8),%a3
+	clrb	%d6
+	moveal	%a4@,%a0
+	movel	%a0@(20),%fp@(-4)
+	beqs	.L408a0c46
+	clrw	%d7
+	moveal	%a4@,%a0
+	movew	%a0@(34),%d5
+	moveal	%fp@(-4),%a0
+	moveal	%a0@,%a4
+	bras	.L408a0c3a
+
+.L408a0c2c:
+	cmpal	%a4@,%a3
+	bnes	.L408a0c34
+	moveq	#1,%d6
+	bras	.L408a0c3a
+
+.L408a0c34:
+	movew	%d7,%d0
+	addqw	#1,%d7
+	addqw	#8,%a4
+
+.L408a0c3a:
+	moveq	#0,%d0
+	moveb	%d6,%d0
+	tstl	%d0
+	bnes	.L408a0c46
+	cmpw	%d7,%d5
+	bgts	.L408a0c2c
+
+.L408a0c46:
+	tstb	%d6
+	beqs	.L408a0c4e
+	movew	%d7,%d0
+	bras	.L408a0c50
+
+.L408a0c4e:
+	moveq	#-1,%d0
+
+.L408a0c50:
+	moveml	%fp@(-24),%d5-%d7/%a3-%a4
+	unlk	%fp
+	rts
 
 FindCacheInCacheList:
-	moveal	0x202c,%a1		/* 408a0c5a 2278 202c */
-	moveal	%a1@(208),%a1		/* 408a0c5e 2269 00d0 */
-	jmp	%a1@			/* 408a0c62 4ed1 */
+	moveal	0x202c,%a1
+	moveal	%a1@(208),%a1
+	jmp	%a1@
 
 	.align	16
 
@@ -7791,10 +7793,10 @@ memcmp:
 	cmpmb	%a1@+,%a0@+		/* 408a41e0 b109 */
 
 .L408a41e2:
-	dbne	%d1,.L408a41e0	/* 408a41e2 56c9 fffc */
+	dbne	%d1,.L408a41e0		/* 408a41e2 56c9 fffc */
 	bnes	.L408a41f2		/* 408a41e6 660a */
 	swap	%d1			/* 408a41e8 4841 */
-	dbf	%d1,.L408a41de	/* 408a41ea 51c9 fff2 */
+	dbf	%d1,.L408a41de		/* 408a41ea 51c9 fff2 */
 	moveq	#0,%d0			/* 408a41ee 7000 */
 	rts				/* 408a41f0 4e75 */
 
