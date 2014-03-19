@@ -10761,7 +10761,7 @@ INITEGRETALT:
 	oriw	#1792,%sr		/* 4080de1c 007c 0700 */
 	lea	%a2@(56),%a0		/* 4080de20 41ea 0038 */
 	movel	%a0,%a2@(48)		/* 4080de24 2548 0030 */
-	bsrw	sub_4080e292		/* 4080de28 6100 0468 */
+	bsrw	__v__SETRESPONSEPARAMS
 	bsrl	sub_4080e87a		/* 4080de2c 61ff 0000 0a4c */
 	movel	%a0,0x19a		/* 4080de32 21c8 019a */
 	movel	%a1,%a2@(40)		/* 4080de36 2549 0028 */
@@ -10929,11 +10929,11 @@ sub_4080dfa8:
 
 .L4080dfbc:
 	tstb	%a1@			/* 4080dfbc 4a11 */
-	dbf	%d1,.L4080dfbc	/* 4080dfbe 51c9 fffc */
+	dbf	%d1,.L4080dfbc		/* 4080dfbe 51c9 fffc */
 	movel	%sp@+,%d1		/* 4080dfc2 221f */
 	rts				/* 4080dfc4 4e75 */
 
-sub_4080dfc6:
+__v__SHIFTREGIRQ:
 	movew	%sr,%d3			/* 4080dfc6 40c3 */
 	oriw	#1792,%sr		/* 4080dfc8 007c 0700 */
 	moveal	0xde0,%a2		/* 4080dfcc 2478 0de0 */
@@ -10953,12 +10953,6 @@ sub_4080dfc6:
 
 .L4080dffc:
 	tstw	%a2@(8)			/* 4080dffc 4a6a 0008 */
-/* SPLIT HERE */
-
-	.ifndef HEADERS
-		.include	"headers.s"
-	.endif
-
 	bles	.L4080e01a		/* 4080e000 6f18 */
 	moveal	%a2@(10),%a0		/* 4080e002 206a 000a */
 	moveb	%a0@+,%d0		/* 4080e006 1018 */
@@ -11072,7 +11066,7 @@ sub_4080dfc6:
 	moveb	%a1@+,%a2@+		/* 4080e124 14d9 */
 
 .L4080e126:
-	dbf	%d0,.L4080e124	/* 4080e126 51c8 fffc */
+	dbf	%d0,.L4080e124		/* 4080e126 51c8 fffc */
 	moveal	0xde0,%a2		/* 4080e12a 2478 0de0 */
 
 .L4080e12e:
@@ -11080,7 +11074,7 @@ sub_4080dfc6:
 	beqw	.L4080e1c4		/* 4080e132 6700 0090 */
 	moveal	%d0,%a1			/* 4080e136 2240 */
 	movel	%a0,%sp@-		/* 4080e138 2f08 */
-	bsrw	sub_4080e292		/* 4080e13a 6100 0156 */
+	bsrw	__v__SETRESPONSEPARAMS
 	movew	%d3,%sr			/* 4080e13e 46c3 */
 	moveal	%sp@+,%a0		/* 4080e140 205f */
 	jmp	%a1@			/* 4080e142 4ed1 */
@@ -11102,7 +11096,7 @@ sub_4080dfc6:
 	beqs	.L4080e1c4		/* 4080e16e 6754 */
 	moveal	%d2,%a3			/* 4080e170 2642 */
 	moveb	%a1@(3),%d0		/* 4080e172 1029 0003 */
-	bsrl	sub_4080e292		/* 4080e176 61ff 0000 011a */
+	bsrl	__v__SETRESPONSEPARAMS
 	movew	%d3,%sr			/* 4080e17c 46c3 */
 	jsr	%a3@			/* 4080e17e 4e93 */
 	bras	.L4080e1d2		/* 4080e180 6050 */
@@ -11128,7 +11122,7 @@ sub_4080dfc6:
 	moveal	0xde0,%a2		/* 4080e1a6 2478 0de0 */
 	movew	%a2@(16),%d0		/* 4080e1aa 302a 0010 */
 	subqw	#4,%d0			/* 4080e1ae 5940 */
-	bsrw	sub_4080e292		/* 4080e1b0 6100 00e0 */
+	bsrw	__v__SETRESPONSEPARAMS
 	movew	%d3,%sr			/* 4080e1b4 46c3 */
 	moveal	%sp,%a1			/* 4080e1b6 224f */
 	addql	#2,%a1			/* 4080e1b8 5489 */
@@ -11138,7 +11132,7 @@ sub_4080dfc6:
 	bras	.L4080e1d2		/* 4080e1c2 600e */
 
 .L4080e1c4:
-	bsrw	sub_4080e292		/* 4080e1c4 6100 00cc */
+	bsrw	__v__SETRESPONSEPARAMS
 	movew	%d3,%sr			/* 4080e1c8 46c3 */
 	bras	.L4080e1d2		/* 4080e1ca 6006 */
 
@@ -11225,7 +11219,7 @@ sub_4080e1d4:
 	moveal	%sp@+,%a1		/* 4080e28e 225f */
 	rts				/* 4080e290 4e75 */
 
-sub_4080e292:
+__v__SETRESPONSEPARAMS:
 	clrl	%a2@(4)			/* 4080e292 42aa 0004 */
 	clrw	%a2@(2)			/* 4080e296 426a 0002 */
 	clrw	%a2@(8)			/* 4080e29a 426a 0008 */
