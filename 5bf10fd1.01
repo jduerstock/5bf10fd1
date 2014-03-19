@@ -9777,7 +9777,7 @@ sub_4080d40e:
 	tstl	%d1			/* 4080d448 4a81 */
 	rts				/* 4080d44a 4e75 */
 
-sub_4080d44c:
+INITDOCKING:
 	moveml	%d0-%d2/%a0-%a2,%sp@-	/* 4080d44c 48e7 e0e0 */
 	moveal	0xdd8,%a1		/* 4080d450 2278 0dd8 */
 	addal	%a1@(12),%a1		/* 4080d454 d3e9 000c */
@@ -9785,7 +9785,7 @@ sub_4080d44c:
 
 .L4080d45a:
 	btst	#6,%a1@+		/* 4080d45a 0819 0006 */
-	dbne	%d1,.L4080d45a	/* 4080d45e 56c9 fffa */
+	dbne	%d1,.L4080d45a		/* 4080d45e 56c9 fffa */
 	beqw	.L4080d4fa		/* 4080d462 6700 0096 */
 	subiw	#15,%d1			/* 4080d466 0441 000f */
 	negw	%d1			/* 4080d46a 4441 */
@@ -9881,6 +9881,7 @@ sub_4080d532:
 	cmpal	%a0,%a1			/* 4080d540 b3c8 */
 	rts				/* 4080d542 4e75 */
 
+DOCKINGSLEEP:
 	CallVector	DockingGlobals 40	/* 4080d544 2f30 81e2 1ff8 00a0 */
 	rts				/* 4080d54c 4e75 */
 
@@ -9892,6 +9893,7 @@ sub_4080d54e:
 	moveal	%sp@+,%a1		/* 4080d562 225f */
 	jmp	%a1@			/* 4080d564 4ed1 */
 
+DOCKINGWAKEUP:
 	CallVector	DockingGlobals 41	/* 4080d566 2f30 81e2 1ff8 00a4 */
 	rts				/* 4080d56e 4e75 */
 
@@ -10003,11 +10005,11 @@ sub_4080d658:
 	bsrw	sub_4080d7a4		/* 4080d688 6100 011a */
 	beqs	.L4080d698		/* 4080d68c 670a */
 	moveal	%d0,%a4			/* 4080d68e 2840 */
-	bsrs	sub_4080d6d6		/* 4080d690 6144 */
+	bsrs	DOCKINITSCC		/* 4080d690 6144 */
 	moveml	%a3-%a4,0x1d8		/* 4080d692 48f8 1800 01d8 */
 
 .L4080d698:
-	bsrs	sub_4080d6d6		/* 4080d698 613c */
+	bsrs	DOCKINITSCC		/* 4080d698 613c */
 	moveal	0xc0c,%a2		/* 4080d69a 2478 0c0c */
 	movel	#1935897449,%d0		/* 4080d69e 203c 7363 7369 */
 	bsrw	sub_4080d7a4		/* 4080d6a4 6100 00fe */
@@ -10028,7 +10030,7 @@ sub_4080d658:
 locret_4080d6d4:
 	rts				/* 4080d6d4 4e75 */
 
-sub_4080d6d6:
+DOCKINITSCC:
 	moveml	%d0-%d2/%a0-%a2,%sp@-	/* 4080d6d6 48e7 e0e0 */
 	bsrw	sub_4080d532		/* 4080d6da 6100 fe56 */
 	beqs	.L4080d6ee		/* 4080d6de 670e */
