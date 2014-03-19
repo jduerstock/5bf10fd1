@@ -33,7 +33,14 @@
 		.short	(\vector) << 2
 	.endm
 
-	.macro	CallVectorA1 base vector
+	.macro	JmpVector base vector
+		.short	0x2f30,0x81e2
+		.short	\base
+		.short	(\vector) << 2
+		rts
+	.endm
+
+	.macro	JmpVectorA1 base vector
 		moveal	\base,%a1
 		moveal	%a1@(\vector << 2),%a1
 		jmp	%a1@
