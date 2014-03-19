@@ -1050,6 +1050,10 @@
 		.short	0xaa52
 	.endm
 
+	.macro	_DockingDispatch
+		.short	0xaa57
+	.endm
+
 	.macro	_SetMCInfo
 		.short	0xaa62
 	.endm
