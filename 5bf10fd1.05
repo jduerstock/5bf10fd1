@@ -385,8 +385,7 @@ __v__GETOFFFSQUEUE:
 	rts				/* 4082838a 4e75 */
 
 GETOFFFSQUEUE:
-	CallVector	0x2030 162	/* 4082838c 2f30 81e2 2030 0288 */
-	rts				/* 40828394 4e75 */
+	JmpVector	0x2030 162	/* 4082838c 2f30 81e2 2030 0288 */
 
 	.align	16
 
@@ -412,8 +411,7 @@ __v__GETQMRECPTR:
 	bras	.L408283bc		/* 408283c4 60f6 */
 
 GETQMRECPTR:
-	CallVector	0x2030 163	/* 408283c6 2f30 81e2 2030 028c */
-	rts				/* 408283ce 4e75 */
+	JmpVector	0x2030 163	/* 408283c6 2f30 81e2 2030 028c */
 
 __v__QMENQUEUE:
 	movew	%d2,%a0@(4)		/* 408283d0 3142 0004 */
@@ -460,8 +458,7 @@ __v__QMENQUEUE:
 	rts				/* 40828436 4e75 */
 
 QMENQUEUE:
-	CallVector	0x2030 164	/* 40828438 2f30 81e2 2030 0290 */
-	rts				/* 40828440 4e75 */
+	JmpVector	0x2030 164	/* 40828438 2f30 81e2 2030 0290 */
 
 	.align	16
 
@@ -555,8 +552,7 @@ __v__CALLWITHREGISTERSPRESERVED:
 	rts				/* 40828522 4e75 */
 
 CALLWITHREGISTERSPRESERVED:
-	CallVector	0x2030 165	/* 40828524 2f30 81e 2030 0294 */
-	rts				/* 4082852c 4e75 */
+	JmpVector	0x2030 165	/* 40828524 2f30 81e 2030 0294 */
 
 	.align	16
 
@@ -1149,20 +1145,16 @@ sub_40828a2c:
 	rts				/* 40828a3e 4e75 */
 
 MARKA5BLOCK:
-	CallVector	0x2030 31	/* 40828a40 2f30 81e2 2030 007c */
-	rts				/* 40828a48 4e75 */
+	JmpVector	0x2030 31	/* 40828a40 2f30 81e2 2030 007c */
 
 TRASHFBLOCKS:
-	CallVector	0x2030 32	/* 40828a4a 2f30 81e2 2030 0080 */
-	rts				/* 40828a52 4e75 */
+	JmpVector	0x2030 32	/* 40828a4a 2f30 81e2 2030 0080 */
 
 TRASHBLOCKS:
-	CallVector	0x2030 33	/* 40828a54 2f30 81e2 2030 0084 */
-	rts				/* 40828a5c 4e75 */
+	JmpVector	0x2030 33	/* 40828a54 2f30 81e2 2030 0084 */
 
 INITCACHE:
-	CallVector	0x2030 30	/* 40828a5e 2f30 81e2 2030 0078 */
-	rts				/* 40828a66 4e75 */
+	JmpVector	0x2030 30	/* 40828a5e 2f30 81e2 2030 0078 */
 
 	.align	16
 
@@ -1293,8 +1285,7 @@ off_40828a9a:
 	.long	VOLUMECALL-off_40828a9a	/* 40828c56 0000 01e6 */
 
 TFSDISPATCH:
-	CallVector	0x2030 174	/* 40828c5a 2f30 81e2 2030 02b8 */
-	rts				/* 40828c62 4e75 */
+	JmpVector	0x2030 174	/* 40828c5a 2f30 81e2 2030 02b8 */
 
 	.align	16
 
@@ -2656,7 +2647,7 @@ VCHECKREMOUNT:
 .L40829970:
 	bsrw	sub_40829be8		/* 40829970 6100 0276 */
 
-.L40829974:	
+.L40829974:
 	tstb	0x34a			/* 40829974 4a38 034a */
 	beqs	.L4082998c		/* 40829978 6712 */
 	bsrw	sub_40829bb4		/* 4082997a 6100 0238 */
@@ -4088,7 +4079,7 @@ sub_4082a5cc:
 .L4082a5fe:
 	moveq	#-35,%d0		/* 4082a5fe 70dd */
 	subiw	#-32767,%d1		/* 4082a600 0441 8001 */
-	tstl	%a1@(0,%d1:w)		/* 4082a604 4ab1 1000 */
+	tstl	%a1@(%d1:w)		/* 4082a604 4ab1 1000 */
 	beqs	.L4082a65a		/* 4082a608 6750 */
 	bras	.L4082a654		/* 4082a60a 6048 */
 
@@ -4111,17 +4102,17 @@ sub_4082a5cc:
 .L4082a630:
 	bsrw	sub_4082ada8		/* 4082a630 6100 0776 */
 	bccs	.L4082a65a		/* 4082a634 6424 */
-	tstl	%a1@(0,%d1:w)		/* 4082a636 4ab1 1000 */
+	tstl	%a1@(%d1:w)		/* 4082a636 4ab1 1000 */
 	beqs	.L4082a630		/* 4082a63a 67f4 */
 	tstl	%d3			/* 4082a63c 4a83 */
 	beqs	.L4082a646		/* 4082a63e 6706 */
-	cmpl	%a1@(0x000c,%d1:w),%d3	/* 4082a640 b6b1 100c */
+	cmpl	%a1@(12,%d1:w),%d3	/* 4082a640 b6b1 100c */
 	bnes	.L4082a630		/* 4082a644 66ea */
 
 .L4082a646:
 	tstl	%d2			/* 4082a646 4a82 */
 	beqs	.L4082a650		/* 4082a648 6706 */
-	cmpl	%a1@(0,%d1:w),%d2	/* 4082a64a b4b1 1000 */
+	cmpl	%a1@(%d1:w),%d2		/* 4082a64a b4b1 1000 */
 	bnes	.L4082a630		/* 4082a64e 66e0 */
 
 .L4082a650:
@@ -4150,13 +4141,13 @@ sub_4082a674:
 	movel	%a1@(12,%d1:w),%a0@(28)	/* 4082a674 2171 100c 001c */
 
 sub_4082a67a:
-	moveal	%a1@(0,%d1:w),%a2	/* 4082a67a 2471 1000 */
-	movew	%a2@(78),%a0@(32)	/* 4082a67e 316a 004e 0020 */
-	movel	%a1@(4,%d1:w),%a0@(48)	/* 4082a684 2171 1004 0030 */
-	movew	%d1,%d0			/* 4082a68a 3001 */
-	addiw	#-32767,%d0		/* 4082a68c 0640 8001 */
-	movew	%d0,%a0@(22)		/* 4082a690 3140 0016 */
-	rts				/* 4082a694 4e75 */
+	moveal	%a1@(%d1:w),%a2
+	movew	%a2@(78),%a0@(32)
+	movel	%a1@(4,%d1:w),%a0@(48)
+	movew	%d1,%d0
+	addiw	#-32767,%d0
+	movew	%d0,%a0@(22)
+	rts
 
 sub_4082a696:
 	movel	%d1,%sp@-		/* 4082a696 2f01 */
@@ -4172,7 +4163,7 @@ sub_4082a696:
 	bnes	.L4082a6c0		/* 4082a6b0 660e */
 	movel	%sp@,%d1		/* 4082a6b2 2217 */
 	subiw	#-32767,%d1		/* 4082a6b4 0441 8001 */
-	tstl	%a1@(0,%d1:w)		/* 4082a6b8 4ab1 1000 */
+	tstl	%a1@(%d1:w)		/* 4082a6b8 4ab1 1000 */
 	beqs	.L4082a6c0		/* 4082a6bc 6702 */
 	moveq	#0,%d0			/* 4082a6be 7000 */
 
@@ -4826,7 +4817,7 @@ FILECREATE:
 	bnes	.L4082abf6		/* 4082abf0 6604 */
 	moveq	#-48,%d0		/* 4082abf2 70d0 */
 	bras	.L4082ac5a		/* 4082abf4 6064 */
-	
+
 .L4082abf6:
 	cmpiw	#-43,%d0		/* 4082abf6 0c40 ffd5 */
 	bnes	.L4082ac5a		/* 4082abfa 665e */
@@ -7559,26 +7550,20 @@ sub_4082c2ee:
 .L4082c30c:
 	rts				/* 4082c30c 4e75 */
 
-	CallVector	0x2014 11	/* 4082c30e 2f30 81e2 2014 002c */
-	rts				/* 4082c316 4e75 */
+	JmpVector	0x2014 11	/* 4082c30e 2f30 81e2 2014 002c */
 
-	CallVector	0x2030 180	/* 4082c318 2f30 81e2 2030 02d0 */
-	rts				/* 4082c320 4e75 */
+	JmpVector	0x2030 180	/* 4082c318 2f30 81e2 2030 02d0 */
 
-	CallVector	0x2030 206	/* 4082c322 2f30 81e2 2030 0338 */
-	rts				/* 4082c32a 4e75 */
+	JmpVector	0x2030 206	/* 4082c322 2f30 81e2 2030 0338 */
 
 DOEJECT:
-	CallVector	0x2030 181	/* 4082c32c 2f30 81e2 2030 02d4 */
-	rts				/* 4082c334 4e75 */
+	JmpVector	0x2030 181	/* 4082c32c 2f30 81e2 2030 02d4 */
 
 OFFLINE:
-	Callvector	0x2030 207	/* 4082c336 2f30 81e2 2030 033c */
-	rts				/* 4082c33e 4e75 */
+	JmpVector	0x2030 207	/* 4082c336 2f30 81e2 2030 033c */
 
 SETVOLINFO:
-	CallVector	0x2030 210	/* 4082c340 2f30 81e2 2030 0348 */
-	rts				/* 4082c348 4e75 */
+	JmpVector	0x2030 210	/* 4082c340 2f30 81e2 2030 0348 */
 
 	CallVector	0x2030 187	/* 4082c34a 2f30 81e2 2030 02ec */
 	rts				/* 4082c352 4e75 */
@@ -13041,7 +13026,7 @@ __v__GenerateUniqueName:
 	unlk	%fp			/* 4082f718 4e5e */
 	rts				/* 4082f71a 4e75 */
 
-str_4082f71c:	
+str_4082f71c:
 	.ascii	"0123456789ABCDEF"	/* 4082f71c */
 	.short	0x0000			/* 4082f72c 0000 */
 
