@@ -1534,29 +1534,25 @@ DOSCSISTAT_96:
 	JmpVector	0x205c 11	/* 40818d5e 2f30 81e2 205c 002c */
 
 DOSCSISELATN_S96:
-	CallVector	0x205c 13	/* 40818d68 2f30 81e2 205c 0034 */
-	rts				/* 40818d70 4e75 */
-	CallVector	0x205c 10	/* 40818d72 2f30 81e2 205c 0028 */
-	rts				/* 40818d7a 4e75 */
+	JmpVector	0x205c 13	/* 40818d68 2f30 81e2 205c 0034 */
+
+	JmpVector	0x205c 10	/* 40818d72 2f30 81e2 205c 0028 */
 
 DOSCSISELECT_S96:
-	CallVector	0x205c 12	/* 40818d7c 2f30 81e2 205c 0030 */
-	rts				/* 40818d84 4e75 */
+	JmpVector	0x205c 12	/* 40818d7c 2f30 81e2 205c 0030 */
 
 DOSCSICOMPLETE_96:
-	CallVector	0x205c 19	/* 40818d86 2f30 81e2 205c 004c */
-	rts				/* 40818d8e 4e75 */
+	JmpVector	0x205c 19	/* 40818d86 2f30 81e2 205c 004c */
 
 DOSCSICMD_96:
-	CallVector	0x205c 14	/* 40818d90 2f30 81e2 205c 0038 */
-	rts				/* 40818d98 4e75 */
+	JmpVector	0x205c 14	/* 40818d90 2f30 81e2 205c 0038 */
 
 SCSIMGR_96:
-	CallVector	0x205c 5	/* 40818d9a 2f30 81e2 205c 0014 */
-	rts				/* 40818da2 4e75 */
+	JmpVector	0x205c 5	/* 40818d9a 2f30 81e2 205c 0014 */
 
 	.align	16
 
+sub_40818db0:
 	moveal	%sp@+,%a0		/* 40818db0 205f */
 	movew	%sp@+,%d0		/* 40818db2 301f */
 	movel	%a0,%sp@-		/* 40818db4 2f08 */
@@ -14036,8 +14032,7 @@ __v__VMEnableUserCode:
 	rts				/* 4081fc02 4e75 */
 
 VMEnableUserCode:
-	CallVector	0x205c 207	/* 4081fc04 2f30 81e2 205c 033c */
-	rts				/* 4081fc0c 4e75 */
+	JmpVector	0x205c 207	/* 4081fc04 2f30 81e2 205c 033c */
 
 	.align 	16
 
@@ -14060,8 +14055,7 @@ __v__VMDisableUserCode:
 	rts				/* 4081fc34 4e75 */
 
 VMDisableUserCode:
-	CallVector	0x205c	208	/* 4081fc36 2f30 81e2 205c 0340 */
-	rts				/* 4081fc3e 4e75 */
+	JmpVector	0x205c	208	/* 4081fc36 2f30 81e2 205c 0340 */
 
 __v__CallOldXPT:
 	.short	0x226f	/* 4081fc40 226f */
@@ -14073,8 +14067,7 @@ __v__CallOldXPT:
 	jmp	%a1@			/* 4081fc4c 4ed1 */
 
 CallOldXPT:
-	CallVector	0x205c 185	/* 4081fc4e 2f30 81e2 205c 02e4 */
-	rts				/* 4081fc56 4e75 */
+	JmpVector	0x205c 185	/* 4081fc4e 2f30 81e2 205c 02e4 */
 
 	.align	16
 
@@ -14085,8 +14078,7 @@ __v__BlockInterrupts:
 	rts				/* 4081fc66 4e75 */
 
 BlockInterrupts:
-	CallVector	0x205c 205	/* 4081fc68 2f30 81e2 205c 0334 */
-	rts				/* 4081fc70 4e75 */
+	JmpVector	0x205c 205	/* 4081fc68 2f30 81e2 205c 0334 */
 
 	.align	16
 
@@ -14096,16 +14088,14 @@ __v__UnblockInterrupts:
 	rts				/* 4081fc84 4e75 */
 
 UnblockInterrupts:
-	CallVector	0x205c 206	/* 4081fc86 2f30 81e2 205c 0338 */
-	rts				/* 4081fc8e 4e75 */
+	JmpVector	0x205c 206	/* 4081fc86 2f30 81e2 205c 0338 */
 
 __v__getTimerPB:
 	.short	0x2009	/* 4081fc90 2009 */
 	rts				/* 4081fc92 4e75 */
 
 getTimerPB:
-	CallVector	0x205c 252	/* 4081fc94 2f30 81e2 205c 03f0 */
-	rts				/* 4081fc9c 4e75 */
+	JmpVector	0x205c 252	/* 4081fc94 2f30 81e2 205c 03f0 */
 
 	.align	16
 
@@ -14284,8 +14274,7 @@ sub_4081fd94:
 	rts				/* 4081fde4 4e75 */
 
 ciDebuggerPatch:
-	CallVector	0x205c 168	/* 4081fde6 2f30 81e2 205c 02a0 */
-	rts				/* 4081fdee 4e75 */
+	JmpVector	0x205c 168	/* 4081fde6 2f30 81e2 205c 02a0 */
 
 CallCompRoutineGlue:
 	movew	%sr,%d0			/* 4081fdf0 40c0 */
@@ -14532,11 +14521,9 @@ off_4081ffb2:
 	.long	sub_4081fef4-off_4081ffb2	/* 4081ffe2 ffff ff42 */
 	.long	sub_4081ff10-off_4081ffb2	/* 4081ffe6 ffff ff5e */
 
-	CallVector	0x205c 244	/* 4081ffea 2f30 81e2 205c 03d0 */
-	rts				/* 4081fff2 4e75 */
+	JmpVector	0x205c 244	/* 4081ffea 2f30 81e2 205c 03d0 */
 
 Init_SCSIXlate:
-	CallVector	0x205c 245	/* 4081fff4 2f30 81e2 205c 03d4 */
-	rts				/* 4081fffc 4e75 */
+	JmpVector	0x205c 245	/* 4081fff4 2f30 81e2 205c 03d4 */
 
 	.align	16
