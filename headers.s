@@ -33,6 +33,11 @@
 		.short	(\vector) << 2
 	.endm
 
+	.macro	CallSVector base vector
+		.short	0x487a,0x000c	/* pea %pc@(.+0x0c) */
+		JmpVector \base \vector
+	.endm
+
 	.macro	JmpVector base vector
 		.short	0x2f30,0x81e2
 		.short	\base
