@@ -5746,38 +5746,28 @@ AddtoAtalkQ:
 	.align	16
 
 __v__RmvfromAtalkQ:
-	linkw	%fp,#0			/* 408335e0 4e56 0000 */
-	.short	0x7018	/* 408335e4 7018 */
-	.short	0x206e	/* 408335e6 206e */
-	.short	0x0008	/* 408335e8 0008 */
-	.short	0x2278	/* 408335ea 2278 */
-	.short	0x0b18	/* 408335ec 0b18 */
-	.short	0xb2fc	/* 408335ee b2fc */
-	.short	0xffff	/* 408335f0 ffff */
-	.short	0x6700	/* 408335f2 6700 */
-	.short	0x0006	/* 408335f4 0006 */
-	.short	0x4ea9	/* 408335f6 4ea9 */
-	.short	0x0002	/* 408335f8 0002 */
-	.short	0x4e5e	/* 408335fa 4e5e */
-	rts				/* 408335fc 4e75 */
+	linkw	%fp,#0
+	moveq	#24,%d0
+	moveal	%fp@(8),%a0
+	moveal	0xb18,%a1
+	cmpaw	#-1,%a1
+	beqw	.L408335fa
+	jsr	%a1@(2)
+
+.L408335fa:
+	unlk	%fp
+	rts
 
 RmvfromAtalkQ:
-	.short	0x2278	/* 408335fe 2278 */
-	.short	0x2050	/* 40833600 2050 */
-	.short	0x2269	/* 40833602 2269 */
-	.short	0x02c0	/* 40833604 02c0 */
-	jmp	%a1@			/* 40833606 4ed1 */
+	JmpVectorA1 0x2050 176
 
 	.align	16
 
 __v__FakeCompletion:
-	.short	0x206f	/* 40833610 206f */
-	.short	0x0004	/* 40833612 0004 */
-	.short	0x2268	/* 40833614 2268 */
-	.short	0x000c	/* 40833616 000c */
-	.short	0x3028	/* 40833618 3028 */
-	.short	0x0010	/* 4083361a 0010 */
-	jmp	%a1@			/* 4083361c 4ed1 */
+	moveal	%sp@(4),%a0
+	moveal	%a0@(12),%a1
+	movew	%a0@(16),%d0
+	jmp	%a1@
 
 FakeCompletion:
 	JmpVectorA1 0x2050 177
