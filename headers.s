@@ -1046,9 +1046,13 @@
 		.short	0xa9c8
 	.endm
 
-	.macro	_SysError
+	.macro	_SysError p1
+		.ifnb \p1
+			moveq \p1,%d0
+		.endif
 		.short	0xa9c9
 	.endm
+
 
 	.macro	_Munger
 		.short	0xa9e0
