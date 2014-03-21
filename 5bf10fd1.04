@@ -6564,26 +6564,19 @@ XPT_ISR7:
 	.align	16
 
 XPT_ISR8:
-	linkw	%fp,#0			/* 408242d0 4e56 0000 */
-	.short	0x2f0c	/* 408242d4 2f0c */
-	.short	0x4eba	/* 408242d6 4eba */
-	.short	0xb95e	/* 408242d8 b95e */
-	.short	0x2078	/* 408242da 2078 */
-	.short	0x0c0c	/* 408242dc 0c0c */
-	.short	0x2068	/* 408242de 2068 */
-	.short	0x01b4	/* 408242e0 01b4 */
-	.short	0x2868	/* 408242e2 2868 */
-	.short	0x0020	/* 408242e4 0020 */
-	.short	0x2f14	/* 408242e6 2f14 */
-	.short	0x206c	/* 408242e8 206c */
-	.short	0x0010	/* 408242ea 0010 */
-	.short	0x4e90	/* 408242ec 4e90 */
-	.short	0x4eba	/* 408242ee 4eba */
-	.short	0xb914	/* 408242f0 b914 */
-	.short	0x286e	/* 408242f2 286e */
-	.short	0xfffc	/* 408242f4 fffc */
-	.short	0x4e5e	/* 408242f6 4e5e */
-	rts				/* 408242f8 4e75 */
+	linkw	%fp,#0
+	movel	%a4,%sp@-
+	jsr	%pc@(VMDisableUserCode)
+	moveal	0xc0c,%a0
+	moveal	%a0@(436),%a0
+	moveal	%a0@(32),%a4
+	movel	%a4@,%sp@-
+	moveal	%a4@(16),%a0
+	jsr	%a0@
+	jsr	%pc@(VMEnableUserCode)
+	moveal	%fp@(-4),%a4
+	unlk	%fp
+	rts
 
 	.align	16
 
