@@ -913,7 +913,7 @@ __v__REALOPENDT:
 	moveq	#1,%d1			/* 408307fa 7201 */
 	bras	.L40830852		/* 408307fc 6054 */
 
-.L408307fe:	
+.L408307fe:
 	movew	%d0,%a4@(16)		/* 408307fe 3940 0010 */
 	bsrw	DOHDELETE		/* 40830802 6100 f7fc */
 	movew	%a4@(16),%d0		/* 40830806 302c 0010 */
@@ -4912,7 +4912,7 @@ __v__SetUpToolBoxName:
 str_40832e6e:
 	.byte	0x01			/* 40832e6e 01 */
 	.ascii	"*"
-	
+
 	.short	0x0000			/* 40832e70 0000 */
 
 sub_40832e72:
@@ -7476,44 +7476,40 @@ __v__NBPRemoveCompletion:
 	rts				/* 40834672 4e75 */
 
 NBPRemoveCompletion:
-	moveal	0x2050,%a1		/* 40834674 2278 2050 */
-	moveal	%a1@(600),%a1		/* 40834678 2269 0258 */
-	jmp	%a1@			/* 4083467c 4ed1 */
+	JmpVectorA1 0x2050 150
 
 	.align	16
 
 __v__CompleteClosePort:
-	linkw	%fp,#0			/* 40834680 4e56 0000 */
-	moveml	%a3-%a4,%sp@-		/* 40834684 48e7 0018 */
-	moveal	%fp@(8),%a4		/* 40834688 286e 0008 */
-	tstb	%a4@(11)		/* 4083468c 4a2c 000b */
-	bnes	.L408346c0		/* 40834690 662e */
-	tstw	%a4@(6)			/* 40834692 4a6c 0006 */
-	bnes	.L408346c0		/* 40834696 6628 */
-	tstl	%a4@(20)		/* 40834698 4aac 0014 */
-	bnes	.L408346c0		/* 4083469c 6622 */
-	moveal	%a4@(24),%a3		/* 4083469e 266c 0018 */
-	movel	%a3,%d0			/* 408346a2 200b */
-	beqs	.L408346c0		/* 408346a4 671a */
-	moveq	#0,%d0			/* 408346a6 7000 */
-	movel	%d0,%a4@(24)		/* 408346a8 2940 0018 */
-	movel	%a4,%sp@-		/* 408346ac 2f0c */
-	jsr	%pc@(FreePortTable)	/* 408346ae 4eba 042e */
-	moveq	#0,%d0			/* 408346b2 7000 */
-	movel	%d0,%sp@-		/* 408346b4 2f00 */
-	movel	%a3,%sp@-		/* 408346b6 2f0b */
-	jsr	%pc@(CompleteWithResult)	/* 408346b8 4eba fa9a */
-	lea	%sp@(12),%sp		/* 408346bc 4fef 000c */
+	linkw	%fp,#0
+	moveml	%a3-%a4,%sp@-
+	moveal	%fp@(8),%a4
+	tstb	%a4@(11)
+	bnes	.L408346c0
+	tstw	%a4@(6)
+	bnes	.L408346c0
+	tstl	%a4@(20)
+	bnes	.L408346c0
+	moveal	%a4@(24),%a3
+	movel	%a3,%d0
+	beqs	.L408346c0
+	moveq	#0,%d0
+	movel	%d0,%a4@(24)
+	movel	%a4,%sp@-
+	jsr	%pc@(FreePortTable)
+	moveq	#0,%d0
+	movel	%d0,%sp@-
+	movel	%a3,%sp@-
+	jsr	%pc@(CompleteWithResult)
+	lea	%sp@(12),%sp
 
 .L408346c0:
-	moveml	%fp@(-8),%a3-%a4	/* 408346c0 4cee 1800 fff8 */
-	unlk	%fp			/* 408346c6 4e5e */
-	rts				/* 408346c8 4e75 */
+	moveml	%fp@(-8),%a3-%a4
+	unlk	%fp
+	rts
 
 CompleteClosePort:
-	moveal	0x2050,%a1		/* 408346ca 2278 2050 */
-	moveal	%a1@(604),%a1		/* 408346ce 2269 025c */
-	jmp	%a1@			/* 408346d2 4ed1 */
+	JmpVectorA1 0x2050 151
 
 	.align	16
 
