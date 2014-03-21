@@ -377,26 +377,23 @@ DTVOLEXTFSCHECK:
 	.align	16
 
 DTRFNEXTFSCHECK:
-	.short	0x3028	/* 408302c0 3028 */
-	.short	0x0018	/* 408302c2 0018 */
-	.short	0x3200	/* 408302c4 3200 */
-	.short	0x4eba	/* 408302c6 4eba */
-	.short	0xc190	/* 408302c8 c190 */
-	.short	0x6614	/* 408302ca 6614 */
-	.short	0x2278	/* 408302cc 2278 */
-	.short	0x034e	/* 408302ce 034e */
-	.short	0x2471	/* 408302d0 2471 */
-	.short	0x1014	/* 408302d2 1014 */
-	.short	0x4a6a	/* 408302d4 4a6a */
-	.short	0x004c	/* 408302d6 004c */
-	.short	0x670c	/* 408302d8 670c */
-	.short	0x21ca	/* 408302da 21ca */
-	.short	0x03ee	/* 408302dc 03ee */
-	.short	0x70c6	/* 408302de 70c6 */
-	.short	0x4a9f	/* 408302e0 4a9f */
-	.short	0x4efa	/* 408302e2 4efa */
-	.short	0xc0ac	/* 408302e4 c0ac */
-	rts				/* 408302e6 4e75 */
+	movew	%a0@(24),%d0
+	movew	%d0,%d1
+	jsr	%pc@(REFNUMCHECK)
+	bnes	.L408302e0
+	moveal	0x34e,%a1
+	moveal	%a1@(20,%d1:w),%a2
+	tstw	%a2@(76)
+	beqs	.L408302e6
+	movel	%a2,0x3ee
+	moveq	#-58,%d0
+
+.L408302e0:
+	tstl	%sp@+
+	jmp	%pc@(CMDDONE)
+
+.L408302e6:
+	rts
 
 	.align	16
 
