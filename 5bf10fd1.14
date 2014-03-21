@@ -74,7 +74,7 @@ RMASK10:
 	andw	%d3,%d4			/* 4087008c c843 */
 	negw	%d4			/* 4087008e 4444 */
 	lsrw	#4,%d3			/* 40870090 e84b */
-	.short	0x4efb,0x4320,0x0022	/* jmp %pc@(.L408700b6,%d4:w:2) /* 40870092 4efb 4320 0022 */
+	.word	0x4efb,0x4320,0x0022	/* jmp %pc@(.L408700b6,%d4:w:2) /* 40870092 4efb 4320 0022 */
 
 .L40870098:
 	eorl	%d6,%a2@+		/* 40870098 bd9a */
@@ -447,20 +447,19 @@ RADDOVER:
 	bras	.L4087037e		/* 408703ba 60c2 */
 
 sub_408703bc:
-	.short	0x3e30	/* 408703bc 3e30 */
-	.short	0x6000	/* 408703be 6000 */
-	.short	0x380a	/* 408703c0 380a */
-	.short	0xc847	/* 408703c2 c847 */
-	.short	0xce40	/* 408703c4 ce40 */
-	.short	0x3a15	/* 408703c6 3a15 */
-	.short	0x360a	/* 408703c8 360a */
-	.short	0xc645	/* 408703ca c645 */
-	.short	0xca40	/* 408703cc ca40 */
-	.short	0xda47	/* 408703ce da47 */
-	.short	0xb943	/* 408703d0 b943 */
-	.short	0xb745	/* 408703d2 b745 */
-	.short	0x3a85	/* 408703d4 3a85 */
-	rts				/* 408703d6 4e75 */
+	movew	%a0@(%d6:w),%d7
+	movew	%a2,%d4
+	andw	%d7,%d4
+	andw	%d0,%d7
+	movew	%a5@,%d5
+	movew	%a2,%d3
+	andw	%d5,%d3
+	andw	%d0,%d5
+	addw	%d7,%d5
+	eorw	%d4,%d3
+	eorw	%d3,%d5
+	movew	%d5,%a5@
+	rts
 
 .L408703d8:
 	.short	0x61e2	/* 408703d8 61e2 */
