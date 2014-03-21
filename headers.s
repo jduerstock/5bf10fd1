@@ -824,13 +824,18 @@
 		.short	0xa8b5
 	.endm
 
-	.macro	_Char2Pixel
-		movel	#0x820c0016,%sp@-
+	.macro	_KeyScript
+		movel	#0x80020004,%sp@-
 		_ScriptUtil
 	.endm
 
 	.macro	_CharByte
 		movel	#0x82060010,%sp@-
+		_ScriptUtil
+	.endm
+
+	.macro	_Char2Pixel
+		movel	#0x820c0016,%sp@-
 		_ScriptUtil
 	.endm
 
