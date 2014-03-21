@@ -839,6 +839,11 @@
 		_ScriptUtil
 	.endm
 
+	.macro	_CharType
+		movel	#0x82060012,%sp@-
+		_ScriptUtil
+	.endm
+
 	.macro	_Char2Pixel
 		movel	#0x820c0016,%sp@-
 		_ScriptUtil
