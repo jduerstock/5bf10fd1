@@ -829,6 +829,11 @@
 		_ScriptUtil
 	.endm
 
+	.macro	_FontScript
+		movel	#0x82000000,%sp@-
+		_ScriptUtil
+	.endm
+
 	.macro	_CharByte
 		movel	#0x82060010,%sp@-
 		_ScriptUtil
