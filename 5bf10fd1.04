@@ -2686,80 +2686,76 @@ __v__TerminateIO:
 	rts				/* 40821cc4 4e75 */
 
 TerminateIO:
-	moveal	0x205c,%a1		/* 40821cc6 2278 205c */
-	moveal	%a1@(780),%a1		/* 40821cca 2269 030c */
-	jmp	%a1@			/* 40821cce 4ed1 */
+	JmpVectorA1 0x205c 195
 
 __v__AbortCommand:
-	linkw	%fp,#0			/* 40821cd0 4e56 0000 */
-	moveml	%d6-%d7/%a3-%a4,%sp@-	/* 40821cd4 48e7 0318 */
-	moveal	%fp@(8),%a3		/* 40821cd8 266e 0008 */
-	clrb	%d7			/* 40821cdc 4207 */
-	jsr	%pc@(BlockInterrupts)	/* 40821cde 4eba df88 */
-	movew	%d0,%d6			/* 40821ce2 3c00 */
-	moveal	%a3@(36),%a4		/* 40821ce4 286b 0024 */
-	movel	%fp@(12),%sp@-		/* 40821ce8 2f2e 000c */
-	movel	%a4,%sp@-		/* 40821cec 2f0c */
-	jsr	%pc@(FindIO)	/* 40821cee 4eba 167c */
-	tstl	%d0			/* 40821cf2 4a80 */
-	addqw	#8,%sp			/* 40821cf4 504f */
-	bnes	.L40821d08		/* 40821cf6 6610 */
-	movew	#-7933,%a3@(10)		/* 40821cf8 377c e103 000a */
-	movel	%a3,%sp@-		/* 40821cfe 2f0b */
-	jsr	%pc@(CallCompRoutine)	/* 40821d00 4eba 0ec6 */
-	addqw	#4,%sp			/* 40821d04 584f */
-	bras	.L40821d52		/* 40821d06 604a */
+	linkw	%fp,#0
+	moveml	%d6-%d7/%a3-%a4,%sp@-
+	moveal	%fp@(8),%a3
+	clrb	%d7
+	jsr	%pc@(BlockInterrupts)
+	movew	%d0,%d6
+	moveal	%a3@(36),%a4
+	movel	%fp@(12),%sp@-
+	movel	%a4,%sp@-
+	jsr	%pc@(FindIO)
+	tstl	%d0
+	addqw	#8,%sp
+	bnes	.L40821d08
+	movew	#-7933,%a3@(10)
+	movel	%a3,%sp@-
+	jsr	%pc@(CallCompRoutine)
+	addqw	#4,%sp
+	bras	.L40821d52
 
 .L40821d08:
-	moveq	#0,%d0			/* 40821d08 7000 */
-	movew	%a4@(188),%d0		/* 40821d0a 302c 00bc */
-	tstl	%d0			/* 40821d0e 4a80 */
-	bnes	.L40821d28		/* 40821d10 6616 */
-	movel	%fp@(12),%sp@-		/* 40821d12 2f2e 000c */
-	movel	%a4,%sp@-		/* 40821d16 2f0c */
-	movel	#-7912,%sp@-		/* 40821d18 2f3c ffff e118 */
-	jsr	%pc@(CompleteIO)	/* 40821d1e 4eba 0e7c */
-	lea	%sp@(12),%sp		/* 40821d22 4fef 000c */
-	bras	.L40821d52		/* 40821d26 602a */
+	moveq	#0,%d0
+	movew	%a4@(188),%d0
+	tstl	%d0
+	bnes	.L40821d28
+	movel	%fp@(12),%sp@-
+	movel	%a4,%sp@-
+	movel	#-7912,%sp@-
+	jsr	%pc@(CompleteIO)
+	lea	%sp@(12),%sp
+	bras	.L40821d52
 
 .L40821d28:
-	tstl	%a4@(196)		/* 40821d28 4aac 00c4 */
-	beqs	.L40821d3c		/* 40821d2c 670e */
-	movew	#-7933,%a3@(10)		/* 40821d2e 377c e103 000a */
-	movel	%a3,%sp@-		/* 40821d34 2f0b */
-	jsr	%pc@(CallCompRoutine)	/* 40821d36 4eba 0e90 */
-	addqw	#4,%sp			/* 40821d3a 584f */
+	tstl	%a4@(196)
+	beqs	.L40821d3c
+	movew	#-7933,%a3@(10)
+	movel	%a3,%sp@-
+	jsr	%pc@(CallCompRoutine)
+	addqw	#4,%sp
 
 .L40821d3c:
-	movel	%a3,%a4@(196)		/* 40821d3c 294b 00c4 */
-	moveq	#1,%d7			/* 40821d40 7e01 */
-	moveal	%fp@(12),%a0		/* 40821d42 206e 000c */
-	pea	%a0@(72)		/* 40821d46 4868 0048 */
-	movel	%a4,%sp@-		/* 40821d4a 2f0c */
-	jsr	%pc@(SwitchQ)	/* 40821d4c 4eba 1660 */
-	addqw	#8,%sp			/* 40821d50 504f */
+	movel	%a3,%a4@(196)
+	moveq	#1,%d7
+	moveal	%fp@(12),%a0
+	pea	%a0@(72)
+	movel	%a4,%sp@-
+	jsr	%pc@(SwitchQ)
+	addqw	#8,%sp
 
 .L40821d52:
-	moveq	#0,%d0			/* 40821d52 7000 */
-	movew	%d6,%d0			/* 40821d54 3006 */
-	movel	%d0,%sp@-		/* 40821d56 2f00 */
-	jsr	%pc@(UnblockInterrupts)	/* 40821d58 4eba df2c */
-	tstb	%d7			/* 40821d5c 4a07 */
-	addqw	#4,%sp			/* 40821d5e 584f */
-	beqs	.L40821d6c		/* 40821d60 670a */
-	movel	%fp@(12),%sp@-		/* 40821d62 2f2e 000c */
-	jsr	%pc@(NewIOStartMachine)	/* 40821d66 4eba 0cae */
-	addqw	#4,%sp			/* 40821d6a 584f */
+	moveq	#0,%d0
+	movew	%d6,%d0
+	movel	%d0,%sp@-
+	jsr	%pc@(UnblockInterrupts)
+	tstb	%d7
+	addqw	#4,%sp
+	beqs	.L40821d6c
+	movel	%fp@(12),%sp@-
+	jsr	%pc@(NewIOStartMachine)
+	addqw	#4,%sp
 
 .L40821d6c:
-	moveml	%fp@(-16),%d6-%d7/%a3-%a4	/* 40821d6c 4cee 18c0 fff0 */
-	unlk	%fp			/* 40821d72 4e5e */
-	rts				/* 40821d74 4e75 */
+	moveml	%fp@(-16),%d6-%d7/%a3-%a4
+	unlk	%fp
+	rts
 
 AbortCommand:
-	moveal	0x205c,%a1		/* 40821d76 2278 205c */
-	moveal	%a1@(784),%a1		/* 40821d7a 2269 0310 */
-	jmp	%a1@			/* 40821d7e 4ed1 */
+	JmpVectorA1 0x205c 196
 
 __v__Machine:
 	linkw	%fp,#-36		/* 40821d80 4e56 ffdc */
