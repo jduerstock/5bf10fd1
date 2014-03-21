@@ -556,6 +556,10 @@
 		.short	0xa401
 	.endm
 
+	.macro	_PBReadAsync
+		.short	0xa402
+	.endm
+
 	.macro	_PBControlAsync
 		.short	0xa404
 	.endm
