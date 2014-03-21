@@ -858,6 +858,10 @@
 		.short	0xa8e6
 	.endm
 
+	.macro	_ScrollRect
+		.short	0xa8ef
+	.endm
+
 	.macro	_PrDrvrOpen
 		movel	#0x80000000,%sp@-
 		.short	0xa8fd
