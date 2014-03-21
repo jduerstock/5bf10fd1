@@ -196,18 +196,17 @@ DOBTSEARCH:
 	braw	.L4082ffe2
 
 DOBTGETREC:
-	.short	0x2d1f	/* 40830156 2d1f */
-	.short	0x6100	/* 40830158 6100 */
-	.short	0xfe16	/* 4083015a fe16 */
-	.short	0x6608	/* 4083015c 6608 */
-	.short	0x7007	/* 4083015e 7007 */
-	.short	0xa08e	/* 40830160 a08e */
-	.short	0x6000	/* 40830162 6000 */
-	.short	0xfe60	/* 40830164 fe60 */
-	.short	0x7007	/* 40830166 7007 */
-	.short	0xa48e	/* 40830168 a48e */
-	.short	0x6000	/* 4083016a 6000 */
-	.short	0xfe76	/* 4083016c fe76 */
+	movel	%sp@+,%fp@-
+	bsrw	__v__BOTTLENECKIO
+	bnes	.L40830166
+	moveq	#7,%d0
+	.short	0xa08e
+	braw	.L4082ffc4
+
+.L40830166:
+	moveq	#7,%d0
+	.short	0xa48e
+	braw	.L4082ffe2
 
 DOBTSETREC:
 	.short	0x2d1f	/* 4083016e 2d1f */
