@@ -557,71 +557,66 @@ CHECKCSPEC:
 	.align	16
 
 MYMAKEFOLDER:
-	moveq	#1,%d0			/* 40830420 7001 */
-	.short	0x6002	/* 40830422 6002 */
-	moveq	#0,%d0			/* 40830424 7000 */
-	.short	0x2d1f	/* 40830426 2d1f */
-	.short	0x48e6	/* 40830428 48e6 */
-	.short	0x00c0	/* 4083042a 00c0 */
-	.short	0x9cfc	/* 4083042c 9cfc */
-	.short	0x0080	/* 4083042e 0080 */
-	.short	0x0c82	/* 40830430 0c82 */
-	.short	0x726f	/* 40830432 726f */
-	.short	0x6f74	/* 40830434 6f74 */
-	.short	0x6708	/* 40830436 6708 */
-	.short	0x0c82	/* 40830438 0c82 */
-	.short	0x7365	/* 4083043a 7365 */
-	.short	0x7276	/* 4083043c 7276 */
-	.short	0x663a	/* 4083043e 663a */
-	.short	0x0c41	/* 40830440 0c41 */
-	.short	0x8000	/* 40830442 8000 */
-	.short	0x6604	/* 40830444 6604 */
-	.short	0x3238	/* 40830446 3238 */
-	.short	0x0210	/* 40830448 0210 */
-	.short	0x41ee	/* 4083044a 41ee */
-	.short	0x0006	/* 4083044c 0006 */
-	.short	0x42a8	/* 4083044e 42a8 */
-	.short	0x0012	/* 40830450 0012 */
-	.short	0x3141	/* 40830452 3141 */
-	.short	0x0016	/* 40830454 0016 */
-	.short	0x4268	/* 40830456 4268 */
-	.short	0x001c	/* 40830458 001c */
-	.short	0x6100	/* 4083045a 6100 */
-	.short	0xfbfa	/* 4083045c fbfa */
-	.short	0x6614	/* 4083045e 6614 */
-	.short	0x3228	/* 40830460 3228 */
-	.short	0x0016	/* 40830462 0016 */
-	.short	0x0c82	/* 40830464 0c82 */
-	.short	0x726f	/* 40830466 726f */
-	.short	0x6f74	/* 40830468 6f74 */
-	.short	0x670a	/* 4083046a 670a */
-	.short	0x2428	/* 4083046c 2428 */
-	.short	0x0076	/* 4083046e 0076 */
-	.short	0x6602	/* 40830470 6602 */
-	.short	0x70d5	/* 40830472 70d5 */
-	.short	0x601e	/* 40830474 601e */
-	.short	0x7402	/* 40830476 7402 */
-	.short	0x601a	/* 40830478 601a */
-	.short	0x558f	/* 4083047a 558f */
-	.short	0x3f01	/* 4083047c 3f01 */
-	.short	0x2f02	/* 4083047e 2f02 */
-	.short	0x3f00	/* 40830480 3f00 */
-	.short	0x4856	/* 40830482 4856 */
-	.short	0x486e	/* 40830484 486e */
-	.short	0x0002	/* 40830486 0002 */
-	moveq	#0,%d0			/* 40830488 7000 */
-	.short	0xa823	/* 4083048a a823 */
-	.short	0x3216	/* 4083048c 3216 */
-	.short	0x242e	/* 4083048e 242e */
-	.short	0x0002	/* 40830490 0002 */
-	.short	0x301f	/* 40830492 301f */
-	.short	0x4dee	/* 40830494 4dee */
-	.short	0x0080	/* 40830496 0080 */
-	.short	0x4cde	/* 40830498 4cde */
-	.short	0x0300	/* 4083049a 0300 */
-	.short	0x2f1e	/* 4083049c 2f1e */
-	.short	0x4a40	/* 4083049e 4a40 */
-	rts				/* 408304a0 4e75 */
+	moveq	#1,%d0
+	bras	.L40830426
+
+MYFINDFOLDER:
+	moveq	#0,%d0
+
+.L40830426:
+	movel	%sp@+,%fp@-
+	moveml	%a0-%a1,%fp@-
+	subaw	#128,%fp
+	cmpil	#1919905652,%d2
+	beqs	.L40830440
+	cmpil	#1936028278,%d2
+	bnes	.L4083047a
+
+.L40830440:
+	cmpiw	#-32768,%d1
+	bnes	.L4083044a
+	movew	0x210,%d1
+
+.L4083044a:
+	lea	%fp@(6),%a0
+	clrl	%a0@(18)
+	movew	%d1,%a0@(22)
+	clrw	%a0@(28)
+	bsrw	DOHGETVINFO
+	bnes	.L40830474
+	movew	%a0@(22),%d1
+	cmpil	#1919905652,%d2
+	beqs	.L40830476
+	movel	%a0@(118),%d2
+	bnes	.L40830474
+	moveq	#-43,%d0
+
+.L40830474:
+	bras	.L40830494
+
+.L40830476:
+	moveq	#2,%d2
+	bras	.L40830494
+
+.L4083047a:
+	subql	#2,%sp
+	movew	%d1,%sp@-
+	movel	%d2,%sp@-
+	movew	%d0,%sp@-
+	pea	%fp@
+	pea	%fp@(2)
+	moveq	#0,%d0
+	.short	0xa823
+	movew	%fp@,%d1
+	movel	%fp@(2),%d2
+	movew	%sp@+,%d0
+
+.L40830494:
+	lea	%fp@(128),%fp
+	moveml	%fp@+,%a0-%a1
+	movel	%fp@+,%sp@-
+	tstw	%d0
+	rts
 
 	.align	16
 
