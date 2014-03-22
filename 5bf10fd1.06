@@ -700,26 +700,21 @@ FINDDTFILES:
 	rts				/* 4083058e 4e75 */
 
 sub_40830590:
-	.short	0x2d1f	/* 40830590 2d1f */
-	.short	0x3203	/* 40830592 3203 */
-	.short	0x6100	/* 40830594 6100 */
-	.short	0xfe8e	/* 40830596 fe8e */
-	.short	0x6618	/* 40830598 6618 */
-	.short	0x41ee	/* 4083059a 41ee */
-	.short	0x0004	/* 4083059c 0004 */
-	.short	0x2149	/* 4083059e 2149 */
-	.short	0x0012	/* 408305a0 0012 */
-	.short	0x3141	/* 408305a2 3141 */
-	.short	0x0016	/* 408305a4 0016 */
-	.short	0x4268	/* 408305a6 4268 */
-	.short	0x001c	/* 408305a8 001c */
-	.short	0x2142	/* 408305aa 2142 */
-	.short	0x0030	/* 408305ac 0030 */
-	.short	0x6100	/* 408305ae 6100 */
-	.short	0xfaba	/* 408305b0 faba */
-	.short	0x2f1e	/* 408305b2 2f1e */
-	.short	0x4a40	/* 408305b4 4a40 */
-	rts				/* 408305b6 4e75 */
+	movel	%sp@+,%fp@-
+	movew	%d3,%d1
+	bsrw	MYFINDFOLDER
+	bnes	.L408305b2
+	lea	%fp@(4),%a0
+	movel	%a1,%a0@(18)
+	movew	%d1,%a0@(22)
+	clrw	%a0@(28)
+	movel	%d2,%a0@(48)
+	bsrw	DOHGETFILEINFO
+
+.L408305b2:
+	movel	%fp@+,%sp@-
+	tstw	%d0
+	rts
 
 str_408305b8:
 	.byte	0x0a			/* 408305b8 0a */
