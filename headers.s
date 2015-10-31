@@ -1215,6 +1215,7 @@
 	.equ	__FCL_PAT__, 0x50415420		/* "PAT " */
 	.equ	__FCL_atkv_, 0x61746b76		/* "atkv" */
 	.equ	__FCL_atlk_, 0x61746c6b		/* "atlk" */
+	.equ	__FCL_clos_, 0x636c6f73		/* "clos" */
 	.equ	__FCL_easy_, 0x65617379		/* "easy" */
 	.equ	__FCL_hdwr_, 0x68647772		/* "hdwr" */
 	.equ	__FCL_mach_, 0x6d616368		/* "mach" */
