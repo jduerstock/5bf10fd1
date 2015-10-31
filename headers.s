@@ -502,7 +502,10 @@
 		.short	0xa198
 	.endm
 
-	.macro	_Gestalt
+	.macro	_Gestalt s1
+		.ifnb \s1
+			movel \s1,%d0
+		.endif
 		.short	0xa1ad
 	.endm
 
