@@ -504,7 +504,7 @@
 
 	.macro	_Gestalt s1
 		.ifnb \s1
-			movel \s1,%d0
+			movel #\s1,%d0
 		.endif
 		.short	0xa1ad
 	.endm
@@ -1214,6 +1214,7 @@
 	.equ	__FCL_DSAT_, 0x44534154		/* "DSAT" */
 	.equ	__FCL_PAT__, 0x50415420		/* "PAT " */
 	.equ	__FCL_mach_, 0x6d616368		/* "mach" */
+	.equ	__FCL_os___, 0x6f732020		/* "os  " */
 	.equ	__FCL_rovm_, 0x726f766d		/* "rovm" */
 	.equ	__FCL_vm___, 0x766d2020		/* "vm  " */
 
