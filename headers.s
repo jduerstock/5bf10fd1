@@ -1206,11 +1206,12 @@
 	.endm
 
 	.equ	__FCL_1_2A_, 0x312e3241		/* "1.2A" */
-/*	.equ	__FCL_CRSR_, 0x43525352		/* "CRSR" */
-	.equ	__FCL_CURS_, 0x43555253		/* "CRSR" */
+	.equ	__FCL_CRSR_, 0x43525352		/* "CRSR" */
+	.equ	__FCL_CURS_, 0x43555253		/* "CURS" */
 	.equ	__FCL_DSAT_, 0x44534154		/* "DSAT" */
 	.equ	__FCL_PAT__, 0x50415420		/* "PAT " */
 	.equ	__FCL_mach_, 0x6d616368		/* "mach" */
+	.equ	__FCL_rovm_, 0x726f766d		/* "rovm" */
 	.equ	__FCL_vm___, 0x766d2020		/* "vm  " */
 
 	.equ	UTableBase, 0x11c
