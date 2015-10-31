@@ -1222,6 +1222,7 @@
 	.equ	__FCL_rom__, 0x726f6d20		/* "rom " */
 	.equ	__FCL_rovm_, 0x726f766d		/* "rovm" */
 	.equ	__FCL_snd__, 0x736e6420		/* "snd " */
+	.equ	__FCL_snhw_, 0x736e6877		/* "snhw" */
 	.equ	__FCL_vm___, 0x766d2020		/* "vm  " */
 
 	.equ	UTableBase, 0x11c
