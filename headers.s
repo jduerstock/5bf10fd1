@@ -1219,6 +1219,7 @@
 	.equ	__FCL_hdwr_, 0x68647772		/* "hdwr" */
 	.equ	__FCL_mach_, 0x6d616368		/* "mach" */
 	.equ	__FCL_os___, 0x6f732020		/* "os  " */
+	.equ	__FCL_pgsz_, 0x7067737a		/* "pgsz" */
 	.equ	__FCL_rom__, 0x726f6d20		/* "rom " */
 	.equ	__FCL_rovm_, 0x726f766d		/* "rovm" */
 	.equ	__FCL_snd__, 0x736e6420		/* "snd " */
