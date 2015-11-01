@@ -1225,6 +1225,7 @@
 	.equ	__FCL_os___, 0x6f732020		/* "os  " */
 	.equ	__FCL_pgsz_, 0x7067737a		/* "pgsz" */
 	.equ	__FCL_powr_, 0x706f7772		/* "powr" */
+	.equ	__FCL_ppc__, 0x70706320		/* "ppc " */
 	.equ	__FCL_pref_, 0x70726566		/* "pref" */
 	.equ	__FCL_qd___, 0x71642020		/* "qd  " */
 	.equ	__FCL_rom__, 0x726f6d20		/* "rom " */
