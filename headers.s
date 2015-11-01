@@ -1213,6 +1213,7 @@
 	.equ	__FCL_CURS_, 0x43555253		/* "CURS" */
 	.equ	__FCL_DSAT_, 0x44534154		/* "DSAT" */
 	.equ	__FCL_PAT__, 0x50415420		/* "PAT " */
+	.equ	__FCL_STR__, 0x53545220		/* "STR " */
 	.equ	__FCL_atkv_, 0x61746b76		/* "atkv" */
 	.equ	__FCL_atlk_, 0x61746c6b		/* "atlk" */
 	.equ	__FCL_clos_, 0x636c6f73		/* "clos" */
