@@ -1227,6 +1227,7 @@
 	.equ	__FCL_powr_, 0x706f7772		/* "powr" */
 	.equ	__FCL_ppc__, 0x70706320		/* "ppc " */
 	.equ	__FCL_pref_, 0x70726566		/* "pref" */
+	.equ	__FCL_proc_, 0x70726f63		/* "proc" */
 	.equ	__FCL_qd___, 0x71642020		/* "qd  " */
 	.equ	__FCL_rom__, 0x726f6d20		/* "rom " */
 	.equ	__FCL_rovm_, 0x726f766d		/* "rovm" */
