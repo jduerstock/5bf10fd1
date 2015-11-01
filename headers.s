@@ -1217,6 +1217,7 @@
 	.equ	__FCL_atlk_, 0x61746c6b		/* "atlk" */
 	.equ	__FCL_clos_, 0x636c6f73		/* "clos" */
 	.equ	__FCL_easy_, 0x65617379		/* "easy" */
+	.equ	__FCL_flag_, 0x666c6167		/* "flag" */
 	.equ	__FCL_hdwr_, 0x68647772		/* "hdwr" */
 	.equ	__FCL_mach_, 0x6d616368		/* "mach" */
 	.equ	__FCL_misc_, 0x6d697363		/* "misc" */
