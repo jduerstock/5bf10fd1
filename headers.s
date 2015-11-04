@@ -490,7 +490,10 @@
 		.short	0xa11e
 	.endm
 
-	.macro	_NewHandle
+	.macro	_NewHandle s1
+		.ifnb \s1
+			moveq #\s1,%d0
+		.endif
 		.short	0xa122
 	.endm
 
