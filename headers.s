@@ -676,6 +676,15 @@
 		.short	0xa823
 	.endm
 
+	.macro	_ComponentDispatch
+		.short	0xa82a
+	.endm
+
+	.macro	_CallComponentFunction
+		moveq	#-1,%d0
+		.short	0xa82a
+	.endm
+
 	.macro	_HMBalloonBulk
 		movew	#252,%d0
 		.short	0xa830
