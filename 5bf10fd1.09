@@ -6619,68 +6619,52 @@ OPENCOMPONENT:
 	.align	16
 
 __v__CLOSECOMPONENT:
-	linkw	%fp,#0			/* 4084bd80 4e56 0000 */
-	.short	0x48e7	/* 4084bd84 48e7 */
-	.short	0x0718	/* 4084bd86 0718 */
-	.short	0x2c2e	/* 4084bd88 2c2e */
-	.short	0x0008	/* 4084bd8a 0008 */
-	.short	0x2f06	/* 4084bd8c 2f06 */
-	.short	0x4eba	/* 4084bd8e 4eba */
-	.short	0xf17c	/* 4084bd90 f17c */
-	.short	0x2840	/* 4084bd92 2840 */
-	.short	0x200c	/* 4084bd94 200c */
-	.short	0x584f	/* 4084bd96 584f */
-	.short	0x6608	/* 4084bd98 6608 */
-	.short	0x3d7c	/* 4084bd9a 3d7c */
-	.short	0xf448	/* 4084bd9c f448 */
-	.short	0x000c	/* 4084bd9e 000c */
-	.short	0x6050	/* 4084bda0 6050 */
-	.short	0x2f0c	/* 4084bda2 2f0c */
-	.short	0x4eba	/* 4084bda4 4eba */
-	.short	0xf62c	/* 4084bda6 f62c */
-	.short	0x2e00	/* 4084bda8 2e00 */
-	.short	0x598f	/* 4084bdaa 598f */
-	.short	0x2f07	/* 4084bdac 2f07 */
-	.short	0x2f07	/* 4084bdae 2f07 */
-	.short	0x2f3c	/* 4084bdb0 2f3c */
-	.short	0x0004	/* 4084bdb2 0004 */
-	.short	0xfffe	/* 4084bdb4 fffe */
-	moveq	#0,%d0			/* 4084bdb6 7000 */
-	.short	0xa82a	/* 4084bdb8 a82a */
-	.short	0x2a1f	/* 4084bdba 2a1f */
-	.short	0x558f	/* 4084bdbc 558f */
-	.short	0x2f06	/* 4084bdbe 2f06 */
-	.short	0x4eba	/* 4084bdc0 4eba */
-	.short	0xf9ba	/* 4084bdc2 f9ba */
-	.short	0x2654	/* 4084bdc4 2654 */
-	.short	0x2078	/* 4084bdc6 2078 */
-	.short	0x028a	/* 4084bdc8 028a */
-	.short	0x5368	/* 4084bdca 5368 */
-	.short	0x000c	/* 4084bdcc 000c */
-	moveq	#0,%d0			/* 4084bdce 7000 */
-	.short	0x2880	/* 4084bdd0 2880 */
-	.short	0x522c	/* 4084bdd2 522c */
-	.short	0x0005	/* 4084bdd4 0005 */
-	.short	0x022c	/* 4084bdd6 022c */
-	.short	0x007f	/* 4084bdd8 007f */
-	.short	0x0005	/* 4084bdda 0005 */
-	.short	0x4a2c	/* 4084bddc 4a2c */
-	.short	0x0005	/* 4084bdde 0005 */
-	.short	0x5c4f	/* 4084bde0 5c4f */
-	.short	0x6604	/* 4084bde2 6604 */
-	.short	0x522c	/* 4084bde4 522c */
-	.short	0x0005	/* 4084bde6 0005 */
-	.short	0x002c	/* 4084bde8 002c */
-	.short	0x0080	/* 4084bdea 0080 */
-	.short	0x0005	/* 4084bdec 0005 */
-	.short	0x3d45	/* 4084bdee 3d45 */
-	.short	0x000c	/* 4084bdf0 000c */
-	.short	0x4cee	/* 4084bdf2 4cee */
-	.short	0x18e0	/* 4084bdf4 18e0 */
-	.short	0xffec	/* 4084bdf6 ffec */
-	.short	0x4e5e	/* 4084bdf8 4e5e */
-	.short	0x4e74	/* 4084bdfa 4e74 */
-	.short	0x0004	/* 4084bdfc 0004 */
+	linkw	%fp,#0
+	moveml	%d5-%d7/%a3-%a4,%sp@-
+	movel	%fp@(8),%d6
+	movel	%d6,%sp@-
+	jsr	%pc@(ValidComponentInstance)
+	moveal	%d0,%a4
+	movel	%a4,%d0
+	addqw	#4,%sp
+	bnes	.L4084bda2
+	movew	#-3000,%fp@(12)
+	bras	.L4084bdf2
+
+.L4084bda2:
+	movel	%a4,%sp@-
+	jsr	%pc@(sub_4084b3d2)
+	movel	%d0,%d7
+	subql	#4,%sp
+	movel	%d7,%sp@-
+	movel	%d7,%sp@-
+	movel	#327678,%sp@-
+	moveq	#0,%d0
+	_ComponentDispatch
+	movel	%sp@+,%d5
+	subql	#2,%sp
+	movel	%d6,%sp@-
+	jsr	%pc@(UNLOADCOMPONENT)
+	moveal	%a4@,%a3
+	moveal	0x28a,%a0
+	subqw	#1,%a0@(12)
+	moveq	#0,%d0
+	movel	%d0,%a4@
+	addqb	#1,%a4@(5)
+	andib	#127,%a4@(5)
+	tstb	%a4@(5)
+	addqw	#6,%sp
+	bnes	.L4084bde8
+	addqb	#1,%a4@(5)
+
+.L4084bde8:
+	orib	#0x80,%a4@(5)
+	movew	%d5,%fp@(12)
+
+.L4084bdf2:
+	moveml	%fp@(-20),%d5-%d7/%a3-%a4
+	unlk	%fp
+	rtd	#4
 
 CLOSECOMPONENT:
 	.short	0x2278	/* 4084bdfe 2278 */
@@ -6865,7 +6849,7 @@ __v__REGISTERCOMPONENTROMRESOURCE:
 	movel	%d7,%sp@-		/* 4084bfbe 2f07 */
 	movel	#65531,%sp@-		/* 4084bfc0 2f3c 0000 fffb */
 	moveq	#0,%d0			/* 4084bfc6 7000 */
-	.short	0xa82a			/* 4084bfc8 a82a */
+	_ComponentDispatch
 	tstl	%sp@+			/* 4084bfca 4a9f */
 	beqs	.L4084bfde		/* 4084bfcc 6710 */
 	subql	#2,%sp			/* 4084bfce 558f */
