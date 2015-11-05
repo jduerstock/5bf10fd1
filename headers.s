@@ -1145,28 +1145,27 @@
 		.short	0xabca
 	.endm
 
-	.macro	_DSPDispatch
+	.macro	_DSPDispatch s1
+		.ifnb \s1
+			movew #\s1,%d0
+		.endif
 		.short	0xabf5
 	.endm
 
 	.macro	_DSPSetTaskInactive
-		movew	#29,%d0	
-		.short	0xabf5
+		_DSPDispatch 29
 	.endm
 
 	.macro	_DSPNewAddress
-		movew	#31,%d0	
-		.short	0xabf5
+		_DSPDispatch 31
 	.endm
 
 	.macro	_DSPDisposeAddress
-		movew	#32,%d0	
-		.short	0xabf5
+		_DSPDIspatch 32
 	.endm
 
 	.macro	_DSPFIFOClearInterrupt
-		movew	#61,%d0	
-		.short	0xabf5
+		_DSPDispatch 61
 	.endm
 
 	.macro	_DSPFIFOSetMessageMode
