@@ -6256,39 +6256,31 @@ utMakeRoom4SInfoHandle:
 
 __v__utHidePaletteAndMenu:
 	linkw	%fp,#0			/* 4088be00 4e56 0000 */
-	.short	0x2f0c	/* 4088be04 2f0c */
-	.short	0x286e	/* 4088be06 286e */
-	.short	0x0008	/* 4088be08 0008 */
-	.short	0x4aac	/* 4088be0a 4aac */
-	.short	0x0008	/* 4088be0c 0008 */
-	.short	0x671c	/* 4088be0e 671c */
-	.short	0x4a2c	/* 4088be10 4a2c */
-	.short	0x000c	/* 4088be12 000c */
-	.short	0x6716	/* 4088be14 6716 */
-	.short	0x206c	/* 4088be16 206c */
-	.short	0x0008	/* 4088be18 0008 */
-	.short	0x2050	/* 4088be1a 2050 */
-	.short	0x3010	/* 4088be1c 3010 */
-	.short	0x48c0	/* 4088be1e 48c0 */
-	.short	0x2f00	/* 4088be20 2f00 */
-	.short	0x4eba	/* 4088be22 4eba */
-	.short	0x13b0	/* 4088be24 13b0 */
-	.short	0x422c	/* 4088be26 422c */
-	.short	0x000c	/* 4088be28 000c */
-	.short	0x584f	/* 4088be2a 584f */
-	.short	0x598f	/* 4088be2c 598f */
-	.short	0x2f2c	/* 4088be2e 2f2c */
-	.short	0x0004	/* 4088be30 0004 */
-	.short	0x2f3c	/* 4088be32 2f3c */
-	.short	0x0000	/* 4088be34 0000 */
-	.short	0x000b	/* 4088be36 000b */
-	moveq	#0,%d0			/* 4088be38 7000 */
-	.short	0xa82a	/* 4088be3a a82a */
-	.short	0x584f	/* 4088be3c 584f */
-	.short	0x286e	/* 4088be3e 286e */
-	.short	0xfffc	/* 4088be40 fffc */
-	.short	0x4e5e	/* 4088be42 4e5e */
-	rts				/* 4088be44 4e75 */
+	movel	%a4,%sp@-
+	moveal	%fp@(8),%a4
+	tstl	%a4@(8)
+	beqs	.L4088be2c
+	tstb	%a4@(12)
+	beqs	.L4088be2c
+	moveal	%a4@(8),%a0
+	moveal	%a0@,%a0
+	movew	%a0@,%d0
+	extl	%d0
+	movel	%d0,%sp@-
+	jsr	%pc@(utDeleteMenu)
+	clrb	%a4@(12)
+	addqw	#4,%sp
+
+.L4088be2c:
+	subql	#4,%sp
+	movel	%a4@(4),%sp@-
+	movel	#11,%sp@-
+	moveq	#0,%d0
+	.short	0xa82a
+	addqw	#4,%sp
+	moveal	%fp@(-4),%a4
+	unlk	%fp
+	rts
 
 utHidePaletteAndMenu:
 	.short	0x2278	/* 4088be46 2278 */
@@ -6470,7 +6462,7 @@ CHANGEMENURESULTFORINPUTMETHOD:
 	movew	%a0@(2),%sp@-
 	movel	#393224,%sp@-
 	moveq	#0,%d0
-	.short	0xa82a
+	_ComponentDispatch
 	movel	%sp@+,%d7
 	subql	#2,%sp
 	movew	#65,%sp@-
@@ -6611,7 +6603,7 @@ __v__utActivateIM4Document:
 	jsr	%pc@(utGetScriptIndex)	/* 4088c13e 4eba 0960 */
 	moveal	%fp@(-8),%a0		/* 4088c142 206e fff8 */
 	asll	#4,%d0			/* 4088c146 e980 */
-	lea	%a0@(0x001e,%d0:l),%a4	/* 4088c148 49f0 081e */
+	lea	%a0@(0x1e,%d0:l),%a4	/* 4088c148 49f0 081e */
 	tstl	%a4@(4)			/* 4088c14c 4aac 0004 */
 	addqw	#4,%sp			/* 4088c150 584f */
 	beqs	.L4088c1ae		/* 4088c152 675a */
@@ -6627,7 +6619,7 @@ __v__utActivateIM4Document:
 	movel	%a4@(4),%sp@-		/* 4088c164 2f2c 0004 */
 	movel	#2,%sp@-		/* 4088c168 2f3c 0000 0002 */
 	moveq	#0,%d0			/* 4088c16e 7000 */
-	.short	0xa82a			/* 4088c170 a82a */
+	_ComponentDispatch
 	movel	%sp@+,%d7		/* 4088c172 2e1f */
 	subql	#4,%sp			/* 4088c174 598f */
 	movel	%a4@(4),%sp@-		/* 4088c176 2f2c 0004 */
@@ -6641,7 +6633,7 @@ __v__utActivateIM4Document:
 	beqs	.L4088c1a6		/* 4088c192 6712 */
 	movel	%fp@(-4),%sp@-		/* 4088c194 2f2e fffc */
 	movel	%a4@(8),%sp@-		/* 4088c198 2f2c 0008 */
-	jsr	%pc@(utCreateSystemVersionOfMenu)	/* 4088c19c 4eba ff52 */
+	jsr	%pc@(utCreateSystemVersionOfMenu)
 	moveb	%d0,%a4@(12)		/* 4088c1a0 1940 000c */
 	addqw	#8,%sp			/* 4088c1a4 504f */
 
@@ -6738,7 +6730,7 @@ __v__utDeactivateIMforDocument:
 	movel	%a4@(4),%sp@-		/* 4088c280 2f2c 0004 */
 	movel	#5,%sp@-		/* 4088c284 2f3c 0000 0005 */
 	moveq	#0,%d0			/* 4088c28a 7000 */
-	.short	0xa82a			/* 4088c28c a82a */
+	_ComponentDispatch
 	clrb	%a4@(13)		/* 4088c28e 422c 000d */
 	addqw	#4,%sp			/* 4088c292 584f */
 
