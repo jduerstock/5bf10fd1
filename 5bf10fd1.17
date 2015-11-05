@@ -6039,67 +6039,54 @@ XFINDSERVICEWINDOW:
 	.align	16
 
 __v__utJustDeactivateIM4Document:
-	linkw	%fp,#0			/* 4088bc40 4e56 0000 */
-	.short	0x48e7	/* 4088bc44 48e7 */
-	.short	0x0318	/* 4088bc46 0318 */
-	.short	0x3c2e	/* 4088bc48 3c2e */
-	.short	0x000e	/* 4088bc4a 000e */
-	.short	0x4247	/* 4088bc4c 4247 */
-	.short	0x206e	/* 4088bc4e 206e */
-	.short	0x0008	/* 4088bc50 0008 */
-	.short	0x2650	/* 4088bc52 2650 */
-	.short	0x4a2b	/* 4088bc54 4a2b */
-	.short	0x0012	/* 4088bc56 0012 */
-	.short	0x6606	/* 4088bc58 6606 */
-	.short	0x303c	/* 4088bc5a 303c */
-	.short	0xf635	/* 4088bc5c f635 */
-	.short	0x6052	/* 4088bc5e 6052 */
-	.short	0x48c6	/* 4088bc60 48c6 */
-	.short	0x2f06	/* 4088bc62 2f06 */
-	.short	0x4eba	/* 4088bc64 4eba */
-	.short	0x0cae	/* 4088bc66 0cae */
-	.short	0x4a00	/* 4088bc68 4a00 */
-	.short	0x584f	/* 4088bc6a 584f */
-	.short	0x663c	/* 4088bc6c 663c */
-	.short	0x48c6	/* 4088bc6e 48c6 */
-	.short	0x2f06	/* 4088bc70 2f06 */
-	.short	0x4eba	/* 4088bc72 4eba */
-	.short	0x0e2c	/* 4088bc74 0e2c */
-	.short	0xe980	/* 4088bc76 e980 */
-	.short	0x49f3	/* 4088bc78 49f3 */
-	.short	0x081e	/* 4088bc7a 081e */
-	.short	0x4aac	/* 4088bc7c 4aac */
-	.short	0x0004	/* 4088bc7e 0004 */
-	.short	0x584f	/* 4088bc80 584f */
-	.short	0x6726	/* 4088bc82 6726 */
-	.short	0x4a2c	/* 4088bc84 4a2c */
-	.short	0x000d	/* 4088bc86 000d */
-	.short	0x6720	/* 4088bc88 6720 */
-	.short	0x598f	/* 4088bc8a 598f */
-	.short	0x2f2c	/* 4088bc8c 2f2c */
-	.short	0x0004	/* 4088bc8e 0004 */
-	.short	0x2f3c	/* 4088bc90 2f3c */
-	.short	0x0000	/* 4088bc92 0000 */
-	.short	0x0005	/* 4088bc94 0005 */
-	moveq	#0,%d0			/* 4088bc96 7000 */
-	.short	0xa82a	/* 4088bc98 a82a */
-	.short	0x201f	/* 4088bc9a 201f */
-	.short	0x3e00	/* 4088bc9c 3e00 */
-	.short	0x660a	/* 4088bc9e 660a */
-	.short	0x206e	/* 4088bca0 206e */
-	.short	0x0008	/* 4088bca2 0008 */
-	.short	0x2650	/* 4088bca4 2650 */
-	.short	0x422c	/* 4088bca6 422c */
-	.short	0x000d	/* 4088bca8 000d */
-	.short	0x176e	/* 4088bcaa 176e */
-	.short	0x0013	/* 4088bcac 0013 */
-	.short	0x0012	/* 4088bcae 0012 */
-	.short	0x3007	/* 4088bcb0 3007 */
-	.short	0x4cee	/* 4088bcb2 4cee */
-	.short	0x18c0	/* 4088bcb4 18c0 */
-	.short	0xfff0	/* 4088bcb6 fff0 */
-	.short	0x4e5e	/* 4088bcb8 4e5e */
-	rts				/* 4088bcba 4e75 */
+	linkw	%fp,#0
+	moveml	%d6-%d7/%a3-%a4,%sp@-
+	movew	%fp@(14),%d6
+	clrw	%d7
+	moveal	%fp@(8),%a0
+	moveal	%a0@,%a3
+	tstb	%a3@(18)
+	bnes	.L4088bc60
+	movew	#-2507,%d0
+	bras	.L4088bcb2
+
+.L4088bc60:
+	extl	%d6
+	movel	%d6,%sp@-
+	jsr	%pc@(utScriptIsNotCCJK)
+	tstb	%d0
+	addqw	#4,%sp
+	bnes	.L4088bcaa
+	extl	%d6
+	movel	%d6,%sp@-
+	jsr	%pc@(utGetScriptIndex)
+	asll	#4,%d0
+	lea	%a3@(0x1e,%d0:l),%a4
+	tstl	%a4@(4)
+	addqw	#4,%sp
+	beqs	.L4088bcaa
+	tstb	%a4@(13)
+	beqs	.L4088bcaa
+	subql	#4,%sp
+	movel	%a4@(4),%sp@-
+	movel	#5,%sp@-
+	moveq	#0,%d0
+	.short	0xa82a
+	movel	%sp@+,%d0
+	movew	%d0,%d7
+	bnes	.L4088bcaa
+	moveal	%fp@(8),%a0
+	moveal	%a0@,%a3
+	clrb	%a4@(13)
+
+.L4088bcaa:
+	moveb	%fp@(19),%a3@(18)
+	movew	%d7,%d0
+
+.L4088bcb2:
+	moveml	%fp@(-16),%d6-%d7/%a3-%a4
+	unlk	%fp
+	rts
 
 utJustDeactivateIM4Document:
 	.short	0x2278	/* 4088bcbc 2278 */
@@ -6869,7 +6856,7 @@ __v__utCloseIM4Document:
 	subql	#4,%sp			/* 4088c35e 598f */
 	movel	%a4@,%sp@-		/* 4088c360 2f14 */
 	moveq	#19,%d0			/* 4088c362 7013 */
-	.short	0xa82a			/* 4088c364 a82a */
+	_ComponentDispatch
 	moveq	#1,%d0			/* 4088c366 7001 */
 	cmpl	%sp@+,%d0		/* 4088c368 b09f */
 	bnes	.L4088c3aa		/* 4088c36a 663e */
@@ -6886,7 +6873,7 @@ __v__utCloseIM4Document:
 	extl	%d6			/* 4088c386 48c6 */
 	moveal	%fp@(-4),%a0		/* 4088c388 206e fffc */
 	moveq	#0,%d0			/* 4088c38c 7000 */
-	movel	%d0,%a0@(0x0030,%d6:l:8)	/* 4088c38e 2180 6e30 */
+	movel	%d0,%a0@(0x30,%d6:l:8)	/* 4088c38e 2180 6e30 */
 	moveq	#0,%d0			/* 4088c392 7000 */
 	movel	%d0,%sp@-		/* 4088c394 2f00 */
 	moveal	%a4@(8),%a0		/* 4088c396 206c 0008 */
@@ -6904,7 +6891,7 @@ __v__utCloseIM4Document:
 	movel	%a4@(4),%sp@-		/* 4088c3b2 2f2c 0004 */
 	movel	#11,%sp@-		/* 4088c3b6 2f3c 0000 000b */
 	moveq	#0,%d0			/* 4088c3bc 7000 */
-	.short	0xa82a			/* 4088c3be a82a */
+	_ComponentDispatch
 	addqw	#4,%sp			/* 4088c3c0 584f */
 
 .L4088c3c2:
@@ -6914,7 +6901,7 @@ __v__utCloseIM4Document:
 	movel	%a4@(4),%sp@-		/* 4088c3ca 2f2c 0004 */
 	movel	#5,%sp@-		/* 4088c3ce 2f3c 0000 0005 */
 	moveq	#0,%d0			/* 4088c3d4 7000 */
-	.short	0xa82a			/* 4088c3d6 a82a */
+	_ComponentDispatch
 	addqw	#4,%sp			/* 4088c3d8 584f */
 
 .L4088c3da:
