@@ -925,6 +925,10 @@
 		.short	0xa931
 	.endm
 
+	.macro	_InsertMenu
+		.short	0xa935
+	.endm
+
 	.macro	_HiliteMenu
 		.short	0xa938
 	.endm
