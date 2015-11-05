@@ -1108,6 +1108,10 @@
 		.short	0xaa2f
 	.endm
 
+	.macro	_HighLevelFSDispatch
+		.short	0xaa52
+	.endm
+
 	.macro	_FSpOpenResFile	
 		moveq	#13,%d0
 		.short	0xaa52
