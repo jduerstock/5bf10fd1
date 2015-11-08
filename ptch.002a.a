@@ -6137,23 +6137,25 @@ sub_409b2b78:
 .L409b2bde:
 	rts				/* 409b2bde 4e75 */
 
-	.short	0x3400	/* 409b2be0 3400 */
-	.short	0x0801	/* 409b2be2 0801 */
-	.short	0x0009	/* 409b2be4 0009 */
-	.short	0x660e	/* 409b2be6 660e */
-	.short	0x0801	/* 409b2be8 0801 */
-	.short	0x000a	/* 409b2bea 000a */
-	.short	0x6714	/* 409b2bec 6714 */
-	.short	0x0802	/* 409b2bee 0802 */
-	.short	0x000b	/* 409b2bf0 000b */
-	.short	0x6708	/* 409b2bf2 6708 */
-	.short	0x6022	/* 409b2bf4 6022 */
-	.short	0x0801	/* 409b2bf6 0801 */
-	.short	0x000a	/* 409b2bf8 000a */
-	.short	0x661c	/* 409b2bfa 661c */
-	.short	0x0242	/* 409b2bfc 0242 */
-	.short	0x00ff	/* 409b2bfe 00ff */
-	rts				/* 409b2c00 4e75 */
+sub_409b2be0:
+	movew	%d0,%d2
+	btst	#9,%d1
+	bnes	.L409b2bf6
+	btst	#10,%d1
+	beqs	.L409b2c02
+	btst	#11,%d2
+	beqs	.L409b2bfc
+	bras	.L409b2c18
+
+.L409b2bf6:
+	btst	#10,%d1
+	bnes	.L409b2c18
+
+.L409b2bfc:
+	andiw	#255,%d2
+	rts
+
+.L409b2c02:
 	.short	0x0242	/* 409b2c02 0242 */
 	.short	0x01ff	/* 409b2c04 01ff */
 	.short	0x0c42	/* 409b2c06 0c42 */
@@ -6165,16 +6167,18 @@ sub_409b2b78:
 	.short	0x0c42	/* 409b2c12 0c42 */
 	.short	0x004f	/* 409b2c14 004f */
 	.short	0x63e4	/* 409b2c16 63e4 */
+
+.L409b2c18:
 	.short	0x0242	/* 409b2c18 0242 */
 	.short	0x03ff	/* 409b2c1a 03ff */
 	.short	0x0042	/* 409b2c1c 0042 */
 	.short	0x0800	/* 409b2c1e 0800 */
 	rts				/* 409b2c20 4e75 */
-	.short	0x61bc	/* 409b2c22 61bc */
-	.short	0x0c42	/* 409b2c24 0c42 */
-	.short	0x002f	/* 409b2c26 002f */
-	.short	0x6700	/* 409b2c28 6700 */
-	.short	0x04ec	/* 409b2c2a 04ec */
+
+sub_409b2c22:
+	bsrs	sub_409b2be0
+	cmpiw	#47,%d2
+	beqw	.L409b3116
 	.short	0x0c42	/* 409b2c2c 0c42 */
 	.short	0x0058	/* 409b2c2e 0058 */
 	.short	0x6700	/* 409b2c30 6700 */
@@ -6798,9 +6802,10 @@ sub_409b30fa:
 	addqw	#8,%sp
 	rts
 
-	.short	0x207a	/* 409b3116 207a */
-	.short	0xffde	/* 409b3118 ffde */
-	rts				/* 409b311a 4e75 */
+.L409b3116:
+	moveal	%pc@(off_409b30f6),%a0
+	rts
+
 	.short	0x43fa	/* 409b311c 43fa */
 	.short	0xffd8	/* 409b311e ffd8 */
 	.short	0x2288	/* 409b3120 2288 */
