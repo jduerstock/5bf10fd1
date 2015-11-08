@@ -4016,6 +4016,7 @@ sub_409b14d8:
 	unlk	%fp			/* 409b158c 4e5e */
 	rts				/* 409b158e 4e75 */
 
+sub_409b1590:
 	linkw	%fp,#0			/* 409b1590 4e56 0000 */
 	moveml	%a3-%a4,%sp@-		/* 409b1594 48e7 0018 */
 	moveal	%fp@(12),%a3		/* 409b1598 266e 000c */
@@ -6789,20 +6790,15 @@ off_409b30f6:
 	.short	0x0000	/* 409b30f8 0000 */
 
 sub_409b30fa:
-	.short	0x206f	/* 409b30fa 206f */
-	.short	0x0004	/* 409b30fc 0004 */
-	.short	0x202f	/* 409b30fe 202f */
-	.short	0x0008	/* 409b3100 0008 */
-	.short	0x4ebb	/* 409b3102 4ebb */
-	.short	0x8161	/* 409b3104 8161 */
-	.short	0xfff2	/* 409b3106 fff2 */
-	.short	0x2f2f	/* 409b3108 2f2f */
-	.short	0x000c	/* 409b310a 000c */
-	.short	0x2f08	/* 409b310c 2f08 */
-	.short	0x4eba	/* 409b310e 4eba */
-	.short	0xe480	/* 409b3110 e480 */
-	.short	0x504f	/* 409b3112 504f */
-	rts				/* 409b3114 4e75 */
+	moveal	%sp@(4),%a0
+	movel	%sp@(8),%d0
+	.short	0x4ebb,0x8161,0xfff2	/* jsr %pc@([off_409b30f6]) */
+	movel	%sp@(12),%sp@-
+	movel	%a0,%sp@-
+	jsr	%pc@(sub_409b1590)
+	addqw	#8,%sp
+	rts
+
 	.short	0x207a	/* 409b3116 207a */
 	.short	0xffde	/* 409b3118 ffde */
 	rts				/* 409b311a 4e75 */
