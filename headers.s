@@ -223,7 +223,11 @@
 	.endm
 
 	.equ	MemoryDispatch, 0xa05c
-	.macro	_MemoryDispatch
+
+	.macro	_MemoryDispatch p1
+		.ifnb \p1
+			moveq #\p1,%d0
+		.endif
 		.short	MemoryDispatch
 	.endm
 
