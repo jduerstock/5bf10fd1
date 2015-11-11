@@ -1132,6 +1132,10 @@
 		.short	0xaa32
 	.endm
 
+	.macro	_QDError
+		.short	0xaa40
+	.endm
+
 	.macro	_HighLevelFSDispatch
 		.short	0xaa52
 	.endm
