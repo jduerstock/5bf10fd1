@@ -729,6 +729,10 @@
 		.short	0xa869
 	.endm
 
+	.macro	_FixRound
+		.short	0xa86c
+	.endm
+
 	.macro	_InitGraf
 		.short	0xa86e
 	.endm
