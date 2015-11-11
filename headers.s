@@ -892,6 +892,10 @@
 		.short	0xa8d9
 	.endm
 
+	.macro	_CopyRgn
+		.short	0xa8dc
+	.endm
+
 	.macro	_OffsetRgn
 		.short	0xa8e0
 	.endm
