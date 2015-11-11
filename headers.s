@@ -1108,6 +1108,10 @@
 		.short	0xa9ff
 	.endm
 
+	.macro	_NewPixMap
+		.short	0xaa03
+	.endm
+
 	.macro	_PlotCIcon
 		.short	0xaa1f
 	.endm
