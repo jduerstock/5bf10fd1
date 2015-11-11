@@ -268,6 +268,10 @@
 		.short	0xa060
 	.endm
 
+	.macro	_MoveHHi
+		.short	0xa064
+	.endm
+
 	.macro	_HGetState p1
 		.ifnb \p1
 			moveal \p1,%a0
