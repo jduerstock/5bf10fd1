@@ -1124,6 +1124,10 @@
 		.short	0xaa2f
 	.endm
 
+	.macro	_GetGDevice
+		.short	0xaa32
+	.endm
+
 	.macro	_HighLevelFSDispatch
 		.short	0xaa52
 	.endm
