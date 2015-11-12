@@ -1136,6 +1136,10 @@
 		.short	0xaa2f
 	.endm
 
+	.macro	_SetGDevice
+		.short	0xaa31
+	.endm
+
 	.macro	_GetGDevice
 		.short	0xaa32
 	.endm
