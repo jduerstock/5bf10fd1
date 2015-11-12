@@ -1120,6 +1120,10 @@
 		.short	0xaa03
 	.endm
 
+	.macro	_CopyPixMap
+		.short	0xaa05
+	.endm
+
 	.macro	_PlotCIcon
 		.short	0xaa1f
 	.endm
@@ -1175,6 +1179,10 @@
 	.macro	_RestoreBack
 		movew	#0x0410,%d0
 		.short	0xaaa2
+	.endm
+
+	.macro	_QuickTimeDispatch
+		.short	0xaaaa
 	.endm
 
 	.macro	_AlphaDispatch
