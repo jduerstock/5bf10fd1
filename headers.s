@@ -1177,6 +1177,10 @@
 		.short	0xaaa2
 	.endm
 
+	.macro	_AlphaDispatch
+		.short	0xabc0
+	.endm
+
 	.macro	_DeviceLoop
 		.short	0xabca
 	.endm
