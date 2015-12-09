@@ -662,15 +662,13 @@ byte_409e061a:
 	btst	#7,0xdd1
 	bnes	.L409e065a
 	moveb	#0xfd,%a0@(50)
-	moveq	#49,%d0
-	.short	0xa06e
+	_SDeleteSRTRec
 	btst	#2,0x2403
 	bnes	.L409e06a2
 
 .L409e065a:
 	moveb	#0xef,%a0@(50)
-	moveq	#49,%d0
-	.short	0xa06e
+	_SDeleteSRTRec
 	bras	.L409e06c0
 
 .L409e0666:
@@ -1010,7 +1008,7 @@ byte_409e0840:
 
 .L409e0954:
 	movel	%a2,%a0@(4)
-	_SPutPRAMRec			/* 409e0958 7012 a06e */
+	_SPutPRAMRec
 	moveb	%a2@(3),%d5
 	lea	%pc@(byte_409e0ab0),%a1
 	moveb	%d5,%d0
@@ -1038,12 +1036,11 @@ byte_409e0840:
 	clrw	%a0@(46)
 	clrl	%a0@(24)
 	bset	#1,%a0@(27)
-	moveq	#12,%d0
-	.short	0xa06e
+	_SGetTypeSRsrc
 	moveb	#126,%a0@(50)
-	_SFindStruct			/* 409e09c0 7006 a06e */
+	_SFindStruct
 	moveb	%d5,%a0@(50)
-	_SGetBlock			/* 409e09c8 7005 a06e */
+	_SGetBlock
 	moveal	%a0@,%a1
 	movel	%a1,%fp@(-92)
 	tstb	%fp@(-86)
@@ -10888,29 +10885,28 @@ sub_409e601e:
 	_SetSRsrcState
 	moveb	%a1@(41),%a0@(50)	/* 409e6048 1169 0029 0032 */
 	clrl	%a0@(24)		/* 409e604e 42a8 0018 */
-	moveq	#9,%d0			/* 409e6052 7009 */
-	.short	0xa06e			/* 409e6054 a06e */
-	bnew	.L409e5d02		/* 409e6056 6600 fcaa */
+	_SetSRsrcState
+	bnew	.L409e5d02
 	_SFindDevBase
-	bnew	.L409e5d02		/* 409e605e 6600 fca2 */
-	movel	%a0@,%d3		/* 409e6062 2610 */
-	movel	%d3,%a3@		/* 409e6064 2683 */
-	lsrl	#5,%d3			/* 409e6066 ea8b */
-	andil	#255,%d3		/* 409e6068 0283 0000 00ff */
+	bnew	.L409e5d02
+	movel	%a0@,%d3
+	movel	%d3,%a3@
+	lsrl	#5,%d3
+	andil	#255,%d3
 
 .L409e606e:
-	moveb	%a1@(40),%a0@(49)	/* 409e606e 1169 0028 0031 */
-	clrb	%a0@(51)		/* 409e6074 4228 0033 */
-	moveb	%a1@(41),%a0@(50)	/* 409e6078 1169 0029 0032 */
+	moveb	%a1@(40),%a0@(49)
+	clrb	%a0@(51)
+	moveb	%a1@(41),%a0@(50)
 	_SRsrcInfo
-	bnew	.L409e5d02		/* 409e6082 6600 fc7e */
-	moveb	%d1,%a0@(50)		/* 409e6086 1141 0032 */
+	bnew	.L409e5d02
+	moveb	%d1,%a0@(50)
 	_SFindStruct
-	beqs	.L409e609c		/* 409e608e 670c */
-	cmpiw	#-330,%d0		/* 409e6090 0c40 feb6 */
-	bnew	.L409e5d02		/* 409e6094 6600 fc6c */
-	subqw	#1,%d1			/* 409e6098 5341 */
-	bras	.L409e606e		/* 409e609a 60d2 */
+	beqs	.L409e609c
+	cmpiw	#-330,%d0
+	bnew	.L409e5d02
+	subqw	#1,%d1
+	bras	.L409e606e
 
 .L409e609c:
 	moveb	#1,%a0@(50)
