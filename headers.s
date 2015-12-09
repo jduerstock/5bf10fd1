@@ -802,9 +802,18 @@
 		.short	0xa893
 	.endm
 
+	.macro	_ShutDown
+		.short	0xa895
+	.endm
+
 	.macro	_ShutDwnPower
 		movew	#1,%sp@-
-		.short	0xa895
+		_ShutDown
+	.endm
+
+	.macro	_ShutDwnStart
+		movew	#1,%sp@-
+		_ShutDown
 	.endm
 
 	.macro	_GetPenState
