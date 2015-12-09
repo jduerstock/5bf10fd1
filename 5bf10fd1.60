@@ -336,8 +336,7 @@ sub_409e0302:
 	moveb	%d0,%a2@(7)		/* 409e0354 1540 0007 */
 	movel	%a2,%a0@(4)		/* 409e0358 214a 0004 */
 	_SPutPRAMRec
-	movew	#2,%sp@-		/* 409e0360 3f3c 0002 */
-	.short	0xa895			/* 409e0364 a895 */
+	_ShutDwnStart
 
 .L409e0366:
 	moveb	%d4,%d0			/* 409e0366 1004 */
@@ -348,15 +347,14 @@ sub_409e0302:
 	orib	#64,%d0			/* 409e0374 0000 0040 */
 	moveb	%d0,%a2@(7)		/* 409e0378 1540 0007 */
 	movel	%a2,%a0@(4)		/* 409e037c 214a 0004 */
-	moveq	#18,%d0			/* 409e0380 7012 */
-	.short	0xa06e			/* 409e0382 a06e */
+	_SPutPRAMRec
 
 .L409e0384:
 	movel	#786432,%d0		/* 409e0384 203c 000c 0000 */
 	andl	0xdd4,%d0		/* 409e038a c0b8 0dd4 */
 	subil	#262144,%d0		/* 409e038e 0480 0004 0000 */
 	bnes	.L409e03c6		/* 409e0394 6630 */
-	movel	#1651861370,%d0		/* 409e0396 203c 6275 677a */
+	movel	#0x6275677a,%d0
 	.short	0xa1ad			/* 409e039c a1ad */
 	beqs	.L409e03c6		/* 409e039e 6726 */
 	lea	%pc@(sub_409e02ea),%a1	/* 409e03a0 43fa ff48 */
@@ -436,19 +434,21 @@ sub_409e0302:
 	.short	0x0156	/* 409e0452 0156 */
 
 sub_409e0454:
-	.short	0x1f00	/* 409e0454 1f00 */
-	.short	0x3219	/* 409e0456 3219 */
-	.short	0x1019	/* 409e0458 1019 */
-	.short	0xb017	/* 409e045a b017 */
-	.short	0x6708	/* 409e045c 6708 */
-	.short	0x1140	/* 409e045e 1140 */
-	.short	0x0032	/* 409e0460 0032 */
-	.short	0x7031	/* 409e0462 7031 */
-	.short	0xa06e	/* 409e0464 a06e */
-	.short	0x51c9	/* 409e0466 51c9 */
-	.short	0xfff0	/* 409e0468 fff0 */
-	.short	0x4a1f	/* 409e046a 4a1f */
-	rts				/* 409e046c 4e75 */
+	moveb	%d0,%sp@-
+	movew	%a1@+,%d1
+
+.L409e0458:
+	moveb	%a1@+,%d0
+	cmpb	%sp@,%d0
+	beqs	.L409e0466
+	moveb	%d0,%a0@(50)
+	moveq	#49,%d0
+	.short	0xa06e
+
+.L409e0466:
+	dbf	%d1,.L409e0458
+	tstb	%sp@+
+	rts
 
 sub_409e046e:
 	.short	0x1f00	/* 409e046e 1f00 */

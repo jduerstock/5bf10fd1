@@ -812,7 +812,7 @@
 	.endm
 
 	.macro	_ShutDwnStart
-		movew	#1,%sp@-
+		movew	#2,%sp@-
 		_ShutDown
 	.endm
 
