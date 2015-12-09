@@ -312,6 +312,11 @@
 		.short	0xa06e
 	.endm
 
+	.macro	_SVersion
+		moveq	#8,%d0
+		.short	0xa06e
+	.endm
+
 	.macro	_SetSRsrcState
 		moveq	#9,%d0
 		.short	0xa06e
