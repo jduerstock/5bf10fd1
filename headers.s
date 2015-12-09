@@ -1161,7 +1161,7 @@
 		.short	0xaa52
 	.endm
 
-	.macro	_FSpOpenResFile	
+	.macro	_FSpOpenResFile
 		moveq	#13,%d0
 		.short	0xaa52
 	.endm
@@ -1230,57 +1230,57 @@
 	.endm
 
 	.macro	_DSPFIFOSetMessageMode
-		movew	#65,%d0	
+		movew	#65,%d0
 		.short	0xabf5
 	.endm
 
 	.macro	_DSPFIFOReset
-		movew	#66,%d0	
+		movew	#66,%d0
 		.short	0xabf5
 	.endm
 
 	.macro	_DSPGetOwnerClient
-		movew	#71,%d0	
+		movew	#71,%d0
 		.short	0xabf5
 	.endm
 
 	.macro	_DSPGetTaskStatus
-		movew	#92,%d0	
+		movew	#92,%d0
 		.short	0xabf5
 	.endm
 
 	.macro	_DSPFIFOGetMessageDispatch
-		movew	#94,%d0	
+		movew	#94,%d0
 		.short	0xabf5
 	.endm
 
 	.macro	_DSPClientRefNumToDSPClientPtr
-		movew	#117,%d0	
+		movew	#117,%d0
 		.short	0xabf5
 	.endm
 
 	.macro	_DSPGetCPUDeviceGivenIndex
-		movew	#121,%d0	
+		movew	#121,%d0
 		.short	0xabf5
 	.endm
 
 	.macro	_DSPGetTaskGivenSectionTable
-		movew	#124,%d0	
+		movew	#124,%d0
 		.short	0xabf5
 	.endm
 
 	.macro	_DSPPowerManager
-		movew	#284,%d0	
+		movew	#284,%d0
 		.short	0xabf5
 	.endm
 
 	.macro	_DSPDeviceCall
-		movew	#290,%d0	
+		movew	#290,%d0
 		.short	0xabf5
 	.endm
 
 	.macro	_DSPRebootCPUDevice
-		movew	#294,%d0	
+		movew	#294,%d0
 		.short	0xabf5
 	.endm
 
