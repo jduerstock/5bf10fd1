@@ -450,27 +450,24 @@ sub_409e0454:
 	rts
 
 sub_409e046e:
-	.short	0x1f00	/* 409e046e 1f00 */
-	.short	0x3219	/* 409e0470 3219 */
-	.short	0x1019	/* 409e0472 1019 */
-	.short	0xb017	/* 409e0474 b017 */
-	.short	0x6718	/* 409e0476 6718 */
-	.short	0x1140	/* 409e0478 1140 */
-	.short	0x0032	/* 409e047a 0032 */
-	.short	0x42a8	/* 409e047c 42a8 */
-	.short	0x0004	/* 409e047e 0004 */
-	.short	0x217c	/* 409e0480 217c */
-	.short	0x0000	/* 409e0482 0000 */
-	.short	0x0001	/* 409e0484 0001 */
-	.short	0x0018	/* 409e0486 0018 */
-	.short	0x4268	/* 409e0488 4268 */
-	.short	0x0026	/* 409e048a 0026 */
-	.short	0x700a	/* 409e048c 700a */
-	.short	0xa06e	/* 409e048e a06e */
-	.short	0x51c9	/* 409e0490 51c9 */
-	.short	0xffe0	/* 409e0492 ffe0 */
-	.short	0x4a1f	/* 409e0494 4a1f */
-	rts				/* 409e0496 4e75 */
+	moveb	%d0,%sp@-
+	movew	%a1@+,%d1
+
+.L409e0472:
+	moveb	%a1@+,%d0
+	cmpb	%sp@,%d0
+	beqs	.L409e0490
+	moveb	%d0,%a0@(50)
+	clrl	%a0@(4)
+	movel	#1,%a0@(24)
+	clrw	%a0@(38)
+	_InsertSRTRec
+
+.L409e0490:
+	dbf	%d1,.L409e0472
+	tstb	%sp@+
+	rts
+
 	.short	0x48e7	/* 409e0498 48e7 */
 	.short	0xc000	/* 409e049a c000 */
 	.short	0x7200	/* 409e049c 7200 */
