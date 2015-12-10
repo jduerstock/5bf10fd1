@@ -353,6 +353,10 @@
 		_SlotManager
 	.endm
 
+	.macro	_SReadFHeader
+		_SlotManager 19
+	.endm
+
 	.macro	_SNextSRsrc
 		moveq	#20,%d0
 		_SlotManager
