@@ -287,24 +287,28 @@
 		.short	0xa06c
 	.endm
 
+	.macro	_SlotManager
+		.short	0xa06e
+	.endm
+
 	.macro	_SReadWord
 		moveq	#1,%d0
-		.short	0xa06e
+		_SlotManager
 	.endm
 
 	.macro	_SReadLong
 		moveq	#2,%d0
-		.short	0xa06e
+		_SlotManager
 	.endm
 
 	.macro	_SGetBlock
 		moveq	#5,%d0
-		.short	0xa06e
+		_SlotManager
 	.endm
 
 	.macro	_SFindStruct
 		moveq	#6,%d0
-		.short	0xa06e
+		_SlotManager
 	.endm
 
 	.macro	_SReadStruct
