@@ -313,127 +313,127 @@
 
 	.macro	_SReadStruct
 		moveq	#7,%d0
-		.short	0xa06e
+		_SlotManager
 	.endm
 
 	.macro	_SVersion
 		moveq	#8,%d0
-		.short	0xa06e
+		_SlotManager
 	.endm
 
 	.macro	_SetSRsrcState
 		moveq	#9,%d0
-		.short	0xa06e
+		_SlotManager
 	.endm
 
 	.macro	_InsertSRTRec
 		moveq	#10,%d0
-		.short	0xa06e
+		_SlotManager
 	.endm
 
 	.macro	_SGetSRsrc
 		moveq	#11,%d0
-		.short	0xa06e
+		_SlotManager
 	.endm
 
 	.macro	_SGetTypeSRsrc
 		moveq	#12,%d0
-		.short	0xa06e
+		_SlotManager
 	.endm
 
 	.macro	_SReadPRAMRec
 		moveq	#17,%d0
-		.short	0xa06e
+		_SlotManager
 	.endm
 
 	.macro	_SPutPRAMRec
 		moveq	#18,%d0
-		.short	0xa06e
+		_SlotManager
 	.endm
 
 	.macro	_SNextSRsrc
 		moveq	#20,%d0
-		.short	0xa06e
+		_SlotManager
 	.endm
 
 	.macro	_SNextTypeSRsrc
 		moveq	#21,%d0
-		.short	0xa06e
+		_SlotManager
 	.endm
 
 	.macro	_SRsrcInfo
 		moveq	#22,%d0
-		.short	0xa06e
+		_SlotManager
 	.endm
 
 	.macro	_SDisposePtr
 		moveq	#23,%d0
-		.short	0xa06e
+		_SlotManager
 	.endm
 
 	.macro	_SReadDrvrName
 		moveq	#25,%d0
-		.short	0xa06e
+		_SlotManager
 	.endm
 
 	.macro	_SFindDevBase
 		moveq	#27,%d0
-		.short	0xa06e
+		_SlotManager
 	.endm
 
 	.macro	_SGetSRsrcPtr
 		moveq	#29,%d0
-		.short	0xa06e
+		_SlotManager
 	.endm
 
 	.macro	_SExec
 		moveq	#35,%d0
-		.short	0xa06e
+		_SlotManager
 	.endm
 
 	.macro	_SOffsetData
 		moveq	#36,%d0
-		.short	0xa06e
+		_SlotManager
 	.endm
 
 	.macro	_SReadPBSize
 		moveq	#38,%d0
-		.short	0xa06e
+		_SlotManager
 	.endm
 
 	.macro	_SCalcStep
 		moveq	#40,%d0
-		.short	0xa06e
+		_SlotManager
 	.endm
 
 	.macro	_SUpdateSRT
 		moveq	#43,%d0
-		.short	0xa06e
+		_SlotManager
 	.endm
 
 	.macro	_SFindSInfoRecPtr
 		moveq	#47,%d0
-		.short	0xa06e
+		_SlotManager
 	.endm
 
 	.macro	_SFindSRsrcPtr
 		moveq	#48,%d0
-		.short	0xa06e
+		_SlotManager
 	.endm
 
 	.macro	_SDeleteSRTRec
 		moveq	#49,%d0
-		.short	0xa06e
+		_SlotManager
 	.endm
 
 	.macro	_SSecondaryInit
 		moveq	#50,%d0
-		.short	0xa06e
+		_SlotManager
 	.endm
 
 	.macro	_SInitSlotPRAM
 		moveq	#51,%d0
-		.short	0xa06e
+		_SlotManager
 	.endm
 
 	.macro	_SIntInstall
