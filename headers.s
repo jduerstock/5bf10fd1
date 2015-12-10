@@ -316,13 +316,11 @@
 	.endm
 
 	.macro	_SReadStruct
-		moveq	#7,%d0
-		_SlotManager
+		_SlotManager 7
 	.endm
 
 	.macro	_SVersion
-		moveq	#8,%d0
-		_SlotManager
+		_SlotManager 8
 	.endm
 
 	.macro	_SetSRsrcState
