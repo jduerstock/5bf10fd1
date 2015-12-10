@@ -333,8 +333,7 @@
 	.endm
 
 	.macro	_SGetSRsrc
-		moveq	#11,%d0
-		_SlotManager
+		_SlotManager 11
 	.endm
 
 	.macro	_SGetTypeSRsrc
