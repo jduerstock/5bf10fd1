@@ -328,8 +328,7 @@
 	.endm
 
 	.macro	_InsertSRTRec
-		moveq	#10,%d0
-		_SlotManager
+		_SlotManager 10
 	.endm
 
 	.macro	_SGetSRsrc
