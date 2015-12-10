@@ -8,7 +8,7 @@
 		.long (( (\a) << 24 ) + ( (\b) & 0xffffff ))
 	.endm
 
-	/* this macro bypasses the A trap mechanism and calls the 
+	/* this macro bypasses the A trap mechanism and calls the
 	trap directly from the dispatch table */
 
 	.macro	tsjsr	trap
@@ -358,13 +358,11 @@
 	.endm
 
 	.macro	_SNextSRsrc
-		moveq	#20,%d0
-		_SlotManager
+		_SlotManager 20
 	.endm
 
 	.macro	_SNextTypeSRsrc
-		moveq	#21,%d0
-		_SlotManager
+		_SlotManager 21
 	.endm
 
 	.macro	_SRsrcInfo
