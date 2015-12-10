@@ -7,6 +7,10 @@
 		.long (( (\a) << 24 ) + ( (\b) & 0xffffff ))
 	.endm
 
+	.macro	slotaddr a b
+		.long (( (\a) << 24 ) + ( (\b-.) & 0xffffff ))
+	.endm
+
 	/* this macro bypasses the A trap mechanism and calls the
 	trap directly from the dispatch table */
 
