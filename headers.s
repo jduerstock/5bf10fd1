@@ -287,13 +287,15 @@
 		.short	0xa06c
 	.endm
 
-	.macro	_SlotManager
+	.macro	_SlotManager p1
+		.ifnb \p1
+			moveq #\p1,%d0
+		.endif
 		.short	0xa06e
 	.endm
 
 	.macro	_SReadWord
-		moveq	#1,%d0
-		_SlotManager
+		_SlotManager 1
 	.endm
 
 	.macro	_SReadLong
