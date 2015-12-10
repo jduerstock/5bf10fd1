@@ -437,8 +437,7 @@
 	.endm
 
 	.macro	_SInitSlotPRAM
-		moveq	#51,%d0
-		_SlotManager
+		_SlotManager 51
 	.endm
 
 	.macro	_SIntInstall
