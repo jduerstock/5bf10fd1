@@ -418,6 +418,10 @@
 		_SlotManager 44
 	.endm
 
+	.macro	_SGetDriver
+		_SlotManager 45
+	.endm
+
 	.macro	_SFindSInfoRecPtr
 		moveq	#47,%d0
 		_SlotManager
