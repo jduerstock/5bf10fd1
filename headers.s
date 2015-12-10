@@ -326,8 +326,7 @@
 	.endm
 
 	.macro	_SetSRsrcState
-		moveq	#9,%d0
-		_SlotManager
+		_SlotManager 9
 	.endm
 
 	.macro	_InsertSRTRec
@@ -341,8 +340,7 @@
 	.endm
 
 	.macro	_SGetTypeSRsrc
-		moveq	#12,%d0
-		_SlotManager
+		_SlotManager 12
 	.endm
 
 	.macro	_SReadPRAMRec
