@@ -251,7 +251,10 @@
 	.endm
 
 	.equ	SwapMMUMode, 0xa05d
-	.macro	_SwapMMUMode
+	.macro	_SwapMMUMode p1
+		.ifnb \p1
+			moveq #\p1,%d0
+		.endif
 		.short	SwapMMUMode
 	.endm
 
