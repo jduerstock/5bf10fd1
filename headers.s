@@ -411,8 +411,11 @@
 	.endm
 
 	.macro	_SUpdateSRT
-		moveq	#43,%d0
-		_SlotManager
+		_SlotManager 43
+	.endm
+
+	.macro	_SCalcSPointer
+		_SlotManager 44
 	.endm
 
 	.macro	_SFindSInfoRecPtr
