@@ -342,13 +342,11 @@
 	.endm
 
 	.macro	_SReadPRAMRec
-		moveq	#17,%d0
-		_SlotManager
+		_SlotManager 17
 	.endm
 
 	.macro	_SPutPRAMRec
-		moveq	#18,%d0
-		_SlotManager
+		_SlotManager 18
 	.endm
 
 	.macro	_SReadFHeader
