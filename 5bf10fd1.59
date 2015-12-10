@@ -451,32 +451,27 @@ byte_409d83f2:
 	.short	0x4040	/* 409d8408 4040 */
 
 sub_409d840a:
-	.short	0x48e7	/* 409d840a 48e7 */
-	.short	0xb0c0	/* 409d840c b0c0 */
-	moveq	#1,%d0			/* 409d840e 7001 */
-	.short	0xa05d	/* 409d8410 a05d */
-	.short	0x1f00	/* 409d8412 1f00 */
-	.short	0x41fa	/* 409d8414 41fa */
-	.short	0xfc48	/* 409d8416 fc48 */
-	.short	0x41f0	/* 409d8418 41f0 */
-	.short	0x1600	/* 409d841a 1600 */
-	.short	0x2253	/* 409d841c 2253 */
-	.short	0x3028	/* 409d841e 3028 */
-	.short	0x0006	/* 409d8420 0006 */
-	.short	0x2610	/* 409d8422 2610 */
-	.short	0x3428	/* 409d8424 3428 */
-	.short	0x0004	/* 409d8426 0004 */
-	.short	0x22c3	/* 409d8428 22c3 */
-	.short	0x51ca	/* 409d842a 51ca */
-	.short	0xfffc	/* 409d842c fffc */
-	.short	0x4683	/* 409d842e 4683 */
-	.short	0x51c8	/* 409d8430 51c8 */
-	.short	0xfff2	/* 409d8432 fff2 */
-	.short	0x101f	/* 409d8434 101f */
-	.short	0xa05d	/* 409d8436 a05d */
-	.short	0x4cdf	/* 409d8438 4cdf */
-	.short	0x030d	/* 409d843a 030d */
-	rts				/* 409d843c 4e75 */
+	moveml	%d0/%d2-%d3/%a0-%a1,%sp@-
+	_SwapMMUMode 1
+	moveb	%d0,%sp@-
+	lea	%pc@(byte_409d805e),%a0
+	lea	%a0@(%d1:w:8),%a0
+	moveal	%a3@,%a1
+	movew	%a0@(6),%d0
+	movel	%a0@,%d3
+
+.L409d8424:
+	movew	%a0@(4),%d2
+
+.L409d8428:
+	movel	%d3,%a1@+
+	dbf	%d2,.L409d8428
+	notl	%d3
+	dbf	%d0,.L409d8424
+	moveb	%sp@+,%d0
+	_SwapMMUMode
+	moveml	%sp@+,%d0/%d2-%d3/%a0-%a1
+	rts
 
 sub_409d843e:
 	moveml	%d0/%d2-%d3/%a0-%a1,%sp@-	/* 409d843e 48e7 b0c0 */
