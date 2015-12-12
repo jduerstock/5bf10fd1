@@ -430,8 +430,7 @@
 	.endm
 
 	.macro	_SDeleteSRTRec
-		moveq	#49,%d0
-		_SlotManager
+		_SlotManager 49
 	.endm
 
 	.macro	_SSecondaryInit
