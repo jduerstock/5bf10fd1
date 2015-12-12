@@ -6898,39 +6898,33 @@ byte_409db908:
 .L409db910:
 	moveb	#0xfe,%a0@(50)
 	_SDeleteSRTRec
-	.short	0x0838	/* 409db91a 0838 */
-	.short	0x0007	/* 409db91c 0007 */
-	.short	0x0dd1	/* 409db91e 0dd1 */
-	.short	0x660c	/* 409db920 660c */
-	.short	0x117c	/* 409db922 117c */
-	.short	0x00fd	/* 409db924 00fd */
-	.short	0x0032	/* 409db926 0032 */
-	.short	0x7031	/* 409db928 7031 */
-	.short	0xa06e	/* 409db92a a06e */
-	.short	0x602c	/* 409db92c 602c */
-	.short	0x2f0a	/* 409db92e 2f0a */
-	.short	0x2478	/* 409db930 2478 */
-	.short	0x0dd8	/* 409db932 0dd8 */
-	.short	0xd5d2	/* 409db934 d5d2 */
-	.short	0x246a	/* 409db936 246a */
-	.short	0x005c	/* 409db938 005c */
-	.short	0x7004	/* 409db93a 7004 */
-	.short	0x2480	/* 409db93c 2480 */
-	.short	0x2012	/* 409db93e 2012 */
-	.short	0x0800	/* 409db940 0800 */
-	.short	0x0003	/* 409db942 0003 */
-	.short	0x66f8	/* 409db944 66f8 */
-	.short	0x203c	/* 409db946 203c */
-	.short	0x0000	/* 409db948 0000 */
-	.short	0x0080	/* 409db94a 0080 */
-	.short	0x2480	/* 409db94c 2480 */
-	.short	0x9080	/* 409db94e 9080 */
-	.short	0x2540	/* 409db950 2540 */
-	.short	0x0010	/* 409db952 0010 */
-	.short	0x2540	/* 409db954 2540 */
-	.short	0x0094	/* 409db956 0094 */
-	.short	0x245f	/* 409db958 245f */
-	moveq	#0,%d0			/* 409db95a 7000 */
+	btst	#7,0xdd1
+	bnes	.L409db92e
+	moveb	#0xfd,%a0@(50)
+	_SDeleteSRTRec
+	bras	.L409db95a
+
+.L409db92e:
+	movel	%a2,%sp@-
+	moveal	0xdd8,%a2
+	addal	%a2@,%a2
+	moveal	%a2@(92),%a2
+	moveq	#4,%d0
+	movel	%d0,%a2@
+
+.L409db93e:
+	movel	%a2@,%d0
+	btst	#3,%d0
+	bnes	.L409db93e
+	movel	#128,%d0
+	movel	%d0,%a2@
+	subl	%d0,%d0
+	movel	%d0,%a2@(16)
+	movel	%d0,%a2@(148)
+	moveal	%sp@+,%a2
+
+.L409db95a:
+	moveq	#0,%d0
 	.short	0x1038	/* 409db95c 1038 */
 	.short	0x0cb3	/* 409db95e 0cb3 */
 	.short	0x41fa	/* 409db960 41fa */
