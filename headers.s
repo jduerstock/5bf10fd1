@@ -364,8 +364,7 @@
 	.endm
 
 	.macro	_SRsrcInfo
-		moveq	#22,%d0
-		_SlotManager
+		_SlotManager 22
 	.endm
 
 	.macro	_SDisposePtr
