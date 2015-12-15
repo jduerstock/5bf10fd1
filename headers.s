@@ -886,7 +886,10 @@
 		.short	0xa8b0
 	.endm
 
-	.macro	_ScriptUtil
+	.macro	_ScriptUtil p1
+		.ifnb \p1
+			movel #\p1,%sp@-
+		.endif
 		.short	0xa8b5
 	.endm
 
