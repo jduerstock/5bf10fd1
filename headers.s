@@ -698,6 +698,13 @@
 		_Pack8
 	.endm
 
+	.macro	_ResourceDispatch p1
+		.ifnb \p1
+			moveq #\p1,%d0
+		.endif
+		.short	0xa822
+	.endm
+
 	.macro	_AliasDispatch
 		.short	0xa823
 	.endm
