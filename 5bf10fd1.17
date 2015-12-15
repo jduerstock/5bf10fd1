@@ -6093,31 +6093,27 @@ utJustDeactivateIM4Document:
 
 __v__utBadSandL:
 	linkw	%fp,#0			/* 4088bcd0 4e56 0000 */
-	.short	0x48e7	/* 4088bcd4 48e7 */
-	.short	0x0108	/* 4088bcd6 0108 */
-	.short	0x286e	/* 4088bcd8 286e */
-	.short	0x0008	/* 4088bcda 0008 */
-	.short	0x598f	/* 4088bcdc 598f */
-	.short	0x3f14	/* 4088bcde 3f14 */
-	.short	0x701c	/* 4088bce0 701c */
-	.short	0x3f00	/* 4088bce2 3f00 */
-	.short	0x2f3c	/* 4088bce4 2f3c */
-	.short	0x8404	/* 4088bce6 8404 */
-	.short	0x000c	/* 4088bce8 000c */
-	.short	0xa8b5	/* 4088bcea a8b5 */
-	.short	0x201f	/* 4088bcec 201f */
-	.short	0x3e00	/* 4088bcee 3e00 */
-	.short	0xbe6c	/* 4088bcf0 be6c */
-	.short	0x0002	/* 4088bcf2 0002 */
-	.short	0x6704	/* 4088bcf4 6704 */
-	moveq	#1,%d0			/* 4088bcf6 7001 */
-	.short	0x6002	/* 4088bcf8 6002 */
-	moveq	#0,%d0			/* 4088bcfa 7000 */
-	.short	0x4cee	/* 4088bcfc 4cee */
-	.short	0x1080	/* 4088bcfe 1080 */
-	.short	0xfff8	/* 4088bd00 fff8 */
-	.short	0x4e5e	/* 4088bd02 4e5e */
-	rts				/* 4088bd04 4e75 */
+	moveml	%d7/%a4,%sp@-
+	moveal	%fp@(8),%a4
+	subql	#4,%sp
+	movew	%a4@,%sp@-
+	moveq	#28,%d0
+	movew	%d0,%sp@-
+	_ScriptUtil 0x8404000c
+	movel	%sp@+,%d0
+	movew	%d0,%d7
+	cmpw	%a4@(2),%d7
+	beqs	.L4088bcfa
+	moveq	#1,%d0
+	bras	.L4088bcfc
+
+.L4088bcfa:
+	moveq	#0,%d0
+
+.L4088bcfc:
+	moveml	%fp@(-8),%d7/%a4
+	unlk	%fp
+	rts
 
 utBadSandL:
 	.short	0x2278	/* 4088bd06 2278 */
