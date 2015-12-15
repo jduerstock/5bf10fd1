@@ -894,28 +894,23 @@
 	.endm
 
 	.macro	_KeyScript
-		movel	#0x80020004,%sp@-
-		_ScriptUtil
+		_ScriptUtil 0x80020004
 	.endm
 
 	.macro	_FontScript
-		movel	#0x82000000,%sp@-
-		_ScriptUtil
+		_ScriptUtil 0x82000000
 	.endm
 
 	.macro	_CharByte
-		movel	#0x82060010,%sp@-
-		_ScriptUtil
+		_ScriptUtil 0x82060010
 	.endm
 
 	.macro	_CharType
-		movel	#0x82060012,%sp@-
-		_ScriptUtil
+		_ScriptUtil 0x82060012
 	.endm
 
 	.macro	_Char2Pixel
-		movel	#0x820c0016,%sp@-
-		_ScriptUtil
+		_ScriptUtil 0x820c0016
 	.endm
 
 	.macro	_NewRgn
