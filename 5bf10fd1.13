@@ -1231,87 +1231,64 @@ off_4086894c:
 	braw	.L40868eb6
 
 .L40868b90:
-	.short	0x3200	/* 40868b90 3200 */
-	.short	0xe549	/* 40868b92 e549 */
-	.short	0x2232	/* 40868b94 2232 */
-	.short	0x1072	/* 40868b96 1072 */
-	.short	0x6700	/* 40868b98 6700 */
-	.short	0x031c	/* 40868b9a 031c */
-	.short	0x2041	/* 40868b9c 2041 */
-	.short	0x4a28	/* 40868b9e 4a28 */
-	.short	0x0004	/* 40868ba0 0004 */
-	.short	0x6700	/* 40868ba2 6700 */
-	.short	0x0312	/* 40868ba4 0312 */
-	.short	0x2278	/* 40868ba6 2278 */
-	.short	0x02b6	/* 40868ba8 02b6 */
-	.short	0x2269	/* 40868baa 2269 */
-	.short	0x0178	/* 40868bac 0178 */
-	.short	0x2209	/* 40868bae 2209 */
-	.short	0x6700	/* 40868bb0 6700 */
-	.short	0x01ec	/* 40868bb2 01ec */
-	.short	0x5281	/* 40868bb4 5281 */
-	.short	0x6700	/* 40868bb6 6700 */
-	.short	0x01e6	/* 40868bb8 01e6 */
-	.short	0x2251	/* 40868bba 2251 */
-	.short	0x0c29	/* 40868bbc 0c29 */
-	.short	0x0001	/* 40868bbe 0001 */
-	.short	0x0020	/* 40868bc0 0020 */
-	.short	0x6512	/* 40868bc2 6512 */
-	.short	0x6700	/* 40868bc4 6700 */
-	.short	0x02f0	/* 40868bc6 02f0 */
-	.short	0x0c40	/* 40868bc8 0c40 */
-	.short	0x0000	/* 40868bca 0000 */
-	.short	0x6708	/* 40868bcc 6708 */
-	.short	0xb06a	/* 40868bce b06a */
-	.short	0x0026	/* 40868bd0 0026 */
-	.short	0x6600	/* 40868bd2 6600 */
-	.short	0x02e2	/* 40868bd4 02e2 */
-	.short	0x3f04	/* 40868bd6 3f04 */
-	.short	0x48e7	/* 40868bd8 48e7 */
-	.short	0xb418	/* 40868bda b418 */
-	.short	0x3800	/* 40868bdc 3800 */
-	.short	0x7200	/* 40868bde 7200 */
-	.short	0x1228	/* 40868be0 1228 */
-	.short	0x0060	/* 40868be2 0060 */
-	.short	0x2038	/* 40868be4 2038 */
-	.short	0x0a1c	/* 40868be6 0a1c */
-	.short	0x6700	/* 40868be8 6700 */
-	.short	0x019a	/* 40868bea 019a */
-	.short	0x5280	/* 40868bec 5280 */
-	.short	0x6700	/* 40868bee 6700 */
-	.short	0x0194	/* 40868bf0 0194 */
-	.short	0x4245	/* 40868bf2 4245 */
-	.short	0x1a28	/* 40868bf4 1a28 */
-	.short	0x0061	/* 40868bf6 0061 */
-	.short	0x4a2a	/* 40868bf8 4a2a */
-	.short	0x006a	/* 40868bfa 006a */
-	.short	0x6734	/* 40868bfc 6734 */
-	.short	0x2f38	/* 40868bfe 2f38 */
-	.short	0x0a1c	/* 40868c00 0a1c */
-	.short	0x21f8	/* 40868c02 21f8 */
-	.short	0x0286	/* 40868c04 0286 */
-	.short	0x0a1c	/* 40868c06 0a1c */
-	.short	0x2f08	/* 40868c08 2f08 */
-	.short	0x5d4f	/* 40868c0a 5d4f */
-	.short	0x3f3c	/* 40868c0c 3f3c */
-	.short	0xbf95	/* 40868c0e bf95 */
-	.short	0xa949	/* 40868c10 a949 */
-	.short	0x4a97	/* 40868c12 4a97 */
-	.short	0x6612	/* 40868c14 6612 */
-	.short	0x4fef	/* 40868c16 4fef */
-	.short	0x000a	/* 40868c18 000a */
-	.short	0x21df	/* 40868c1a 21df */
-	.short	0x0a1c	/* 40868c1c 0a1c */
-	.short	0x7200	/* 40868c1e 7200 */
-	.short	0x1228	/* 40868c20 1228 */
-	.short	0x0060	/* 40868c22 0060 */
-	.short	0x6000	/* 40868c24 6000 */
-	.short	0x015e	/* 40868c26 015e */
+	movew	%d0,%d1
+	lslw	#2,%d1
+	movel	%a2@(0x72,%d1:w),%d1
+	beqw	.L40868eb6
+	moveal	%d1,%a0
+	tstb	%a0@(4)
+	beqw	.L40868eb6
+	moveal	0x2b6,%a1
+	moveal	%a1@(376),%a1
+	movel	%a1,%d1
+	beqw	.L40868d9e
+	addql	#1,%d1
+	beqw	.L40868d9e
+	moveal	%a1@,%a1
+	cmpib	#1,%a1@(32)
+	bcss	.L40868bd6
+	beqw	.L40868eb6
+	cmpiw	#0,%d0
+	beqs	.L40868bd6
+	cmpw	%a2@(38),%d0
+	bnew	.L40868eb6
+
+.L40868bd6:
+	movew	%d4,%sp@-
+	moveml	%d0/%d2-%d3/%d5/%a3-%a4,%sp@-
+	movew	%d0,%d4
+	moveq	#0,%d1
+	moveb	%a0@(96),%d1
+	movel	0xa1c,%d0
+	beqw	.L40868d84
+	addql	#1,%d0
+	beqw	.L40868d84
+	clrw	%d5
+	moveb	%a0@(97),%d5
+	tstb	%a2@(106)
+	beqs	.L40868c32
+	movel	0xa1c,%sp@-
+	movel	0x286,0xa1c
+	movel	%a0,%sp@-
+	subqw	#6,%sp
+	movew	#-16491,%sp@-
+	.short	0xa949
+	tstl	%sp@
+	bnes	.L40868c28
+	lea	%sp@(10),%sp
+	movel	%sp@+,0xa1c
+	moveq	#0,%d1
+	moveb	%a0@(96),%d1
+	braw	.L40868d84
+
+.L40868c28:
 	.short	0xa950	/* 40868c28 a950 */
 	.short	0x3a1f	/* 40868c2a 3a1f */
 	.short	0x205f	/* 40868c2c 205f */
 	.short	0x21df	/* 40868c2e 21df */
 	.short	0x0a1c	/* 40868c30 0a1c */
+
+.L40868c32:
 	.short	0x286a	/* 40868c32 286a */
 	.short	0x0066	/* 40868c34 0066 */
 	.short	0x7600	/* 40868c36 7600 */
@@ -1481,6 +1458,8 @@ off_4086894c:
 	.short	0x7200	/* 40868d7e 7200 */
 	.short	0x1228	/* 40868d80 1228 */
 	.short	0x0060	/* 40868d82 0060 */
+
+.L40868d84:
 	.short	0x4cdf	/* 40868d84 4cdf */
 	.short	0x182d	/* 40868d86 182d */
 	.short	0x3004	/* 40868d88 3004 */
@@ -1494,6 +1473,8 @@ off_4086894c:
 	.short	0x0060	/* 40868d98 0060 */
 	.short	0x6000	/* 40868d9a 6000 */
 	.short	0x008a	/* 40868d9c 008a */
+
+.L40868d9e:
 	.short	0x7200	/* 40868d9e 7200 */
 	.short	0x1228	/* 40868da0 1228 */
 	.short	0x0060	/* 40868da2 0060 */
@@ -1640,11 +1621,9 @@ off_4086894c:
 	.short	0xead0	/* 40868eb4 ead0 */
 
 .L40868eb6:
-	.short	0x245f	/* 40868eb6 245f */
-	.short	0x303c	/* 40868eb8 303c */
-	.short	0x0006	/* 40868eba 0006 */
-	.short	0x6000	/* 40868ebc 6000 */
-	.short	0xf584	/* 40868ebe f584 */
+	moveal	%sp@+,%a2
+	movew	#6,%d0
+	braw	STDUNLINK
 
 sub_40868ec0:
 	JmpVector	0x2060 68	/* 40868ec0 2f30 81e2 2060 0110 */
