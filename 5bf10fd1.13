@@ -1328,87 +1328,71 @@ off_4086894c:
 	braw	.L40868d84
 
 .L40868ca8:
-	.short	0x143c	/* 40868ca8 143c */
-	.short	0x0002	/* 40868caa 0002 */
+	moveb	#2,%d2
 
 .L40868cac:
-	.short	0x7201	/* 40868cac 7201 */
-	.short	0x3001	/* 40868cae 3001 */
-	.short	0x264c	/* 40868cb0 264c */
-	.short	0xc0fc	/* 40868cb2 c0fc */
-	.short	0x000e	/* 40868cb4 000e */
-	.short	0xd6c0	/* 40868cb6 d6c0 */
-	.short	0x4aab	/* 40868cb8 4aab */
-	.short	0x0006	/* 40868cba 0006 */
-	.short	0x6720	/* 40868cbc 6720 */
-	.short	0xb42b	/* 40868cbe b42b */
-	.short	0x0004	/* 40868cc0 0004 */
-	.short	0x661a	/* 40868cc2 661a */
-	.short	0x0c2b	/* 40868cc4 0c2b */
-	.short	0x0001	/* 40868cc6 0001 */
-	.short	0x0004	/* 40868cc8 0004 */
-	.short	0x6d0c	/* 40868cca 6d0c */
-	.short	0x6e0a	/* 40868ccc 6e0a */
-	.short	0xb6ab	/* 40868cce b6ab */
-	.short	0x000a	/* 40868cd0 000a */
-	.short	0x660a	/* 40868cd2 660a */
-	.short	0x6000	/* 40868cd4 6000 */
-	.short	0x00ae	/* 40868cd6 00ae */
-	.short	0xb653	/* 40868cd8 b653 */
-	.short	0x6700	/* 40868cda 6700 */
-	.short	0x00a8	/* 40868cdc 00a8 */
-	.short	0x5241	/* 40868cde 5241 */
-	.short	0x51cd	/* 40868ce0 51cd */
-	.short	0xffcc	/* 40868ce2 ffcc */
-	.short	0x2f08	/* 40868ce4 2f08 */
-	.short	0x4a02	/* 40868ce6 4a02 */
-	.short	0x6600	/* 40868ce8 6600 */
-	.short	0x0086	/* 40868cea 0086 */
-	.short	0x554f	/* 40868cec 554f */
-	.short	0x2f3c	/* 40868cee 2f3c */
-	.short	0x8200	/* 40868cf0 8200 */
-	.short	0xffd2	/* 40868cf2 ffd2 */
-	.short	0xa8b5	/* 40868cf4 a8b5 */
-	.short	0x0c5f	/* 40868cf6 0c5f */
-	.short	0x0000	/* 40868cf8 0000 */
-	.short	0x6674	/* 40868cfa 6674 */
-	.short	0x3004	/* 40868cfc 3004 */
-	.short	0xe548	/* 40868cfe e548 */
-	.short	0x2072	/* 40868d00 2072 */
-	.short	0x0072	/* 40868d02 0072 */
-	.short	0x584f	/* 40868d04 584f */
-	.short	0x4245	/* 40868d06 4245 */
-	.short	0x1a28	/* 40868d08 1a28 */
-	.short	0x0061	/* 40868d0a 0061 */
-	.short	0x4a2a	/* 40868d0c 4a2a */
-	.short	0x006a	/* 40868d0e 006a */
-	.short	0x6734	/* 40868d10 6734 */
-	.short	0x2f38	/* 40868d12 2f38 */
-	.short	0x0a1c	/* 40868d14 0a1c */
-	.short	0x21f8	/* 40868d16 21f8 */
-	.short	0x0286	/* 40868d18 0286 */
-	.short	0x0a1c	/* 40868d1a 0a1c */
-	.short	0x2f08	/* 40868d1c 2f08 */
-	.short	0x5d4f	/* 40868d1e 5d4f */
-	.short	0x3f3c	/* 40868d20 3f3c */
-	.short	0xbf95	/* 40868d22 bf95 */
-	.short	0xa949	/* 40868d24 a949 */
-	.short	0x4a97	/* 40868d26 4a97 */
-	.short	0x6612	/* 40868d28 6612 */
-	.short	0x4fef	/* 40868d2a 4fef */
-	.short	0x000a	/* 40868d2c 000a */
-	.short	0x21df	/* 40868d2e 21df */
-	.short	0x0a1c	/* 40868d30 0a1c */
-	.short	0x7200	/* 40868d32 7200 */
-	.short	0x1228	/* 40868d34 1228 */
-	.short	0x0060	/* 40868d36 0060 */
-	.short	0x6000	/* 40868d38 6000 */
-	.short	0x004a	/* 40868d3a 004a */
+	moveq	#1,%d1
+
+.L40868cae:
+	movew	%d1,%d0
+	moveal	%a4,%a3
+	muluw	#14,%d0
+	addaw	%d0,%a3
+	tstl	%a3@(6)
+	beqs	.L40868cde
+	cmpb	%a3@(4),%d2
+	bnes	.L40868cde
+	cmpib	#1,%a3@(4)
+	blts	.L40868cd8
+	bgts	.L40868cd8
+	cmpl	%a3@(10),%d3
+	bnes	.L40868cde
+	braw	.L40868d84
+
+.L40868cd8:
+	cmpw	%a3@,%d3
+	beqw	.L40868d84
+
+.L40868cde:
+	addqw	#1,%d1
+	dbf	%d5,.L40868cae
+	movel	%a0,%sp@-
+	tstb	%d2
+	bnew	.L40868d70
+	subqw	#2,%sp
+	_ScriptUtil 0x8200ffd2
+	cmpiw	#0,%sp@+
+	bnes	.L40868d70
+	movew	%d4,%d0
+	lslw	#2,%d0
+	moveal	%a2@(0x72,%d0:w),%a0
+	addqw	#4,%sp
+	clrw	%d5
+	moveb	%a0@(97),%d5
+	tstb	%a2@(106)
+	beqs	.L40868d46
+	movel	0xa1c,%sp@-
+	movel	0x286,0xa1c
+	movel	%a0,%sp@-
+	subqw	#6,%sp
+	movew	#-16491,%sp@-
+	.short	0xa949
+	tstl	%sp@
+	bnes	.L40868d3c
+	lea	%sp@(10),%sp
+	movel	%sp@+,0xa1c
+	moveq	#0,%d1
+	moveb	%a0@(96),%d1
+	braw	.L40868d84
+
+.L40868d3c:
 	.short	0xa950	/* 40868d3c a950 */
 	.short	0x3a1f	/* 40868d3e 3a1f */
 	.short	0x205f	/* 40868d40 205f */
 	.short	0x21df	/* 40868d42 21df */
 	.short	0x0a1c	/* 40868d44 0a1c */
+
+.L40868d46:
 	.short	0x286a	/* 40868d46 286a */
 	.short	0x0066	/* 40868d48 0066 */
 	.short	0x7201	/* 40868d4a 7201 */
@@ -1430,6 +1414,8 @@ off_4086894c:
 	.short	0x51cd	/* 40868d6a 51cd */
 	.short	0xffe0	/* 40868d6c ffe0 */
 	.short	0x6002	/* 40868d6e 6002 */
+
+.L40868d70:
 	.short	0x205f	/* 40868d70 205f */
 	.short	0x322a	/* 40868d72 322a */
 	.short	0x0026	/* 40868d74 0026 */
