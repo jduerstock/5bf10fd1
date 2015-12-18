@@ -7077,29 +7077,26 @@ INSMENUITEM:
 
 sub_4085bf90:
 	bsrw	sub_4085bfd0
-	.short	0x7600	/* 4085bf94 7600 */
-	.short	0x6018	/* 4085bf96 6018 */
-	.short	0x558f	/* 4085bf98 558f */
-	.short	0x2f0c	/* 4085bf9a 2f0c */
-	.short	0x3f03	/* 4085bf9c 3f03 */
-	.short	0x2f3c	/* 4085bf9e 2f3c */
-	.short	0x8206	/* 4085bfa0 8206 */
-	.short	0x0010	/* 4085bfa2 0010 */
-	.short	0xa8b5	/* 4085bfa4 a8b5 */
-	.short	0x341f	/* 4085bfa6 341f */
-	.short	0x1034	/* 4085bfa8 1034 */
-	.short	0x3000	/* 4085bfaa 3000 */
-	.short	0x6100	/* 4085bfac 6100 */
-	.short	0x0032	/* 4085bfae 0032 */
-	.short	0x5283	/* 4085bfb0 5283 */
-	.short	0xb614	/* 4085bfb2 b614 */
-	.short	0x63e2	/* 4085bfb4 63e2 */
-	.short	0x6100	/* 4085bfb6 6100 */
-	.short	0x00d6	/* 4085bfb8 00d6 */
-	.short	0x2f0b	/* 4085bfba 2f0b */
-	.short	0x6100	/* 4085bfbc 6100 */
-	.short	0xf3e4	/* 4085bfbe f3e4 */
-	rts				/* 4085bfc0 4e75 */
+	moveq	#0,%d3
+	bras	.L4085bfb0
+
+.L4085bf98:
+	subql	#2,%sp
+	movel	%a4,%sp@-
+	movew	%d3,%sp@-
+	_ScriptUtil 0x82060010
+	movew	%sp@+,%d2
+	moveb	%a4@(%d3:w),%d0
+	bsrw	sub_4085bfe0
+
+.L4085bfb0:
+	addql	#1,%d3
+	cmpb	%a4@,%d3
+	blss	.L4085bf98
+	bsrw	sub_4085c08e
+	movel	%a3,%sp@-
+	bsrw	DIRTYMENUSIZE
+	rts
 
 	.align	16
 
@@ -7111,6 +7108,7 @@ sub_4085bfd0:
 
 	.align	16
 
+sub_4085bfe0:
 	.short	0x7200	/* 4085bfe0 7200 */
 	.short	0x122e	/* 4085bfe2 122e */
 	.short	0xfeec	/* 4085bfe4 feec */
@@ -7198,6 +7196,8 @@ sub_4085bfd0:
 	.short	0x50ee	/* 4085c088 50ee */
 	.short	0xfeed	/* 4085c08a feed */
 	rts				/* 4085c08c 4e75 */
+
+sub_4085c08e:
 	.short	0x302e	/* 4085c08e 302e */
 	.short	0xfeee	/* 4085c090 feee */
 	.short	0x6708	/* 4085c092 6708 */
