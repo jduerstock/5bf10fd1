@@ -1731,8 +1731,7 @@ sub_40958ad0:
 	movew	%d0,%a4@(6)		/* 40958f58 3940 0006 */
 	movel	%a4,%sp@-		/* 40958f5c 2f0c */
 	pea	%fp@(-8)		/* 40958f5e 486e fff8 */
-	movel	#-2146893838,%sp@-	/* 40958f62 2f3c 8008 fff2 */
-	.short	0xa8b5			/* 40958f68 a8b5 */
+	_ScriptUtil 0x8008fff2
 	pea	%fp@(-8)		/* 40958f6a 486e fff8 */
 	moveq	#0,%d0			/* 40958f6e 7000 */
 	moveb	%d0,%sp@-		/* 40958f70 1f00 */
@@ -5391,70 +5390,49 @@ sub_4095af50:
 	.align	16
 
 sub_4095af80:
-	.short	0x4e56	/* 4095af80 4e56 */
-	.short	0xffda	/* 4095af82 ffda */
-	.short	0x48e7	/* 4095af84 48e7 */
-	.short	0x0f18	/* 4095af86 0f18 */
-	.short	0x426e	/* 4095af88 426e */
-	.short	0x000a	/* 4095af8a 000a */
-	.short	0x42a7	/* 4095af8c 42a7 */
-	.short	0x4eba	/* 4095af8e 4eba */
-	.short	0xe440	/* 4095af90 e440 */
-	.short	0x2e1f	/* 4095af92 2e1f */
-	.short	0x6700	/* 4095af94 6700 */
-	.short	0x0126	/* 4095af96 0126 */
-	.short	0x2847	/* 4095af98 2847 */
-	.short	0x102c	/* 4095af9a 102c */
-	.short	0x011e	/* 4095af9c 011e */
-	.short	0xb02e	/* 4095af9e b02e */
-	.short	0x0008	/* 4095afa0 0008 */
-	.short	0x6604	/* 4095afa2 6604 */
-	.short	0x6000	/* 4095afa4 6000 */
-	.short	0x011a	/* 4095afa6 011a */
-	.short	0x42a7	/* 4095afa8 42a7 */
-	.short	0x42a7	/* 4095afaa 42a7 */
-	.short	0x3f3c	/* 4095afac 3f3c */
-	.short	0x0012	/* 4095afae 0012 */
-	.short	0x2f3c	/* 4095afb0 2f3c */
-	.short	0x8402	/* 4095afb2 8402 */
-	.short	0x0008	/* 4095afb4 0008 */
-	.short	0xa8b5	/* 4095afb6 a8b5 */
-	.short	0x201f	/* 4095afb8 201f */
-	.short	0x3f00	/* 4095afba 3f00 */
-	.short	0x3f3c	/* 4095afbc 3f3c */
-	.short	0x0058	/* 4095afbe 0058 */
-	.short	0x2f3c	/* 4095afc0 2f3c */
-	.short	0x8404	/* 4095afc2 8404 */
-	.short	0x000c	/* 4095afc4 000c */
-	.short	0xa8b5	/* 4095afc6 a8b5 */
-	.short	0x2d5f	/* 4095afc8 2d5f */
-	.short	0xfff8	/* 4095afca fff8 */
-	.short	0x296e	/* 4095afcc 296e */
-	.short	0xfff8	/* 4095afce fff8 */
-	.short	0x00dc	/* 4095afd0 00dc */
-	.short	0x102e	/* 4095afd2 102e */
-	.short	0x0008	/* 4095afd4 0008 */
-	.short	0x6700	/* 4095afd6 6700 */
-	.short	0x00ac	/* 4095afd8 00ac */
-	.short	0x42a7	/* 4095afda 42a7 */
-	moveq	#-1,%d0			/* 4095afdc 70ff */
-	.short	0xa829	/* 4095afde a829 */
-	.short	0x205f	/* 4095afe0 205f */
-	.short	0x2c28	/* 4095afe2 2c28 */
-	.short	0x0094	/* 4095afe4 0094 */
-	.short	0x6700	/* 4095afe6 6700 */
-	.short	0x00ce	/* 4095afe8 00ce */
-	.short	0x42a7	/* 4095afea 42a7 */
-	.short	0x42a7	/* 4095afec 42a7 */
-	moveq	#-1,%d0			/* 4095afee 70ff */
-	.short	0xa829	/* 4095aff0 a829 */
-	.short	0x7005	/* 4095aff2 7005 */
-	.short	0xa829	/* 4095aff4 a829 */
-	.short	0x265f	/* 4095aff6 265f */
-	.short	0x42a7	/* 4095aff8 42a7 */
-	.short	0xa11a	/* 4095affa a11a */
-	.short	0x2e88	/* 4095affc 2e88 */
-	.short	0x2a1f	/* 4095affe 2a1f */
+	linkw	%fp,#-38
+	moveml	%d4-%d7/%a3-%a4,%sp@-
+	clrw	%fp@(10)
+	clrl	%sp@-
+	jsr	%pc@(sub_409593d0)
+	movel	%sp@+,%d7
+	beqw	.L4095b0bc
+	moveal	%d7,%a4
+	moveb	%a4@(286),%d0
+	cmpb	%fp@(8),%d0
+	bnes	.L4095afa8
+	braw	.L4095b0c0
+
+.L4095afa8:
+	clrl	%sp@-
+	clrl	%sp@-
+	movew	#18,%sp@-
+	_ScriptUtil 0x84020008
+	movel	%sp@+,%d0
+	movew	%d0,%sp@-
+	movew	#88,%sp@-
+	_ScriptUtil 0x8404000c
+	movel	%sp@+,%fp@(-8)
+	movel	%fp@(-8),%a4@(220)
+	moveb	%fp@(8),%d0
+	beqw	.L4095b084
+	clrl	%sp@-
+	moveq	#-1,%d0
+	.short	0xa829
+	moveal	%sp@+,%a0
+	movel	%a0@(148),%d6
+	beqw	.L4095b0b6
+	clrl	%sp@-
+	clrl	%sp@-
+	moveq	#-1,%d0
+	.short	0xa829
+	moveq	#5,%d0
+	.short	0xa829
+	moveal	%sp@+,%a3
+	clrl	%sp@-
+	.short	0xa11a
+	movel	%a0,%sp@
+	movel	%sp@+,%d5
 	clrl	%sp@-			/* 4095b000 42a7 */
 	movel	0x2a6,%sp@		/* 4095b002 2eb8 02a6 */
 	moveal	%sp@+,%a0		/* 4095b006 205f */
