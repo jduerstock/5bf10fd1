@@ -7049,40 +7049,33 @@ NEWMENU:
 	.align	16
 
 APPENDMENU:
-	.short	0x205f	/* 4085bf50 205f */
-	.short	0x3f3c	/* 4085bf52 3f3c */
-	.short	0x03e7	/* 4085bf54 03e7 */
-	.short	0x2f08	/* 4085bf56 2f08 */
+	moveal	%sp@+,%a0
+	movew	#999,%sp@-
+	movel	%a0,%sp@-
 
 INSMENUITEM:
-	.short	0x4aaf	/* 4085bf58 4aaf */
-	.short	0x0006	/* 4085bf5a 0006 */
-	.short	0x672c	/* 4085bf5c 672c */
-	.short	0x202f	/* 4085bf5e 202f */
-	.short	0x000a	/* 4085bf60 000a */
-	.short	0x6726	/* 4085bf62 6726 */
-	.short	0x0800	/* 4085bf64 0800 */
-	.short	0x0000	/* 4085bf66 0000 */
-	.short	0x6620	/* 4085bf68 6620 */
-	.short	0x4e56	/* 4085bf6a 4e56 */
-	.short	0xfee4	/* 4085bf6c fee4 */
-	.short	0x48e7	/* 4085bf6e 48e7 */
-	.short	0x1f38	/* 4085bf70 1f38 */
-	.short	0x286e	/* 4085bf72 286e */
-	.short	0x000a	/* 4085bf74 000a */
-	.short	0x266e	/* 4085bf76 266e */
-	.short	0x000e	/* 4085bf78 000e */
-	.short	0x3c2e	/* 4085bf7a 3c2e */
-	.short	0x0008	/* 4085bf7c 0008 */
-	.short	0x5246	/* 4085bf7e 5246 */
-	.short	0x6100	/* 4085bf80 6100 */
-	.short	0x000e	/* 4085bf82 000e */
-	.short	0x4cdf	/* 4085bf84 4cdf */
-	.short	0x1cf8	/* 4085bf86 1cf8 */
-	.short	0x4e5e	/* 4085bf88 4e5e */
-	.short	0x6000	/* 4085bf8a 6000 */
-	.short	0xfad2	/* 4085bf8c fad2 */
-	.short	0x0000	/* 4085bf8e 0000 */
+	tstl	%sp@(6)
+	beqs	.L4085bf8a
+	movel	%sp@(10),%d0
+	beqs	.L4085bf8a
+	btst	#0,%d0
+	bnes	.L4085bf8a
+	linkw	%fp,#-284
+	moveml	%d3-%d7/%a2-%a4,%sp@-
+	moveal	%fp@(10),%a4
+	moveal	%fp@(14),%a3
+	movew	%fp@(8),%d6
+	addqw	#1,%d6
+	bsrw	sub_4085bf90
+	moveml	%sp@+,%d3-%d7/%a2-%a4
+	unlk	%fp
+
+.L4085bf8a:
+	braw	TENBYTEXIT2
+
+	.align	16
+
+sub_4085bf90:
 	.short	0x6100	/* 4085bf90 6100 */
 	.short	0x003e	/* 4085bf92 003e */
 	.short	0x7600	/* 4085bf94 7600 */
