@@ -5082,8 +5082,7 @@ DRAWMBAR:
 DRAWMENUBAR:
 	moveq	#-18,%d0		/* 4085ae90 70ee */
 	movew	%d0,%sp@-		/* 4085ae92 3f00 */
-	movel	#-2147352572,%sp@-	/* 4085ae94 2f3c 8002 0004 */
-	.short	0xa8b5			/* 4085ae9a a8b5 */
+	_ScriptUtil 0x80020004
 	bclr	#6,0xb21		/* 4085ae9c 08b8 0006 0b21 */
 	bclr	#6,0xb20		/* 4085aea2 08b8 0006 0b20 */
 	jsr	%pc@(PUSHMENUSTATE)	/* 4085aea8 4eba 369a */
@@ -6808,20 +6807,14 @@ MENUCTBLSANITYCHK:
 	.align	16
 
 sub_4085bd20:
-	.short	0x1f00	/* 4085bd20 1f00 */
-	.short	0x2f0f	/* 4085bd22 2f0f */
-	.short	0x3f3c	/* 4085bd24 3f3c */
-	.short	0x0001	/* 4085bd26 0001 */
-	.short	0x3f3c	/* 4085bd28 3f3c */
-	.short	0xffff	/* 4085bd2a ffff */
-	.short	0x3f3c	/* 4085bd2c 3f3c */
-	.short	0x0400	/* 4085bd2e 0400 */
-	.short	0x2f3c	/* 4085bd30 2f3c */
-	.short	0x800a	/* 4085bd32 800a */
-	.short	0xffb6	/* 4085bd34 ffb6 */
-	.short	0xa8b5	/* 4085bd36 a8b5 */
-	.short	0x101f	/* 4085bd38 101f */
-	rts				/* 4085bd3a 4e75 */
+	moveb	%d0,%sp@-
+	movel	%sp,%sp@-
+	movew	#1,%sp@-
+	movew	#-1,%sp@-
+	movew	#1024,%sp@-
+	_ScriptUtil 0x800affb6
+	moveb	%sp@+,%d0
+	rts
 
 MENUKEY:
 	linkw	%fp,#0			/* 4085bd3c 4e56 0000 */
