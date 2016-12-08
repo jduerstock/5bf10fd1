@@ -1505,22 +1505,21 @@ sub_409d5da8:
 	_SwapMMUMode 1
 	moveb	%d0,%sp@-
 	movel	#0xaaaaaaaa,%d3
-	.short	0x2053	/* 409d5db8 2053 */
-	.short	0x303c	/* 409d5dba 303c */
-	.short	0x018f	/* 409d5dbc 018f */
-	.short	0x343c	/* 409d5dbe 343c */
-	.short	0x0013	/* 409d5dc0 0013 */
-	.short	0x20c3	/* 409d5dc2 20c3 */
-	.short	0x51ca	/* 409d5dc4 51ca */
-	.short	0xfffc	/* 409d5dc6 fffc */
-	.short	0x4683	/* 409d5dc8 4683 */
-	.short	0x51c8	/* 409d5dca 51c8 */
-	.short	0xfff2	/* 409d5dcc fff2 */
-	.short	0x101f	/* 409d5dce 101f */
-	.short	0xa05d	/* 409d5dd0 a05d */
-	.short	0x4cdf	/* 409d5dd2 4cdf */
-	.short	0x030d	/* 409d5dd4 030d */
-	rts				/* 409d5dd6 4e75 */
+	moveal	%a3@,%a0
+	movew	#399,%d0
+
+.L409d5dbe:
+	movew	#19,%d2
+
+.L409d5dc2:
+	movel	%d3,%a0@+
+	dbf	%d2,.L409d5dc2
+	notl	%d3
+	dbf	%d0,.L409d5dbe
+	moveb	%sp@+,%d0
+	_SwapMMUMode
+	moveml	%sp@+,%d0/%d2-%d3/%a0-%a1
+	rts
 
 sub_409d5dd8:
 	.short	0x2f09	/* 409d5dd8 2f09 */
