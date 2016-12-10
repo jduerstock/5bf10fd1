@@ -8662,7 +8662,7 @@ sub_4084d0d4:
 
 __v__INITSNDDISPATCH:
 	moveq	#52,%d0			/* 4084d0f0 7034 */
-	.short	0xa51e			/* 4084d0f2 a51e */
+	_NewPtrSys
 	moveal	ExpandMem,%a1		/* 4084d0f4 2278 02b6 */
 	moveal	%a1@(272),%a1		/* 4084d0f8 2269 0110 */
 	movel	%a0,%a1@(42)		/* 4084d0fc 2348 002a */
@@ -13745,45 +13745,33 @@ __v__SOUNDCLOSECOMMON:
 	.short	0x00b4	/* 4084fa0c 00b4 */
 	.short	0x6102	/* 4084fa0e 6102 */
 	rts				/* 4084fa10 4e75 */
-	.short	0x4238	/* 4084fa12 4238 */
-	.short	0x027e	/* 4084fa14 027e */
-	.short	0x4ab8	/* 4084fa16 4ab8 */
-	.short	0x0266	/* 4084fa18 0266 */
-	.short	0x673c	/* 4084fa1a 673c */
-	.short	0x7010	/* 4084fa1c 7010 */
-	.short	0xa51e	/* 4084fa1e a51e */
-	.short	0x4a40	/* 4084fa20 4a40 */
-	.short	0x6634	/* 4084fa22 6634 */
-	.short	0x4290	/* 4084fa24 4290 */
-	.short	0x317c	/* 4084fa26 317c */
-	.short	0x0001	/* 4084fa28 0001 */
-	.short	0x0004	/* 4084fa2a 0004 */
-	.short	0x43fa	/* 4084fa2c 43fa */
-	.short	0x040a	/* 4084fa2e 040a */
-	.short	0x2149	/* 4084fa30 2149 */
-	.short	0x0006	/* 4084fa32 0006 */
-	.short	0x317c	/* 4084fa34 317c */
-	.short	0x003d	/* 4084fa36 003d */
-	.short	0x000a	/* 4084fa38 000a */
-	.short	0x317c	/* 4084fa3a 317c */
-	.short	0x0009	/* 4084fa3c 0009 */
-	.short	0x000c	/* 4084fa3e 000c */
-	.short	0x2278	/* 4084fa40 2278 */
-	.short	0x01d4	/* 4084fa42 01d4 */
-	.short	0x08d1	/* 4084fa44 08d1 */
-	.short	0x0007	/* 4084fa46 0007 */
-	.short	0x317c	/* 4084fa48 317c */
-	.short	0x0080	/* 4084fa4a 0080 */
-	.short	0x000e	/* 4084fa4c 000e */
-	.short	0xa033	/* 4084fa4e a033 */
-	.short	0x2078	/* 4084fa50 2078 */
-	.short	0x0cc0	/* 4084fa52 0cc0 */
-	.short	0x21c8	/* 4084fa54 21c8 */
-	.short	0x0266	/* 4084fa56 0266 */
+
+sub_4084fa12:
+	clrb	0x27e
+	tstl	0x266
+	beqs	.L4084fa58
+	moveq	#16,%d0
+	_NewPtrSys
+	tstw	%d0
+	bnes	.L4084fa58
+	clrl	%a0@
+	movew	#1,%a0@(4)
+	lea	%pc@(sub_4084fe38),%a1
+	movel	%a1,%a0@(6)
+	movew	#61,%a0@(10)
+	movew	#9,%a0@(12)
+	moveal	0x1d4,%a1
+	bset	#7,%a1@
+	movew	#128,%a0@(14)
+	.short	0xa033
+	moveal	0xcc0,%a0
+	movel	%a0,0x266
 
 .L4084fa58:
-	moveq	#0,%d0			/* 4084fa58 7000 */
-	rts				/* 4084fa5a 4e75 */
+	moveq	#0,%d0
+	rts
+
+sub_4084fa5c:
 	.short	0x4278	/* 4084fa5c 4278 */
 	.short	0x0280	/* 4084fa5e 0280 */
 	.short	0x2078	/* 4084fa60 2078 */
@@ -14217,6 +14205,8 @@ sub_4084fcf6:
 	.short	0x6100	/* 4084fe32 6100 */
 	.short	0xfe6e	/* 4084fe34 fe6e */
 	rts				/* 4084fe36 4e75 */
+
+sub_4084fe38:
 	.short	0x317c	/* 4084fe38 317c */
 	.short	0x003d	/* 4084fe3a 003d */
 	.short	0x000a	/* 4084fe3c 000a */
