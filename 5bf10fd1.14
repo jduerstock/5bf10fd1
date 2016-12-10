@@ -14722,64 +14722,45 @@ INITGRAF:
 	movel	%a4,%a5@
 	clrb	0x8f3
 	jsrind	0xf48
-	.short	0x41ec	/* 408774f8 41ec */
-	.short	0xff36	/* 408774fa ff36 */
-	.short	0x43ec	/* 408774fc 43ec */
-	.short	0x0004	/* 408774fe 0004 */
-	.short	0x4258	/* 40877500 4258 */
-	.short	0xb1c9	/* 40877502 b1c9 */
-	.short	0x66fa	/* 40877504 66fa */
-	.short	0x397c	/* 40877506 397c */
-	.short	0x0001	/* 40877508 0001 */
-	.short	0xff62	/* 4087750a ff62 */
-	.short	0x49ec	/* 4087750c 49ec */
-	.short	0xff70	/* 4087750e ff70 */
-	.short	0x200c	/* 40877510 200c */
-	.short	0x38fc	/* 40877512 38fc */
-	.short	0x000a	/* 40877514 000a */
-	.short	0x28fc	/* 40877516 28fc */
-	.short	0x8001	/* 40877518 8001 */
-	.short	0x8001	/* 4087751a 8001 */
-	.short	0x28fc	/* 4087751c 28fc */
-	.short	0x7fff	/* 4087751e 7fff */
-	.short	0x7fff	/* 40877520 7fff */
-	.short	0x220c	/* 40877522 220c */
-	.short	0x28c0	/* 40877524 28c0 */
-	.short	0x28c1	/* 40877526 28c1 */
-	moveq	#1,%d0			/* 40877528 7001 */
-	.short	0x28c0	/* 4087752a 28c0 */
-	.short	0x2f0c	/* 4087752c 2f0c */
-	.short	0xa833	/* 4087752e a833 */
-	.short	0x49ec	/* 40877530 49ec */
-	.short	0x000e	/* 40877532 000e */
-	.short	0x701a	/* 40877534 701a */
-	.short	0x41fa	/* 40877536 41fa */
-	.short	0x00b2	/* 40877538 00b2 */
-	.short	0x28d8	/* 4087753a 28d8 */
-	.short	0x51c8	/* 4087753c 51c8 */
-	.short	0xfffc	/* 4087753e fffc */
-	.short	0x203c	/* 40877540 203c */
-	.short	0x0006	/* 40877542 0006 */
-	.short	0x0082	/* 40877544 0082 */
-	.short	0x41f8	/* 40877546 41f8 */
-	.short	0x0da0	/* 40877548 0da0 */
-	_ReadXPRAM	/* 4087754a a051 */
-	.short	0x61ff	/* 4087754c 61ff */
-	.short	0xffff	/* 4087754e ffff */
-	.short	0x308e	/* 40877550 308e */
-	.short	0x2078	/* 40877552 2078 */
-	.short	0x08a4	/* 40877554 08a4 */
-	.short	0x21c8	/* 40877556 21c8 */
-	.short	0x0cc8	/* 40877558 0cc8 */
-	.short	0x21c8	/* 4087755a 21c8 */
-	.short	0x08a0	/* 4087755c 08a0 */
-	.short	0x2038	/* 4087755e 2038 */
-	.short	0x08b0	/* 40877560 08b0 */
-	.short	0x2040	/* 40877562 2040 */
-	.short	0x6e28	/* 40877564 6e28 */
-	.short	0x594f	/* 40877566 594f */
-	.short	0x3f3c	/* 40877568 3f3c */
-	.short	0x007f	/* 4087756a 007f */
+	lea	%a4@(-202),%a0
+	lea	%a4@(4),%a1
+
+.L40877500:
+	clrw	%a0@+
+	cmpal	%a1,%a0
+	bnes	.L40877500
+	movew	#1,%a4@(-158)
+	lea	%a4@(-144),%a4
+	movel	%a4,%d0
+	movew	#10,%a4@+
+	movel	#0x80018001,%a4@+
+	movel	#0x7fff7fff,%a4@+
+	movel	%a4,%d1
+	movel	%d0,%a4@+
+	movel	%d1,%a4@+
+	moveq	#1,%d0
+	movel	%d0,%a4@+
+	movel	%a4,%sp@-
+	.short	0xa833
+	lea	%a4@(14),%a4
+	moveq	#26,%d0
+	lea	%pc@(word_408775ea),%a0
+
+.L4087753a:
+	movel	%a0@+,%a4@+
+	dbf	%d0,.L4087753a
+	movel	#393346,%d0
+	lea	0xda0,%a0
+	_ReadXPRAM
+	bsrl	sub_4086a5dc
+	moveal	0x8a4,%a0
+	movel	%a0,0xcc8
+	movel	%a0,0x8a0
+	movel	0x8b0,%d0
+	moveal	%d0,%a0
+	bgts	.L4087758e
+	subqw	#4,%sp
+	movew	#127,%sp@-
 	.short	0x4eb0	/* 4087756c 4eb0 */
 	.short	0x81e1	/* 4087756e 81e1 */
 	.short	0x1660	/* 40877570 1660 */
@@ -14797,6 +14778,8 @@ INITGRAF:
 	.short	0x4eb0	/* 40877588 4eb0 */
 	.short	0x81e1	/* 4087758a 81e1 */
 	.short	0x1690	/* 4087758c 1690 */
+
+.L4087758e:
 	moveq	#-1,%d0			/* 4087758e 70ff */
 	.short	0x2078	/* 40877590 2078 */
 	.short	0x0d66	/* 40877592 0d66 */
@@ -14843,6 +14826,8 @@ INITGRAF:
 	.short	0x4e5e	/* 408775e4 4e5e */
 	.short	0x2e9f	/* 408775e6 2e9f */
 	rts				/* 408775e8 4e75 */
+
+word_408775ea:
 	.short	0x0000	/* 408775ea 0000 */
 	.short	0x4000	/* 408775ec 4000 */
 	.short	0x6000	/* 408775ee 6000 */
