@@ -13355,61 +13355,48 @@ fnt_RS:
 	.short	0x1080	/* 4088fe5c 1080 */
 	.short	0xfff8	/* 4088fe5e fff8 */
 	.short	0x4e5e	/* 4088fe60 4e5e */
-	rts				/* 4088fe62 4e75 */
+	rts
 
 	.align	16
 
 fnt_WCVTP:
-	linkw	%fp,#0			/* 4088fe70 4e56 0000 */
-	.short	0x48e7	/* 4088fe74 48e7 */
-	.short	0x0708	/* 4088fe76 0708 */
-	.short	0x286e	/* 4088fe78 286e */
-	.short	0x0008	/* 4088fe7a 0008 */
-	.short	0x59ac	/* 4088fe7c 59ac */
-	.short	0x0018	/* 4088fe7e 0018 */
-	.short	0x206c	/* 4088fe80 206c */
-	.short	0x0018	/* 4088fe82 0018 */
-	.short	0x2e10	/* 4088fe84 2e10 */
-	.short	0x59ac	/* 4088fe86 59ac */
-	.short	0x0018	/* 4088fe88 0018 */
-	.short	0x206c	/* 4088fe8a 206c */
-	.short	0x0018	/* 4088fe8c 0018 */
-	.short	0x2c10	/* 4088fe8e 2c10 */
-	.short	0x206c	/* 4088fe90 206c */
-	.short	0x0024	/* 4088fe92 0024 */
-	.short	0x2068	/* 4088fe94 2068 */
-	.short	0x0008	/* 4088fe96 0008 */
-	.short	0x2187	/* 4088fe98 2187 */
-	.short	0x6c00	/* 4088fe9a 6c00 */
-	.short	0x672e	/* 4088fe9c 672e */
-	.short	0x2f06	/* 4088fe9e 2f06 */
-	.short	0x2f0c	/* 4088fea0 2f0c */
-	.short	0x206c	/* 4088fea2 206c */
-	.short	0x0052	/* 4088fea4 0052 */
-	.short	0x4e90	/* 4088fea6 4e90 */
-	.short	0x2a00	/* 4088fea8 2a00 */
-	.short	0x504f	/* 4088feaa 504f */
-	.short	0x671e	/* 4088feac 671e */
-	.short	0xbe85	/* 4088feae be85 */
-	.short	0x671a	/* 4088feb0 671a */
-	.short	0x598f	/* 4088feb2 598f */
-	.short	0x2f07	/* 4088feb4 2f07 */
-	.short	0x598f	/* 4088feb6 598f */
-	.short	0x2f07	/* 4088feb8 2f07 */
-	.short	0x2f05	/* 4088feba 2f05 */
-	.short	0xa84d	/* 4088febc a84d */
-	.short	0xa868	/* 4088febe a868 */
-	.short	0x206c	/* 4088fec0 206c */
-	.short	0x0024	/* 4088fec2 0024 */
-	.short	0x2068	/* 4088fec4 2068 */
-	.short	0x0008	/* 4088fec6 0008 */
-	.short	0x219f	/* 4088fec8 219f */
-	.short	0x6c00	/* 4088feca 6c00 */
-	.short	0x4cee	/* 4088fecc 4cee */
-	.short	0x10e0	/* 4088fece 10e0 */
-	.short	0xfff0	/* 4088fed0 fff0 */
-	.short	0x4e5e	/* 4088fed2 4e5e */
-	rts				/* 4088fed4 4e75 */
+	linkw	%fp,#0
+	moveml	%d5-%d7/%a4,%sp@-
+	moveal	%fp@(8),%a4
+	subql	#4,%a4@(24)
+	moveal	%a4@(24),%a0
+	movel	%a0@,%d7
+	subql	#4,%a4@(24)
+	moveal	%a4@(24),%a0
+	movel	%a0@,%d6
+	moveal	%a4@(36),%a0
+	moveal	%a0@(8),%a0
+	movel	%d7,%a0@(%d6:l:4)
+	beqs	.L4088fecc
+	movel	%d6,%sp@-
+	movel	%a4,%sp@-
+	moveal	%a4@(82),%a0
+	jsr	%a0@
+	movel	%d0,%d5
+	addqw	#8,%sp
+	beqs	.L4088fecc
+	cmpl	%d5,%d7
+	beqs	.L4088fecc
+	subql	#4,%sp
+	movel	%d7,%sp@-
+	subql	#4,%sp
+	movel	%d7,%sp@-
+	movel	%d5,%sp@-
+	.short	0xa84d
+	.short	0xa868
+	moveal	%a4@(36),%a0
+	moveal	%a0@(8),%a0
+	movel	%sp@+,%a0@(%d6:l:4)
+
+.L4088fecc:
+	moveml	%fp@(-16),%d5-%d7/%a4
+	unlk	%fp
+	rts
 
 	.align	16
 
