@@ -2162,10 +2162,10 @@ fnt_ADJUST:
 
 .L40891584:
 	extl	%d4			/* 40891584 48c4 */
-	cmpl	%a4@(0x0000,%d4:l:4),%d6	/* 40891586 bcb4 4c00 */
+	cmpl	%a4@(%d4:l:4),%d6	/* 40891586 bcb4 4c00 */
 	bgts	.L408915a0		/* 4089158a 6e14 */
 	extl	%d4			/* 4089158c 48c4 */
-	cmpl	%a4@(0x0000,%d4:l:4),%d7	/* 4089158e beb4 4c00 */
+	cmpl	%a4@(%d4:l:4),%d7	/* 4089158e beb4 4c00 */
 	blts	.L408915a0		/* 40891592 6d0c */
 	movel	%fp@(-36),%d0		/* 40891594 202e ffdc */
 	subql	#1,%fp@(-36)		/* 40891598 53ae ffdc */
@@ -2179,9 +2179,9 @@ fnt_ADJUST:
 	tstw	%a3@(58)		/* 408915a4 4a6b 003a */
 	bgew	.L40891296		/* 408915a8 6c00 fcec */
 	clrw	%a3@(58)		/* 408915ac 426b 003a */
-	moveml	%fp@(-80),%d3-%d7/%a3-%a4	/* 408915b0 4cee 18f8 ffb0 */
-	unlk	%fp			/* 408915b6 4e5e */
-	rts				/* 408915b8 4e75 */
+	moveml	%fp@(-80),%d3-%d7/%a3-%a4
+	unlk	%fp
+	rts
 	
 	.align	16
 
@@ -2484,31 +2484,31 @@ fnt_DefaultJumpTable:
 .L40891934:
 	lea	%pc@(fnt_IDefPatch),%a0	/* 40891934 41fa f4aa */
 	movel	%a0,%a4@+		/* 40891938 28c8 */
-	dbf	%d7,.L40891934	/* 4089193a 51cf fff8 */
+	dbf	%d7,.L40891934		/* 4089193a 51cf fff8 */
 	moveq	#7,%d7			/* 4089193e 7e07 */
 
 .L40891940:
 	lea	%pc@(fnt_PUSHB),%a0	/* 40891940 41fa e3ee */
 	movel	%a0,%a4@+		/* 40891944 28c8 */
-	dbf	%d7,.L40891940	/* 40891946 51cf fff8 */
+	dbf	%d7,.L40891940		/* 40891946 51cf fff8 */
 	moveq	#7,%d7			/* 4089194a 7e07 */
 
 .L4089194c:
 	lea	%pc@(fnt_PUSHW),%a0	/* 4089194c 41fa e442 */
 	movel	%a0,%a4@+		/* 40891950 28c8 */
-	dbf	%d7,.L4089194c	/* 40891952 51cf fff8 */
+	dbf	%d7,.L4089194c		/* 40891952 51cf fff8 */
 	moveq	#31,%d7			/* 40891956 7e1f */
 
 .L40891958:
 	lea	%pc@(fnt_MDRP),%a0	/* 40891958 41fa ee86 */
 	movel	%a0,%a4@+		/* 4089195c 28c8 */
-	dbf	%d7,.L40891958	/* 4089195e 51cf fff8 */
+	dbf	%d7,.L40891958		/* 4089195e 51cf fff8 */
 	moveq	#31,%d7			/* 40891962 7e1f */
 
 .L40891964:
 	lea	%pc@(fnt_MIRP),%a0	/* 40891964 41fa f04a */
 	movel	%a0,%a4@+		/* 40891968 28c8 */
-	dbf	%d7,.L40891964	/* 4089196a 51cf fff8 */
+	dbf	%d7,.L40891964		/* 4089196a 51cf fff8 */
 	moveml	%fp@(-8),%d7/%a4	/* 4089196e 4cee 1080 fff8 */
 	unlk	%fp			/* 40891974 4e5e */
 	rts				/* 40891976 4e75 */
@@ -2516,12 +2516,12 @@ fnt_DefaultJumpTable:
 	.align	16
 
 __v__fnt_Init:
-	linkw	%fp,#0			/* 40891980 4e56 0000 */
-	moveal	%fp@(8),%a0		/* 40891984 206e 0008 */
-	movel	%a0@(140),%sp@-		/* 40891988 2f28 008c */
-	jsr	%pc@(fnt_DefaultJumpTable)	/* 4089198c 4eba fc32 */
-	unlk	%fp			/* 40891990 4e5e */
-	rts				/* 40891992 4e75 */
+	linkw	%fp,#0
+	moveal	%fp@(8),%a0
+	movel	%a0@(140),%sp@-
+	jsr	%pc@(fnt_DefaultJumpTable)
+	unlk	%fp
+	rts
 
 fnt_Init:
 	moveal	0x202c,%a1		/* 40891994 2278 202c */
