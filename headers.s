@@ -1311,6 +1311,7 @@
 	.equ	__FCL_1_2A_, 0x312e3241		/* "1.2A" */
 	.equ	__FCL_CRSR_, 0x43525352		/* "CRSR" */
 	.equ	__FCL_CURS_, 0x43555253		/* "CURS" */
+	.equ	__FCL_DITL_, 0x4449544c		/* "DITL" */
 	.equ	__FCL_DSAT_, 0x44534154		/* "DSAT" */
 	.equ	__FCL_PAT__, 0x50415420		/* "PAT " */
 	.equ	__FCL_STR__, 0x53545220		/* "STR " */
