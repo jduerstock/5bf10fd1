@@ -1304,6 +1304,10 @@
 		.short	0xabf5
 	.endm
 
+	.macro	_DebugStr
+		.short	0xabff
+	.endm
+
 	.equ	__FCL_1_2A_, 0x312e3241		/* "1.2A" */
 	.equ	__FCL_CRSR_, 0x43525352		/* "CRSR" */
 	.equ	__FCL_CURS_, 0x43555253		/* "CURS" */
@@ -1314,6 +1318,7 @@
 	.equ	__FCL_atlk_, 0x61746c6b		/* "atlk" */
 	.equ	__FCL_clos_, 0x636c6f73		/* "clos" */
 	.equ	__FCL_easy_, 0x65617379		/* "easy" */
+	.equ	__FCL_ecfg_, 0x65636667		/* "ecfg" */
 	.equ	__FCL_flag_, 0x666c6167		/* "flag" */
 	.equ	__FCL_hdwr_, 0x68647772		/* "hdwr" */
 	.equ	__FCL_mach_, 0x6d616368		/* "mach" */
