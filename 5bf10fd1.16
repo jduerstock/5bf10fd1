@@ -803,6 +803,8 @@ __v__DITHER32TOINDEXED:
 	bnes	.L408809ee
 	moveal	%fp@(-680),%a0
 	moveq	#32,%d2
+
+.L408809bc:
 	subw	%d4,%d2
 
 .L408809be:
@@ -821,13 +823,12 @@ __v__DITHER32TOINDEXED:
 	addxw	%d3,%d7
 	subw	%d4,%d2
 	bges	.L408809be
-	.short	0x7420	/* 408809e0 7420 */
-	.short	0x2501	/* 408809e2 2501 */
-	.short	0xb3ca	/* 408809e4 b3ca */
-	.short	0x65d4	/* 408809e6 65d4 */
-	.short	0x2d4c	/* 408809e8 2d4c */
-	.short	0xfd5c	/* 408809ea fd5c */
-	.short	0x602e	/* 408809ec 602e */
+	moveq	#32,%d2
+	movel	%d1,%a2@-
+	cmpal	%a2,%a1
+	bcss	.L408809bc
+	movel	%a4,%fp@(-676)
+	bras	.L40880a1c
 
 .L408809ee:
 	.short	0x2018	/* 408809ee 2018 */
@@ -853,9 +854,10 @@ __v__DITHER32TOINDEXED:
 	.short	0xfd5c	/* 40880a16 fd5c */
 	.short	0x2d48	/* 40880a18 2d48 */
 	.short	0xfd58	/* 40880a1a fd58 */
-	.short	0x4cdf	/* 40880a1c 4cdf */
-	.short	0x28c0	/* 40880a1e 28c0 */
-	rts				/* 40880a20 4e75 */
+
+.L40880a1c:
+	moveml	%sp@+,%d6-%d7/%a3/%a5
+	rts
 
 sub_40880a22:
 	.short	0xda54	/* 40880a22 da54 */
